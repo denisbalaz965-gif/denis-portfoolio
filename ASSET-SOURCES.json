@@ -1,15 +1,13 @@
 {
   "world": {
-    "file": "dist/assets/denis-world.png",
+    "file": "public/images/denis-world.png",
     "source": "OpenAI image_gen, original generation, 2026-10-29",
     "role": "3D portfolio world, not a project screenshot"
   },
   "gsap": {
-    "source": "GSAP3.15.0 distribution; see licenses and library headers",
-    "files": [
-      "gsap.min.js",
-      "ScrollTrigger.min.js"
-    ]
+    "source": "npm dependency gsap@3.15.0",
+    "license": "https://gsap.com/standard-license/",
+    "modules": ["gsap", "gsap/ScrollTrigger"]
   },
   "reference": {
     "url": "https://www.tatrabanka.sk/tatrascool/",
@@ -19,6 +17,11 @@
   "fonts": {
     "family": "Instrument Sans",
     "license": "SIL OFL1.1",
-    "source": "https://github.com/google/fonts/tree/main/ofl/instrumentsans"
+    "source": "https://github.com/google/fonts/tree/main/ofl/instrumentsans",
+    "files": ["public/fonts/InstrumentSans-Regular.ttf", "public/fonts/InstrumentSans-Bold.ttf"]
+  },
+  "salon_screenshot": {
+    "file": "public/images/stylovy-chlpac.png",
+    "source": "Development screenshot of Denis Balaz project, used with original portfolio content"
   }
 }

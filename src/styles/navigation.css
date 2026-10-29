@@ -1,0 +1,122 @@
+.nav-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  padding: 27px 3.4vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+.brand-mark {
+  font-size: 49px;
+  line-height: 0.8;
+  position: relative;
+  letter-spacing: -0.17em;
+  padding-right: 20px;
+}
+.brand-mark > span {
+  font-size: 32px;
+  position: absolute;
+  right: 0;
+  top: -5px;
+  color: var(--blue);
+}
+.brand-dot {
+  color: var(--blue);
+}
+.nav {
+  background: rgba(250, 248, 255, 0.56);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(18px);
+  border-radius: 100px;
+  padding: 6px;
+  display: flex;
+  gap: 1px;
+  box-shadow: 0 4px 22px #38277705;
+}
+.nav a {
+  padding: 10px 21px;
+  border-radius: 50px;
+  font-size: 13px;
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+.nav a.active,
+.nav a:hover {
+  background: var(--ink);
+  color: white;
+}
+.nav-contact {
+  border: 1px solid var(--ink);
+  border-radius: 100px;
+  padding: 13px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  gap: 26px;
+  align-items: center;
+}
+.nav-contact span {
+  font-size: 19px;
+}
+.nav-contact:hover {
+  background: var(--ink);
+  color: white;
+}
+.menu-toggle,
+.mobile-menu {
+  display: none;
+}
+.chapter-nav {
+  position: fixed;
+  left: 24px;
+  top: 43%;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.chapter-nav:before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 5px;
+  width: 1px;
+  background: #aaa0ce88;
+}
+.chapter-nav a {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  position: relative;
+}
+.chapter-nav i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #a497c8;
+  transition: 0.3s;
+}
+.chapter-nav .active i {
+  background: var(--blue);
+  box-shadow: 0 0 0 4px #d2c9fb;
+  border-color: var(--blue);
+}
+.section-pad {
+  padding: 95px var(--gutter);
+}

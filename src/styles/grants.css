@@ -1,0 +1,120 @@
+.grants {
+  background: var(--paper);
+  padding-bottom: 90px;
+}
+.grants .section-top h2 em {
+  color: var(--blue);
+}
+.grants-intro {
+  max-width: 345px;
+  width: 34%;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.grants-intro small {
+  font-size: 10px;
+  display: block;
+  color: #827e8a;
+}
+.grant-list {
+  margin-top: 70px;
+}
+.grant-row {
+  display: grid;
+  grid-template-columns: 28px 90px 1fr minmax(140px, 230px) 45px;
+  align-items: center;
+  gap: 24px;
+  border-top: 1px solid var(--line);
+  padding: 28px 0;
+}
+.grant-row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.grant-index {
+  font-size: 10px;
+  color: #948b99;
+}
+.grant-symbol {
+  width: 73px;
+  height: 73px;
+  border-radius: 19px;
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+  line-height: 1;
+  box-shadow: inset -4px -5px 10px #73619310;
+  transform: rotate(-7deg);
+}
+.symbol-corinex {
+  background: #e4dcff;
+  color: #6a50e5;
+}
+.symbol-camp {
+  background: #d5eddf;
+  color: #43886b;
+  font-size: 48px;
+}
+.symbol-library {
+  background: #ffe3d6;
+  color: #be7965;
+  transform: rotate(5deg);
+  font-size: 43px;
+}
+.symbol-enviro {
+  background: #e6e9cc;
+  color: #8a9854;
+}
+.grant-name > span {
+  font-size: 9px;
+  color: #8e8796;
+}
+.grant-name h3 {
+  font-size: 27px;
+  letter-spacing: -0.045em;
+  margin: 5px 0 10px;
+}
+.grant-name p {
+  font-size: 10px;
+  color: #898390;
+  max-width: 45ch;
+}
+.grant-result {
+  text-align: right;
+}
+.grant-result strong {
+  display: block;
+  font-size: 25px;
+  letter-spacing: -0.05em;
+  line-height: 1.2;
+}
+.grant-result span {
+  display: block;
+  font-size: 8px;
+  color: #948b99;
+  margin-top: 7px;
+}
+.source-link,
+.source-mark {
+  width: 39px;
+  height: 39px;
+  border: 1px solid #d5d1dc;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+}
+.source-link:hover {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+}
+.source-mark {
+  color: #948b99;
+  border-color: transparent;
+}
+.grant-note {
+  font-size: 10px;
+  color: #8e8598;
+  margin-top: 25px;
+  max-width: 85ch;
+}

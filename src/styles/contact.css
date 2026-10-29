@@ -1,0 +1,97 @@
+.contact {
+  background: #ebe3ff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 100px;
+  padding-bottom: 30px;
+}
+.contact > .eyebrow {
+  font-size: 9px;
+}
+.contact h2 {
+  font-size: clamp(62px, 9vw, 138px);
+  line-height: 0.95;
+  margin-top: 40px;
+}
+.contact h2 em {
+  color: var(--blue);
+}
+.contact > p:not(.eyebrow) {
+  font-size: 14px;
+  line-height: 1.8;
+  margin-top: 30px;
+}
+.email-link {
+  font-size: clamp(16px, 3vw, 38px);
+  letter-spacing: -0.04em;
+  display: inline-block;
+  border-bottom: 1px solid #9183bc;
+  margin-top: 29px;
+  padding-bottom: 8px;
+}
+.email-link > span {
+  display: inline-block;
+  color: var(--blue);
+  margin-left: 18px;
+}
+.email-link:hover > span {
+  transform: translate(4px, -4px);
+}
+.contact-actions {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.dark {
+  background: var(--ink);
+  color: white;
+}
+.contact-actions .button {
+  font-size: 11px;
+  min-height: 43px;
+  padding: 12px 19px;
+}
+.contact-actions .text-link {
+  font-size: 10px;
+}
+.contact-decor {
+  position: absolute;
+  top: 28%;
+  right: 4%;
+  font-size: 145px;
+  color: #b8dcca;
+  line-height: 1;
+  transform: rotate(12deg);
+  text-shadow: 3px 7px #8eafa455;
+}
+#copy-status {
+  font-size: 10px;
+  min-width: 0;
+}
+footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-top: 110px;
+  padding-top: 24px;
+  border-top: 1px solid #b6aacd;
+  font-size: 9px;
+  color: #857895;
+}
+.footer-brand {
+  font-size: 17px;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  color: var(--ink);
+}
+.footer-brand > span {
+  color: var(--blue);
+  font-size: 24px;
+  vertical-align: middle;
+  margin-left: 6px;
+}
