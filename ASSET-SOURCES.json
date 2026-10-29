@@ -1,0 +1,24 @@
+{
+  "world": {
+    "file": "dist/assets/denis-world.png",
+    "source": "OpenAI image_gen, original generation, 2026-10-29",
+    "role": "3D portfolio world, not a project screenshot"
+  },
+  "gsap": {
+    "source": "GSAP3.15.0 distribution; see licenses and library headers",
+    "files": [
+      "gsap.min.js",
+      "ScrollTrigger.min.js"
+    ]
+  },
+  "reference": {
+    "url": "https://www.tatrabanka.sk/tatrascool/",
+    "observed": "2026-10-29, hero and money-scene screens, scroll interaction",
+    "adaptation": "Saturated lavender/cobalt/mint, spatial world, object parallax; no Tatra assets or mascot reused"
+  },
+  "fonts": {
+    "family": "Instrument Sans",
+    "license": "SIL OFL1.1",
+    "source": "https://github.com/google/fonts/tree/main/ofl/instrumentsans"
+  }
+}
