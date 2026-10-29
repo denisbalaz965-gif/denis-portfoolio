@@ -7,3 +7,7 @@ outputs/
 work/
 qa-*.html
 *.log
+
+.sites-runtime/
+.sites-checkout/
+.sites-checkout-*/
