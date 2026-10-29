@@ -26,10 +26,10 @@ Lokálny prehliadač, desktop 1280 px; mobilné rozloženie v rámcoch 390 a 320
 
 Aktualizácia29.10.: automatické animácie bez prepínača na výslovný pokyn Denisa, priamy odkaz na Zákazko.sk a telefonický kontakt. Štýlový chlpáč dostane verejný odkaz po zverejnení; víkend31.10.–1.11. je plán používateľa, nie dokončené nasadenie.
 
-Stav: lokálna verzia na kontrolu textov. Nasadenie webu zabezpečuje Sites podľa `.openai/hosting.json`. Zdrojový repozitár: https://github.com/denisbalaz965-gif/denis-portfoolio (súkromný).
+Stav: lokálna verzia na kontrolu textov. Nasadenie webu zabezpečuje Sites podľa `.openai/hosting.json`. Zdrojový repozitár: https://github.com/denisbalaz965-gif/denis-portfoolio.
 
 ## Štruktúra repozitára
 Web je v priečinku `dist/`. Z koreňa repozitára spusti `python3 -m http.server 8793 --bind 127.0.0.1 --directory dist`.
 
 ## Hosting
-Cieľová adresa: https://denis-balaz-portfolio.denis-balaz567.chatgpt.site . Súkromný GitHub repozitár je oddelený od prístupu k verejnému portfóliu.
+Cieľová adresa: https://denis-balaz-portfolio.denis-balaz567.chatgpt.site . GitHub repozitár obsahuje zdrojové súbory portfólia.
