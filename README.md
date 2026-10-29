@@ -1,35 +1,39 @@
-# Denis Baláž — osobné portfólio
+# Denis Baláž — portfólio
 
-Samostatná statická stránka: HTML, CSS, JavaScript a lokálne assety. Nie je potrebný balíčkovací systém ani API kľúč.
+Weby, digitálne produkty a pracovné postupy s AI. Skúsenosti s prípravou a implementáciou grantových projektov v CASSIS Consult.
+
+## Vybraná práca
+
+- **Eurofondy s podporou AI:** používaný postup spracovania projektových podkladov, úloh a čakaní. Interaktívny príklad obsahuje modelové údaje.
+- **Štýlový chlpáč:** návrh a realizácia webu pre psí salón, služby, cenník a rezervačný postup. Pripravuje sa na zverejnenie.
+- **[Zákazko.sk](https://zakazko.sk/):** vlastný produkt pre cenové ponuky, zákazkové listy a preberacie protokoly.
+
+Grantové referencie opisujú moju úlohu v tímovej práci. Uvedené sumy podpory patria prijímateľom projektov; stav schválenia a zmluvy odlišujem od dokončenej realizácie. Súkromné projektové dokumenty a e-maily v repozitári nie sú.
 
 ## Spustenie
-V priečinku stránky spusti `python3 -m http.server 8793 --bind 127.0.0.1` a otvor http://127.0.0.1:8793/.
 
-## Obsah a úpravy
-- index.html: obsah, referencie, kontakty a štruktúra.
-- style.css: vizuálny systém a mobilné rozloženie.
-- app.js: animácie, filtre, detaily projektov, modelový pracovný postup a navigácia.
-- assets/: lokálne obrázky, fonty a animačné knižnice.
+Statický web bez závislosti na balíčkovacom systéme. Z koreňa repozitára:
 
-## Pravdivosť prezentácie
-Pracovný postup s AI odlišujeme od bezobslužnej integrácie. Štýlový chlpáč je lokálna verzia. Cenové ponuky sú vlastný produkt; výsledky predaja sa netvrdia. Grantové sumy patria prijímateľom a sú výsledkom tímovej spolupráce; zmluva alebo schválenie nie je dôkaz dokončenej realizácie. Súkromné e-maily a prílohy nie sú súčasťou stránky ani archívu.
+```sh
+python3 -m http.server 8793 --bind 127.0.0.1 --directory dist
+```
 
-## Assety a licencie
-- Vlastný 3D ostrov: originál vytvorený pomocou OpenAI image_gen 29. 10. 2026. Ide o raster s animovanými vrstvami, nie živý 3D model.
-- Inšpirácia: https://www.tatrabanka.sk/tatrascool/ — farebnosť, hravý priestor a pohyb. Bez prevzatia loga, maskota či assetov Tatra banky.
-- Screenshot Štýlového chlpáča: Denisov lokálny návrh projektu.
-- Instrument Sans: SIL Open Font License, plné znenie v licenses/InstrumentSans-OFL.txt; https://github.com/google/fonts/tree/main/ofl/instrumentsans .
-- GSAP 3.15.0 / ScrollTrigger: zachované autorské hlavičky; https://gsap.com/standard-license/ . Knižnice majú vlastnú licenciu a nie sú prelicencované touto stránkou.
+Potom otvor http://127.0.0.1:8793/.
 
-## Rozsah overenia
-Lokálny prehliadač, desktop 1280 px; mobilné rozloženie v rámcoch 390 a 320 px. Filter, dialógy a Escape s návratom fokusu, modelový postup 1–4, mobilná navigácia, automatické spustenie pohybu. Nie je to test na fyzickom telefóne ani úplný audit prístupnosti. Bez formulára, trackingu, externých API či odosielania.
+## Súbory
 
-Aktualizácia29.10.: automatické animácie bez prepínača na výslovný pokyn Denisa, priamy odkaz na Zákazko.sk a telefonický kontakt. Štýlový chlpáč dostane verejný odkaz po zverejnení; víkend31.10.–1.11. je plán používateľa, nie dokončené nasadenie.
+- `dist/index.html` — štruktúra, obsah, kontakty a referencie.
+- `dist/style.css` — vzhľad a responzívne rozloženie.
+- `dist/app.js` — animácie, filtre, detaily a interaktívny postup.
+- `dist/assets/` — obrázky, fonty a animačné knižnice.
+- `.openai/hosting.json` — konfigurácia hostingu Sites.
 
-Stav: lokálna verzia na kontrolu textov. Nasadenie webu zabezpečuje Sites podľa `.openai/hosting.json`. Zdrojový repozitár: https://github.com/denisbalaz965-gif/denis-portfoolio.
+## Vizuál a licencie
 
-## Štruktúra repozitára
-Web je v priečinku `dist/`. Z koreňa repozitára spusti `python3 -m http.server 8793 --bind 127.0.0.1 --directory dist`.
+Vlastný ilustračný ostrov vznikol s OpenAI image_gen. Pohyb zabezpečuje CSS a GSAP. Inšpiráciou pre hravý priestor a farebnosť bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Screenshot Štýlového chlpáča pochádza z vývojovej verzie projektu.
 
-## Hosting
-Cieľová adresa: https://denis-balaz-portfolio.denis-balaz567.chatgpt.site . GitHub repozitár obsahuje zdrojové súbory portfólia.
+Instrument Sans používa SIL Open Font License; plné znenie je v `dist/licenses/InstrumentSans-OFL.txt`. GSAP a ScrollTrigger používajú vlastnú licenciu: https://gsap.com/standard-license/ . Autorské hlavičky sú zachované. Pôvod assetov je uvedený v `ASSET-SOURCES.json`.
+
+## Kontakt
+
+Denis Baláž · denisbalaz965@gmail.com · +421948835138

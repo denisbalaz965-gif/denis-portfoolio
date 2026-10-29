@@ -44,21 +44,135 @@
   }));
 
   const steps=[
-    {icon:'↙',title:'Najprv pochopiť,<br>čo prišlo.',description:'Správa z porady nie je hotová úloha. Najprv potrebujem rozlíšiť projekt, požiadavku a chýbajúci kontext.',label:'VSTUP Z PORADY',example:'„Potrebujeme doplniť podklady k projektu. Rozpočet ešte čaká na kontrolu.“',tags:['Rozhovor','Dokumenty','E-mail'],caption:'Človek určuje cieľ.'},
-    {icon:'⌁',title:'Priradiť.<br>Prepojiť. Usporiadať.',description:'Požiadavka dostane projekt, súvisiace podklady a jasný stav. Návrh AI porovnám s pôvodným vstupom.',label:'PRACOVNÉ SPRACOVANIE',example:'Projekt: modelová obecná budova. Úloha: doplnenie podkladov. Čakanie: kontrola rozpočtu.',tags:['Projekt','Úloha','Čakanie'],caption:'Kontext sa nestráca.'},
-    {icon:'✓',title:'Overiť, čo<br>naozaj vieme.',description:'Rozlišujem doložené údaje, návrhy a chýbajúce dôkazy. Rozhodujúce čísla a podmienky kontrolujem voči zdroju.',label:'KONTROLA PRED POUŽITÍM',example:'Rozpočet existuje. Jeho kontrola ešte nie je potvrdená. Úloha preto zostáva otvorená.',tags:['Zdroj','Súlad','Ľudská kontrola'],caption:'Návrh ešte nie je schválenie.'},
-    {icon:'↗',title:'Ďalší krok,<br>ktorý je jasný.',description:'Výsledkom je použiteľný prehľad alebo návrh odpovede. Pri odoslaní a podaní zostáva rozhodnutie na človeku.',label:'VÝSTUP PRACOVNÉHO POSTUPU',example:'Doplniť konkrétne prílohy a vyžiadať potvrdenie kontroly rozpočtu. Návrh pripravený na kontrolu.',tags:['Prehľad','Návrh odpovede','Schválenie'],caption:'Pripravené ≠ odoslané.'}
-  ];
+  {
+    "icon": "↙",
+    "title": "Pochopiť,<br>čo treba riešiť.",
+    "description": "Z porady alebo správy vyberiem konkrétnu požiadavku. Rozlíšim, čo máme doplniť a ktoré informácie chýbajú.",
+    "label": "ZADANIE",
+    "example": "„Fond žiada doplniť rozpočet. Posledná verzia ešte čaká na kontrolu.“",
+    "tags": [
+      "Porada",
+      "Dokumenty",
+      "E-mail"
+    ],
+    "caption": "Najprv si ujasním zadanie."
+  },
+  {
+    "icon": "⌁",
+    "title": "Spojiť zadanie<br>s podkladmi.",
+    "description": "Požiadavku priradím k projektu, dohľadám súvisiace dokumenty a zapíšem úlohu aj to, na čo čakáme.",
+    "label": "PROJEKT A SÚVISLOSTI",
+    "example": "Úloha: doplniť rozpočet. Podklad: posledná verzia. Čakáme: potvrdenie kontroly.",
+    "tags": [
+      "Projekt",
+      "Podklady",
+      "Závislosti"
+    ],
+    "caption": "Každá úloha má svoj kontext."
+  },
+  {
+    "icon": "✓",
+    "title": "Overiť verziu<br>aj skutočný stav.",
+    "description": "Kontrolujem zdroj, údaje a verziu dokumentu. Rozlišujem hotový podklad od návrhu, ktorý ešte čaká na kontrolu.",
+    "label": "KONTROLA PODKLADOV",
+    "example": "Rozpočet máme, kontrolu zatiaľ nie. Doplnenie preto ešte nie je pripravené na odoslanie.",
+    "tags": [
+      "Zdroj",
+      "Verzia",
+      "Kontrola"
+    ],
+    "caption": "Rozhodujem podľa overených podkladov."
+  },
+  {
+    "icon": "↗",
+    "title": "Pripraviť výstup<br>a ďalší krok.",
+    "description": "Z podkladov pripravím návrh odpovede a určím, čo treba dokončiť. Pred odoslaním výstup skontrolujem.",
+    "label": "PRACOVNÝ VÝSTUP",
+    "example": "Vyžiadať potvrdenie kontroly rozpočtu, doplniť prílohy a pripraviť odpoveď fondu.",
+    "tags": [
+      "Odpoveď",
+      "Prílohy",
+      "Ďalší krok"
+    ],
+    "caption": "Je jasné, čo nasleduje."
+  }
+];
   let stage=0;
   function showStep(index){stage=index%steps.length;const s=steps[stage];$('#stage-icon').textContent=s.icon;$('#stage-title').innerHTML=s.title;$('#stage-description').textContent=s.description;$('#stage-example').innerHTML='';const label=document.createElement('span');label.textContent=s.label;const p=document.createElement('p');p.textContent=s.example;$('#stage-example').append(label,p);$('#stage-tags').replaceChildren(...s.tags.map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));$('#stage-caption').textContent=s.caption;$('#stage-counter').textContent=String(stage+1).padStart(2,'0')+' / 04';$$('.step').forEach(b=>{b.classList.toggle('active',Number(b.dataset.step)===stage);b.setAttribute('aria-pressed',String(Number(b.dataset.step)===stage));});if(window.gsap)gsap.fromTo('.stage-content',{opacity:.4,y:9},{opacity:1,y:0,duration:.35,clearProps:'all'});}
   $$('.step').forEach(b=>b.addEventListener('click',()=>showStep(Number(b.dataset.step))));
   $('#next-step').addEventListener('click',()=>showStep(stage+1));
 
   const cases={
-    eurofondy:{category:'AI v praxi / pracovný postup',title:'Eurofondy, v súvislostiach.',intro:'Ako používam AI pri spracovaní skutočnej projektovej agendy — so zdrojmi, kontrolou a jasným rozlíšením stavov.',sections:[['Problém','Informácie prichádzajú v e-mailoch, dokumentoch a poradách. Úloha bez súvislostí môže znamenať nesprávny projekt, prehliadnutý podklad alebo nepravdivé hlásenie o dokončení.'],['Moja úloha','Pripravujem a implementujem eurofondové projekty. Spracúvam podklady, žiadosti, zmeny a projektovú administratívu počas realizácie; kontrolujem ich vecný súlad. AI používam na štruktúrovanie, sumarizáciu a pomocné overovanie. Rozhodnutia a významné kroky zostávajú pod kontrolou človeka.'],['Konkrétny priechod','Vstup → priradenie k projektu → úlohy a čakania → kontrola zdrojov → pracovný výstup → schválenie. Na stránke si môžeš prejsť modelový príklad bez klientskych dát.'],['Stav a hranice','Ide o používaný AI podporovaný pracovný postup. Jednotlivé kroky sú riadené človekom; ukážka nepredstavuje bezobslužný firemný systém ani úplnú produkčnú integráciu cez n8n/Make. Meraná časová úspora sa netvrdí.']]},
-    chlpac:{category:'UX/UI / web / rezervácie',title:'Štýlový chlpáč.',intro:'Digitálna prezentácia salónu s vlastnou osobnosťou, jasným cenníkom a premysleným postupom objednania.',sections:[['Problém','Návštevník potrebuje rýchlo pochopiť služby, orientovať sa vo veľkostiach a možnostiach starostlivosti a vedieť, ako sa objednať. Salón zároveň potrebuje upravovať obsah bez zásahu do kódu.'],['Moja úloha','Na projekte pracujem ako tvorca návrhu a realizácie s podporou AI. Riešim kompozíciu, texty, mobilný postup, služby, obsahové rozhranie a kontrolu jednotlivých scenárov podľa spätnej väzby salónu.'],['Čo ukážka dokladá','Na karte je skutočný screenshot lokálneho návrhu. Projekt zahŕňa prezentáciu služieb, cenník, správu obsahu a lokálne overovaný rezervačný postup.'],['Stav a hranice','Lokálna verzia. Verejné nasadenie a ostré rezervácie neprezentujem ako dokončené; nadväzujú na skutočné rozvrhy, trvania služieb a potvrdenie prevádzkových údajov. Projekt je portfóliová spolupráca, nie doložená platená zákazka.']]},
-    ponuky:{category:'Produkt / dokumentová automatizácia',title:'Zákazko.sk.',intro:'Jeden vstup údajov pre cenovú ponuku, zákazkový list a preberací protokol.',sections:[['Problém','Opakované údaje o firme, zákazníkovi a zákazke sa medzi dokumentmi prepisujú. Pri zmene potom hrozí nesúlad jednotlivých výstupov.'],['Moja úloha','Spolupracujem na produktovom zadaní, používateľskom postupe, realizácii a overovaní s podporou AI. Sledujem zrozumiteľný vstup, spoločné údaje a konzistentné výsledné dokumenty.'],['Princíp riešenia','Údaje sa zadajú raz, vyberú sa potrebné dokumenty a vytvoria sa konkrétne výstupy. Vizualizácia na karte je ilustračná a používa modelové údaje.'],['Stav a hranice','Zákazko.sk je zverejnený vlastný produkt vo fáze získavania prvých zákazníkov. Ukážka vysvetľuje princíp spoločných údajov a výstupov. Výsledky predaja a merané úspory zatiaľ neuvádzam.']]}
-  };
+  "eurofondy": {
+    "category": "AI v praxi / projektová agenda",
+    "title": "Eurofondy s podporou AI",
+    "intro": "Pracovný postup, ktorý používam pri príprave a implementácii projektov v CASSIS Consult.",
+    "sections": [
+      [
+        "Zadanie",
+        "Informácie o projekte prichádzajú v e-mailoch, dokumentoch a poradách. Potrebujem ich spojiť tak, aby bolo jasné, čo riešime, ktoré podklady platia a čo nasleduje."
+      ],
+      [
+        "Moja úloha",
+        "Pripravujem a implementujem eurofondové projekty. Riešim žiadosti, rozpočtové podklady, zmeny a projektovú administratívu. AI využívam na spracovanie informácií a pracovné návrhy; kontrolujem zdroje aj výsledok."
+      ],
+      [
+        "Ako to funguje",
+        "Vstup priradím k projektu, prepojím s podkladmi a rozdelím na úlohy a čakania. Po kontrole údajov pripravím výstup a konkrétny ďalší krok. Významné odoslania a podania prechádzajú schválením."
+      ],
+      [
+        "Aktuálny stav",
+        "Postup používam v každodennej práci s AI a kontrolou človeka. Interaktívna ukážka na stránke pracuje s modelovými údajmi."
+      ]
+    ]
+  },
+  "chlpac": {
+    "category": "UX/UI / web / rezervácie",
+    "title": "Štýlový chlpáč",
+    "intro": "Web pre psí salón — od prvého zoznámenia so službami po výber starostlivosti a postup rezervácie.",
+    "sections": [
+      [
+        "Zadanie",
+        "Zákazník potrebuje rozumieť službám, zorientovať sa v cenníku a vedieť, ako sa objednať. Tím salónu potrebuje spravovať obsah a pracovať s rezerváciami podľa reálnej prevádzky."
+      ],
+      [
+        "Moja úloha",
+        "Navrhujem a vytváram web s podporou AI. Riešim vizuál, texty, služby, cenník, mobilné rozloženie, správu obsahu aj rezervačný postup. Úpravy overujem na konkrétnych scenároch a podľa spätnej väzby salónu."
+      ],
+      [
+        "Ako to funguje",
+        "Návštevník sa zoznámi so salónom, porovná služby a vyberie starostlivosť pre svojho psa. Rezervačný postup nadväzuje na ponuku služieb, ich trvanie a dostupnosť pracovníčok."
+      ],
+      [
+        "Aktuálny stav",
+        "Pripravujem verejné nasadenie. Na karte je ukážka z vývojovej verzie; odkaz na živý web doplním po spustení."
+      ]
+    ]
+  },
+  "ponuky": {
+    "category": "Vlastný produkt / dokumentová automatizácia",
+    "title": "Zákazko.sk",
+    "intro": "Cenová ponuka, zákazkový list a preberací protokol zo spoločných údajov o zákazke.",
+    "sections": [
+      [
+        "Zadanie",
+        "Údaje o firme, zákazníkovi a zákazke sa opakujú vo viacerých dokumentoch. Ručné prepisovanie pridáva prácu a pri zmene údajov môže viesť k rozdielnym výstupom."
+      ],
+      [
+        "Moja úloha",
+        "Spolupracujem na zadaní produktu, návrhu používateľského postupu, realizácii a overovaní s podporou AI. Sústreďujem sa na zrozumiteľný vstup a konzistentné výsledné dokumenty."
+      ],
+      [
+        "Ako to funguje",
+        "Používateľ vyplní údaje o zákazke a vyberie potrebné dokumenty. Zo spoločného vstupu vytvorí cenovú ponuku, zákazkový list alebo preberací protokol. Ilustrácia na karte používa modelové údaje."
+      ],
+      [
+        "Aktuálny stav",
+        "Zákazko.sk je zverejnený produkt. Teraz pracujeme na oslovení prvých zákazníkov a overení jeho prínosu v každodennej praxi."
+      ]
+    ]
+  }
+};
   const dialog=$('#case-dialog');let lastOpener;
   function closeCase(){dialog.close();document.body.classList.remove('dialog-open');lastOpener?.focus();}
   $$('[data-case]').forEach(b=>b.addEventListener('click',()=>{const c=cases[b.dataset.case];lastOpener=b;$('#case-category').textContent=c.category;$('#case-title').textContent=c.title;$('#case-intro').textContent=c.intro;$('#case-details').replaceChildren(...c.sections.map(([title,body])=>{const s=document.createElement('section');s.className='case-section';const h=document.createElement('h3');h.textContent=title;const p=document.createElement('p');p.textContent=body;s.append(h,p);return s;}));dialog.showModal();dialog.scrollTop=0;document.body.classList.add('dialog-open');}));
