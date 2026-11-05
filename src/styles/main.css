@@ -1,11 +1,9 @@
 @import './foundations.css';
 @import './navigation.css';
 @import './hero.css';
-@import './projects.css';
-@import './workflow.css';
+@import './layout.css';
 @import './grants.css';
 @import './about.css';
 @import './contact.css';
-@import './dialog.css';
-@import './salon-journey.css';
 @import './responsive.css';
+@import './scroll-stories.css';

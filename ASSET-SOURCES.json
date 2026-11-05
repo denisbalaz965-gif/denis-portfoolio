@@ -30,5 +30,11 @@
     "source": "https://stylovychlpac.sk/media/fotografie/85f24d65-936d-4a39-ab79-966303345c0b.webp",
     "retrieved": "2026-11-05",
     "role": "Public salon hero photograph used in the client project case study"
+  },
+  "scroll_chapters": {
+    "created": "2026-11-05",
+    "source": "Original HTML/CSS spatial compositions and GSAP timelines created for Denis Balaz portfolio",
+    "reference_mechanism": "Tatrascool: progressive composition controlled by the visitor; adapted to a salon website and a grant project dossier",
+    "privacy": "Illustrative booking/admin/documents; no private customer data or original grant documents"
   }
 }

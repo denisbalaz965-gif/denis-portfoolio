@@ -2,9 +2,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { initNavigation } from '../src/features/navigation.js';
-import { initProjectFilter } from '../src/features/project-filter.js';
-import { initProjectDialog } from '../src/features/project-dialog.js';
-import { initWorkflowDemo } from '../src/features/workflow-demo.js';
+import { buildWebScene, buildGrantScene } from '../src/features/scroll-stories.js';
 import { initContact } from '../src/features/contact.js';
 
 const page = readFileSync(resolve(process.cwd(), 'index.html'), 'utf8');
@@ -52,135 +50,6 @@ describe('Mobile navigation', () => {
   });
 });
 
-describe('Project filters', () => {
-  it.each([
-    ['design', ['project-chlpac', 'project-ponuky']],
-    ['automation', ['project-workflow', 'project-ponuky']],
-  ])('shows the relevant projects for %s, then restores all projects', (filter, expected) => {
-    dispose = initProjectFilter();
-    document.querySelector(`[data-filter="${filter}"]`).click();
-    const visible = () =>
-      [...document.querySelectorAll('.project-card')]
-        .filter((card) => !card.hidden)
-        .map((card) => card.id);
-    expect(visible()).toEqual(expected);
-    expect(document.querySelectorAll('.filters [aria-pressed="true"]')).toHaveLength(1);
-    document.querySelector('[data-filter="all"]').click();
-    expect(visible()).toHaveLength(3);
-  });
-
-  it('does not duplicate listeners after teardown and reinitialization', () => {
-    const onChange = vi.fn();
-    initProjectFilter({ onChange })();
-    dispose = initProjectFilter({ onChange });
-    document.querySelector('[data-filter="design"]').click();
-    expect(onChange).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('Project details', () => {
-  it.each([
-    ['eurofondy', 'Eurofondy s podporou AI'],
-    ['chlpac', 'Štýlový chlpáč'],
-    ['ponuky', 'Zákazko.sk'],
-  ])('opens the matching story for %s and returns focus after Escape', (id, title) => {
-    dispose = initProjectDialog();
-    const opener = document.querySelector(`[data-case="${id}"]`);
-    opener.click();
-    const dialog = document.querySelector('#case-dialog');
-    expect(dialog.open).toBe(true);
-    expect(document.querySelector('#case-title').textContent).toBe(title);
-    expect(dialog.querySelectorAll('.case-section')).toHaveLength(4);
-    expect(document.body.classList.contains('dialog-open')).toBe(true);
-    dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
-    expect(dialog.open).toBe(false);
-    expect(document.body.classList.contains('dialog-open')).toBe(false);
-    expect(document.activeElement).toBe(opener);
-  });
-
-  it('navigates the salon journey by keyboard and cleans it up before reopening', () => {
-    dispose = initProjectDialog();
-    const opener = document.querySelector('[data-case="chlpac"]');
-    opener.click();
-    const navigation = document.querySelector('.journey-navigation');
-    navigation.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
-    expect(document.querySelector('[data-journey-counter]').textContent).toBe('05 / 05');
-    expect(document.querySelector('[data-journey-text]').textContent).toContain(
-      'čaká na doplnenie kalendára',
-    );
-    expect(document.activeElement.dataset.journeyStep).toBe('4');
-    document.querySelector('.journey-next').click();
-    expect(document.querySelector('[data-journey-counter]').textContent).toBe('01 / 05');
-    document.querySelector('.dialog-done').click();
-    expect(document.querySelector('.salon-journey')).toBeNull();
-    opener.click();
-    expect(document.querySelectorAll('.salon-journey')).toHaveLength(1);
-    expect(document.querySelector('[data-journey-counter]').textContent).toBe('01 / 05');
-    document.querySelector('.dialog-done').click();
-    document.querySelector('[data-case="ponuky"]').click();
-    expect(document.querySelector('.salon-journey')).toBeNull();
-    expect(document.querySelector('dialog').classList.contains('case-dialog--salon')).toBe(false);
-  });
-
-  it('keeps every salon step usable with reduced motion', () => {
-    const media = new EventTarget();
-    Object.defineProperty(media, 'matches', { value: true });
-    window.matchMedia.mockReturnValueOnce(media);
-    dispose = initProjectDialog();
-    document.querySelector('[data-case="chlpac"]').click();
-    document.querySelector('[data-journey-step="4"]').click();
-    expect(document.querySelector('.model-admin').style.opacity).toBe('1');
-    expect(document.querySelector('.model-admin').style.visibility).toBe('inherit');
-    expect(document.querySelector('.note-brief').style.visibility).toBe('hidden');
-    expect(document.querySelector('[data-journey-title]').textContent).toBe(
-      'Od návrhu k reálnej prevádzke.',
-    );
-  });
-
-  it('closes using the visible return button', () => {
-    dispose = initProjectDialog();
-    document.querySelector('[data-case="eurofondy"]').click();
-    document.querySelector('.dialog-done').click();
-    expect(document.querySelector('dialog').open).toBe(false);
-  });
-
-  it('renders story text without interpreting embedded markup', () => {
-    const text = '<img src=x onerror="alert(1)">';
-    dispose = initProjectDialog({
-      stories: {
-        eurofondy: { category: 'Test', title: 'Test', intro: text, sections: [['Text', text]] },
-      },
-    });
-    document.querySelector('[data-case="eurofondy"]').click();
-    expect(document.querySelector('#case-intro').textContent).toBe(text);
-    expect(document.querySelector('#case-details img')).toBeNull();
-  });
-});
-
-describe('Workflow example', () => {
-  it('cycles through all four steps and returns to the first', () => {
-    dispose = initWorkflowDemo();
-    const next = document.querySelector('#next-step');
-    for (const counter of ['02 / 04', '03 / 04', '04 / 04', '01 / 04']) {
-      next.click();
-      expect(document.querySelector('#stage-counter').textContent).toBe(counter);
-      expect(document.querySelectorAll('.step[aria-pressed="true"]')).toHaveLength(1);
-    }
-  });
-
-  it('can jump directly to a step and shows its context and control state', () => {
-    dispose = initWorkflowDemo();
-    document.querySelector('[data-step="2"]').click();
-    expect(document.querySelector('#stage-counter').textContent).toBe('03 / 04');
-    expect(document.querySelector('#stage-title').textContent).toBe(
-      'Overiť verziuaj skutočný stav.',
-    );
-    expect(document.querySelector('#stage-example span').textContent).toBe('KONTROLA PODKLADOV');
-    expect(document.querySelector('#stage-title br')).not.toBeNull();
-    expect(document.querySelector('[data-step="2"]').getAttribute('aria-pressed')).toBe('true');
-  });
-});
-
 describe('Contact', () => {
   it('copies the same email address shown in the contact link', async () => {
     const clipboard = { writeText: vi.fn().mockResolvedValue(undefined) };
@@ -202,5 +71,40 @@ describe('Contact', () => {
         'E-mail: denisbalaz965@gmail.com',
       ),
     );
+  });
+});
+
+describe('Continuous project scenes', () => {
+  it('builds the salon system forwards, then restores the brief when reversed', () => {
+    const stage = document.querySelector('.web-stage');
+    const timeline = buildWebScene(stage);
+    dispose = () => timeline.revert();
+    timeline.seek(2);
+    expect(stage.querySelector('[data-part="catalogue"]').style.opacity).toBe('1');
+    expect(stage.querySelector('[data-part="brief"]').style.visibility).toBe('hidden');
+    timeline.seek(4);
+    expect(stage.querySelector('[data-part="domain"]').style.opacity).toBe('1');
+    expect(stage.querySelector('[data-part="hero"]').style.opacity).toBe('1');
+    expect(stage.querySelector('[data-part="booking"]').style.visibility).toBe('hidden');
+    timeline.seek(0);
+    expect(stage.querySelector('[data-part="brief"]').style.opacity).toBe('1');
+    expect(stage.querySelector('[data-part="wireframe"]').style.opacity).toBe('1');
+    expect(stage.querySelector('[data-part="domain"]').style.visibility).toBe('hidden');
+  });
+
+  it('moves grant preparation into implementation and can return to preparation', () => {
+    const stage = document.querySelector('.grant-stage');
+    const timeline = buildGrantScene(stage);
+    dispose = () => timeline.revert();
+    timeline.seek(1);
+    expect(stage.querySelector('[data-part="budget"]').style.opacity).toBe('1');
+    timeline.seek(2);
+    expect(stage.querySelector('[data-part="delivery"]').style.opacity).toBe('1');
+    expect(stage.querySelector('[data-part="budget"]').style.visibility).toBe('hidden');
+    timeline.seek(3);
+    expect(stage.querySelector('[data-part="proof"]').style.opacity).toBe('1');
+    timeline.seek(1);
+    expect(stage.querySelector('[data-part="budget"]').style.opacity).toBe('1');
+    expect(stage.querySelector('[data-part="proof"]').style.visibility).toBe('hidden');
   });
 });

@@ -1,32 +1,17 @@
 # Architektúra portfólia
 
-## Rozdelenie zodpovedností
+`src/main.js` zostavuje navigáciu, kontakt, vstupné animácie a dve scrollové kapitoly. Každá funkcia vracia cleanup pre HMR.
 
-`src/main.js` načíta štýly a inicializuje jednotlivé funkcie. Funkcie pracujú s existujúcim HTML, nepotrebujú globálne pomocné premenné a vracajú funkciu na odstránenie listenerov alebo observerov. HMR ju zavolá pred nahradením modulu.
+## Obsah a pohyb
 
-- `navigation.js`: mobilné menu, Escape, prechod na desktop a označenie aktuálnej sekcie.
-- `project-filter.js`: viditeľné karty a stav tlačidiel; zmenu oznamuje callbackom.
-- `project-dialog.js`: obsah natívneho dialógu, zatvorenie, zámok posúvania a návrat fokusu.
-- `workflow-demo.js`: aktuálny krok, obsah a stav jeho ovládania.
-- `contact.js`: adresa vychádza z kontaktného odkazu; kopírovanie má textový fallback.
-- `animations.js`: GSAP, ScrollTrigger a pohyb podľa rozmerov a typu ukazovateľa. Ostatné moduly nepotrebujú poznať GSAP.
+Celý obsah je v `index.html`. Päť krokov webovej tvorby a štyri kroky grantového projektu zostávajú v prirodzenom poradí aj bez JavaScriptu. Kotvy vedú priamo na obsah. Vizuálne makety sú označené `aria-hidden`, pretože význam vysvetľuje priľahlý text; nepoužívajú zákaznícke údaje ani živé API.
 
-Dlhšie projektové texty a kroky sú v `src/data/`. Renderujú sa cez textové uzly; zalomenie titulku kroku je explicitné pole riadkov. Obsah nie je interpretovaný ako HTML.
+`scroll-stories.js` vytvára jednu GSAP timeline a jeden ScrollTrigger na kapitolu. Časová os vlastní všetky transformácie jej objektov; CSS vlastní kompozíciu a sticky scénu. Začiatok a koniec vychádzajú z polohy skutočného textu. Spätné posúvanie vracia tú istú časovú os. Mobil má samostatné pomery, rozmery a textové pásmo pod scénou. GSAP matchMedia obnovuje kontext pri zmene rozmerov alebo systémového nastavenia pohybu.
 
-Prvý krok ukážky je aj v statickom HTML. Návštevník ho vidí pred načítaním JavaScriptu; pri inicializácii sa zosúladí s dátami.
+Pri reduced motion je scéna statická a textové kroky nemajú vynútenú výšku. Len vývojový build podporuje `?motion=full` pre prehliadačové QA. Žiadny prepínač animácií ani serverová integrácia nie sú súčasťou produktu.
 
-## Štýly a vizuálne správanie
+`animations.js` obsluhuje vstup, hero parallax a about. `navigation.js` mobilné menu a aktuálnu kapitolu. `contact.js` kopírovanie s fallbackom.
 
-Importy v `src/styles/main.css` zachovávajú pôvodné poradie kaskády. Responzívne pravidlá sú na konci. Premenné farieb, písma a rozostupov zostávajú v `foundations.css`.
+## Overenie a publikovanie
 
-Vstupné animácie a scrollové efekty majú samostatné GSAP kontexty. `matchMedia` vytvorí desktopové efekty po prekročení breakpointu a odstráni ich pri návrate na mobil. Pohyb myšou používa znovupoužiteľné `quickTo` animácie; pri deaktivácii sa listenery odstránia. Štítky v úvode sa neposúvajú spolu s ilustráciou.
-
-## Testy
-
-Testy používajú skutočné `index.html` ako fixture, takže overujú aj prepojenie značiek a funkcií. Simulované sú len rozhrania, ktoré jsdom nemá: layout observer, media query a natívne otvorenie dialógu. Rozloženie, natívna práca s fokusom a animácie sa kontrolujú samostatne v prehliadači.
-
-## Build a publikovanie
-
-`npm ci` používa lockfile. Vite vytvorí `dist/`; zdrojové súbory ani testy sa do verejného webu nekopírujú. Relatívny base umožňuje nasadenie v koreňovej adrese aj podpriečinku. Hosting sa riadi `.openai/hosting.json` a publikuje build z konkrétneho zdrojového commitu.
-
-História pred refaktorom zostáva v Gite. Návrat je možný k predchádzajúcemu commitu bez prepisovania jeho histórie.
+Vitest používa skutočné HTML a preveruje menu, kontakt a konečné/stredné/spätné stavy oboch scén. jsdom nenahrádza vizuálnu a scrollovú kontrolu v prehliadači. `npm run build` vytvorí ignorované `dist/`. Sites publikuje tento výstup z konkrétneho pushed commitu podľa `.openai/hosting.json`. Staršie modálne príbehy a filter kariet nahradila súvislá hlavná stránka; ich predchádzajúca verzia zostáva v Gite.

@@ -4,11 +4,13 @@ Osobné portfólio spájajúce weby, digitálne produkty a pracovné postupy s A
 
 ![Náhľad portfólia](docs/preview-desktop.png)
 
-## Vybraná práca
+## Pracovná činnosť
 
-- **Eurofondy s podporou AI:** používaný postup spracovania projektových podkladov, úloh a čakaní. Interaktívna ukážka používa modelové údaje.
-- **Štýlový chlpáč:** [zverejnený web psieho salónu](https://stylovychlpac.sk/), spoločný katalóg služieb, cenník, rezervácie a administrácia. Interaktívny príbeh ukazuje päť krokov od zadania po odovzdanie. Verejné online objednávanie čaká na doplnenie kalendára salónom.
-- **[Zákazko.sk](https://zakazko.sk/):** vlastný produkt pre cenové ponuky, zákazkové listy a preberacie protokoly.
+Dve hlavné kapitoly priamo na stránke. Natívne posúvanie ovláda súvislé GSAP scény; text zostáva v HTML a dostupný aj bez animácií.
+
+- **Tvorba webov:** päť krokov Štýlového chlpáča od rozhovoru cez vizuál, spoločný katalóg a rezervácie po spustenie na [stylovychlpac.sk](https://stylovychlpac.sk/). Verejné online objednávanie čaká na doplnenie kalendára salónom.
+- **Príprava a implementácia eurofondov:** zámer, žiadosť a rozpočet, implementácia, konkrétna skúsenosť. Vizuály používajú ilustrované podklady, nie súkromné dokumenty.
+- **[Zákazko.sk](https://zakazko.sk/):** kratšia nadväzujúca ukážka vlastného produktu pre cenové ponuky, zákazkové listy a preberacie protokoly.
 
 Grantové referencie opisujú moju úlohu v tímovej práci. Sumy podpory patria prijímateľom; schválenie a zmluva sa odlišujú od dokončenej realizácie. Súkromné projektové dokumenty a e-maily v repozitári nie sú.
 
@@ -32,13 +34,12 @@ npm run preview
 
 ## Architektúra
 
-HTML a bežný JavaScript s modulmi, CSS, GSAP a Vite. Obsah stránky zostáva v HTML; projektové príbehy a kroky ukážky majú samostatné dátové súbory. Funkcie vracajú cleanup pre bezpečné opätovné spustenie pri vývoji.
+HTML a bežný JavaScript s modulmi, CSS, GSAP a Vite. Celý obsah a kroky projektových príbehov zostávajú v HTML. Jedna časová os na kapitolu vlastní všetky transformácie scény. Funkcie vracajú cleanup pre bezpečné opätovné spustenie pri vývoji.
 
 ```text
 index.html                 Obsah a sémantická štruktúra
 src/main.js                Zostavenie jednotlivých funkcií
-src/data/                  Príbehy projektov a kroky ukážky
-src/features/              Navigácia, filtre, detaily, workflow, kontakt, animácie
+src/features/              Navigácia, kontakt, vstupné animácie, scrollové príbehy
 src/styles/                Základné, sekčné a responzívne štýly
 public/                    Obrázky, fonty, favicon a licenčné oznámenia
 tests/                     Funkčné testy v simulovanom DOM
@@ -50,13 +51,15 @@ docs/                      Architektúra a vizuálny náhľad
 
 ## Overovanie
 
-Vitest a jsdom overujú navigáciu, filtre, všetky projektové detaily, zatvorenie a návrat fokusu, kroky workflow a správanie kontaktu pri povolenom aj zamietnutom kopírovaní. Tieto testy nenahrádzajú skutočný prehliadač: rozloženie, natívny dialóg a animácie sa overujú aj vizuálne na desktope a mobile.
+Vitest a jsdom overujú mobilnú navigáciu, kopírovanie kontaktu vrátane zamietnutého prístupu a obojsmerný priebeh oboch časových osí. Rozloženie, kotvy, mobilná kompozícia a scroll sa kontrolujú samostatne v skutočnom prehliadači. Systémové obmedzenie pohybu používa stabilné rozloženie s celým obsahom.
+
+Iba vo vývojovom režime možno cez `?motion=full` overiť plné scrollové scény aj v testovacom prehliadači so zapnutým obmedzením pohybu. Produkčný build tento parameter nepoužíva.
 
 GitHub Actions pri pushi a pull requeste spúšťajú rovnaký `npm run check`. Výsledok lokálnych kontrol a výsledok CI sú oddelené.
 
 ## Vizuál, AI a licencie
 
-Na návrhu, textoch, implementácii a overovaní spolupracujem s AI. Vlastný ilustračný ostrov vznikol pomocou OpenAI image_gen. Pohyb zabezpečujú CSS a GSAP. Animácie sa spúšťajú automaticky bez ovládača podľa zadania portfólia.
+Na návrhu, textoch, implementácii a overovaní spolupracujem s AI. Vlastný ilustračný ostrov vznikol pomocou OpenAI image_gen. Pohyb zabezpečujú CSS a GSAP. Scény reagujú na posúvanie bez nutnosti klikať medzi krokmi.
 
 Inšpiráciou pre hravý priestor a farebnosť bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Interaktívny príbeh Štýlového chlpáča používa vlastnú ilustrovanú scénu a fotografiu z jeho verejného webu; nejde o živú administráciu ani zákaznícke údaje. Rešpektuje nastavenie obmedzeného pohybu a dá sa ovládať klávesnicou.
 

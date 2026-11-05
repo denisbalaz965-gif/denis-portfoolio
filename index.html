@@ -35,8 +35,8 @@
         ><span>Denis<br />Baláž<span class="brand-dot">.</span></span></a
       >
       <nav class="nav" aria-label="Hlavná navigácia">
-        <a href="#svet" class="active">Môj svet</a><a href="#projekty">Projekty</a
-        ><a href="#granty">Granty</a><a href="#o-mne">O mne</a>
+        <a href="#svet" class="active">Môj svet</a><a href="#projekty">Weby</a
+        ><a href="#granty">Eurofondy</a><a href="#o-mne">O mne</a>
       </nav>
       <a class="nav-contact" href="#kontakt">Poďme sa spojiť <span>↗</span></a>
       <button
@@ -48,16 +48,16 @@
         <span></span><span></span>
       </button>
       <nav id="mobile-menu" class="mobile-menu" aria-label="Mobilná navigácia" hidden>
-        <a href="#svet">Môj svet</a><a href="#projekty">Projekty</a><a href="#granty">Granty</a
+        <a href="#svet">Môj svet</a><a href="#projekty">Weby</a><a href="#granty">Eurofondy</a
         ><a href="#o-mne">O mne</a><a href="#kontakt">Kontakt ↗</a>
       </nav>
     </header>
     <aside class="chapter-nav" aria-label="Kapitoly">
-      <a href="#svet" aria-label="Úvod" class="active"><i></i></a
-      ><a href="#projekty" aria-label="Projekty"><i></i></a
-      ><a href="#workflow" aria-label="Spôsob práce"><i></i></a
-      ><a href="#granty" aria-label="Grantové projekty"><i></i></a
-      ><a href="#kontakt" aria-label="Kontakt"><i></i></a>
+      <a href="#svet" aria-label="Úvod" class="active"><i></i></a>
+      <a href="#projekty" aria-label="Tvorba webov"><i></i></a>
+      <a href="#granty" aria-label="Grantové projekty"><i></i></a>
+      <a href="#o-mne" aria-label="O mne"><i></i></a>
+      <a href="#kontakt" aria-label="Kontakt"><i></i></a>
     </aside>
     <main id="main">
       <section id="svet" class="hero" aria-labelledby="hero-heading">
@@ -99,7 +99,7 @@
               />
             </div>
           </div>
-          <a class="world-label label-ai" href="#workflow"
+          <a class="world-label label-ai" href="#grant-implementacia"
             ><span class="label-icon">✦</span
             ><span>AI, ktorá pomáha<br /><b>v reálnej práci</b></span
             ><i>↗</i></a
@@ -110,259 +110,403 @@
           >
         </div>
         <div class="hero-bottom">
-          <a href="#projekty"><span class="scroll-arrow">↓</span> Pozrieť vybrané projekty</a
+          <a href="#projekty"><span class="scroll-arrow">↓</span> Prejdi si moju prácu</a
           ><span>Slovensko <i>✳</i> otvorený spolupráci</span>
         </div>
         <div class="hero-wave" aria-hidden="true"></div>
       </section>
 
-      <section id="projekty" class="work section-pad" aria-labelledby="work-title">
-        <div class="section-kicker reveal">
-          <span>01 / Vybraná práca</span><span>Weby · produkty · AI v praxi ↘</span>
+      <section
+        id="projekty"
+        class="story-chapter chapter-web section-pad"
+        aria-labelledby="web-title"
+        data-story="web"
+      >
+        <div class="section-kicker">
+          <span>01 / Tvorím weby</span><span>Od potreby po spustenie ↘</span>
         </div>
-        <div class="section-top">
-          <h2 id="work-title" class="reveal">Každý projekt<br />má svoj <em>príbeh.</em></h2>
-          <div class="work-intro reveal">
+        <div class="chapter-heading">
+          <h2 id="web-title">Za webom<br />je <em>celý príbeh.</em></h2>
+          <div>
             <p>
-              Web pre salón, vlastný produkt a AI v projektovej agende. Tri ukážky toho, čo
-              navrhujem, tvorím a používam.
+              Návrh, texty, vývoj s AI aj odovzdanie. Na Štýlovom chlpáčovi ukazujem, ako prepájam
+              potreby skutočnej prevádzky s digitálnym riešením.
             </p>
-            <div class="filters" aria-label="Filtrovať projekty">
-              <button data-filter="all" aria-pressed="true">Všetko</button
-              ><button data-filter="design" aria-pressed="false">UX/UI</button
-              ><button data-filter="automation" aria-pressed="false">AI & procesy</button>
-            </div>
-          </div>
-        </div>
-        <div class="project-grid" aria-live="polite">
-          <article
-            class="project-card card-workflow reveal"
-            data-tags="automation"
-            id="project-workflow"
-          >
-            <div class="project-art workflow-art">
-              <span class="art-label">Podklady, ktoré na seba nadväzujú.</span
-              ><span class="art-number">01</span>
-              <div class="flow-illustration" aria-hidden="true">
-                <div class="flow-source">
-                  <span>↙</span><b>Podklady</b><small>mail · dokument · porada</small>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-core">
-                  <span>✳</span><b>Kontext.</b><small>AI + kontrola človekom</small>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-target">
-                  <i>✓</i><b>Ďalší krok</b><small>úloha · návrh · prehľad</small>
-                </div>
-                <div class="mini-note note-a">Čo máme doložené? ↗</div>
-                <div class="mini-note note-b">Čo ešte chýba? ↗</div>
-              </div>
-              <button
-                class="project-open"
-                data-case="eurofondy"
-                aria-label="Pozrieť detail eurofondového postupu"
-              >
-                ↗
-              </button>
-            </div>
-            <div class="project-meta">
-              <div>
-                <p class="eyebrow">AI v projektovej praxi</p>
-                <h3>Eurofondy s podporou AI</h3>
-                <p>
-                  E-maily, porady a dokumenty prepojené s projektmi, úlohami a overenými podkladmi.
-                </p>
-              </div>
-              <span class="project-status">Používam v práci</span>
-            </div>
-          </article>
-          <article class="project-card card-salon reveal" data-tags="design" id="project-chlpac">
-            <div class="project-art salon-art">
-              <span class="art-label">Starostlivosť aj o detail.</span
-              ><span class="art-number">02</span>
-              <div class="salon-browser">
-                <div class="browser-bar"><i></i><i></i><i></i><span>Štýlový chlpáč</span></div>
-                <div class="salon-card-preview">
-                  <div>
-                    <strong>Strihanie<br />chlpáčov.</strong><small>Psí salón v Tomášove.</small
-                    ><b>Dohodnúť návštevu ↗</b>
-                  </div>
-                  <img
-                    src="/images/chlpac-salon-live.webp"
-                    alt="Dvaja psí návštevníci na fotografii zo zverejneného webu salónu"
-                    loading="lazy"
-                    width="1200"
-                    height="1600"
-                  />
-                </div>
-              </div>
-              <div class="salon-token" aria-hidden="true">✿</div>
-              <button
-                class="project-open"
-                data-case="chlpac"
-                aria-label="Pozrieť detail Štýlového chlpáča"
-              >
-                ↗
-              </button>
-            </div>
-            <div class="project-meta">
-              <div>
-                <p class="eyebrow">UX/UI · web · správa salónu</p>
-                <h3>Štýlový chlpáč</h3>
-                <p>
-                  Od zadania po spustenie: web, spoločný cenník, rezervačný systém a vlastná
-                  administrácia.
-                </p>
-                <div class="project-links">
-                  <button type="button" data-case="chlpac">Ako projekt vznikal ↗</button
-                  ><a href="https://stylovychlpac.sk/" target="_blank" rel="noopener noreferrer"
-                    >Živý web ↗</a
-                  >
-                </div>
-              </div>
-              <span class="project-status">Web je online</span>
-            </div>
-          </article>
-          <article
-            class="project-card card-quotes reveal"
-            data-tags="design automation"
-            id="project-ponuky"
-          >
-            <div class="project-art quotes-art">
-              <span class="art-label">Jedna zákazka. Tri dokumenty.</span
-              ><span class="art-number">03</span>
-              <div class="document-stack" aria-label="Ilustračné dokumenty s modelovými údajmi">
-                <div class="document doc-back">
-                  <span>PREBERACÍ PROTOKOL</span><i></i><i></i><i></i>
-                  <div class="doc-sign"></div>
-                </div>
-                <div class="document doc-middle">
-                  <span>ZÁKAZKOVÝ LIST</span><i></i><i></i><i></i>
-                </div>
-                <div class="document doc-front">
-                  <div class="doc-top"><span>CENOVÁ PONUKA</span><b>↗</b></div>
-                  <h4>Údaje raz.<br />Dokumenty spolu.</h4>
-                  <small>Modelová zákazka / 2026</small>
-                  <div class="doc-rule"></div>
-                  <i></i><i></i><i></i>
-                  <div class="doc-check">✓ Údaje zadané iba raz</div>
-                </div>
-              </div>
-              <a
-                class="project-open"
-                href="https://zakazko.sk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Otvoriť Zákazko.sk v novej karte"
-                >↗</a
-              >
-            </div>
-            <div class="project-meta">
-              <div>
-                <p class="eyebrow">Produkt · dokumentová automatizácia</p>
-                <h3>Zákazko.sk</h3>
-                <p>
-                  Cenová ponuka, zákazkový list a preberací protokol zo spoločných údajov o zákazke.
-                </p>
-                <div class="project-links">
-                  <a href="https://zakazko.sk/" target="_blank" rel="noopener noreferrer"
-                    >Vyskúšať Zákazko.sk ↗</a
-                  ><button data-case="ponuky">Detail projektu +</button>
-                </div>
-              </div>
-              <span class="project-status">Zverejnený produkt</span>
-            </div>
-          </article>
-        </div>
-        <p class="section-footnote">
-          V detailoch projektov nájdeš zadanie, moju úlohu, spôsob riešenia aj aktuálny stav.
-        </p>
-      </section>
-
-      <section id="workflow" class="workflow section-pad" aria-labelledby="workflow-title">
-        <div class="section-kicker reveal">
-          <span>02 / Ako pracujem</span><span>Prejdi si pracovný postup ↙</span>
-        </div>
-        <div class="workflow-layout">
-          <div class="workflow-copy">
-            <h2 id="workflow-title" class="reveal">
-              Jasno v tom,<br /><em>čo je ďalej.</em
-              ><span class="inline-spark" aria-hidden="true">✳</span>
-            </h2>
-            <p class="reveal">
-              AI pomáha spracovať informácie.<br />Ja overujem podklady a určujem ďalší krok.
-            </p>
-            <ol class="step-list" aria-label="Kroky pracovného postupu">
-              <li>
-                <button class="step active" data-step="0" aria-pressed="true">
-                  <span>01</span> Pochopiť zadanie <i>↗</i>
-                </button>
-              </li>
-              <li>
-                <button class="step" data-step="1" aria-pressed="false">
-                  <span>02</span> Prepojiť podklady <i>↗</i>
-                </button>
-              </li>
-              <li>
-                <button class="step" data-step="2" aria-pressed="false">
-                  <span>03</span> Overiť výsledok <i>↗</i>
-                </button>
-              </li>
-              <li>
-                <button class="step" data-step="3" aria-pressed="false">
-                  <span>04</span> Pripraviť ďalší krok <i>↗</i>
-                </button>
-              </li>
-            </ol>
-          </div>
-          <div class="process-stage reveal">
-            <div class="stage-halo" aria-hidden="true"></div>
-            <div class="process-orbit" aria-hidden="true"><span>✳</span></div>
-            <div class="process-window">
-              <div class="window-top">
-                <span><i></i> PRACOVNÝ PRIESTOR</span><span id="stage-counter">01 / 04</span>
-              </div>
-              <p class="demo-label">Modelový príklad · bez klientskych údajov</p>
-              <div class="stage-content" aria-live="polite" aria-atomic="true">
-                <span class="stage-icon" id="stage-icon">↙</span>
-                <h3 id="stage-title">Pochopiť,<br />čo treba riešiť.</h3>
-                <p id="stage-description">
-                  Z porady alebo správy vyberiem konkrétnu požiadavku. Rozlíšim, čo máme doplniť a
-                  ktoré informácie chýbajú.
-                </p>
-                <div class="example-message" id="stage-example">
-                  <span>ZADANIE</span>
-                  <p>„Fond žiada doplniť rozpočet. Posledná verzia ešte čaká na kontrolu.“</p>
-                </div>
-                <div class="stage-tags" id="stage-tags">
-                  <span>Porada</span><span>Dokumenty</span><span>E-mail</span>
-                </div>
-              </div>
-              <div class="stage-controls">
-                <span id="stage-caption">Najprv si ujasním zadanie.</span
-                ><button id="next-step" aria-label="Prejsť na ďalší krok ukážky">
-                  Ďalší krok <span>→</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="granty" class="grants section-pad" aria-labelledby="grants-title">
-        <div class="section-kicker reveal">
-          <span>03 / Projektová prax</span><span>CASSIS Consult · spolupráca v tíme</span>
-        </div>
-        <div class="section-top">
-          <h2 id="grants-title" class="reveal">Od žiadosti<br />po <em>implementáciu.</em></h2>
-          <p class="grants-intro reveal">
-            V CASSIS Consult pripravujem a implementujem grantové projekty pre firmy a samosprávy.
-            Riešim žiadosti, rozpočty, zmeny, podklady k platbám a administratívu počas
-            realizácie.<br /><br /><small
-              >Uvedená podpora patrí prijímateľom. Na projektoch pracujeme ako tím.</small
+            <a
+              href="https://stylovychlpac.sk/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="chapter-link"
+              >Navštíviť stylovychlpac.sk <span>↗</span></a
             >
-          </p>
+          </div>
+        </div>
+        <div class="story-layout">
+          <div class="story-stage web-stage">
+            <div class="scene-space web-scene" aria-hidden="true">
+              <div class="scene-orbit orbit-a"></div>
+              <div class="scene-orbit orbit-b"></div>
+              <span class="scene-spark spark-a">✳</span><span class="scene-spark spark-b">✿</span>
+              <div class="scene-ground"></div>
+              <div class="web-browser" data-part="browser">
+                <div class="scene-chrome"><span>● ● ●</span><b>stylovychlpac.sk</b><i>↗</i></div>
+                <div class="web-screen">
+                  <div class="screen-wireframe" data-part="wireframe">
+                    <div><i></i><i></i><i></i><b></b></div>
+                    <span></span>
+                  </div>
+                  <div class="screen-salon" data-part="hero">
+                    <div class="salon-copy">
+                      <span>PSÍ SALÓN · TOMÁŠOV</span><strong>Strihanie<br />chlpáčov.</strong>
+                      <p>Na každý deň aj do výstavného kruhu.</p>
+                      <b>Dohodnúť návštevu ↗</b>
+                    </div>
+                    <img
+                      src="/images/chlpac-salon-live.webp"
+                      alt=""
+                      width="1200"
+                      height="1600"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="brief-sheet scene-floating" data-part="brief">
+                <span>ZAČÍNA SA ROZHOVOROM</span><strong>Čo potrebuje<br />váš salón?</strong>
+                <div><b>Služby</b><b>Cenník</b><b>Objednanie</b></div>
+                <i>Počúvať. Pochopiť. Navrhnúť.</i>
+              </div>
+              <div class="web-phone scene-floating" data-part="phone">
+                <span class="phone-speaker"></span><span>Štýlový chlpáč ✿</span
+                ><strong>Aj na<br />mobile.</strong
+                ><img
+                  src="/images/chlpac-salon-live.webp"
+                  alt=""
+                  width="1200"
+                  height="1600"
+                  loading="lazy"
+                /><b>Dohodnúť návštevu ↗</b>
+              </div>
+              <svg
+                class="catalogue-links scene-floating"
+                data-part="connections"
+                viewBox="0 0 800 640"
+              >
+                <path
+                  d="M180 245C180 410 440 310 440 440M620 250C620 390 440 340 440 440M440 440L440 540"
+                />
+              </svg>
+              <div class="catalogue-system scene-floating" data-part="catalogue">
+                <div class="catalogue-title">
+                  <span>JEDEN SPOLOČNÝ KATALÓG</span><b>Čo potrebuje váš chlpáč?</b>
+                </div>
+                <div class="catalogue-columns">
+                  <div><i>✿</i><b>Starostlivosť</b><small>Služba a veľkosť psa</small></div>
+                  <div><i>◷</i><b>Cena a trvanie</b><small>Údaje na jednom mieste</small></div>
+                  <div><i>↗</i><b>Rezervácie</b><small>Rovnaký zdroj údajov</small></div>
+                </div>
+              </div>
+              <div class="booking-system scene-floating" data-part="booking">
+                <span>REZERVAČNÁ CESTA</span><strong>Jedna návšteva.<br />Všetko nadväzuje.</strong>
+                <div class="booking-flow">
+                  <b>01<small>Služba</small></b
+                  ><i>→</i><b>02<small>Pracovníčka</small></b
+                  ><i>→</i><b>03<small>Termín</small></b>
+                </div>
+                <p>Trvanie · rozvrhy · blokované voľno</p>
+              </div>
+              <div class="salon-admin scene-floating" data-part="admin">
+                <aside><b>✿</b><i></i><i></i><i></i><i></i></aside>
+                <div>
+                  <span>SPRÁVA SALÓNU</span><strong>Každý deň prehľadne.</strong>
+                  <div class="admin-week">
+                    <i>PO</i><i>UT</i><i>ST</i><i>ŠT</i><i>PI</i><b>Ukážkový termín</b><b>Voľno</b
+                    ><b>Úprava srsti</b>
+                  </div>
+                  <p>Kalendár · služby · obsah</p>
+                </div>
+              </div>
+              <div class="web-domain scene-floating" data-part="domain">
+                <i>↗</i>
+                <div>
+                  <small>ODOVZDANÉ NA VLASTNEJ DOMÉNE</small><strong>stylovychlpac.sk</strong
+                  ><span>Web je online.</span>
+                </div>
+              </div>
+            </div>
+            <div class="story-stage-footer">
+              <p>Štýlový chlpáč <span>Ilustrovaný priebeh projektu</span></p>
+              <div class="story-progress" aria-hidden="true"><i></i></div>
+              <nav class="story-index" aria-label="Cesta tvorbou webu">
+                <a href="#web-zadanie" aria-label="Web: zadanie">01</a
+                ><a href="#web-podoba" aria-label="Web: vizuál">02</a
+                ><a href="#web-system" aria-label="Web: spoločný systém">03</a
+                ><a href="#web-prevadzka" aria-label="Web: každodenná prevádzka">04</a
+                ><a href="#web-spustenie" aria-label="Web: spustenie">05</a>
+              </nav>
+            </div>
+          </div>
+          <div class="story-steps">
+            <article class="story-step" id="web-zadanie" data-story-step>
+              <div>
+                <p class="step-kicker">01 / Pochopiť prevádzku</p>
+                <h3>Najprv ľudia.<br />Potom obrazovky.</h3>
+                <p>
+                  Z rozhovorov s Gabikou a Monikou vzniklo zadanie: zrozumiteľne predstaviť služby,
+                  ukázať ceny a zjednodušiť objednávanie.
+                </p>
+                <ul class="step-tags">
+                  <li>Potreby salónu</li>
+                  <li>Používateľská cesta</li>
+                </ul>
+              </div>
+            </article>
+            <article class="story-step" id="web-podoba" data-story-step>
+              <div>
+                <p class="step-kicker">02 / Dať projektu podobu</p>
+                <h3>Osobnosť salónu.<br />V každom detaile.</h3>
+                <p>
+                  Ružová a modrá, vlastné fotografie a priame texty. Návrh aj realizáciu s AI som
+                  priebežne upravoval podľa spätnej väzby a kontroloval na mobile.
+                </p>
+                <ul class="step-tags">
+                  <li>Vizuál a texty</li>
+                  <li>Mobilné zobrazenie</li>
+                </ul>
+              </div>
+            </article>
+            <article class="story-step" id="web-system" data-story-step>
+              <div>
+                <p class="step-kicker">03 / Prepojiť jednotlivé časti</p>
+                <h3>Jeden katalóg.<br />Pre celý systém.</h3>
+                <p>
+                  Služby, veľkosti psov, ceny a trvania majú spoločný zdroj. Web, rezervačný výber a
+                  administrácia tak pracujú s rovnakými údajmi.
+                </p>
+                <ul class="step-tags">
+                  <li>Cenník</li>
+                  <li>Služby a trvanie</li>
+                  <li>Administrácia</li>
+                </ul>
+              </div>
+            </article>
+            <article class="story-step" id="web-prevadzka" data-story-step>
+              <div>
+                <p class="step-kicker">04 / Myslieť na každodennú prácu</p>
+                <h3>Aj jednoduchý výber<br />má svoje pravidlá.</h3>
+                <p>
+                  Rezervácie zohľadňujú pracovníčku, trvanie návštevy, rozvrhy a blokované voľno.
+                  Preveroval som kolízie aj opakované odoslanie. Salón má vlastnú správu termínov,
+                  služieb a obsahu.
+                </p>
+                <ul class="step-tags">
+                  <li>Rezervačný systém</li>
+                  <li>Laravel + Orchid</li>
+                </ul>
+              </div>
+            </article>
+            <article class="story-step" id="web-spustenie" data-story-step>
+              <div>
+                <p class="step-kicker">05 / Spustiť a odovzdať</p>
+                <h3>Projekt, ktorý<br />už má svoju adresu.</h3>
+                <p>
+                  Web je zverejnený. Nasadená je administrácia, osobné prístupy, pošta a denné
+                  zálohy. Verejné online rezervácie čakajú na doplnenie kalendára salónom.
+                </p>
+                <a
+                  class="button story-button"
+                  href="https://stylovychlpac.sk/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Pozrieť hotový web <span>↗</span></a
+                >
+                <p class="step-note">Ukážka správy používa ilustračné údaje.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="project-coda" id="zakazko">
+          <div>
+            <p class="eyebrow">Ďalší vlastný produkt / Zákazko.sk</p>
+            <h3>Údaje raz.<br />Dokumenty spolu.</h3>
+            <p>
+              Cenová ponuka, zákazkový list a preberací protokol zo spoločných údajov o zákazke.
+            </p>
+            <a
+              class="chapter-link"
+              href="https://zakazko.sk/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Vyskúšať Zákazko.sk <span>↗</span></a
+            >
+          </div>
+          <div class="coda-documents" aria-hidden="true">
+            <div><span>03 / PREBERACÍ PROTOKOL</span><i></i><i></i><b>Odovzdanie</b></div>
+            <div><span>02 / ZÁKAZKOVÝ LIST</span><i></i><i></i><b>Realizácia</b></div>
+            <div>
+              <span>01 / CENOVÁ PONUKA</span><strong>Jedna zákazka.<br />Spoločné údaje.</strong
+              ><i></i><i></i><b>Príprava ↗</b>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        id="granty"
+        class="story-chapter chapter-grants grants section-pad"
+        aria-labelledby="grants-title"
+        data-story="grants"
+      >
+        <div class="section-kicker">
+          <span>02 / Pripravujem a implementujem eurofondy</span
+          ><span>CASSIS Consult · tímová práca ↘</span>
+        </div>
+        <div class="chapter-heading">
+          <h2 id="grants-title">Od zámeru<br />po <em>implementáciu.</em></h2>
+          <div>
+            <p>
+              Projekt pokračuje aj po schválení. V CASSIS Consult prepájam prípravu žiadostí s
+              rozpočtami, zmenami, podkladmi k platbám a administratívou počas realizácie.
+            </p>
+            <a class="chapter-link" href="#referencie"
+              >Pozrieť projektové skúsenosti <span>↘</span></a
+            >
+          </div>
+        </div>
+        <div class="story-layout">
+          <div class="story-stage grant-stage">
+            <div class="scene-space grant-scene" aria-hidden="true">
+              <div class="scene-orbit orbit-a"></div>
+              <div class="scene-orbit orbit-b"></div>
+              <span class="scene-spark spark-a">✳</span>
+              <div class="scene-ground"></div>
+              <svg class="grant-map" viewBox="0 0 800 640">
+                <path d="M10 440Q280 230 790 410M130 100Q550 390 680 610M0 225Q400 500 800 140" />
+                <path d="M180 500L230 230L510 130L650 360L430 520Z" />
+              </svg>
+              <div class="grant-pin" data-part="pin"><i>⌂</i><span>Obec alebo firma</span></div>
+              <div class="grant-input input-need scene-floating" data-part="need">
+                <span>ZÁMER</span><strong>Čo potrebuje<br />projekt vyriešiť?</strong>
+              </div>
+              <div class="grant-input input-call scene-floating" data-part="call">
+                <span>VÝZVA</span><strong>Podmienky.<br />Oprávnenosť.<br />Termíny.</strong>
+              </div>
+              <div class="grant-folder" data-part="folder">
+                <div class="folder-back"></div>
+                <div class="folder-front">
+                  <span>PROJEKTOVÝ SPIS</span><strong>Podklady,<br />ktoré nadväzujú.</strong
+                  ><b>CASSIS Consult ↗</b>
+                </div>
+              </div>
+              <div class="grant-document scene-floating" data-part="application">
+                <span>01 / ŽIADOSŤ A PRÍLOHY</span><strong>Od zámeru<br />k plánu.</strong><i></i
+                ><i></i><i></i>
+                <div><b>Ciele</b><b>Aktivity</b><b>Podklady</b></div>
+              </div>
+              <div class="grant-budget scene-floating" data-part="budget">
+                <span>02 / ROZPOČET</span><strong>Každá položka<br />má svoj podklad.</strong>
+                <div>
+                  <i>Výdavok</i><i>Podklad</i><b>Aktivita 01</b><b>↗</b><b>Aktivita 02</b><b>↗</b
+                  ><b>Aktivita 03</b><b>↗</b>
+                </div>
+              </div>
+              <div class="grant-delivery scene-floating" data-part="delivery">
+                <span>03 / IMPLEMENTÁCIA</span><strong>Schválením sa<br />práca nekončí.</strong>
+                <div class="delivery-timeline">
+                  <b>Harmonogram</b><b>Zmeny</b><b>Podklady k platbám</b><b>Monitoring</b>
+                </div>
+                <p>Dokumenty · termíny · koordinácia</p>
+              </div>
+              <div class="grant-proof scene-floating" data-part="proof">
+                <span>SKÚSENOSŤ Z KONKRÉTNYCH PROJEKTOV</span>
+                <div>
+                  <i>✳</i><b>Corinex<small>Výskum a inovácie</small></b>
+                </div>
+                <div>
+                  <i>⌂</i><b>Tornaľa<small>Autokemping</small></b>
+                </div>
+                <div>
+                  <i>▥</i><b>Horná Kráľová<small>Obecná knižnica</small></b>
+                </div>
+                <p>Moja úloha a stav podpory sú uvedené nižšie.</p>
+              </div>
+            </div>
+            <div class="story-stage-footer">
+              <p>Príprava → implementácia <span>Ilustrovaný pracovný postup</span></p>
+              <div class="story-progress" aria-hidden="true"><i></i></div>
+              <nav class="story-index" aria-label="Cesta grantovým projektom">
+                <a href="#grant-zamer" aria-label="Granty: zámer">01</a
+                ><a href="#grant-priprava" aria-label="Granty: príprava">02</a
+                ><a href="#grant-implementacia" aria-label="Granty: implementácia">03</a
+                ><a href="#grant-skusenost" aria-label="Granty: skúsenosti">04</a>
+              </nav>
+            </div>
+          </div>
+          <div class="story-steps">
+            <article class="story-step" id="grant-zamer" data-story-step>
+              <div>
+                <p class="step-kicker">01 / Zámer a podmienky</p>
+                <h3>Dobrý projekt<br />potrebuje pevný základ.</h3>
+                <p>
+                  Ujasniť potrebu, prejsť podmienky výzvy a zistiť, ktoré podklady máme a ktoré ešte
+                  chýbajú. Príprava začína konkrétnymi otázkami.
+                </p>
+                <ul class="step-tags">
+                  <li>Zadanie</li>
+                  <li>Výzva</li>
+                  <li>Podklady</li>
+                </ul>
+              </div>
+            </article>
+            <article class="story-step" id="grant-priprava" data-story-step>
+              <div>
+                <p class="step-kicker">02 / Príprava projektu</p>
+                <h3>Jednotlivé časti<br />musia sedieť spolu.</h3>
+                <p>
+                  Žiadosť, rozpočet, aktivity a prílohy na seba musia nadväzovať. Pracujem s
+                  podkladmi, dopĺňaním informácií a kontrolou verzií.
+                </p>
+                <ul class="step-tags">
+                  <li>Žiadosti a prílohy</li>
+                  <li>Rozpočtové podklady</li>
+                </ul>
+              </div>
+            </article>
+            <article class="story-step" id="grant-implementacia" data-story-step>
+              <div>
+                <p class="step-kicker">03 / Implementácia</p>
+                <h3>Za schválením<br />je ďalšia práca.</h3>
+                <p>
+                  Počas realizácie riešim projektovú administratívu, zmeny, termíny a podklady k
+                  platbám. Dôležité je vedieť, čo je doložené, na čo čakáme a aký je ďalší krok.
+                </p>
+                <ul class="step-tags">
+                  <li>Zmeny a platby</li>
+                  <li>Termíny</li>
+                  <li>Koordinácia</li>
+                </ul>
+              </div>
+            </article>
+            <article class="story-step" id="grant-skusenost" data-story-step>
+              <div>
+                <p class="step-kicker">04 / Skúsenosť a spôsob práce</p>
+                <h3>Konkrétne projekty.<br />Konkrétna zodpovednosť.</h3>
+                <p>
+                  Pracujem na firemných aj samosprávnych projektoch v tíme CASSIS Consult. AI mi
+                  pomáha spracovať informácie; ja overujem podklady, prepájam súvislosti a určujem
+                  ďalší krok.
+                </p>
+                <a class="chapter-link" href="#referencie"
+                  >Moja úloha na projektoch <span>↘</span></a
+                >
+                <p class="step-note">Schválená podpora a dokončená realizácia sú odlišné stavy.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="reference-heading" id="referencie">
+          <p class="eyebrow">Vybraná projektová skúsenosť</p>
+          <h3>Za každým názvom<br />je konkrétna práca.</h3>
+          <p>Uvedená podpora patrí prijímateľom. Na projektoch pracujeme ako tím.</p>
         </div>
         <div class="grant-list">
           <article class="grant-row reveal">
@@ -455,7 +599,7 @@
           <p>Denis Baláž<br /><span>Slovensko · 2026</span></p>
         </div>
         <div class="about-copy">
-          <p class="eyebrow reveal">04 / Človek za projektmi</p>
+          <p class="eyebrow reveal">03 / Človek za projektmi</p>
           <h2 id="about-title" class="reveal">Baví ma vedieť,<br /><em>čo je za tým.</em></h2>
           <p class="about-lead reveal">Od nápadu po verziu, ktorá sa dá vyskúšať.</p>
           <p class="reveal">
@@ -502,15 +646,5 @@
         </footer>
       </section>
     </main>
-    <dialog id="case-dialog" aria-labelledby="case-title">
-      <button class="dialog-close" aria-label="Zavrieť detail projektu" autofocus>✕</button>
-      <div class="case-body">
-        <p class="eyebrow" id="case-category"></p>
-        <h2 id="case-title"></h2>
-        <p class="case-intro" id="case-intro"></p>
-        <div id="case-details"></div>
-        <button class="button dark dialog-done">Späť k projektom ↗</button>
-      </div>
-    </dialog>
   </body>
 </html>
