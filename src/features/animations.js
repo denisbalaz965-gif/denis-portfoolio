@@ -13,7 +13,6 @@ export function initAnimations() {
   const media = gsap.matchMedia();
 
   const entrance = gsap.context(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     gsap.from('.hero-line', {
       y: 65,
       opacity: 0,
@@ -53,7 +52,7 @@ export function initAnimations() {
   });
 
   // Scroll parallax is reverted when crossing back to the mobile layout.
-  media.add('(min-width: 761px) and (prefers-reduced-motion: no-preference)', () => {
+  media.add('(min-width: 761px)', () => {
     gsap.to('.world-image', {
       y: 65,
       rotation: 3,
@@ -67,37 +66,34 @@ export function initAnimations() {
     });
   });
 
-  media.add(
-    '(min-width: 761px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
-    () => {
-      const stage = document.querySelector('.world-stage');
-      const layer = stage?.querySelector('.world-parallax');
-      if (!stage || !layer) return;
+  media.add('(min-width: 761px) and (hover: hover) and (pointer: fine)', () => {
+    const stage = document.querySelector('.world-stage');
+    const layer = stage?.querySelector('.world-parallax');
+    if (!stage || !layer) return;
 
-      const pointer = new AbortController();
-      const xTo = gsap.quickTo(layer, 'x', { duration: 0.9, ease: 'power2.out' });
-      const yTo = gsap.quickTo(layer, 'y', { duration: 0.9, ease: 'power2.out' });
-      stage.addEventListener(
-        'pointermove',
-        (event) => {
-          if (event.pointerType !== 'mouse') return;
-          const bounds = stage.getBoundingClientRect();
-          xTo(((event.clientX - bounds.left) / bounds.width - 0.5) * 22);
-          yTo(((event.clientY - bounds.top) / bounds.height - 0.5) * 18);
-        },
-        { signal: pointer.signal },
-      );
-      stage.addEventListener(
-        'pointerleave',
-        () => {
-          xTo(0);
-          yTo(0);
-        },
-        { signal: pointer.signal },
-      );
-      return () => pointer.abort();
-    },
-  );
+    const pointer = new AbortController();
+    const xTo = gsap.quickTo(layer, 'x', { duration: 0.9, ease: 'power2.out' });
+    const yTo = gsap.quickTo(layer, 'y', { duration: 0.9, ease: 'power2.out' });
+    stage.addEventListener(
+      'pointermove',
+      (event) => {
+        if (event.pointerType !== 'mouse') return;
+        const bounds = stage.getBoundingClientRect();
+        xTo(((event.clientX - bounds.left) / bounds.width - 0.5) * 22);
+        yTo(((event.clientY - bounds.top) / bounds.height - 0.5) * 18);
+      },
+      { signal: pointer.signal },
+    );
+    stage.addEventListener(
+      'pointerleave',
+      () => {
+        xTo(0);
+        yTo(0);
+      },
+      { signal: pointer.signal },
+    );
+    return () => pointer.abort();
+  });
 
   window.addEventListener('load', refreshAnimations, { once: true, signal: controller.signal });
   document.fonts?.ready.then(() => {

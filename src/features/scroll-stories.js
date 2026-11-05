@@ -158,26 +158,15 @@ export function buildGrantScene(stage) {
 export function initScrollStories({ root = document } = {}) {
   gsap.registerPlugin(ScrollTrigger);
   const media = gsap.matchMedia();
-  // Local QA can exercise motion even when the browser harness requests reduced motion.
-  const forceMotion =
-    import.meta.env.DEV && new URLSearchParams(window.location.search).get('motion') === 'full';
+  // The owner explicitly requested automatic motion on this portfolio, including
+  // browsers reporting reduced motion. Keep this choice local to this website.
   let disposed = false;
   media.add(
     {
       desktop: '(min-width: 761px)',
       mobile: '(max-width: 760px)',
-      reduce: forceMotion ? '(max-width: 0px)' : '(prefers-reduced-motion: reduce)',
     },
     (context) => {
-      if (context.conditions.reduce) {
-        root
-          .querySelectorAll('[data-story]')
-          .forEach((chapter) => chapter.classList.add('story-is-static'));
-        return () =>
-          root
-            .querySelectorAll('[data-story]')
-            .forEach((chapter) => chapter.classList.remove('story-is-static'));
-      }
       const chapters = [...root.querySelectorAll('[data-story]')];
       for (const chapter of chapters) {
         const stage = chapter.querySelector('.story-stage');

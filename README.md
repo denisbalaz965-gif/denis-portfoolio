@@ -51,9 +51,7 @@ docs/                      Architektúra a vizuálny náhľad
 
 ## Overovanie
 
-Vitest a jsdom overujú mobilnú navigáciu, kopírovanie kontaktu vrátane zamietnutého prístupu a obojsmerný priebeh oboch časových osí. Rozloženie, kotvy, mobilná kompozícia a scroll sa kontrolujú samostatne v skutočnom prehliadači. Systémové obmedzenie pohybu používa stabilné rozloženie s celým obsahom.
-
-Iba vo vývojovom režime možno cez `?motion=full` overiť plné scrollové scény aj v testovacom prehliadači so zapnutým obmedzením pohybu. Produkčný build tento parameter nepoužíva.
+Vitest a jsdom overujú mobilnú navigáciu, kopírovanie kontaktu vrátane zamietnutého prístupu a obojsmerný priebeh oboch časových osí. Rozloženie, kotvy, mobilná kompozícia a scroll sa kontrolujú samostatne v skutočnom prehliadači. Na výslovné zadanie majiteľa sú animácie na tomto portfóliu automaticky aktívne aj pri systémovom obmedzení pohybu. Nastavenia počítača sa nemenia.
 
 GitHub Actions pri pushi a pull requeste spúšťajú rovnaký `npm run check`. Výsledok lokálnych kontrol a výsledok CI sú oddelené.
 
@@ -61,7 +59,7 @@ GitHub Actions pri pushi a pull requeste spúšťajú rovnaký `npm run check`. 
 
 Na návrhu, textoch, implementácii a overovaní spolupracujem s AI. Vlastný ilustračný ostrov vznikol pomocou OpenAI image_gen. Pohyb zabezpečujú CSS a GSAP. Scény reagujú na posúvanie bez nutnosti klikať medzi krokmi.
 
-Inšpiráciou pre hravý priestor a farebnosť bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Interaktívny príbeh Štýlového chlpáča používa vlastnú ilustrovanú scénu a fotografiu z jeho verejného webu; nejde o živú administráciu ani zákaznícke údaje. Rešpektuje nastavenie obmedzeného pohybu a dá sa ovládať klávesnicou.
+Inšpiráciou pre hravý priestor a farebnosť bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Interaktívny príbeh Štýlového chlpáča používa vlastnú ilustrovanú scénu a fotografiu z jeho verejného webu; nejde o živú administráciu ani zákaznícke údaje. Obsah zostáva dostupný v HTML a dá sa prechádzať klávesnicou.
 
 Instrument Sans používa SIL Open Font License; znenie je v `public/licenses/InstrumentSans-OFL.txt`. GSAP a ScrollTrigger používajú [vlastnú licenciu](https://gsap.com/standard-license/). Licencie knižníc sa nemenia. Pôvod assetov je v `ASSET-SOURCES.json`.
 

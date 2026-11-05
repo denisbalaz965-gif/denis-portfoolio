@@ -1527,43 +1527,6 @@
     font-size: 10px;
   }
 }
-/* Static mode preserves the complete text and links without pinned progression. */
-.story-is-static .story-stage {
-  position: relative;
-  top: 0;
-  height: auto;
-  min-height: 0;
-}
-.story-is-static .scene-space {
-  height: auto;
-  aspect-ratio: 1.2;
-}
-.story-is-static .story-index,
-.story-is-static .story-progress {
-  display: none;
-}
-.story-is-static .story-step {
-  min-height: 0;
-  padding: 30px 0;
-}
-.story-is-static .story-layout {
-  align-items: start;
-}
-.story-is-static .story-steps {
-  padding-top: 20px;
-}
-.story-is-static .story-stage-footer {
-  padding-bottom: 20px;
-}
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .world-float {
-    animation: none;
-  }
-}
-
 .chapter-grants .chapter-heading h2 {
   font-size: clamp(48px, 5.5vw, 92px);
 }

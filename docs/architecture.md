@@ -6,9 +6,9 @@
 
 Celý obsah je v `index.html`. Päť krokov webovej tvorby a štyri kroky grantového projektu zostávajú v prirodzenom poradí aj bez JavaScriptu. Kotvy vedú priamo na obsah. Vizuálne makety sú označené `aria-hidden`, pretože význam vysvetľuje priľahlý text; nepoužívajú zákaznícke údaje ani živé API.
 
-`scroll-stories.js` vytvára jednu GSAP timeline a jeden ScrollTrigger na kapitolu. Časová os vlastní všetky transformácie jej objektov; CSS vlastní kompozíciu a sticky scénu. Začiatok a koniec vychádzajú z polohy skutočného textu. Spätné posúvanie vracia tú istú časovú os. Mobil má samostatné pomery, rozmery a textové pásmo pod scénou. GSAP matchMedia obnovuje kontext pri zmene rozmerov alebo systémového nastavenia pohybu.
+`scroll-stories.js` vytvára jednu GSAP timeline a jeden ScrollTrigger na kapitolu. Časová os vlastní všetky transformácie jej objektov; CSS vlastní kompozíciu a sticky scénu. Začiatok a koniec vychádzajú z polohy skutočného textu. Spätné posúvanie vracia tú istú časovú os. Mobil má samostatné pomery, rozmery a textové pásmo pod scénou. GSAP matchMedia obnovuje kontext pri zmene rozmerov.
 
-Pri reduced motion je scéna statická a textové kroky nemajú vynútenú výšku. Len vývojový build podporuje `?motion=full` pre prehliadačové QA. Žiadny prepínač animácií ani serverová integrácia nie sú súčasťou produktu.
+Na výslovný pokyn majiteľa z 5. 11. 2026 sú animácie na tejto stránke aktívne aj pri `prefers-reduced-motion: reduce`. Ide o konfiguráciu webu; nastavenia systému ani iných stránok sa nemenia. Vývojový parameter na vynútenie pohybu už nie je potrebný. Celý obsah zostáva v HTML aj bez JavaScriptu.
 
 `animations.js` obsluhuje vstup, hero parallax a about. `navigation.js` mobilné menu a aktuálnu kapitolu. `contact.js` kopírovanie s fallbackom.
 
