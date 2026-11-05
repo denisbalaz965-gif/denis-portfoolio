@@ -883,3 +883,38 @@
     font-size: 22px;
   }
 }
+
+/* The process cover carries a sentence and three phases, not a monetary metric. */
+.cover-agenda .cover-reference-paper {
+  top: 10%;
+  height: 80%;
+}
+.cover-agenda .cover-reference-paper > strong {
+  font-size: clamp(24px, 2.25vw, 34px);
+  margin: 14px 0 20px;
+  line-height: 1.08;
+}
+.cover-reference-paper .cover-workflow-path {
+  display: grid;
+  gap: 6px;
+  margin-top: auto;
+  border-top: 1px solid #d4cddb;
+  padding-top: 12px;
+}
+.cover-workflow-path > span {
+  font-size: clamp(10px, 0.9vw, 14px);
+  line-height: 1.4;
+}
+@media (max-width: 760px) {
+  .cover-agenda .cover-reference-paper > strong {
+    font-size: clamp(17px, 4.8vw, 25px);
+    margin: 10px 0 14px;
+  }
+  .cover-reference-paper .cover-workflow-path {
+    gap: 4px;
+    padding-top: 8px;
+  }
+  .cover-workflow-path > span {
+    font-size: 8px;
+  }
+}

@@ -21,7 +21,11 @@ export function quotesScene() {
 }
 
 function referenceCover(project) {
-  return `<div class="reference-cover cover-${escapeHTML(project.cover)}" aria-hidden="true"><div class="cover-orbit"></div><span class="cover-symbol">${icons[project.cover]}</span><div class="cover-reference-paper"><span>${escapeHTML(project.kind.split(' · ')[0])}</span><strong>${lines(project.title)}</strong><div><b>${escapeHTML(project.amount || 'Príprava → implementácia')}</b><small>${escapeHTML(project.evidence || 'Projektový pracovný postup')}</small></div><i></i><i></i></div><span class="cover-label">${project.amount ? 'Projektová referencia' : 'Ako pracujem'}</span></div>`;
+  const workflow = project.cover === 'agenda';
+  const summary = workflow
+    ? '<div class="cover-workflow-path"><span>01 / Zámer</span><span>02 / Príprava</span><span>03 / Implementácia</span></div>'
+    : `<div><b>${escapeHTML(project.amount)}</b><small>${escapeHTML(project.evidence)}</small></div><i></i><i></i>`;
+  return `<div class="reference-cover cover-${escapeHTML(project.cover)}" aria-hidden="true"><div class="cover-orbit"></div><span class="cover-symbol">${icons[project.cover]}</span><div class="cover-reference-paper"><span>${escapeHTML(project.kind.split(' · ')[0])}</span><strong>${lines(project.title)}</strong>${summary}</div><span class="cover-label">${workflow ? 'Ako pracujem' : 'Projektová referencia'}</span></div>`;
 }
 
 function artwork(project, root) {
