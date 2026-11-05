@@ -6,11 +6,16 @@ Osobné portfólio spájajúce weby, digitálne produkty a pracovné postupy s A
 
 ## Pracovná činnosť
 
-Dve hlavné kapitoly priamo na stránke. Natívne posúvanie ovláda súvislé GSAP scény; text zostáva v HTML a dostupný aj bez animácií.
+Dva stručné výbery na hlavnej stránke: weby a eurofondová práca. Projekty sa prepínajú ručne šípkami, tlačidlami s názvami alebo horizontálnym potiahnutím na náhľade; karusely nemajú automatické prehrávanie.
 
-- **Tvorba webov:** päť krokov Štýlového chlpáča od rozhovoru cez vizuál, spoločný katalóg a rezervácie po spustenie na [stylovychlpac.sk](https://stylovychlpac.sk/). Verejné online objednávanie čaká na doplnenie kalendára salónom.
-- **Príprava a implementácia eurofondov:** zámer, žiadosť a rozpočet, implementácia, konkrétna skúsenosť. Vizuály používajú ilustrované podklady, nie súkromné dokumenty.
-- **[Zákazko.sk](https://zakazko.sk/):** kratšia nadväzujúca ukážka vlastného produktu pre cenové ponuky, zákazkové listy a preberacie protokoly.
+„Prejsť projekt“ otvorí samostatný príbeh na celú obrazovku. Jeho vnútorné posúvanie ovláda pôvodné GSAP scény. Vždy sa pripája iba jeden príbeh, takže počet projektov nepredlžuje hlavnú stránku.
+
+- **Štýlový chlpáč:** päť krokov od zadania po spustenie; odkaz na [živý web](https://stylovychlpac.sk/). Verejné online rezervácie čakajú na doplnenie kalendára salónom.
+- **[Zákazko.sk](https://zakazko.sk/):** tri kroky vlastného produktu a ilustrované prepojenie troch dokumentov.
+- **Corinex, Autokemping Tornaľa a Knižnica Horná Kráľová:** samostatné referencie s konkrétnou úlohou a doloženým stavom podpory.
+- **Eurofondová agenda:** pôvodný štvorkrokový postup od zámeru po implementáciu.
+
+Každý príbeh má adresu `#projekt/<id>`, dostupný návrat, prepínanie na ďalší projekt a zatvorenie klávesom Escape. Späť/vpred v prehliadači funguje aj pri otvorenom príbehu. Pôvodné odkazy ako `#web-system` sa prenesú na príslušný príbeh.
 
 Grantové referencie opisujú moju úlohu v tímovej práci. Sumy podpory patria prijímateľom; schválenie a zmluva sa odlišujú od dokončenej realizácie. Súkromné projektové dokumenty a e-maily v repozitári nie sú.
 
@@ -39,7 +44,8 @@ HTML a bežný JavaScript s modulmi, CSS, GSAP a Vite. Celý obsah a kroky proje
 ```text
 index.html                 Obsah a sémantická štruktúra
 src/main.js                Zostavenie jednotlivých funkcií
-src/features/              Navigácia, kontakt, vstupné animácie, scrollové príbehy
+src/data/                  Register projektov a overené texty referencií
+src/features/              Navigácia, kontakt, výber projektov, scrollové príbehy
 src/styles/                Základné, sekčné a responzívne štýly
 public/                    Obrázky, fonty, favicon a licenčné oznámenia
 tests/                     Funkčné testy v simulovanom DOM
@@ -51,7 +57,7 @@ docs/                      Architektúra a vizuálny náhľad
 
 ## Overovanie
 
-Vitest a jsdom overujú mobilnú navigáciu, kopírovanie kontaktu vrátane zamietnutého prístupu a obojsmerný priebeh oboch časových osí. Rozloženie, kotvy, mobilná kompozícia a scroll sa kontrolujú samostatne v skutočnom prehliadači. Na výslovné zadanie majiteľa sú animácie na tomto portfóliu automaticky aktívne aj pri systémovom obmedzení pohybu. Nastavenia počítača sa nemenia.
+Vitest a jsdom overujú navigáciu, kontakt, výber a striedanie projektov, priame odkazy, históriu, Escape/fokus, oneskorené udalosti zatvorenia, rozlíšenie vodorovného a zvislého gesta a obojsmerný priebeh scén. Rozloženie, kotvy, mobilná kompozícia a scroll sa kontrolujú samostatne v skutočnom prehliadači. Na výslovné zadanie majiteľa sú animácie na tomto portfóliu automaticky aktívne aj pri systémovom obmedzení pohybu. Nastavenia počítača sa nemenia.
 
 GitHub Actions pri pushi a pull requeste spúšťajú rovnaký `npm run check`. Výsledok lokálnych kontrol a výsledok CI sú oddelené.
 

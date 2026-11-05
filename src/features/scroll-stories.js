@@ -155,7 +155,62 @@ export function buildGrantScene(stage) {
   );
 }
 
-export function initScrollStories({ root = document } = {}) {
+export function buildQuotesScene(stage) {
+  return composeScene(
+    stage,
+    {
+      input: [
+        { ...visible, rotation: -5 },
+        { ...visible, scale: 0.74, yPercent: -28, xPercent: -18, rotation: -9 },
+        hidden,
+      ],
+      offer: [
+        hidden,
+        { ...visible, rotation: -12, xPercent: -14, yPercent: 22, scale: 0.8 },
+        { ...visible, rotation: -11, xPercent: -14, yPercent: 0, scale: 0.83 },
+      ],
+      order: [
+        hidden,
+        { ...visible, rotation: 2, yPercent: 7, scale: 0.8 },
+        { ...visible, rotation: 2, yPercent: -5, scale: 0.83 },
+      ],
+      handover: [
+        hidden,
+        { ...visible, rotation: 14, xPercent: 22, yPercent: 0, scale: 0.8 },
+        { ...visible, rotation: 14, xPercent: 22, yPercent: -12, scale: 0.83 },
+      ],
+      'quote-domain': [hidden, hidden, { ...visible, rotation: -3 }],
+    },
+    2,
+  );
+}
+
+export function buildReferenceScene(stage, budget = false) {
+  return composeScene(
+    stage,
+    {
+      pin: [visible, hidden, hidden],
+      need: [{ ...visible, rotation: -7 }, hidden, hidden],
+      call: [{ ...visible, rotation: 8 }, hidden, hidden],
+      folder: [
+        { ...visible, autoAlpha: 0.18, scale: 0.75 },
+        { ...visible, rotation: -8, yPercent: 17 },
+        { ...visible, rotation: -9, scale: 0.85, yPercent: 20 },
+      ],
+      application: [
+        hidden,
+        { ...visible, rotation: -7, scale: budget ? 1 : 1.1, xPercent: budget ? 0 : 20 },
+        hidden,
+      ],
+      budget: [hidden, budget ? { ...visible, rotation: 7 } : hidden, hidden],
+      delivery: [hidden, hidden, hidden],
+      proof: [hidden, hidden, { ...visible, rotation: 4 }],
+    },
+    2,
+  );
+}
+
+export function initScrollStories({ root = document, scroller } = {}) {
   gsap.registerPlugin(ScrollTrigger);
   const media = gsap.matchMedia();
   // The owner explicitly requested automatic motion on this portfolio, including
@@ -173,7 +228,13 @@ export function initScrollStories({ root = document } = {}) {
         const steps = [...chapter.querySelectorAll('[data-story-step]')];
         const links = [...stage.querySelectorAll('.story-index a')];
         const timeline =
-          chapter.dataset.story === 'web' ? buildWebScene(stage) : buildGrantScene(stage);
+          chapter.dataset.story === 'web'
+            ? buildWebScene(stage)
+            : chapter.dataset.story === 'quotes'
+              ? buildQuotesScene(stage)
+              : chapter.dataset.story === 'reference'
+                ? buildReferenceScene(stage, chapter.dataset.hasBudget === 'true')
+                : buildGrantScene(stage);
         chapter.classList.add('story-is-animated');
         let activeStep = -1;
         const update = (progress) => {
@@ -195,6 +256,7 @@ export function initScrollStories({ root = document } = {}) {
           start: context.conditions.mobile ? 'center 70%' : 'center 50%',
           end: context.conditions.mobile ? 'center 70%' : 'center 50%',
           animation: timeline,
+          ...(scroller ? { scroller } : {}),
           scrub: 0.55,
           invalidateOnRefresh: true,
           onUpdate: (self) => update(self.progress),

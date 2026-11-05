@@ -36,5 +36,10 @@
     "source": "Original HTML/CSS spatial compositions and GSAP timelines created for Denis Balaz portfolio",
     "reference_mechanism": "Tatrascool: progressive composition controlled by the visitor; adapted to a salon website and a grant project dossier",
     "privacy": "Illustrative booking/admin/documents; no private customer data or original grant documents"
+  },
+  "project_gallery": {
+    "source": "Original CSS/HTML covers and project scenes created 2026-11-05",
+    "reference_covers": "Abstract project illustrations, not photographs of the municipal buildings or proprietary Corinex branding",
+    "quote_documents": "Illustrative document cards and synthetic sample input; no customer data"
   }
 }
