@@ -223,6 +223,73 @@ describe('Project selection and full-page stories', () => {
   });
 });
 
+describe('Audit regressions', () => {
+  const mountStories = () => () => {};
+
+  it('moves focus from a removed story control to the new project heading', () => {
+    dispose = initProjectBrowser({ animate: false, mountStories });
+    document.querySelector('.gallery-open').click();
+    const step = document.querySelector('dialog .story-index a');
+    step.focus();
+    step.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    expect(document.querySelector('dialog').dataset.project).toBe('zakazko');
+    expect(document.activeElement).toBe(document.querySelector('dialog #case-title'));
+    expect(document.querySelector('[data-case-announcement]').textContent).toContain('Zákazko.sk');
+  });
+
+  it.each(['metaKey', 'ctrlKey', 'shiftKey'])('leaves %s clicks to the browser', (modifier) => {
+    dispose = initProjectBrowser({ animate: false, mountStories });
+    let intercepted;
+    // Observe after the application listener, then suppress jsdom's native navigation.
+    document.addEventListener(
+      'click',
+      (event) => {
+        intercepted = event.defaultPrevented;
+        event.preventDefault();
+      },
+      { once: true },
+    );
+    document.querySelector('.gallery-open').dispatchEvent(
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        [modifier]: true,
+      }),
+    );
+    expect(intercepted).toBe(false);
+    expect(document.querySelector('dialog').open).toBe(false);
+  });
+
+  it.each(['%E0%A4%A', 'projekt-neexistuje'])('recovers from invalid project address %s', (id) => {
+    dispose = initProjectBrowser({ animate: false, mountStories });
+    document.querySelector('.gallery-open').click();
+    window.history.replaceState(null, '', `/#projekt/${id}`);
+    expect(() => window.dispatchEvent(new HashChangeEvent('hashchange'))).not.toThrow();
+    expect(document.querySelector('dialog').open).toBe(false);
+    expect(document.body.style.overflow).toBe('');
+    expect(location.hash).toBe('#projekty');
+    expect(document.querySelector('#project-route-status').hidden).toBe(false);
+    expect(document.activeElement.id).toBe('project-route-status');
+    // Browsers may notify both popstate and hashchange for the same navigation.
+    window.dispatchEvent(new PopStateEvent('popstate'));
+    expect(document.querySelector('#project-route-status').hidden).toBe(false);
+  });
+
+  it('switches real captures without showing multiple panels or losing button focus', () => {
+    dispose = initProjectBrowser({ animate: false, mountStories });
+    document.querySelector('.gallery-open').click();
+    const button = document.querySelector('[data-salon-view="admin"]');
+    button.focus();
+    button.click();
+    expect(document.querySelectorAll('[data-salon-panel]:not([hidden])')).toHaveLength(1);
+    expect(document.querySelector('[data-salon-panel="admin"]').hidden).toBe(false);
+    expect(button.getAttribute('aria-pressed')).toBe('true');
+    expect(document.activeElement).toBe(button);
+    document.querySelector('.case-switch [data-case-next]').click();
+    expect(document.querySelector('.case-showcase')).toBeNull();
+  });
+});
+
 describe('Additional project animations', () => {
   it('fans out the three quote documents and restores the input when reversed', () => {
     const chapter = buildProjectContent(findProject('zakazko'));

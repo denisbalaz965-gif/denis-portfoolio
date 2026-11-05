@@ -84,6 +84,13 @@ export function buildProjectContent(project, root = document) {
     }
   }
   chapter.setAttribute('aria-labelledby', 'case-title');
+  if (project.sourceNote) {
+    const note = document.createElement('p');
+    note.className = 'case-source-note';
+    note.textContent = project.sourceNote;
+    chapter.querySelector('.chapter-heading > div').append(note);
+  }
+  chapter.querySelector('#case-title').tabIndex = -1;
   const hint = document.createElement('p');
   hint.className = 'case-reading-hint';
   hint.textContent = 'Príbeh pokračuje nadol. Ďalší projekt nájdeš pod šípkou vpravo.';
@@ -182,6 +189,9 @@ export function initProjectBrowser({
     const number = projects.findIndex((p) => p.id === id) + 1;
     const article = document.createElement('article');
     article.className = 'gallery-project';
+    article.setAttribute('role', 'group');
+    article.setAttribute('aria-roledescription', 'projekt');
+    article.setAttribute('aria-label', `${project.name}, ${number} z ${projects.length}`);
     article.innerHTML = `<div class="gallery-description"><p class="eyebrow">${escapeHTML(project.kind)}</p><h3>${escapeHTML(project.name)}</h3><p>${escapeHTML(project.summary)}</p><span class="gallery-status">${escapeHTML(project.status)}</span><div class="gallery-actions"><a href="#projekt/${project.id}" class="button gallery-open">Prejsť projekt <span>→</span></a>${project.url ? `<a href="${escapeHTML(project.url)}" class="gallery-external" target="_blank" rel="noopener noreferrer">${project.group === 'webs' ? 'Živý web' : 'Verejný zdroj'} ↗</a>` : ''}</div></div>`;
     const preview = artwork(project, root);
     preview.setAttribute('data-gallery-swipe', '');
@@ -258,7 +268,13 @@ export function initProjectBrowser({
     }
     const project = findProject(id);
     if (!project) return;
+    const routeStatus = root.querySelector('#project-route-status');
+    if (routeStatus) routeStatus.hidden = true;
     const wasOpen = dialog.open;
+    const keepControlFocus =
+      wasOpen &&
+      dialog.contains(document.activeElement) &&
+      !content.contains(document.activeElement);
     if (wasOpen && current?.id === id) {
       if (legacyStep)
         content.querySelector(`[id="${legacyStep}"]`)?.scrollIntoView({ block: 'start' });
@@ -299,6 +315,10 @@ export function initProjectBrowser({
     }
     scroller.scrollTop = 0;
     disposeStory = mountStories({ root: content, scroller });
+    const announcement = dialog.querySelector('[data-case-announcement]');
+    if (announcement)
+      announcement.textContent = `${project.name}. Projekt ${index + 1} zo ${projects.length}.`;
+    if (!keepControlFocus) content.querySelector('#case-title').focus({ preventScroll: true });
     if (animate)
       transition = gsap.fromTo(
         page,
@@ -325,17 +345,48 @@ export function initProjectBrowser({
   }
 
   function syncRoute() {
-    const hash = decodeURIComponent(window.location.hash.slice(1));
+    const routeStatus = root.querySelector('#project-route-status');
+    let hash;
+    try {
+      hash = decodeURIComponent(window.location.hash.slice(1));
+    } catch {
+      invalidProjectRoute();
+      return;
+    }
+    if (routeStatus && hash !== 'projekty') routeStatus.hidden = true;
     if (hash.startsWith('projekt/') && findProject(hash.slice(8))) openProject(hash.slice(8));
+    else if (hash.startsWith('projekt/')) invalidProjectRoute();
     else if (legacyRoutes[hash]) openProject(legacyRoutes[hash], { legacyStep: hash });
     else cleanupViewer();
+  }
+
+  function invalidProjectRoute() {
+    cleanupViewer();
+    window.history.replaceState(null, '', '#projekty');
+    const status = root.querySelector('#project-route-status');
+    if (status) {
+      status.hidden = false;
+      status.focus({ preventScroll: true });
+    }
+    root.querySelector('#projekty')?.scrollIntoView?.({ block: 'start' });
   }
 
   root.addEventListener(
     'click',
     (event) => {
       const target = event.target.closest('button,a');
-      if (!target) return;
+      if (!target || event.defaultPrevented) return;
+      if (
+        target.matches('a') &&
+        (event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey ||
+          target.target === '_blank' ||
+          target.hasAttribute('download'))
+      )
+        return;
       const gallery = target.closest('[data-project-group]');
       if (target.matches('[data-gallery-choice]'))
         renderGallery(gallery.dataset.projectGroup, target.dataset.galleryChoice, 1);
@@ -344,7 +395,15 @@ export function initProjectBrowser({
       else if (target.matches('[data-case-close]')) closeViewer();
       else if (target.matches('[data-case-prev],[data-case-next]'))
         moveProject(target.matches('[data-case-next]') ? 1 : -1);
-      else if (target.matches('a[href^="#projekt/"]')) {
+      else if (target.matches('[data-salon-view]')) {
+        const showcase = target.closest('.case-showcase');
+        showcase
+          .querySelectorAll('[data-salon-view]')
+          .forEach((button) => button.setAttribute('aria-pressed', String(button === target)));
+        showcase.querySelectorAll('[data-salon-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.salonPanel !== target.dataset.salonView;
+        });
+      } else if (target.matches('a[href^="#projekt/"]')) {
         event.preventDefault();
         opener = target;
         openProject(target.getAttribute('href').slice(9), { push: true });

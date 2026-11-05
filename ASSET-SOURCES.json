@@ -2,7 +2,13 @@
   "world": {
     "file": "public/images/denis-world.png",
     "source": "OpenAI image_gen, original generation, 2026-10-29",
-    "role": "3D portfolio world, not a project screenshot"
+    "role": "3D portfolio world, not a project screenshot",
+    "optimized_variants": [
+      "public/images/denis-world-640.webp",
+      "public/images/denis-world-960.webp",
+      "public/images/denis-world-1536.webp"
+    ],
+    "optimization": "Same original image, resized/encoded as WebP without generated content changes;2026-11-05"
   },
   "gsap": {
     "source": "npm dependency gsap@3.15.0",
@@ -41,5 +47,18 @@
     "source": "Original CSS/HTML covers and project scenes created 2026-11-05",
     "reference_covers": "Abstract project illustrations, not photographs of the municipal buildings or proprietary Corinex branding",
     "quote_documents": "Illustrative document cards and synthetic sample input; no customer data"
+  },
+  "salon_case_captures": {
+    "captured": "2026-11-05",
+    "public_web": {
+      "files": ["public/images/chlpac-web-desktop.webp", "public/images/chlpac-web-mobile.webp"],
+      "source": "https://stylovychlpac.sk/",
+      "method": "Actual browser viewport captures at1440x900 and390x844"
+    },
+    "admin": {
+      "file": "public/images/chlpac-admin-demo.webp",
+      "source": "Own client project, isolated fictional SQLite/account preview, admin-jednoduchy-2026-11-05/prehlad-pracovnicka-cely.jpg",
+      "privacy": "Only fictional sample clients and visits. No production admin capture."
+    }
   }
 }

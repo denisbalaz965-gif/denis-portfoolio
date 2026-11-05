@@ -83,7 +83,7 @@
 .about-visual > p > span {
   font-size: 9px;
   font-weight: 400;
-  color: #9b7c7a;
+  color: #705853;
 }
 .about-copy > .eyebrow {
   margin-bottom: 28px;
@@ -105,7 +105,7 @@
   line-height: 1.9;
   margin-top: 20px;
   max-width: 52ch;
-  color: #826a73;
+  color: #66505b;
 }
 .about-skills {
   display: flex;

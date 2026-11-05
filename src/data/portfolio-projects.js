@@ -7,7 +7,7 @@ export const portfolioProjects = [
     kind: 'Web · rezervácie · administrácia',
     template: 'salon',
     cover: 'salon',
-    status: 'Web je online',
+    status: 'Web online · objednanie telefonicky',
     summary:
       'Od rozhovoru v salóne po web, spoločný cenník, rezervačný systém a vlastnú správu prevádzky.',
     url: 'https://stylovychlpac.sk/',
@@ -55,12 +55,12 @@ export const portfolioProjects = [
     kind: 'Výskum a inovácie · CASSIS Consult',
     template: 'reference',
     cover: 'corinex',
-    status: 'Podpora podľa zmluvy',
+    status: 'Maximálna dotácia podľa dodatku',
     amount: '482 293 €',
-    evidence: 'Zmluva 261/2025',
+    evidence: 'Zmluva 261/2025 · dodatok č. 1',
     summary: 'Pracovné balíky, projektové podklady a anotácia projektu v rámci tímovej spolupráce.',
-    url: 'https://crz.gov.sk/2171273-sk/centralny-register-zmluv/?art_predmet=zmluva+o+poskytnut%C3%AD+dot%C3%A1cie&art_zs1=%C3%BArad+podpredsedu&page=1',
-    linkLabel: 'Verejný zdroj k podpore',
+    url: 'https://crz.gov.sk/11775252-sk/1/',
+    linkLabel: 'Dodatok č. 1 v CRZ',
     steps: [
       {
         label: 'Projekt',
@@ -76,9 +76,9 @@ export const portfolioProjects = [
       },
       {
         label: 'Doložený stav',
-        title: ['482 293 €', 'podľa zmluvy.'],
-        text: 'Podpora projektu podľa zmluvy 261/2025 predstavuje 482 293 €. Na projekte som sa podieľal v tíme CASSIS Consult.',
-        tags: ['Zmluva 261/2025'],
+        title: ['Do 482 293 €', 'podľa dodatku.'],
+        text: 'Maximálna dotácia podľa zmluvy 261/2025 v znení dodatku č. 1 predstavuje 482 293 €. Ide o zmluvný limit podpory, nie o doklad jej vyplatenia. Na projekte som sa podieľal v tíme CASSIS Consult.',
+        tags: ['Zmluva 261/2025', 'Dodatok č. 1'],
         action: true,
       },
     ],
@@ -93,9 +93,9 @@ export const portfolioProjects = [
     cover: 'camp',
     status: 'Príspevok podľa zmluvy',
     amount: '293 500 €',
-    evidence: 'Zmluva FNPCR',
+    evidence: 'Zmluva FNPCR-2025-01-0262',
     summary: 'Podklady k žiadosti a projektová administratíva počas realizácie autokempingu.',
-    url: 'https://crz.gov.sk/6274407-sk/mesto-tornala/?order=22&page=1',
+    url: 'https://crz.gov.sk/zmluva/11753202/',
     linkLabel: 'Verejný zdroj k projektu',
     steps: [
       {
@@ -130,6 +130,10 @@ export const portfolioProjects = [
     status: 'Schválená podpora',
     amount: '867 180,67 €',
     evidence: 'Oznámenie Envirofondu · 28. 9. 2026',
+    url: 'https://envirofond.sk/wp-content/uploads/2026/10/6_2026-Podporene_-na-web.pdf#page=13',
+    linkLabel: 'Zoznam podporených projektov',
+    sourceNote:
+      'Verejný zoznam potvrdzuje podporenie projektu. Suma a dátum vychádzajú z oznámenia fondu.',
     budget: true,
     summary: 'Rozpočtové podklady, prílohy a koordinácia pred uzavretím zmluvy.',
     steps: [

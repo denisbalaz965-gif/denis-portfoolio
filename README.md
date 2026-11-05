@@ -10,7 +10,7 @@ Dva stručné výbery na hlavnej stránke: weby a eurofondová práca. Projekty 
 
 „Prejsť projekt“ otvorí samostatný príbeh na celú obrazovku. Jeho vnútorné posúvanie ovláda pôvodné GSAP scény. Vždy sa pripája iba jeden príbeh, takže počet projektov nepredlžuje hlavnú stránku.
 
-- **Štýlový chlpáč:** päť krokov od zadania po spustenie; odkaz na [živý web](https://stylovychlpac.sk/). Verejné online rezervácie čakajú na doplnenie kalendára salónom.
+- **Štýlový chlpáč:** päť krokov od zadania po spustenie; odkaz na [živý web](https://stylovychlpac.sk/). Verejné online rezervácie čakajú na doplnenie kalendára salónom. Príbeh obsahuje autentické zábery verejného webu a administrácie z oddeleného prostredia s modelovými údajmi, zjednodušenú schému katalógu a doložené výsledky testov súbehu.
 - **[Zákazko.sk](https://zakazko.sk/):** tri kroky vlastného produktu a ilustrované prepojenie troch dokumentov.
 - **Corinex, Autokemping Tornaľa a Knižnica Horná Kráľová:** samostatné referencie s konkrétnou úlohou a doloženým stavom podpory.
 - **Eurofondová agenda:** pôvodný štvorkrokový postup od zámeru po implementáciu.

@@ -25,3 +25,11 @@ Dialóg má vlastný `.case-scroll`; ten sa odovzdáva ScrollTriggeru cez `scrol
 URL `#projekt/<id>` sa dá otvoriť priamo. Otvorenie z prehľadu pridá jeden záznam histórie, striedanie projektov ho nahrádza. Zatvorenie obnoví prehľad a fokus. Nové otvorenie počas čakajúceho návratu histórie sa zaradí za návrat; oneskorená udalosť close nesmie zavrieť už znovu otvorený dialóg. Pri otvorení sa zamyká posúvanie koreňového dokumentu aj body, pôvodné hodnoty sa obnovia pri zatvorení.
 
 Referencie majú konkrétne vlastné texty. Všeobecný proces implementácie je oddelený ako Eurofondová agenda; vrstva rozpočtu sa v referenčnej scéne zapína iba tam, kde je uvedená rozpočtová úloha. Žiadne zákaznícke údaje alebo súkromné grantové originály sa nepoužívajú.
+
+## Opravy a dôkazy z auditu 5. 11. 2026
+
+Nízky mobilný viewport600–760px používa dve čitateľné kolóny namiesto scény prekrývajúcej text; pri ešte užšom a nízkom viewporte sa scéna nelepí. Zodpovedajúci breakpoint obnovuje ScrollTrigger. Výmena príbehu zachováva fokus stabilných ovládacích prvkov alebo ho presúva na nový nadpis. Stav projektu oznamuje živý región. Modifikované kliknutia zostávajú prehliadaču; neplatná adresa bezpečne vracia prehľad s vysvetlením. Galérie majú pomenované skupiny.
+
+`case-evidence.css` obsluhuje skutočné obrazovky, rozhodnutie o ochrane rezervácií a zjednodušenú schému katalógu v príbehu salónu. Prepínanie záberov patrí existujúcemu delegovanému handleru; pri výmene projektu sa obsah odstráni spolu s príbehom. Screenshot administrácie obsahuje výhradne modelové údaje. Čísla súbehu pochádzajú z oddelených MySQL testov, nie z produkčnej návštevnosti.
+
+Úvodný obrázok používa tri varianty WebP a `srcset/sizes`. Grantové odkazy vedú na presné zmluvy alebo verejný zoznam; pri Corinexe sa uvádza limit v znení dodatku1, pri knižnici verejný zoznam nepotvrdzuje konkrétnu sumu a text to odlišuje.

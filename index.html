@@ -91,7 +91,13 @@
             <div class="world-float">
               <img
                 class="world-image"
-                src="/images/denis-world.png"
+                src="/images/denis-world-1536.webp"
+                srcset="
+                  /images/denis-world-640.webp   640w,
+                  /images/denis-world-960.webp   960w,
+                  /images/denis-world-1536.webp 1536w
+                "
+                sizes="(max-width: 760px) 110vw, 68vw"
                 width="1536"
                 height="1024"
                 alt="Farebný priestorový ostrov s tvorivým štúdiom, dokumentmi a digitálnym pomocníkom"
@@ -121,6 +127,9 @@
         class="project-overview overview-web section-pad"
         aria-labelledby="web-title"
       >
+        <p id="project-route-status" class="route-status" role="status" tabindex="-1" hidden>
+          Tento odkaz na projekt nie je platný. Vyber si projekt z prehľadu nižšie.
+        </p>
         <div class="section-kicker">
           <span>01 / Tvorím weby</span><span>Vyber si projekt ↘</span>
         </div>
@@ -134,6 +143,7 @@
         <div
           class="project-gallery"
           data-project-group="webs"
+          role="group"
           aria-roledescription="karusel"
           aria-label="Webové projekty"
         >
@@ -181,6 +191,7 @@
         <div
           class="project-gallery"
           data-project-group="grants"
+          role="group"
           aria-roledescription="karusel"
           aria-label="Eurofondové projekty"
         >
@@ -281,6 +292,7 @@
           <header class="case-toolbar">
             <button type="button" data-case-close>← <span>Všetky projekty</span></button>
             <p data-case-name></p>
+            <span class="sr-only" data-case-announcement role="status" aria-atomic="true"></span>
             <div class="case-switch">
               <span data-case-counter></span
               ><button type="button" data-case-prev aria-label="Predchádzajúci projekt">←</button
@@ -322,8 +334,13 @@
               class="chapter-link"
               >Navštíviť stylovychlpac.sk <span>↗</span></a
             >
+            <a class="case-evidence-jump" href="#salon-ukazky">Pozrieť skutočné obrazovky ↓</a>
           </div>
         </div>
+        <p class="case-live-status">
+          <strong>Web a administrácia sú nasadené.</strong> Termíny sa zatiaľ dohadujú telefonicky.
+          Verejné online rezervácie čakajú na doplnenie kalendára salónom.
+        </p>
         <div class="story-layout">
           <div class="story-stage web-stage">
             <div class="scene-space web-scene" aria-hidden="true">
@@ -508,6 +525,145 @@
             </article>
           </div>
         </div>
+        <section class="case-showcase" id="salon-ukazky" aria-labelledby="salon-showcase-title">
+          <div class="case-showcase-heading">
+            <div>
+              <p class="eyebrow">Z ilustrácie do skutočnej prevádzky</p>
+              <h3 id="salon-showcase-title">Takto vyzerá<br /><em>výsledok.</em></h3>
+            </div>
+            <p>
+              Verejný web aj vlastná správa salónu. Vyber si obrazovku a pozri si konkrétny výstup.
+            </p>
+          </div>
+          <div class="case-view-controls" role="group" aria-label="Vybrať ukážku Štýlového chlpáča">
+            <button
+              type="button"
+              data-salon-view="desktop"
+              aria-pressed="true"
+              aria-controls="salon-capture-desktop"
+            >
+              Web na počítači
+            </button>
+            <button
+              type="button"
+              data-salon-view="mobile"
+              aria-pressed="false"
+              aria-controls="salon-capture-mobile"
+            >
+              Web na mobile
+            </button>
+            <button
+              type="button"
+              data-salon-view="admin"
+              aria-pressed="false"
+              aria-controls="salon-capture-admin"
+            >
+              Administrácia
+            </button>
+          </div>
+          <div class="case-captures">
+            <figure id="salon-capture-desktop" data-salon-panel="desktop">
+              <a
+                class="case-capture-image"
+                href="/images/chlpac-web-desktop.webp"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Zväčšiť skutočný web na počítači"
+              >
+                <img
+                  src="/images/chlpac-web-desktop.webp"
+                  width="1440"
+                  height="900"
+                  loading="lazy"
+                  alt="Zverejnený web Štýlový chlpáč: služby salónu, kontakty a vlastné fotografie."
+                />
+              </a>
+              <figcaption>
+                Skutočný verejný web · zachytené 5. 11. 2026. Kliknutím otvoríš väčší záber.
+              </figcaption>
+            </figure>
+            <figure id="salon-capture-mobile" data-salon-panel="mobile" hidden>
+              <a
+                class="case-capture-image is-mobile"
+                href="/images/chlpac-web-mobile.webp"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Zväčšiť skutočný web na mobile"
+              >
+                <img
+                  src="/images/chlpac-web-mobile.webp"
+                  width="390"
+                  height="844"
+                  loading="lazy"
+                  alt="Mobilná verzia verejného webu Štýlového chlpáča s priamymi kontaktmi na pracovníčky."
+                />
+              </a>
+              <figcaption>
+                Rovnaký web na úzkej obrazovke. Služby a kontakty zostávajú priamo dostupné.
+              </figcaption>
+            </figure>
+            <figure id="salon-capture-admin" data-salon-panel="admin" hidden>
+              <a
+                class="case-capture-image"
+                href="/images/chlpac-admin-demo.webp"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Zväčšiť administráciu s modelovými údajmi"
+              >
+                <img
+                  src="/images/chlpac-admin-demo.webp"
+                  width="1280"
+                  height="1031"
+                  loading="lazy"
+                  alt="Skutočná administrácia v testovacom prostredí: dnešný program, návštevy a voľno. Mená a návštevy sú modelové."
+                />
+              </a>
+              <figcaption>
+                Administrácia s modelovými údajmi z oddeleného testovacieho prostredia. Zobrazené
+                mená a návštevy nepatria zákazníkom.
+              </figcaption>
+            </figure>
+          </div>
+          <div class="case-decision">
+            <div>
+              <p class="eyebrow">Rozhodnutie za obrazovkou</p>
+              <h3>Jeden termín.<br />Aj pri opakovanom odoslaní.</h3>
+              <p>
+                Dostupnosť sa pred uložením znova kontroluje na serveri. Opakovaný pokus vráti
+                pôvodný výsledok bez vytvorenia druhej návštevy.
+              </p>
+            </div>
+            <div class="case-test-results">
+              <p>
+                <strong>4 pokusy → 1 termín</strong
+                ><span
+                  >Pri súbežnom výbere rovnakého času sa uložila jedna návšteva; ostatné pokusy
+                  dostali informáciu o obsadení.</span
+                >
+              </p>
+              <p>
+                <strong>4 odoslania → 1 záznam</strong
+                ><span>Opakovanie rovnakej požiadavky nevytvorilo ďalšiu rezerváciu.</span>
+              </p>
+              <p class="case-test-note">
+                Overené v oddelených testoch na MySQL. Ide o výsledky technickej kontroly, nie o
+                štatistiku zákazníkov.
+              </p>
+            </div>
+          </div>
+          <div class="case-system-map" aria-label="Zjednodušená schéma spoločného katalógu">
+            <p><strong>Jeden katalóg služieb</strong><span>Ceny · veľkosti psov · trvania</span></p>
+            <span class="case-map-arrow" aria-hidden="true">→</span>
+            <ul>
+              <li>Verejný cenník</li>
+              <li>Rezervačný výber</li>
+              <li>Správa salónu</li>
+            </ul>
+          </div>
+          <p class="case-map-note">
+            Zjednodušená schéma implementovaného systému. Rovnaké údaje prepájajú jednotlivé časti.
+          </p>
+        </section>
       </section></template
     >
     <template id="agenda-template"
@@ -680,12 +836,12 @@
             </div>
             <div class="grant-result">
               <strong id="corinex-amount">482 293 €</strong
-              ><span>podpora podľa zmluvy 261/2025</span>
+              ><span>maximálna dotácia · zmluva 261/2025, dodatok č. 1</span>
             </div>
             <a
               id="corinex-source"
               class="source-link"
-              href="https://crz.gov.sk/2171273-sk/centralny-register-zmluv/?art_predmet=zmluva+o+poskytnut%C3%AD+dot%C3%A1cie&amp;art_zs1=%C3%BArad+podpredsedu&amp;page=1"
+              href="https://crz.gov.sk/11775252-sk/1/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Verejný zdroj k podpore Corinex"
@@ -706,7 +862,7 @@
             <a
               id="tornala-source"
               class="source-link"
-              href="https://crz.gov.sk/6274407-sk/mesto-tornala/?order=22&amp;page=1"
+              href="https://crz.gov.sk/zmluva/11753202/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Verejný zdroj k autokempingu Tornaľa"
@@ -724,10 +880,13 @@
             <div class="grant-result">
               <strong>867 180,67 €</strong><span>Schválená podpora · MoF 6/2026</span>
             </div>
-            <span
-              class="source-mark"
-              aria-label="Schválenie overené v oznámení Environmentálneho fondu z 28. 9. 2026"
-              >✓</span
+            <a
+              class="source-link"
+              href="https://envirofond.sk/wp-content/uploads/2026/10/6_2026-Podporene_-na-web.pdf#page=13"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Verejný zoznam podporených projektov: Knižnica Horná Kráľová. Suma vychádza z oznámenia fondu."
+              >↗</a
             >
           </article>
           <article class="grant-row reveal">

@@ -220,6 +220,7 @@ export function initScrollStories({ root = document, scroller } = {}) {
     {
       desktop: '(min-width: 761px)',
       mobile: '(max-width: 760px)',
+      landscape: '(min-width: 600px) and (max-width: 760px) and (max-height: 600px)',
     },
     (context) => {
       const chapters = [...root.querySelectorAll('[data-story]')];
@@ -253,8 +254,14 @@ export function initScrollStories({ root = document, scroller } = {}) {
           id: `portfolio-${chapter.dataset.story}`,
           trigger: steps[0].firstElementChild,
           endTrigger: steps.at(-1).firstElementChild,
-          start: context.conditions.mobile ? 'center 70%' : 'center 50%',
-          end: context.conditions.mobile ? 'center 70%' : 'center 50%',
+          start:
+            context.conditions.mobile && !context.conditions.landscape
+              ? 'center 70%'
+              : 'center 50%',
+          end:
+            context.conditions.mobile && !context.conditions.landscape
+              ? 'center 70%'
+              : 'center 50%',
           animation: timeline,
           ...(scroller ? { scroller } : {}),
           scrub: 0.55,
