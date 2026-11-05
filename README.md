@@ -7,7 +7,7 @@ Osobné portfólio spájajúce weby, digitálne produkty a pracovné postupy s A
 ## Vybraná práca
 
 - **Eurofondy s podporou AI:** používaný postup spracovania projektových podkladov, úloh a čakaní. Interaktívna ukážka používa modelové údaje.
-- **Štýlový chlpáč:** návrh a realizácia webu pre psí salón, služby, cenník a rezervačný postup. Pripravuje sa na zverejnenie.
+- **Štýlový chlpáč:** [zverejnený web psieho salónu](https://stylovychlpac.sk/), spoločný katalóg služieb, cenník, rezervácie a administrácia. Interaktívny príbeh ukazuje päť krokov od zadania po odovzdanie. Verejné online objednávanie čaká na doplnenie kalendára salónom.
 - **[Zákazko.sk](https://zakazko.sk/):** vlastný produkt pre cenové ponuky, zákazkové listy a preberacie protokoly.
 
 Grantové referencie opisujú moju úlohu v tímovej práci. Sumy podpory patria prijímateľom; schválenie a zmluva sa odlišujú od dokončenej realizácie. Súkromné projektové dokumenty a e-maily v repozitári nie sú.
@@ -58,7 +58,7 @@ GitHub Actions pri pushi a pull requeste spúšťajú rovnaký `npm run check`. 
 
 Na návrhu, textoch, implementácii a overovaní spolupracujem s AI. Vlastný ilustračný ostrov vznikol pomocou OpenAI image_gen. Pohyb zabezpečujú CSS a GSAP. Animácie sa spúšťajú automaticky bez ovládača podľa zadania portfólia.
 
-Inšpiráciou pre hravý priestor a farebnosť bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Screenshot Štýlového chlpáča pochádza z vývojovej verzie projektu.
+Inšpiráciou pre hravý priestor a farebnosť bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Interaktívny príbeh Štýlového chlpáča používa vlastnú ilustrovanú scénu a fotografiu z jeho verejného webu; nejde o živú administráciu ani zákaznícke údaje. Rešpektuje nastavenie obmedzeného pohybu a dá sa ovládať klávesnicou.
 
 Instrument Sans používa SIL Open Font License; znenie je v `public/licenses/InstrumentSans-OFL.txt`. GSAP a ScrollTrigger používajú [vlastnú licenciu](https://gsap.com/standard-license/). Licencie knižníc sa nemenia. Pôvod assetov je v `ASSET-SOURCES.json`.
 

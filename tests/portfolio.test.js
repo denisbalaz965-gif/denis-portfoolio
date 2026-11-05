@@ -98,6 +98,45 @@ describe('Project details', () => {
     expect(document.activeElement).toBe(opener);
   });
 
+  it('navigates the salon journey by keyboard and cleans it up before reopening', () => {
+    dispose = initProjectDialog();
+    const opener = document.querySelector('[data-case="chlpac"]');
+    opener.click();
+    const navigation = document.querySelector('.journey-navigation');
+    navigation.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
+    expect(document.querySelector('[data-journey-counter]').textContent).toBe('05 / 05');
+    expect(document.querySelector('[data-journey-text]').textContent).toContain(
+      'čaká na doplnenie kalendára',
+    );
+    expect(document.activeElement.dataset.journeyStep).toBe('4');
+    document.querySelector('.journey-next').click();
+    expect(document.querySelector('[data-journey-counter]').textContent).toBe('01 / 05');
+    document.querySelector('.dialog-done').click();
+    expect(document.querySelector('.salon-journey')).toBeNull();
+    opener.click();
+    expect(document.querySelectorAll('.salon-journey')).toHaveLength(1);
+    expect(document.querySelector('[data-journey-counter]').textContent).toBe('01 / 05');
+    document.querySelector('.dialog-done').click();
+    document.querySelector('[data-case="ponuky"]').click();
+    expect(document.querySelector('.salon-journey')).toBeNull();
+    expect(document.querySelector('dialog').classList.contains('case-dialog--salon')).toBe(false);
+  });
+
+  it('keeps every salon step usable with reduced motion', () => {
+    const media = new EventTarget();
+    Object.defineProperty(media, 'matches', { value: true });
+    window.matchMedia.mockReturnValueOnce(media);
+    dispose = initProjectDialog();
+    document.querySelector('[data-case="chlpac"]').click();
+    document.querySelector('[data-journey-step="4"]').click();
+    expect(document.querySelector('.model-admin').style.opacity).toBe('1');
+    expect(document.querySelector('.model-admin').style.visibility).toBe('inherit');
+    expect(document.querySelector('.note-brief').style.visibility).toBe('hidden');
+    expect(document.querySelector('[data-journey-title]').textContent).toBe(
+      'Od návrhu k reálnej prevádzke.',
+    );
+  });
+
   it('closes using the visible return button', () => {
     dispose = initProjectDialog();
     document.querySelector('[data-case="eurofondy"]').click();

@@ -1,4 +1,5 @@
 import { projectStories } from '../data/projects.js';
+import { mountSalonJourney } from './salon-journey.js';
 
 export function initProjectDialog({ root = document, stories = projectStories } = {}) {
   const dialog = root.querySelector('#case-dialog');
@@ -8,8 +9,12 @@ export function initProjectDialog({ root = document, stories = projectStories } 
   const options = { signal: controller.signal };
   const body = dialog.ownerDocument.body;
   let opener;
+  let disposeJourney = () => {};
 
   function restorePage() {
+    disposeJourney();
+    disposeJourney = () => {};
+    dialog.classList.remove('case-dialog--salon');
     body.classList.remove('dialog-open');
     opener?.focus({ preventScroll: true });
   }
@@ -24,6 +29,9 @@ export function initProjectDialog({ root = document, stories = projectStories } 
       () => {
         const story = stories[button.dataset.case];
         if (!story) return;
+        disposeJourney();
+        disposeJourney = () => {};
+        dialog.classList.toggle('case-dialog--salon', button.dataset.case === 'chlpac');
         opener = button;
         dialog.querySelector('#case-category').textContent = story.category;
         dialog.querySelector('#case-title').textContent = story.title;
@@ -42,6 +50,9 @@ export function initProjectDialog({ root = document, stories = projectStories } 
         dialog.querySelector('#case-details').replaceChildren(...sections);
         body.classList.add('dialog-open');
         if (!dialog.open) dialog.showModal();
+        if (button.dataset.case === 'chlpac') {
+          disposeJourney = mountSalonJourney(dialog.querySelector('#case-details'));
+        }
         dialog.scrollTop = 0;
       },
       options,

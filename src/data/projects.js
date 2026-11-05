@@ -24,26 +24,26 @@ export const projectStories = {
     ],
   },
   chlpac: {
-    category: 'UX/UI / web / rezervácie',
+    category: 'Klientsky projekt / web je online',
     title: 'Štýlový chlpáč',
     intro:
-      'Web pre psí salón — od prvého zoznámenia so službami po výber starostlivosti a postup rezervácie.',
+      'Od rozhovorov v salóne po vlastný web a systém na správu návštev. Pozrite si päť krokov, ktorými projekt prešiel.',
     sections: [
       [
         'Zadanie',
-        'Zákazník potrebuje rozumieť službám, zorientovať sa v cenníku a vedieť, ako sa objednať. Tím salónu potrebuje spravovať obsah a pracovať s rezerváciami podľa reálnej prevádzky.',
+        'Zrozumiteľne predstaviť služby psieho salónu v Tomášove a prepojiť verejný web s jeho každodennou prevádzkou. Podkladom boli rozhovory, cenník, fotografie a priebežná spätná väzba Gabiky a Moniky.',
       ],
       [
         'Moja úloha',
-        'Navrhujem a vytváram web s podporou AI. Riešim vizuál, texty, služby, cenník, mobilné rozloženie, správu obsahu aj rezervačný postup. Úpravy overujem na konkrétnych scenároch a podľa spätnej väzby salónu.',
+        'Viedol som zadanie, vizuálny smer, texty a realizáciu s podporou AI. Prepájal som požiadavky salónu s rozhraním a pravidlami systému, kontroloval konkrétne scenáre a pripravil nasadenie aj odovzdanie správy.',
       ],
       [
-        'Ako to funguje',
-        'Návštevník sa zoznámi so salónom, porovná služby a vyberie starostlivosť pre svojho psa. Rezervačný postup nadväzuje na ponuku služieb, ich trvanie a dostupnosť pracovníčok.',
+        'Čo je za webom',
+        'Laravel a vlastná administrácia nad Orchid. Spoločný katalóg služieb, cenník, rozvrhy pracovníčok, rezervácie, správa obsahu a fotografií. Súčasťou nasadenia je HTTPS, firemná pošta a šifrované denné zálohy.',
       ],
       [
         'Aktuálny stav',
-        'Pripravujem verejné nasadenie. Na karte je ukážka z vývojovej verzie; odkaz na živý web doplním po spustení.',
+        'Verejný web stylovychlpac.sk je spustený. Administrácia a doručovanie pošty boli overené skúšobnými návštevami. Verejné online rezervácie zatiaľ čakajú na doplnenie už dohodnutých termínov a voľna salónom. Animácia používa ilustračné údaje.',
       ],
     ],
   },

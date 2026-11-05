@@ -12,7 +12,8 @@
   "reference": {
     "url": "https://www.tatrabanka.sk/tatrascool/",
     "observed": "2026-10-29, hero and money-scene screens, scroll interaction",
-    "adaptation": "Saturated lavender/cobalt/mint, spatial world, object parallax; no Tatra assets or mascot reused"
+    "adaptation": "Saturated lavender/cobalt/mint, spatial world, object parallax; no Tatra assets or mascot reused",
+    "case_study_adaptation": "Tatrascool outfit selector observed 2026-11-05; original five-step salon website construction scene, no reference assets copied"
   },
   "fonts": {
     "family": "Instrument Sans",
@@ -23,5 +24,11 @@
   "salon_screenshot": {
     "file": "public/images/stylovy-chlpac.png",
     "source": "Development screenshot of Denis Balaz project, used with original portfolio content"
+  },
+  "salon_live_photo": {
+    "file": "public/images/chlpac-salon-live.webp",
+    "source": "https://stylovychlpac.sk/media/fotografie/85f24d65-936d-4a39-ab79-966303345c0b.webp",
+    "retrieved": "2026-11-05",
+    "role": "Public salon hero photograph used in the client project case study"
   }
 }
