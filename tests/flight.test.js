@@ -121,6 +121,9 @@ describe('Loss of 3D mid-flight', () => {
       el.style.pointerEvents = 'none';
       el.inert = true;
     }
+    for (const project of document.querySelectorAll('.flight-project')) {
+      project.style.transform = 'translate3d(900px, 400px, 0)';
+    }
     restoreFlightFallback();
     window.dispatchEvent(new WheelEvent('wheel', { deltaY: 100 }));
     expect(document.body.classList.contains('flight-ready')).toBe(false);
@@ -132,6 +135,9 @@ describe('Loss of 3D mid-flight', () => {
       expect(el.inert).toBe(false);
     }
     expect([...document.querySelectorAll('.hologram')].every((el) => !el.inert)).toBe(true);
+    expect(
+      [...document.querySelectorAll('.flight-project')].every((el) => !el.style.transform),
+    ).toBe(true);
     expect(document.querySelector('.flight-contact a[href^="mailto:"]')).not.toBeNull();
   });
 });

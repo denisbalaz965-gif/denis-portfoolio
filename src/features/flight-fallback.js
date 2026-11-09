@@ -8,7 +8,8 @@ export function restoreFlightFallback({ root = document } = {}) {
     element.inert = false;
   });
   root.querySelectorAll('.flight-project').forEach((node) => {
-    node.style.removeProperty('visibility');
+    for (const property of ['visibility', 'transform', 'left', 'top', 'z-index'])
+      node.style.removeProperty(property);
     node.querySelector('.hologram').inert = false;
   });
 }
