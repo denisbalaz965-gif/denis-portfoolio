@@ -1,0 +1,473 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-09T11:52:37.548706+00:00",
+  "title": "Design System: Denis Baláž — Na konci internetu",
+  "extensions": {
+    "colorMeta": {
+      "signal-green": {
+        "role": "primary",
+        "displayName": "Signal Green",
+        "tonalRamp": [
+          "oklch(15% 0.0525 134.2)",
+          "oklch(26% 0.1049 134.2)",
+          "oklch(38% 0.1574 134.2)",
+          "oklch(49% 0.1889 134.2)",
+          "oklch(61% 0.2099 134.2)",
+          "oklch(72% 0.1889 134.2)",
+          "oklch(84% 0.1259 134.2)",
+          "oklch(95% 0.0420 134.2)"
+        ]
+      },
+      "signal-text": {
+        "role": "neutral",
+        "displayName": "Signal Text",
+        "tonalRamp": [
+          "oklch(15% 0.0114 133.2)",
+          "oklch(26% 0.0228 133.2)",
+          "oklch(38% 0.0343 133.2)",
+          "oklch(49% 0.0411 133.2)",
+          "oklch(61% 0.0457 133.2)",
+          "oklch(72% 0.0411 133.2)",
+          "oklch(84% 0.0274 133.2)",
+          "oklch(95% 0.0091 133.2)"
+        ]
+      },
+      "signal-muted": {
+        "role": "neutral",
+        "displayName": "Signal Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0122 138.4)",
+          "oklch(26% 0.0244 138.4)",
+          "oklch(38% 0.0366 138.4)",
+          "oklch(49% 0.0439 138.4)",
+          "oklch(61% 0.0488 138.4)",
+          "oklch(72% 0.0439 138.4)",
+          "oklch(84% 0.0293 138.4)",
+          "oklch(95% 0.0098 138.4)"
+        ]
+      },
+      "signal-edge": {
+        "role": "neutral",
+        "displayName": "Signal Edge",
+        "tonalRamp": [
+          "oklch(15% 0.0185 139.5)",
+          "oklch(26% 0.0371 139.5)",
+          "oklch(38% 0.0556 139.5)",
+          "oklch(49% 0.0667 139.5)",
+          "oklch(61% 0.0742 139.5)",
+          "oklch(72% 0.0667 139.5)",
+          "oklch(84% 0.0445 139.5)",
+          "oklch(95% 0.0148 139.5)"
+        ]
+      },
+      "world-ground": {
+        "role": "neutral",
+        "displayName": "World Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0043 151.3)",
+          "oklch(26% 0.0085 151.3)",
+          "oklch(38% 0.0128 151.3)",
+          "oklch(49% 0.0153 151.3)",
+          "oklch(61% 0.0170 151.3)",
+          "oklch(72% 0.0153 151.3)",
+          "oklch(84% 0.0102 151.3)",
+          "oklch(95% 0.0034 151.3)"
+        ]
+      },
+      "world-center": {
+        "role": "neutral",
+        "displayName": "World Center",
+        "tonalRamp": [
+          "oklch(15% 0.0162 141.3)",
+          "oklch(26% 0.0324 141.3)",
+          "oklch(38% 0.0485 141.3)",
+          "oklch(49% 0.0582 141.3)",
+          "oklch(61% 0.0647 141.3)",
+          "oklch(72% 0.0582 141.3)",
+          "oklch(84% 0.0388 141.3)",
+          "oklch(95% 0.0129 141.3)"
+        ]
+      },
+      "world-middle": {
+        "role": "neutral",
+        "displayName": "World Middle",
+        "tonalRamp": [
+          "oklch(15% 0.0074 148.3)",
+          "oklch(26% 0.0148 148.3)",
+          "oklch(38% 0.0221 148.3)",
+          "oklch(49% 0.0266 148.3)",
+          "oklch(61% 0.0295 148.3)",
+          "oklch(72% 0.0266 148.3)",
+          "oklch(84% 0.0177 148.3)",
+          "oklch(95% 0.0059 148.3)"
+        ]
+      },
+      "world-outer": {
+        "role": "neutral",
+        "displayName": "World Outer",
+        "tonalRamp": [
+          "oklch(15% 0.0031 157.0)",
+          "oklch(26% 0.0063 157.0)",
+          "oklch(38% 0.0094 157.0)",
+          "oklch(49% 0.0113 157.0)",
+          "oklch(61% 0.0125 157.0)",
+          "oklch(72% 0.0113 157.0)",
+          "oklch(84% 0.0075 157.0)",
+          "oklch(95% 0.0025 157.0)"
+        ]
+      },
+      "fragment-title": {
+        "role": "primary",
+        "displayName": "Fragment Title",
+        "tonalRamp": [
+          "oklch(15% 0.0309 135.6)",
+          "oklch(26% 0.0617 135.6)",
+          "oklch(38% 0.0926 135.6)",
+          "oklch(49% 0.1111 135.6)",
+          "oklch(61% 0.1234 135.6)",
+          "oklch(72% 0.1111 135.6)",
+          "oklch(84% 0.0741 135.6)",
+          "oklch(95% 0.0247 135.6)"
+        ]
+      },
+      "fragment-meta": {
+        "role": "neutral",
+        "displayName": "Fragment Meta",
+        "tonalRamp": [
+          "oklch(15% 0.0328 135.8)",
+          "oklch(26% 0.0656 135.8)",
+          "oklch(38% 0.0984 135.8)",
+          "oklch(49% 0.1181 135.8)",
+          "oklch(61% 0.1312 135.8)",
+          "oklch(72% 0.1181 135.8)",
+          "oklch(84% 0.0787 135.8)",
+          "oklch(95% 0.0262 135.8)"
+        ]
+      },
+      "fragment-body": {
+        "role": "neutral",
+        "displayName": "Fragment Body",
+        "tonalRamp": [
+          "oklch(15% 0.0107 136.3)",
+          "oklch(26% 0.0214 136.3)",
+          "oklch(38% 0.0320 136.3)",
+          "oklch(49% 0.0385 136.3)",
+          "oklch(61% 0.0427 136.3)",
+          "oklch(72% 0.0385 136.3)",
+          "oklch(84% 0.0256 136.3)",
+          "oklch(95% 0.0085 136.3)"
+        ]
+      },
+      "article-ground": {
+        "role": "neutral",
+        "displayName": "Article Ground",
+        "tonalRamp": [
+          "oklch(15% 0.0051 151.3)",
+          "oklch(26% 0.0102 151.3)",
+          "oklch(38% 0.0153 151.3)",
+          "oklch(49% 0.0184 151.3)",
+          "oklch(61% 0.0204 151.3)",
+          "oklch(72% 0.0184 151.3)",
+          "oklch(84% 0.0123 151.3)",
+          "oklch(95% 0.0041 151.3)"
+        ]
+      },
+      "article-text": {
+        "role": "neutral",
+        "displayName": "Article Text",
+        "tonalRamp": [
+          "oklch(15% 0.0088 136.0)",
+          "oklch(26% 0.0175 136.0)",
+          "oklch(38% 0.0263 136.0)",
+          "oklch(49% 0.0315 136.0)",
+          "oklch(61% 0.0351 136.0)",
+          "oklch(72% 0.0315 136.0)",
+          "oklch(84% 0.0210 136.0)",
+          "oklch(95% 0.0070 136.0)"
+        ]
+      },
+      "article-muted": {
+        "role": "neutral",
+        "displayName": "Article Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0116 134.0)",
+          "oklch(26% 0.0231 134.0)",
+          "oklch(38% 0.0347 134.0)",
+          "oklch(49% 0.0417 134.0)",
+          "oklch(61% 0.0463 134.0)",
+          "oklch(72% 0.0417 134.0)",
+          "oklch(84% 0.0278 134.0)",
+          "oklch(95% 0.0093 134.0)"
+        ]
+      },
+      "article-toolbar": {
+        "role": "neutral",
+        "displayName": "Article Toolbar",
+        "tonalRamp": [
+          "oklch(15% 0.0072 148.1)",
+          "oklch(26% 0.0144 148.1)",
+          "oklch(38% 0.0217 148.1)",
+          "oklch(49% 0.0260 148.1)",
+          "oklch(61% 0.0289 148.1)",
+          "oklch(72% 0.0260 148.1)",
+          "oklch(84% 0.0173 148.1)",
+          "oklch(95% 0.0058 148.1)"
+        ]
+      },
+      "button-fill": {
+        "role": "primary",
+        "displayName": "Button Fill",
+        "tonalRamp": [
+          "oklch(15% 0.0471 133.8)",
+          "oklch(26% 0.0941 133.8)",
+          "oklch(38% 0.1412 133.8)",
+          "oklch(49% 0.1694 133.8)",
+          "oklch(61% 0.1882 133.8)",
+          "oklch(72% 0.1694 133.8)",
+          "oklch(84% 0.1129 133.8)",
+          "oklch(95% 0.0376 133.8)"
+        ]
+      },
+      "button-ink": {
+        "role": "neutral",
+        "displayName": "Button Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0076 144.0)",
+          "oklch(26% 0.0152 144.0)",
+          "oklch(38% 0.0227 144.0)",
+          "oklch(49% 0.0273 144.0)",
+          "oklch(61% 0.0303 144.0)",
+          "oklch(72% 0.0273 144.0)",
+          "oklch(84% 0.0182 144.0)",
+          "oklch(95% 0.0061 144.0)"
+        ]
+      },
+      "index-panel": {
+        "role": "neutral",
+        "displayName": "Index Panel",
+        "tonalRamp": [
+          "oklch(15% 0.0058 144.4)",
+          "oklch(26% 0.0117 144.4)",
+          "oklch(38% 0.0175 144.4)",
+          "oklch(49% 0.0210 144.4)",
+          "oklch(61% 0.0233 144.4)",
+          "oklch(72% 0.0210 144.4)",
+          "oklch(84% 0.0140 144.4)",
+          "oklch(95% 0.0047 144.4)"
+        ]
+      },
+      "index-hover": {
+        "role": "neutral",
+        "displayName": "Index Hover",
+        "tonalRamp": [
+          "oklch(15% 0.0114 140.9)",
+          "oklch(26% 0.0228 140.9)",
+          "oklch(38% 0.0342 140.9)",
+          "oklch(49% 0.0410 140.9)",
+          "oklch(61% 0.0455 140.9)",
+          "oklch(72% 0.0410 140.9)",
+          "oklch(84% 0.0273 140.9)",
+          "oklch(95% 0.0091 140.9)"
+        ]
+      },
+      "index-edge": {
+        "role": "neutral",
+        "displayName": "Index Edge",
+        "tonalRamp": [
+          "oklch(15% 0.0276 136.0)",
+          "oklch(26% 0.0551 136.0)",
+          "oklch(38% 0.0827 136.0)",
+          "oklch(49% 0.0993 136.0)",
+          "oklch(61% 0.1103 136.0)",
+          "oklch(72% 0.0993 136.0)",
+          "oklch(84% 0.0662 136.0)",
+          "oklch(95% 0.0221 136.0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Opening statement."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Personal and contact headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Project fragment headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Project summaries."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Monospace project categories."
+      }
+    },
+    "shadows": [
+      {
+        "name": "axis-halo",
+        "value": "0 0 22px #6cff5455",
+        "purpose": "Luminous persistent axis."
+      },
+      {
+        "name": "fragment-halo",
+        "value": "0 0 70px #3d9a1e12",
+        "purpose": "Faint depth around a clipped plane."
+      },
+      {
+        "name": "article",
+        "value": "0 0 100px #02060399",
+        "purpose": "Separate the article from the same world."
+      },
+      {
+        "name": "index",
+        "value": "0 20px 70px #000a",
+        "purpose": "Dropdown separation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "fragment-scrub",
+        "value": "0.45",
+        "purpose": "GSAP ScrollTrigger scrub response in seconds."
+      },
+      {
+        "name": "fragment-approach",
+        "value": "scale 0.55 → 1; y 80px → 0; rotationY ±12deg → 0",
+        "purpose": "Approach the stable reading interval."
+      },
+      {
+        "name": "fragment-departure",
+        "value": "scale 1 → 1.12; y 0 → -60px; opacity 1 → 0",
+        "purpose": "Depart in the same scroll timeline."
+      },
+      {
+        "name": "article-open",
+        "value": "0.6s power3.out",
+        "purpose": "Horizontal article arrival."
+      },
+      {
+        "name": "article-switch",
+        "value": "0.45s power3.out",
+        "purpose": "Change the article across the full six-project sequence."
+      },
+      {
+        "name": "background-phase",
+        "value": "0.025/s",
+        "purpose": "Autonomous canvas drift, independently pausable."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "760px"
+      },
+      {
+        "name": "short-wide",
+        "value": "(max-height: 600px) and (min-width: 600px)"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Project index",
+      "kind": "nav",
+      "refersTo": "index-trigger",
+      "description": "Native expandable archive index.",
+      "html": "<details class=\"ds-index\"><summary>Index prác <span>＋</span></summary><nav aria-label=\"Priamy výber projektu\"><a href=\"#stop-stylovy-chlpac\"><span>01</span>Štýlový chlpáč</a><a href=\"#stop-zakazko\"><span>02</span>Zákazko.sk</a></nav></details>",
+      "css": ".ds-index{font-family:Instrument,Arial,sans-serif;width:280px;font-size:12px}.ds-index summary{list-style:none;width:145px;padding:13px 16px;margin:auto;border:1px solid #63914c;background:#081108d9;color:#c7efb6;display:flex;justify-content:space-between;cursor:pointer}.ds-index summary::-webkit-details-marker{display:none}.ds-index[open] summary{width:auto;border-bottom:0}.ds-index[open] summary span{transform:rotate(45deg)}.ds-index nav{padding:5px 12px 12px;border:1px solid #63914c;border-top:0;background:#081108f5;box-shadow:0 20px 70px #000a}.ds-index a{display:flex;gap:14px;padding:13px 4px;color:#d1e9c6;line-height:1.3;text-decoration:none}.ds-index a span{font:10px monospace;color:#7ea96a;padding-top:2px}.ds-index a:hover{color:var(--signal-green,#a4ff61);background:#10220d}.ds-index summary:focus-visible,.ds-index a:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    },
+    {
+      "name": "Fragment plane",
+      "kind": "card",
+      "refersTo": "fragment-plane",
+      "description": "Clipped decorative archive plane; source preview artwork is supplied by the application.",
+      "html": "<div class=\"ds-plane\"><span class=\"ds-serial\">WEB / 01</span><span class=\"ds-corner\">↗</span></div>",
+      "css": ".ds-plane{position:relative;width:85%;height:clamp(240px,29vw,420px);background:#0e210e77;border:1px solid #659a4666;box-shadow:0 0 70px #3d9a1e12;transform:rotate(-4deg);clip-path:polygon(0 0,92% 0,100% 12%,100% 100%,8% 100%,0 88%);overflow:hidden}.ds-plane::after{content:\"\";position:absolute;inset:0;pointer-events:none;border:18px solid #06100644;background:repeating-linear-gradient(0deg,transparent 0 4px,#091b0644 4px 5px)}.ds-serial{position:absolute;left:20px;top:13px;font:9px monospace;letter-spacing:.12em;color:#bcff92}.ds-corner{position:absolute;bottom:17px;right:23px;font:30px Instrument,Arial,sans-serif;color:#b0ff80}"
+    },
+    {
+      "name": "Story link",
+      "kind": "button",
+      "refersTo": "fragment-link",
+      "description": "Underlined semantic entry point beneath a project summary.",
+      "html": "<a class=\"ds-story\" href=\"#projekt/stylovy-chlpac\">Otvoriť celý príbeh <span>→</span></a>",
+      "css": ".ds-story{font-family:Instrument,Arial,sans-serif;display:inline-flex;gap:35px;padding:12px 0;border-bottom:1px solid #5a8b3e;margin-top:12px;font-size:12px;color:var(--signal-green,#a4ff61);text-decoration:none}.ds-story:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    },
+    {
+      "name": "Article toolbar",
+      "kind": "nav",
+      "refersTo": "article-toolbar",
+      "description": "Close and wraparound project controls above an independently scrolling article.",
+      "html": "<header class=\"ds-toolbar\"><button class=\"ds-close\" aria-label=\"Zavrieť príbeh\">×</button><span>Štýlový chlpáč</span><div class=\"ds-switch\"><span>1 / 6</span><button aria-label=\"Predchádzajúci projekt\">←</button><button aria-label=\"Ďalší projekt\">→</button></div></header>",
+      "css": ".ds-toolbar{font-family:Instrument,Arial,sans-serif;display:flex;align-items:center;justify-content:space-between;gap:20px;height:76px;padding:0 24px;background:#0a170cef;color:#c9edb6;border-bottom:1px solid var(--signal-edge,#35552d);backdrop-filter:blur(16px);font-size:12px}.ds-toolbar button{font-family:Instrument,Arial,sans-serif;border-radius:0;min-height:44px;background:none;color:inherit;cursor:pointer}.ds-close{border:0;font-size:22px;padding:0 8px}.ds-switch{display:flex;gap:8px;align-items:center}.ds-switch span{font-size:11px;margin-right:15px}.ds-switch button{width:44px;border:1px solid #50713c;font-size:20px;color:var(--signal-green,#a4ff61)}.ds-toolbar button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    },
+    {
+      "name": "Evidence view choice",
+      "kind": "button",
+      "refersTo": "evidence-choice",
+      "description": "Screenshot-view selector with explicit selected state.",
+      "html": "<button class=\"ds-choice\" aria-pressed=\"true\">Web na počítači</button>",
+      "css": ".ds-choice{font-family:Instrument,Arial,sans-serif;min-height:46px;padding:11px 20px;border:1px solid var(--signal-edge,#35552d);border-radius:0;background:transparent;color:#c7e7b6;font-size:13px;cursor:pointer}.ds-choice:hover{background:#d0f3df;border-color:#d0f3df}.ds-choice[aria-pressed=\"true\"]{background:var(--signal-green,#a4ff61);color:#071009}.ds-choice:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    },
+    {
+      "name": "Copy email action",
+      "kind": "button",
+      "refersTo": "contact-button",
+      "description": "Contact action without a form or submission flow.",
+      "html": "<button class=\"ds-copy\">Skopírovať e-mail ↗</button>",
+      "css": ".ds-copy{font-family:Instrument,Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:12px 19px;border:0;border-radius:0;background:#9fee64;color:#051005;font-size:11px;font-weight:700;line-height:1.25;cursor:pointer;transition:transform .3s,background .3s}.ds-copy:hover{transform:translateY(-3px)}.ds-copy:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    },
+    {
+      "name": "Background pause",
+      "kind": "custom",
+      "description": "Freezes autonomous background drift; scrolling still updates depth.",
+      "html": "<button class=\"ds-pause\" aria-pressed=\"false\">Pozastaviť pozadie</button>",
+      "css": ".ds-pause{font-family:Instrument,Arial,sans-serif;padding:12px 5px;background:none;border:0;color:#92be7d;font-size:10px;text-decoration:underline;cursor:pointer}.ds-pause:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Na konci internetu",
+    "overview": "“Na konci internetu” is the owner-confirmed replacement world: one continuous phosphor-green space with a persistent vertical axis, sparse geometric data planes and six ordered fragments that approach and depart as the visitor scrolls. The background remains present from the opening sentence through the project archive and contact.\n\nDepth comes from perspective, scale, sparse linework and controlled glow. The fragments are pieces of a digital archive, not literal meteorites or a collection of separate card sections. Opening a project places a calmer reading surface over the same world; it does not replace that world with a different page identity.",
+    "keyCharacteristics": [
+      "A fixed green field and vertical axis persist through the whole journey.",
+      "Six project fragments alternate their desktop alignment and move through scroll-owned depth.",
+      "Large Instrument Sans headings pair with small monospace coordinates and category text.",
+      "Clipped planes, square controls and restrained phosphor glow replace rounded gallery cards.",
+      "An inset article surface preserves the surrounding space and factual project evidence."
+    ],
+    "rules": [
+      {
+        "name": "The Continuous World Rule",
+        "body": "Keep the field and axis present across intro, project fragments, personal text and contact; do not introduce unrelated section backgrounds.",
+        "section": "colors"
+      },
+      {
+        "name": "The Reading Interval Rule",
+        "body": "Give each approaching fragment a stable, fully visible reading interval before it departs.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Evidence Rule",
+        "body": "Keep project status, Denis’s contribution and source captions readable inside the article; atmospheric treatment must not strengthen the underlying claims.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "**Do** preserve one continuous background and the ordered six-project sequence.",
+      "**Do** keep the small index, readable titles, visible focus outlines and explicit close control.",
+      "**Do** treat horizontal gestures as project switching and vertical gestures as article reading.",
+      "**Do** preserve the saved journey scroll position when the article closes.",
+      "**Do** distinguish presentation filters, illustrations, model data and authentic captures in the project evidence."
+    ],
+    "donts": [
+      "**Don't** describe the geometric planes as literal meteorites or add unrelated space imagery.",
+      "**Don't** rebuild the former separate web/grant galleries or rounded navigation pill.",
+      "**Don't** make pause imply that all scroll-linked movement stops.",
+      "**Don't** promote grant approval or a contractual funding limit into payment or completed delivery."
+    ]
+  }
+}

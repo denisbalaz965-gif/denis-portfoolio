@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { findProject, projectsInGroup } from '../data/portfolio-projects.js';
+import { findProject, projectsInGroup, portfolioProjects } from '../data/portfolio-projects.js';
 import { initScrollStories } from './scroll-stories.js';
 
 const escapeHTML = (value) =>
@@ -28,7 +28,7 @@ function referenceCover(project) {
   return `<div class="reference-cover cover-${escapeHTML(project.cover)}" aria-hidden="true"><div class="cover-orbit"></div><span class="cover-symbol">${icons[project.cover]}</span><div class="cover-reference-paper"><span>${escapeHTML(project.kind.split(' · ')[0])}</span><strong>${lines(project.title)}</strong>${summary}</div><span class="cover-label">${workflow ? 'Ako pracujem' : 'Projektová referencia'}</span></div>`;
 }
 
-function artwork(project, root) {
+export function artwork(project, root) {
   const wrapper = document.createElement('div');
   wrapper.className = 'gallery-preview';
   if (project.cover === 'salon') {
@@ -91,10 +91,17 @@ export function buildProjectContent(project, root = document) {
     chapter.querySelector('.chapter-heading > div').append(note);
   }
   chapter.querySelector('#case-title').tabIndex = -1;
+  // Project category is supporting metadata, placed after the title rather than above it.
+  const metadata = chapter.querySelector('.section-kicker');
+  metadata.classList.add('case-category');
+  chapter.querySelectorAll('.eyebrow').forEach((label) => {
+    const heading = label.nextElementSibling;
+    if (heading?.matches('h2,h3')) heading.after(label);
+  });
   const hint = document.createElement('p');
   hint.className = 'case-reading-hint';
-  hint.textContent = 'Príbeh pokračuje nadol. Ďalší projekt nájdeš pod šípkou vpravo.';
-  chapter.querySelector('.chapter-heading').after(hint);
+  hint.textContent = 'Čítaj nadol. Projekty prepínaj šípkami alebo potiahnutím do strán.';
+  chapter.querySelector('.chapter-heading').after(metadata, hint);
   return chapter;
 }
 
@@ -172,6 +179,9 @@ export function initProjectBrowser({
   let oldRootOverflow;
   let waitingForBack = false;
   let queuedOpen;
+  let returnScroll = 0;
+  const continuous = Boolean(root.querySelector('.boundary-journey'));
+  const viewerProjects = (group) => (continuous ? portfolioProjects : projectsInGroup(group));
 
   function moveGallery(group, delta) {
     const projects = projectsInGroup(group);
@@ -192,7 +202,7 @@ export function initProjectBrowser({
     article.setAttribute('role', 'group');
     article.setAttribute('aria-roledescription', 'projekt');
     article.setAttribute('aria-label', `${project.name}, ${number} z ${projects.length}`);
-    article.innerHTML = `<div class="gallery-description"><p class="eyebrow">${escapeHTML(project.kind)}</p><h3>${escapeHTML(project.name)}</h3><p>${escapeHTML(project.summary)}</p><span class="gallery-status">${escapeHTML(project.status)}</span><div class="gallery-actions"><a href="#projekt/${project.id}" class="button gallery-open">Prejsť projekt <span>→</span></a>${project.url ? `<a href="${escapeHTML(project.url)}" class="gallery-external" target="_blank" rel="noopener noreferrer">${project.group === 'webs' ? 'Živý web' : 'Verejný zdroj'} ↗</a>` : ''}</div></div>`;
+    article.innerHTML = `<div class="gallery-description"><h3>${escapeHTML(project.name)}</h3><p class="eyebrow">${escapeHTML(project.kind)}</p><p>${escapeHTML(project.summary)}</p><span class="gallery-status">${escapeHTML(project.status)}</span><div class="gallery-actions"><a href="#projekt/${project.id}" class="button gallery-open">Prejsť projekt <span>→</span></a>${project.url ? `<a href="${escapeHTML(project.url)}" class="gallery-external" target="_blank" rel="noopener noreferrer">${project.group === 'webs' ? 'Živý web' : 'Verejný zdroj'} ↗</a>` : ''}</div></div>`;
     const preview = artwork(project, root);
     preview.setAttribute('data-gallery-swipe', '');
     article.prepend(preview);
@@ -244,8 +254,13 @@ export function initProjectBrowser({
     document.body.classList.remove('project-viewer-open');
     const returnTo = opener?.isConnected
       ? opener
-      : root.querySelector(`[data-project-group="${previous?.group || 'webs'}"] .gallery-open`);
+      : root.querySelector(
+          continuous
+            ? `#stop-${previous?.id} .fragment-title-link`
+            : `[data-project-group="${previous?.group || 'webs'}"] .gallery-open`,
+        );
     returnTo?.focus({ preventScroll: true });
+    if (continuous) window.scrollTo({ top: returnScroll, behavior: 'instant' });
   }
 
   function closeViewer() {
@@ -256,8 +271,11 @@ export function initProjectBrowser({
     cleanupViewer();
     if (pushed) window.history.back();
     else {
-      window.history.replaceState(null, '', groupAnchor(group));
-      root.querySelector(groupAnchor(group))?.scrollIntoView?.({ block: 'start' });
+      const destination = continuous
+        ? `#stop-${group === 'webs' ? 'stylovy-chlpac' : 'corinex'}`
+        : groupAnchor(group);
+      window.history.replaceState(null, '', destination);
+      if (!continuous) root.querySelector(destination)?.scrollIntoView?.({ block: 'start' });
     }
   }
 
@@ -291,7 +309,7 @@ export function initProjectBrowser({
     dialog.dataset.project = id;
     dialog.dataset.group = project.group;
     dialog.querySelector('[data-case-name]').textContent = project.name;
-    const projects = projectsInGroup(project.group);
+    const projects = viewerProjects(project.group);
     const index = projects.findIndex((p) => p.id === id);
     dialog.querySelector('[data-case-counter]').textContent = `${index + 1} / ${projects.length}`;
     const next = projects[(index + 1) % projects.length];
@@ -306,6 +324,7 @@ export function initProjectBrowser({
       .querySelector('.case-switch [data-case-next]')
       .setAttribute('aria-label', `Ďalší projekt: ${next.name}`);
     if (!wasOpen) {
+      returnScroll = window.scrollY;
       oldOverflow = document.body.style.overflow;
       oldRootOverflow = document.documentElement.style.overflow;
       document.body.style.overflow = 'hidden';
@@ -337,7 +356,7 @@ export function initProjectBrowser({
 
   function moveProject(delta) {
     if (!current) return;
-    const projects = projectsInGroup(current.group);
+    const projects = viewerProjects(current.group);
     const index = projects.findIndex((p) => p.id === current.id);
     openProject(projects[(index + delta + projects.length) % projects.length].id, {
       direction: delta,
@@ -467,7 +486,7 @@ export function initProjectBrowser({
   );
   window.addEventListener('hashchange', syncRoute, options);
   bindProjectSwipe(scroller, moveProject, controller.signal, (target) =>
-    Boolean(target.closest('.scene-space')),
+    Boolean(target.closest('.case-content')),
   );
   syncRoute();
   return () => {

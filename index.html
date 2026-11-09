@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#eee7ff" />
+    <meta name="theme-color" content="#080b09" />
     <meta
       name="description"
       content="Denis Baláž — weby, digitálne produkty a pracovné postupy s AI. Príprava a implementácia grantových projektov v CASSIS Consult."
@@ -29,268 +29,285 @@
   </head>
   <body>
     <a class="skip" href="#main">Preskočiť na obsah</a>
-    <header class="nav-wrap">
+    <div class="boundary-field" aria-hidden="true">
+      <canvas id="signal-canvas"></canvas>
+      <div class="field-vignette"></div>
+      <div class="signal-axis"><i></i></div>
+      <span class="field-coordinate">d / work archive / 2026</span>
+    </div>
+    <header class="boundary-nav">
       <a class="brand" href="#svet" aria-label="Denis Baláž — úvod"
-        ><span class="brand-mark">d<span>↗</span></span
-        ><span>Denis<br />Baláž<span class="brand-dot">.</span></span></a
+        >d<span>↗</span><span class="brand-name">Denis Baláž</span></a
       >
-      <nav class="nav" aria-label="Hlavná navigácia">
-        <a href="#svet" class="active">Môj svet</a><a href="#projekty">Weby</a
-        ><a href="#granty">Eurofondy</a><a href="#o-mne">O mne</a>
-      </nav>
-      <a class="nav-contact" href="#kontakt">Poďme sa spojiť <span>↗</span></a>
-      <button
-        class="menu-toggle"
-        aria-label="Otvoriť navigáciu"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-      >
-        <span></span><span></span>
-      </button>
-      <nav id="mobile-menu" class="mobile-menu" aria-label="Mobilná navigácia" hidden>
-        <a href="#svet">Môj svet</a><a href="#projekty">Weby</a><a href="#granty">Eurofondy</a
-        ><a href="#o-mne">O mne</a><a href="#kontakt">Kontakt ↗</a>
-      </nav>
+      <details class="project-index">
+        <summary>Index prác <span>＋</span></summary>
+        <nav aria-label="Priamy výber projektu">
+          <a href="#stop-stylovy-chlpac"><span>01</span>Štýlový chlpáč</a
+          ><a href="#stop-zakazko"><span>02</span>Zákazko.sk</a
+          ><a href="#stop-corinex"><span>03</span>Corinex</a
+          ><a href="#stop-tornala"><span>04</span>Autokemping Tornaľa</a
+          ><a href="#stop-horna-kralova"><span>05</span>Knižnica Horná Kráľová</a
+          ><a href="#stop-eurofondova-agenda"><span>06</span>Od zámeru po implementáciu</a
+          ><a href="#o-mne"><span>07</span>O mne</a><a href="#kontakt"><span>08</span>Kontakt</a>
+        </nav>
+      </details>
+      <a class="boundary-contact" href="#kontakt">Spojme sa ↗</a>
     </header>
-    <aside class="chapter-nav" aria-label="Kapitoly">
-      <a href="#svet" aria-label="Úvod" class="active"><i></i></a>
-      <a href="#projekty" aria-label="Tvorba webov"><i></i></a>
-      <a href="#granty" aria-label="Grantové projekty"><i></i></a>
-      <a href="#o-mne" aria-label="O mne"><i></i></a>
-      <a href="#kontakt" aria-label="Kontakt"><i></i></a>
-    </aside>
-    <main id="main">
-      <section id="svet" class="hero" aria-labelledby="hero-heading">
-        <div class="hero-glow glow-one" aria-hidden="true"></div>
-        <div class="hero-glow glow-two" aria-hidden="true"></div>
-        <div class="hero-copy">
-          <p class="eyebrow hero-enter">
-            <span class="status-dot"></span> AI · weby · projektová práca
-          </p>
-          <h1 id="hero-heading">
-            <span class="hero-line">Vitaj v</span><span class="hero-line">mojom</span
-            ><span class="hero-line"
-              ><em>svete.</em><span class="title-spark" aria-hidden="true">✳</span></span
-            >
+    <div class="depth-readout" aria-hidden="true">
+      <span>HĹBKA</span><b id="depth-value">000</b><i></i><span>POSÚVAJ ↓</span>
+    </div>
+    <button type="button" id="signal-pause" class="motion-control" aria-pressed="false">
+      Pozastaviť pozadie
+    </button>
+    <main id="main" class="boundary-journey">
+      <div id="svet" class="journey-intro journey-node">
+        <div class="intro-copy">
+          <h1 aria-label="Na konci internetu.">
+            Na konci<br /><em class="signal-word" data-text="internetu.">internetu.</em>
           </h1>
-          <p class="hero-lead hero-enter">
-            Som Denis. Tvorím weby, digitálne produkty a pracovné postupy s AI. V CASSIS Consult
-            pripravujem a implementujem grantové projekty.
+          <p class="intro-description">Tu sa začína moja práca.</p>
+          <p class="intro-person">
+            Som Denis. Prepájam weby, digitálne produkty a AI s reálnou projektovou praxou.
           </p>
-          <div class="hero-actions hero-enter">
-            <a class="button primary" href="#projekty">Pozrieť moju prácu <span>↘</span></a
-            ><a class="text-link" href="#o-mne">Viac o mne <span>↗</span></a>
-          </div>
-        </div>
-        <div
-          class="world-stage"
-          aria-label="Ilustrácia vlastného digitálneho sveta — dokumenty, produkty a AI"
-        >
-          <div class="world-shadow" aria-hidden="true"></div>
-          <div class="world-parallax">
-            <div class="world-float">
-              <img
-                class="world-image"
-                src="/images/denis-world-1536.webp"
-                srcset="
-                  /images/denis-world-640.webp   640w,
-                  /images/denis-world-960.webp   960w,
-                  /images/denis-world-1536.webp 1536w
-                "
-                sizes="(max-width: 760px) 110vw, 68vw"
-                width="1536"
-                height="1024"
-                alt="Farebný priestorový ostrov s tvorivým štúdiom, dokumentmi a digitálnym pomocníkom"
-                fetchpriority="high"
-              />
-            </div>
-          </div>
-          <a class="world-label label-ai" href="#grant-implementacia"
-            ><span class="label-icon">✦</span
-            ><span>AI, ktorá pomáha<br /><b>v reálnej práci</b></span
-            ><i>↗</i></a
-          >
-          <a class="world-label label-design" href="#projekty"
-            ><span class="label-icon">◒</span><span>Nápad →<br /><b>použiteľný produkt</b></span
-            ><i>↗</i></a
+          <a class="journey-enter" href="#stop-stylovy-chlpac"
+            >Vstúp do mojich projektov <span>↓</span></a
           >
         </div>
-        <div class="hero-bottom">
-          <a href="#projekty"><span class="scroll-arrow">↓</span> Prejdi si moju prácu</a
-          ><span>Slovensko <i>✳</i> otvorený spolupráci</span>
+        <div class="boundary-seal" aria-hidden="true">
+          <span>ŽIADNY ĎALŠÍ ODKAZ.</span><b>IBA<br />HLBŠIE.</b><i>↓</i>
         </div>
-        <div class="hero-wave" aria-hidden="true"></div>
-      </section>
-
-      <section
-        id="projekty"
-        class="project-overview overview-web section-pad"
-        aria-labelledby="web-title"
+      </div>
+      <p id="project-route-status" class="route-status" role="status" tabindex="-1" hidden>
+        Tento odkaz na projekt nie je platný. Vyber si projekt z indexu prác.
+      </p>
+      <div id="projekty" class="journey-anchor"></div>
+      <article
+        id="stop-stylovy-chlpac"
+        class="journey-node project-stop stop-left"
+        data-stop="stylovy-chlpac"
+        aria-labelledby="title-stylovy-chlpac"
       >
-        <p id="project-route-status" class="route-status" role="status" tabindex="-1" hidden>
-          Tento odkaz na projekt nie je platný. Vyber si projekt z prehľadu nižšie.
-        </p>
-        <div class="section-kicker">
-          <span>01 / Tvorím weby</span><span>Vyber si projekt ↘</span>
-        </div>
-        <div class="overview-heading">
-          <h2 id="web-title">Každý projekt.<br /><em>Vlastný príbeh.</em></h2>
-          <p>
-            Weby, produkty a systémy, ktoré navrhujem a tvorím s AI. Vyber si projekt a prejdi si
-            jeho cestu od zadania po výsledok.
-          </p>
-        </div>
-        <div
-          class="project-gallery"
-          data-project-group="webs"
-          role="group"
-          aria-roledescription="karusel"
-          aria-label="Webové projekty"
-        >
-          <div class="gallery-card" data-gallery-card></div>
-          <div class="gallery-controls">
-            <div
-              class="gallery-selection"
-              data-gallery-selection
-              role="group"
-              aria-label="Vybrať webový projekt"
-            ></div>
-            <div class="gallery-arrows">
-              <span data-gallery-counter></span
-              ><button type="button" data-gallery-prev aria-label="Predchádzajúci webový projekt">
-                ←</button
-              ><button type="button" data-gallery-next aria-label="Ďalší webový projekt">→</button>
-            </div>
-          </div>
-          <p class="gallery-hint">Projekty prepínaš šípkami alebo potiahnutím do strán.</p>
-        </div>
-        <noscript
-          ><p>
-            <a href="https://stylovychlpac.sk/">Štýlový chlpáč ↗</a> ·
-            <a href="https://zakazko.sk/">Zákazko.sk ↗</a>
-          </p>
-          <p>Na interaktívne príbehy projektov je potrebný JavaScript.</p></noscript
-        >
-      </section>
-      <section
-        id="granty"
-        class="project-overview overview-grants section-pad"
-        aria-labelledby="grants-title"
-      >
-        <div class="section-kicker">
-          <span>02 / Pripravujem a implementujem eurofondy</span
-          ><span>CASSIS Consult · tímová práca</span>
-        </div>
-        <div class="overview-heading">
-          <h2 id="grants-title">Konkrétne projekty.<br /><em>Konkrétna práca.</em></h2>
-          <p>
-            Žiadosti, rozpočty, zmeny a podklady počas implementácie. Pri referenciách ukazujem
-            svoju úlohu a presne doložený stav podpory.
-          </p>
-        </div>
-        <div
-          class="project-gallery"
-          data-project-group="grants"
-          role="group"
-          aria-roledescription="karusel"
-          aria-label="Eurofondové projekty"
-        >
-          <div class="gallery-card" data-gallery-card></div>
-          <div class="gallery-controls">
-            <div
-              class="gallery-selection"
-              data-gallery-selection
-              role="group"
-              aria-label="Vybrať eurofondový projekt"
-            ></div>
-            <div class="gallery-arrows">
-              <span data-gallery-counter></span
-              ><button
-                type="button"
-                data-gallery-prev
-                aria-label="Predchádzajúci eurofondový projekt"
+        <div class="project-fragment">
+          <a
+            class="fragment-art"
+            href="#projekt/stylovy-chlpac"
+            tabindex="-1"
+            aria-hidden="true"
+            data-art="salon"
+            ><span class="fragment-serial">WEB / 01</span>
+            <div class="fragment-preview" data-preview="stylovy-chlpac"></div>
+            <span class="fragment-corner">↗</span></a
+          >
+          <div class="fragment-copy">
+            <h2 id="title-stylovy-chlpac">
+              <a class="fragment-title-link" href="#projekt/stylovy-chlpac"
+                >Štýlový chlpáč<span>↗</span></a
               >
-                ←</button
-              ><button type="button" data-gallery-next aria-label="Ďalší eurofondový projekt">
-                →
-              </button>
-            </div>
+            </h2>
+            <p class="fragment-kind">Web · rezervácie · administrácia</p>
+            <p>Od potrieb salónu po web a vlastnú správu prevádzky.</p>
+            <a class="fragment-link" href="#projekt/stylovy-chlpac"
+              >Otvoriť celý príbeh <span>→</span></a
+            >
           </div>
-          <p class="gallery-hint">
-            Uvedená podpora patrí prijímateľom. Na projektoch pracujeme ako tím.
-          </p>
+          <span class="fragment-number" aria-hidden="true">01</span>
         </div>
-        <noscript
-          ><p>
-            Corinex — pracovné balíky, projektové podklady a anotácia. Autokemping Tornaľa —
-            podklady k žiadosti a administratíva počas realizácie. Knižnica Horná Kráľová —
-            rozpočtové podklady, prílohy a koordinácia pred zmluvou.
-          </p></noscript
-        >
-      </section>
-      <section id="o-mne" class="about section-pad" aria-labelledby="about-title">
-        <div class="about-visual reveal">
-          <div class="about-orbit" aria-hidden="true">
-            <span>TVORÍM · UČÍM SA · OVERUJEM ·</span>
+      </article>
+      <article
+        id="stop-zakazko"
+        class="journey-node project-stop stop-right"
+        data-stop="zakazko"
+        aria-labelledby="title-zakazko"
+      >
+        <div class="project-fragment">
+          <a
+            class="fragment-art"
+            href="#projekt/zakazko"
+            tabindex="-1"
+            aria-hidden="true"
+            data-art="quotes"
+            ><span class="fragment-serial">PRODUKT / 02</span>
+            <div class="fragment-preview" data-preview="zakazko"></div>
+            <span class="fragment-corner">↗</span></a
+          >
+          <div class="fragment-copy">
+            <h2 id="title-zakazko">
+              <a class="fragment-title-link" href="#projekt/zakazko">Zákazko.sk<span>↗</span></a>
+            </h2>
+            <p class="fragment-kind">Vlastný digitálny produkt</p>
+            <p>Jedna zákazka. Spoločné údaje. Tri nadväzujúce dokumenty.</p>
+            <a class="fragment-link" href="#projekt/zakazko">Otvoriť celý príbeh <span>→</span></a>
           </div>
-          <div class="about-monogram">d<span>↗</span></div>
-          <div class="about-sticker">Zvedavosť<br />je začiatok. <span>✳</span></div>
-          <p>Denis Baláž<br /><span>Slovensko · 2026</span></p>
+          <span class="fragment-number" aria-hidden="true">02</span>
         </div>
-        <div class="about-copy">
-          <p class="eyebrow reveal">03 / Človek za projektmi</p>
-          <h2 id="about-title" class="reveal">Baví ma vedieť,<br /><em>čo je za tým.</em></h2>
-          <p class="about-lead reveal">Od nápadu po verziu, ktorá sa dá vyskúšať.</p>
-          <p class="reveal">
-            Pri digitálnych projektoch riešim návrh, texty, používateľský postup aj technickú
-            realizáciu s podporou AI. Skúšam jednotlivé scenáre a zapracúvam spätnú väzbu.
-          </p>
-          <p class="reveal">
-            Z grantovej praxe si prenášam prácu s podkladmi, termínmi a nadväzujúcimi krokmi. Chcem
-            rozumieť tomu, pre koho riešenie vzniká, čo má zjednodušiť a ako spoznám, že funguje.
-          </p>
-          <div class="about-skills reveal">
-            <span>Návrh produktov</span><span>AI v praxi</span><span>UX/UI & prototypy</span
-            ><span>Príprava a implementácia grantov</span>
+      </article>
+      <div id="granty" class="journey-anchor"></div>
+      <article
+        id="stop-corinex"
+        class="journey-node project-stop stop-left"
+        data-stop="corinex"
+        aria-labelledby="title-corinex"
+      >
+        <div class="project-fragment">
+          <a
+            class="fragment-art"
+            href="#projekt/corinex"
+            tabindex="-1"
+            aria-hidden="true"
+            data-art="corinex"
+            ><span class="fragment-serial">PROJEKT / 03</span>
+            <div class="fragment-preview" data-preview="corinex"></div>
+            <span class="fragment-corner">↗</span></a
+          >
+          <div class="fragment-copy">
+            <h2 id="title-corinex">
+              <a class="fragment-title-link" href="#projekt/corinex">Corinex<span>↗</span></a>
+            </h2>
+            <p class="fragment-kind">Výskum a inovácie · CASSIS Consult</p>
+            <p>Pracovné balíky, projektové podklady a anotácia. Moja časť tímovej práce.</p>
+            <a class="fragment-link" href="#projekt/corinex">Otvoriť celý príbeh <span>→</span></a>
           </div>
+          <span class="fragment-number" aria-hidden="true">03</span>
         </div>
-      </section>
-
-      <section id="kontakt" class="contact section-pad" aria-labelledby="contact-title">
-        <div class="contact-decor" aria-hidden="true">✳</div>
-        <p class="eyebrow reveal">
-          <span class="status-dot"></span> Externá spolupráca · tímové projekty
-        </p>
-        <h2 id="contact-title" class="reveal">Čo vytvoríme<br /><em>spoločne?</em></h2>
-        <p class="reveal">
-          Hľadáš kolegu na web, digitálny produkt alebo zlepšenie pracovného postupu?<br />Ozvi sa a
-          prejdime si, s čím viem pomôcť.
-        </p>
-        <a class="email-link reveal" href="mailto:denisbalaz965@gmail.com"
-          >denisbalaz965@gmail.com <span>↗</span></a
-        ><a class="phone-link reveal" href="tel:+421948835138">+421 948 835 138 <span>↗</span></a>
-        <div class="contact-actions reveal">
-          <button class="button dark" id="copy-email">Skopírovať e-mail <span>↗</span></button
-          ><a
-            class="text-link"
+      </article>
+      <article
+        id="stop-tornala"
+        class="journey-node project-stop stop-right"
+        data-stop="tornala"
+        aria-labelledby="title-tornala"
+      >
+        <div class="project-fragment">
+          <a
+            class="fragment-art"
+            href="#projekt/tornala"
+            tabindex="-1"
+            aria-hidden="true"
+            data-art="camp"
+            ><span class="fragment-serial">PROJEKT / 04</span>
+            <div class="fragment-preview" data-preview="tornala"></div>
+            <span class="fragment-corner">↗</span></a
+          >
+          <div class="fragment-copy">
+            <h2 id="title-tornala">
+              <a class="fragment-title-link" href="#projekt/tornala"
+                >Autokemping Tornaľa<span>↗</span></a
+              >
+            </h2>
+            <p class="fragment-kind">Cestovný ruch · CASSIS Consult</p>
+            <p>Od podkladov k žiadosti po administratívu počas realizácie.</p>
+            <a class="fragment-link" href="#projekt/tornala">Otvoriť celý príbeh <span>→</span></a>
+          </div>
+          <span class="fragment-number" aria-hidden="true">04</span>
+        </div>
+      </article>
+      <article
+        id="stop-horna-kralova"
+        class="journey-node project-stop stop-left"
+        data-stop="horna-kralova"
+        aria-labelledby="title-horna-kralova"
+      >
+        <div class="project-fragment">
+          <a
+            class="fragment-art"
+            href="#projekt/horna-kralova"
+            tabindex="-1"
+            aria-hidden="true"
+            data-art="library"
+            ><span class="fragment-serial">PROJEKT / 05</span>
+            <div class="fragment-preview" data-preview="horna-kralova"></div>
+            <span class="fragment-corner">↗</span></a
+          >
+          <div class="fragment-copy">
+            <h2 id="title-horna-kralova">
+              <a class="fragment-title-link" href="#projekt/horna-kralova"
+                >Knižnica Horná Kráľová<span>↗</span></a
+              >
+            </h2>
+            <p class="fragment-kind">Obnova verejnej budovy · CASSIS Consult</p>
+            <p>Rozpočtové podklady, prílohy a koordinácia pred uzavretím zmluvy.</p>
+            <a class="fragment-link" href="#projekt/horna-kralova"
+              >Otvoriť celý príbeh <span>→</span></a
+            >
+          </div>
+          <span class="fragment-number" aria-hidden="true">05</span>
+        </div>
+      </article>
+      <article
+        id="stop-eurofondova-agenda"
+        class="journey-node project-stop stop-right"
+        data-stop="eurofondova-agenda"
+        aria-labelledby="title-eurofondova-agenda"
+      >
+        <div class="project-fragment">
+          <a
+            class="fragment-art"
+            href="#projekt/eurofondova-agenda"
+            tabindex="-1"
+            aria-hidden="true"
+            data-art="agenda"
+            ><span class="fragment-serial">POSTUP / 06</span>
+            <div class="fragment-preview" data-preview="eurofondova-agenda"></div>
+            <span class="fragment-corner">↗</span></a
+          >
+          <div class="fragment-copy">
+            <h2 id="title-eurofondova-agenda">
+              <a class="fragment-title-link" href="#projekt/eurofondova-agenda"
+                >Od zámeru po implementáciu<span>↗</span></a
+              >
+            </h2>
+            <p class="fragment-kind">Grantová agenda · CASSIS Consult</p>
+            <p>Žiadosti, rozpočty, zmeny, platby a termíny. Takto na seba moja práca nadväzuje.</p>
+            <a class="fragment-link" href="#projekt/eurofondova-agenda"
+              >Otvoriť celý príbeh <span>→</span></a
+            >
+          </div>
+          <span class="fragment-number" aria-hidden="true">06</span>
+        </div>
+      </article>
+      <div id="o-mne" class="journey-node personal-stop">
+        <div class="personal-copy">
+          <h2>Zvedavosť.<br /><em>Potom realizácia.</em></h2>
+          <p>
+            Pri digitálnych projektoch riešim návrh, texty, používateľský postup aj realizáciu s
+            podporou AI. Skúšam scenáre a zapracúvam spätnú väzbu.
+          </p>
+          <p>
+            V CASSIS Consult pripravujem a implementujem grantové projekty. Práca s podkladmi,
+            termínmi a súvislosťami je základ, ktorý prenášam aj do digitálnych riešení.
+          </p>
+          <p class="personal-signature">Denis Baláž <span>Weby / AI / Projektová práca</span></p>
+        </div>
+      </div>
+      <div id="kontakt" class="journey-node contact-stop">
+        <div class="contact-fragment">
+          <h2>Si tu.<br /><em>Čo vytvoríme?</em></h2>
+          <p>
+            Hľadám prácu na diaľku na weboch, digitálnych produktoch a zlepšovaní pracovných
+            postupov.
+          </p>
+          <p class="employment-note">Pracovná zmluva alebo dohoda</p>
+          <a class="email-link" href="mailto:denisbalaz965@gmail.com">denisbalaz965@gmail.com ↗</a
+          ><a class="phone-link" href="tel:+421948835138">+421 948 835 138 ↗</a>
+          <div class="contact-actions">
+            <button class="button" id="copy-email">Skopírovať e-mail ↗</button
+            ><span id="copy-status" role="status"></span>
+          </div>
+          <a
+            class="source-code"
             href="https://github.com/denisbalaz965-gif/denis-portfoolio"
             target="_blank"
             rel="noopener noreferrer"
-            >Pozrieť kód na GitHube <span>↗</span></a
-          ><span id="copy-status" role="status"></span>
+            >Pozrieť kód na GitHube ↗</a
+          ><a class="back-to-surface" href="#svet">Späť na povrch ↑</a>
         </div>
-        <footer>
-          <a class="footer-brand" href="#svet">Denis Baláž<span>✳</span></a
-          ><span>AI · weby · projektová práca</span><a href="#svet">Späť na úvod ↑</a>
-        </footer>
-      </section>
+      </div>
     </main>
 
     <dialog id="project-viewer" class="project-viewer" aria-labelledby="case-title">
       <div class="case-scroll">
         <div class="case-page">
           <header class="case-toolbar">
-            <button type="button" data-case-close>← <span>Všetky projekty</span></button>
+            <button type="button" data-case-close>× <span>Zavrieť príbeh</span></button>
             <p data-case-name></p>
             <span class="sr-only" data-case-announcement role="status" aria-atomic="true"></span>
             <div class="case-switch">
@@ -304,7 +321,7 @@
             <p>Každý projekt má svoj príbeh.</p>
             <button type="button" data-case-next class="case-next-large">
               Ďalší projekt <span>→</span></button
-            ><button type="button" data-case-close>Späť na všetky projekty</button
+            ><button type="button" data-case-close>Späť do priestoru</button
             ><a href="mailto:denisbalaz965@gmail.com">Poďme sa spojiť ↗</a>
           </footer>
         </div>

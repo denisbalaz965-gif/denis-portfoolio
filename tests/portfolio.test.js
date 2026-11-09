@@ -32,34 +32,28 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe('Mobile navigation', () => {
-  it('opens, then closes with Escape and returns focus to its button', () => {
+describe('Project index', () => {
+  it('closes with Escape and returns focus to its summary', () => {
     dispose = initNavigation();
-    const toggle = document.querySelector('.menu-toggle');
-    toggle.click();
-    expect(document.querySelector('#mobile-menu').hidden).toBe(false);
-    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    const menu = document.querySelector('.project-index');
+    menu.open = true;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-    expect(document.querySelector('#mobile-menu').hidden).toBe(true);
-    expect(document.activeElement).toBe(toggle);
+    expect(menu.open).toBe(false);
+    expect(document.activeElement).toBe(menu.querySelector('summary'));
   });
-
   it('closes after choosing a destination', () => {
     dispose = initNavigation();
-    document.querySelector('.menu-toggle').click();
-    document.querySelector('#mobile-menu a[href="#granty"]').click();
-    expect(document.querySelector('#mobile-menu').hidden).toBe(true);
+    const menu = document.querySelector('.project-index');
+    menu.open = true;
+    menu.querySelector('a[href="#stop-corinex"]').click();
+    expect(menu.open).toBe(false);
   });
-
-  it('closes an open menu when the layout crosses to desktop', () => {
+  it('closes when clicking outside the index', () => {
     dispose = initNavigation();
-    document.querySelector('.menu-toggle').click();
-    const media = window.matchMedia.mock.results[0].value;
-    const event = new Event('change');
-    Object.defineProperty(event, 'matches', { value: true });
-    media.dispatchEvent(event);
-    expect(document.querySelector('#mobile-menu').hidden).toBe(true);
-    expect(document.querySelector('.menu-toggle').getAttribute('aria-expanded')).toBe('false');
+    const menu = document.querySelector('.project-index');
+    menu.open = true;
+    document.querySelector('.brand').click();
+    expect(menu.open).toBe(false);
   });
 });
 
@@ -132,23 +126,46 @@ describe('Project selection and full-page stories', () => {
     mountStories.mockClear();
   });
 
-  it('changes the manual selection without opening or lengthening a story', () => {
+  it('offers six ordered fragments without mounting long articles on the main page', () => {
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('[data-project-group="webs"] [data-gallery-next]').click();
-    expect(document.querySelector('[data-project-group="webs"] h3').textContent).toBe('Zákazko.sk');
-    expect(
-      document.querySelector('[data-project-group="webs"] [data-gallery-counter]').textContent,
-    ).toBe('02 / 02');
+    expect([...document.querySelectorAll('[data-stop]')].map((node) => node.dataset.stop)).toEqual([
+      'stylovy-chlpac',
+      'zakazko',
+      'corinex',
+      'tornala',
+      'horna-kralova',
+      'eurofondova-agenda',
+    ]);
     expect(document.querySelector('dialog').open).toBe(false);
     expect(document.querySelector('main [data-story]')).toBeNull();
     expect(mountStories).not.toHaveBeenCalled();
+  });
+  it('cycles between all six projects across web and grant work', () => {
+    dispose = initProjectBrowser({ animate: false, mountStories });
+    document.querySelector('#stop-zakazko .fragment-title-link').click();
+    document.querySelector('.case-switch [data-case-next]').click();
+    expect(document.querySelector('dialog').dataset.project).toBe('corinex');
+    expect(document.querySelector('[data-case-counter]').textContent).toBe('3 / 6');
+    document.querySelector('.case-switch [data-case-prev]').click();
+    expect(document.querySelector('dialog').dataset.project).toBe('zakazko');
+  });
+  it('restores the exact main-page position after closing the reader', () => {
+    const restore = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    vi.spyOn(window, 'scrollY', 'get').mockReturnValue(1374);
+    dispose = initProjectBrowser({ animate: false, mountStories });
+    document.querySelector('.fragment-title-link').click();
+    document.querySelector('.case-switch [data-case-next]').click();
+    document.querySelector('[data-case-close]').click();
+    expect(restore).toHaveBeenLastCalledWith({ top: 1374, behavior: 'instant' });
+    restore.mockRestore();
+    vi.restoreAllMocks();
   });
 
   it('mounts only the opened story and disposes it before switching projects', () => {
     const teardown = vi.fn();
     mountStories.mockReturnValueOnce(teardown).mockReturnValue(() => {});
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('.gallery-open').click();
+    document.querySelector('.fragment-title-link').click();
     expect(document.querySelector('dialog').open).toBe(true);
     expect(document.querySelector('.case-content [data-story]').dataset.story).toBe('web');
     expect(location.hash).toBe('#projekt/stylovy-chlpac');
@@ -171,27 +188,27 @@ describe('Project selection and full-page stories', () => {
     expect(document.querySelector('dialog').open).toBe(false);
     expect(document.querySelector('.case-content').children).toHaveLength(0);
     expect(document.body.style.overflow).toBe('');
-    expect(location.hash).toBe('#granty');
+    expect(location.hash).toBe('#stop-corinex');
     expect(document.activeElement).toBe(
-      document.querySelector('[data-project-group="grants"] .gallery-open'),
+      document.querySelector('#stop-horna-kralova .fragment-title-link'),
     );
   });
 
   it('returns to the overview when browser history leaves the project route', () => {
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('.gallery-open').click();
+    document.querySelector('.fragment-title-link').click();
     window.history.replaceState(null, '', '/#projekty');
     window.dispatchEvent(new PopStateEvent('popstate'));
     expect(document.querySelector('dialog').open).toBe(false);
     expect(document.querySelector('.case-content').children).toHaveLength(0);
-    expect(document.activeElement.classList.contains('gallery-open')).toBe(true);
+    expect(document.activeElement.classList.contains('fragment-title-link')).toBe(true);
   });
 
   it('ignores a delayed close event from a previous project after a new one opens', () => {
     window.history.replaceState(null, '', '/#projekt/stylovy-chlpac');
     dispose = initProjectBrowser({ animate: false, mountStories });
     document.querySelector('[data-case-close]').click();
-    document.querySelector('[data-project-group="grants"] .gallery-open').click();
+    document.querySelector('#stop-corinex .fragment-title-link').click();
     const dialog = document.querySelector('dialog');
     expect(dialog.dataset.project).toBe('corinex');
     dialog.dispatchEvent(new Event('close'));
@@ -228,7 +245,7 @@ describe('Audit regressions', () => {
 
   it('moves focus from a removed story control to the new project heading', () => {
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('.gallery-open').click();
+    document.querySelector('.fragment-title-link').click();
     const step = document.querySelector('dialog .story-index a');
     step.focus();
     step.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
@@ -249,7 +266,7 @@ describe('Audit regressions', () => {
       },
       { once: true },
     );
-    document.querySelector('.gallery-open').dispatchEvent(
+    document.querySelector('.fragment-title-link').dispatchEvent(
       new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
@@ -262,7 +279,7 @@ describe('Audit regressions', () => {
 
   it.each(['%E0%A4%A', 'projekt-neexistuje'])('recovers from invalid project address %s', (id) => {
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('.gallery-open').click();
+    document.querySelector('.fragment-title-link').click();
     window.history.replaceState(null, '', `/#projekt/${id}`);
     expect(() => window.dispatchEvent(new HashChangeEvent('hashchange'))).not.toThrow();
     expect(document.querySelector('dialog').open).toBe(false);
@@ -277,7 +294,7 @@ describe('Audit regressions', () => {
 
   it('switches real captures without showing multiple panels or losing button focus', () => {
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('.gallery-open').click();
+    document.querySelector('.fragment-title-link').click();
     const button = document.querySelector('[data-salon-view="admin"]');
     button.focus();
     button.click();
