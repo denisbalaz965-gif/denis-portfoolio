@@ -40,10 +40,16 @@ colors:
 typography:
   display:
     fontFamily: 'Instrument, Arial, sans-serif'
-    fontSize: 'clamp(64px, 8vw, 96px)'
+    fontSize: 'clamp(60px, 8vw, 96px)'
     fontWeight: 700
-    lineHeight: 0.94
+    lineHeight: 0.98
     letterSpacing: '-0.04em'
+  intro-services:
+    fontFamily: 'Instrument, Arial, sans-serif'
+    fontSize: 'clamp(40px, 5vw, 68px)'
+    fontWeight: 700
+    lineHeight: 1.02
+    letterSpacing: '-0.035em'
   headline:
     fontFamily: 'Instrument, Arial, sans-serif'
     fontSize: 'clamp(50px, 6.3vw, 88px)'
@@ -180,7 +186,7 @@ components:
 
 **Creative North Star: "Na konci internetu"**
 
-“Na konci internetu” begins with one large crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. Procedural fog, a faint axis and sparse debris connect the whole journey.
+“Na konci internetu” begins with one large crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. An upper-left identity, lower-left crystal and right-hand work statement give the opening its asymmetric composition. Procedural fog, a faint axis and sparse debris connect the whole journey.
 
 Native HTML holograms make the 3D projects readable. The story action gently opens and expands its selected fragment over 560ms, then enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.
 
@@ -195,7 +201,7 @@ Native HTML holograms make the 3D projects readable. The story action gently ope
 
 ## Colors
 
-The world uses green-black, phosphor actions and a procedural obsidian surface. `world-finish.css`, imported last after `fragment-reader.css`, owns the final visual hierarchy, holograms, reading panels and contact. The earlier styles retain the native fallback. The colours in the frontmatter are CSS values; the material shader derives reflections and facets procedurally rather than using one flat body colour.
+The world uses green-black, phosphor actions and a procedural obsidian surface. `world-finish.css`, imported after `fragment-reader.css`, owns the holograms, reading panels and contact. The final import, `intro.css`, owns the opening composition and its responsive typography. The earlier styles retain the native fallback. The colours in the frontmatter are CSS values; the material shader derives reflections and facets procedurally rather than using one flat body colour.
 
 ### Primary
 
@@ -226,7 +232,8 @@ The fog shader builds continuously varying green from noise rather than a static
 
 ### Hierarchy
 
-- **Display:** Instrument Sans 700, `clamp(64px, 8vw, 96px)`, line-height (.94), tracking (-.04em); mobile `clamp(46px, 13.6vw, 78px)`.
+- **Display:** the opening identity uses the normative display role above; mobile `clamp(43px, 13vw, 64px)`.
+- **Intro services:** the separate work statement uses the normative intro-services role above; mobile `clamp(27px, 7.2vw, 36px)` with line-height (1.05). Supporting copy is (16px / 1.65), (18px) above (1500px), and (13px / 1.5) on mobile.
 - **Contact:** `clamp(50px, 6.3vw, 88px)`; mobile `clamp(40px, 10vw, 64px)`.
 - **Hologram:** (30px) title / (14px, 1.6) summary / (11px) category; mobile title (29px).
 - **Reader introduction:** `clamp(48px, 4.9vw, 88px)`; mobile `clamp(37px, 10vw, 56px)`.
@@ -242,7 +249,7 @@ With WebGL ready, the flight track is (420svh) high on desktop and (390svh) at w
 
 The primary beacon uses a generous invisible hit area (130 × 140px). Distant project hit areas shrink to (54 × 54px). Projection positions the HTML controls beside their geometry. A hologram is at most (320px) wide, constrained to viewport width minus (40px), and clamped away from screen edges. Its invisible bridge spans the gap between target and panel so pointer travel does not close the reveal.
 
-The intro sits at (7.5%) from the left and (30%) from the top, switching to (9%) left above (1500px). Its text occupies (57%) width. Mobile uses (26px) left and (22%) top; contact uses (18%) / (22%) desktop and (26px) / (20%) mobile. The contact headline, mail and copy action share the phosphor palette. The project HUD fades with contact progression, preventing a stale project name from colliding with the return link.
+The opening identity sits at (8%) left / (14%) top. Its crystal is centred at normalized screen coordinates (.32, .59), scale (2.05), while the work statement sits at (61%) left / (29%) top, width (32%); above (1500px), it moves to (32%) top and (28%) width. Mobile places the identity at (26px) / (17%), crystal at (.55, .435), scale (1.05), and work at (26px) / (61%). Below (680px) height, the mobile crystal moves to (.55, .39), scale (.8); below (600px) width and (680px) height, work starts at (55%). Short landscape separates identity on the left and work on the right. Contact uses (18%) / (22%) desktop and (26px) / (20%) mobile. The contact headline, mail and copy action share the phosphor palette. The project HUD fades with contact progression, preventing a stale project name from colliding with the return link.
 
 The WebGL story reader occupies the full viewport, with the main flight DOM hidden/inert and the shared canvas retained. Its toolbar and sticky-stage offset are (80px) desktop and (64px) mobile. Desktop text starts at (49%) left / (6svh) stage top, width `min(760px, 46%)`, max-height `calc(100svh - 200px)`, padding (24px 34px 36px). Above (1500px), it starts at (50%) / (9svh), padding (30px 42px 44px). Mobile uses (24px) left, (23svh) stage top, width `calc(100% - 48px)`, max-height `calc(77svh - 182px)`, padding (23px 0 24px). Long evidence remains internally scrollable. Low landscape uses (43%) left, (53%) width and a viewport-bound height.
 
@@ -304,9 +311,9 @@ Four green corners track mouse movement only under `(hover: hover) and (pointer:
 
 ### Background, pause and fallback
 
-Three.js (0.182.0) renders the field with a capped pixel ratio (1.25 desktop / 1 mobile). Pause freezes autonomous drift while scroll travel remains available. Hologram/story locks stop main-flight interpolation and ambient drift. The story camera separately interpolates its chapter progress, so scrolling still moves between story fragments. Rendering stops while the page is hidden. On renderer creation failure or context loss, the native HTML project list and the restored original article remain accessible; no publication or device-performance result follows from having that fallback in source.
+Three.js (0.182.0) uses `scenePixelRatio()` to cap the scene at (1,000,000 pixels / .9 pixel ratio) on desktop and (550,000 pixels / 1 pixel ratio) on mobile, also respecting device pixel ratio. Procedural fog is cached in a render target with maximum dimension (448px), refreshed about every (50ms) or sooner during faster travel; its composite uses the actual scene buffer resolution. Project controls move with transforms, use cached references and skip hidden DOM work. Pause freezes autonomous drift while scroll travel remains available. Hologram/story locks stop main-flight interpolation and ambient drift. The story camera separately interpolates its chapter progress, so scrolling still moves between story fragments. Rendering stops while the page is hidden. On renderer creation failure or context loss, the native HTML project list and the restored original article remain accessible; no publication or device-performance result follows from having that fallback in source.
 
-The intro uses a clean phosphor word rather than the former static duplicated title slice. Motion is locally active even when the system requests reduced motion; the pause control is not a global article-animation toggle.
+The intro uses a clean two-tone identity, a separate services statement, AI-assisted description and “Objaviť projekty” action. GSAP animates the identity and work children over (.6s) with (.1s) stagger; the renderer alone owns the outer wrapper’s scroll transform and opacity. Motion is locally active even when the system requests reduced motion; the pause control is not a global article-animation toggle.
 
 ## Do's and Don'ts
 

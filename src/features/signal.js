@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { scenePixelRatio, fogDimensions, introCrystalPose } from './render-policy.js';
 import { restoreFlightFallback } from './flight-fallback.js';
 import { makeCrystalPiece, makeChapterShard } from './fracture-geometry.js';
 import { createCrystalMaterial } from './crystal-material.js';
@@ -70,16 +71,28 @@ export function initSignal() {
     depthTest: false,
     depthWrite: false,
   });
-  const fog = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), fogMaterial);
+  const fogTarget = new THREE.WebGLRenderTarget(1, 1, { depthBuffer: false, stencilBuffer: false });
+  const fogScene = new THREE.Scene();
+  const fogSource = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), fogMaterial);
+  fogSource.frustumCulled = false;
+  fogScene.add(fogSource);
+  const fogDisplay = new THREE.ShaderMaterial({
+    uniforms: {
+      field: { value: fogTarget.texture },
+      resolution: { value: new THREE.Vector2(1, 1) },
+    },
+    vertexShader: fogVertex,
+    fragmentShader:
+      'uniform sampler2D field; uniform vec2 resolution; void main(){gl_FragColor=texture2D(field,gl_FragCoord.xy/resolution);}',
+    depthTest: false,
+    depthWrite: false,
+  });
+  const fog = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), fogDisplay);
   fog.frustumCulled = false;
   fog.renderOrder = -1000;
   scene.add(fog);
-  scene.add(new THREE.AmbientLight(0x8cef68, 2.1));
-  const light = new THREE.DirectionalLight(0xc5ffb0, 3);
-  light.position.set(2, 4, 5);
-  scene.add(light);
-  const fill = new THREE.PointLight(0x48ff77, 22, 25);
-  scene.add(fill);
+  let lastFogAt = -Infinity,
+    lastFogTravel = -Infinity;
   const positions = [0.85, -0.85, 0.75, -0.9, 0.85, -0.7];
   const projects = nodes.map((node, i) => {
     const group = new THREE.Group();
@@ -115,7 +128,18 @@ export function initSignal() {
     }
     group.scale.setScalar(0.72);
     scene.add(group);
-    return { group, node, x: positions[i], y: Math.sin(i * 3.1) * 0.35, z: -i * 7, material };
+    node.style.left = '0px';
+    node.style.top = '0px';
+    const beacon = node.querySelector('.fragment-beacon');
+    return {
+      group,
+      node,
+      beacon,
+      x: positions[i],
+      y: Math.sin(i * 3.1) * 0.35,
+      z: -i * 7,
+      material,
+    };
   });
   let entry = null,
     reader = null,
@@ -279,6 +303,12 @@ export function initSignal() {
   const contact = document.querySelector('.flight-contact');
   const flightProgress = document.querySelector('.flight-progress');
   const instruction = document.querySelector('.flight-instruction');
+  const depthValue = document.querySelector('#depth-value');
+  const currentLabel = document.querySelector('#flight-current');
+  const countLabel = document.querySelector('#flight-count');
+  let currentDepth = '';
+  const destination = new THREE.Vector3(),
+    merge = new THREE.Vector3();
   function readScroll() {
     target = flightAt(window.scrollY, start, distance);
     startDraw();
@@ -362,7 +392,6 @@ export function initSignal() {
         11 - progress * 7,
       );
     camera.lookAt(0, 0, camera.position.z - 10);
-    fill.position.copy(camera.position);
     fogMaterial.uniforms.time.value = phase;
     fogMaterial.uniforms.travel.value = progress;
     const primary = activeStop(progress);
@@ -378,18 +407,24 @@ export function initSignal() {
     const labelIndex = progress < 0.4 ? -1 : primary;
     if (lastActive !== labelIndex) {
       lastActive = labelIndex;
-      document.querySelector('#flight-current').textContent =
+      currentLabel.textContent =
         progress < 0.4 ? 'Objavuj posúvaním' : nodes[primary].querySelector('h2').textContent;
-      document.querySelector('#flight-count').textContent =
-        progress < 0.4 ? '00 / 06' : `0${primary + 1} / 06`;
+      countLabel.textContent = progress < 0.4 ? '00 / 06' : `0${primary + 1} / 06`;
     }
-    document.querySelector('#depth-value').textContent = String(
-      Math.round((progress / FLIGHT_END) * 999),
-    ).padStart(3, '0');
+    const depth = String(Math.round((progress / FLIGHT_END) * 999)).padStart(3, '0');
+    if (depth !== currentDepth) {
+      depthValue.textContent = depth;
+      currentDepth = depth;
+    }
     const fracture = introFracture(progress);
-    const merge = new THREE.Vector3(width < 761 ? 0 : 1.9, width < 761 ? -1.2 : 0, 4);
+    const pose = introCrystalPose(width, height);
+    merge.set(pose.x, pose.y, 4);
     projects.forEach((p, i) => {
-      const destination = new THREE.Vector3(
+      if (reader) {
+        p.group.visible = false;
+        return;
+      }
+      destination.set(
         p.x * (width < 761 ? 0.52 : 1) +
           Math.sin(i * 2.4) * Math.max(0, camera.position.z - p.z - 6) * 0.16,
         p.y +
@@ -398,7 +433,7 @@ export function initSignal() {
         p.z,
       );
       p.group.position.copy(merge).lerp(destination, fracture);
-      p.group.scale.setScalar(THREE.MathUtils.lerp(width < 761 ? 1.45 : 2.2, 0.66, fracture));
+      p.group.scale.setScalar(THREE.MathUtils.lerp(pose.scale, 0.66, fracture));
       p.group.rotation.set(
         THREE.MathUtils.lerp(0.25, 0.2 + Math.sin(phase * 0.15 + i) * 0.15, fracture),
         phase * 0.06 + THREE.MathUtils.lerp(0.4, i * 0.8, fracture),
@@ -424,6 +459,12 @@ export function initSignal() {
       p.material.uniforms.time.value = phase;
       const gap = camera.position.z - p.group.position.z;
       p.group.visible = !reader && gap > 1.3 && gap < 75 && ending < 0.9;
+      if (!p.group.visible || fracture <= 0.98 || entry) {
+        p.node.style.visibility = 'hidden';
+        p.node.classList.remove('is-approached');
+        p.beacon.tabIndex = -1;
+        return;
+      }
       screen.copy(p.group.position).project(camera);
       const x = (screen.x * 0.5 + 0.5) * width,
         y = (-screen.y * 0.5 + 0.5) * height;
@@ -437,13 +478,12 @@ export function initSignal() {
         y > 95 &&
         y < height - 90;
       p.node.style.visibility = visible ? 'visible' : 'hidden';
-      p.node.style.left = `${x}px`;
-      p.node.style.top = `${y}px`;
+      p.node.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
       p.node.classList.toggle('is-primary', i === primary && progress > 0.4);
       const approached =
         i === primary && progress > 0.4 && progress < 6.5 && Math.abs(target - progress) < 0.035;
       p.node.classList.toggle('is-approached', approached);
-      p.node.querySelector('.fragment-beacon').tabIndex = approached ? 0 : -1;
+      p.beacon.tabIndex = approached ? 0 : -1;
       p.node.style.setProperty(
         '--beacon-opacity',
         String(i === primary ? 1 : Math.max(0.3, 1 - gap / 65)),
@@ -479,6 +519,13 @@ export function initSignal() {
     debris.forEach((mesh, i) => {
       mesh.rotation.z += !paused && !locked ? dt * 0.025 * (i % 2 ? 1 : -1) : 0;
     });
+    if (time - lastFogAt > 50 || Math.abs(progress - lastFogTravel) > 0.08) {
+      renderer.setRenderTarget(fogTarget);
+      renderer.render(fogScene, camera);
+      renderer.setRenderTarget(null);
+      lastFogAt = time;
+      lastFogTravel = progress;
+    }
     renderer.render(scene, camera);
     if (
       entry ||
@@ -499,10 +546,14 @@ export function initSignal() {
     height = window.innerHeight;
     start = track.getBoundingClientRect().top + window.scrollY;
     distance = Math.max(1, track.offsetHeight - height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, width < 761 ? 1 : 1.25));
+    renderer.setPixelRatio(scenePixelRatio(width, height, window.devicePixelRatio));
     renderer.setSize(width, height, false);
     const size = renderer.getDrawingBufferSize(new THREE.Vector2());
-    fogMaterial.uniforms.resolution.value.copy(size);
+    fogDisplay.uniforms.resolution.value.copy(size);
+    const fieldSize = fogDimensions(width, height);
+    fogTarget.setSize(fieldSize.width, fieldSize.height);
+    fogMaterial.uniforms.resolution.value.set(fieldSize.width, fieldSize.height);
+    lastFogAt = -Infinity;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     readScroll();
@@ -591,6 +642,9 @@ export function initSignal() {
     });
     geometries.forEach((g) => g.dispose());
     materials.forEach((m) => m.dispose());
+    fogSource.geometry.dispose();
+    fogMaterial.dispose();
+    fogTarget.dispose();
     renderer.dispose();
     document.body.classList.remove('flight-ready', 'flight-fallback');
   };

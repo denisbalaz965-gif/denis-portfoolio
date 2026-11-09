@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-09T14:13:42.487318+00:00",
+  "generatedAt": "2026-11-09T15:28:20.473993+00:00",
   "title": "Design System: Denis Baláž — Na konci internetu",
   "extensions": {
     "colorMeta": {
@@ -309,7 +309,7 @@
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Opening statement."
+        "purpose": "Opening identity: Denis Baláž."
       },
       "headline": {
         "displayName": "Headline",
@@ -342,6 +342,10 @@
       "reader-body": {
         "displayName": "Reader Body",
         "purpose": "Full chapter and evidence text."
+      },
+      "intro-services": {
+        "displayName": "Intro Services",
+        "purpose": "Separate opening work statement: Weby. AI. Projektová práca."
       }
     },
     "shadows": [
@@ -498,7 +502,7 @@
   ],
   "narrative": {
     "northStar": "Na konci internetu",
-    "overview": "“Na konci internetu” begins with one large faceted hexagonal crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. Procedural fog, a faint axis and sparse debris connect the whole journey.\n\nNative HTML holograms make the 3D projects readable. The story action gently opens and expands its selected fragment over 560ms, then enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.\n\nThe finished visual system uses cut obsidian/phosphor reflections, contour fog and real spatial filaments. Larger editorial titles balance volumetric chapter objects and a decorative sequence numeral. The final contact fades the stale project HUD away. `world-finish.css` is the final visual authority.",
+    "overview": "“Na konci internetu” begins with one large crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. An upper-left identity, lower-left crystal and right-hand work statement give the opening its asymmetric composition. Procedural fog, a faint axis and sparse debris connect the whole journey.\n\nNative HTML holograms make the 3D projects readable. The story action gently opens and expands its selected fragment over 560ms, then enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.",
     "keyCharacteristics": [
       "One large crystal reversibly separates into the six actual project pieces.",
       "A primary project, smaller surrounding fragments and readable HTML holograms.",

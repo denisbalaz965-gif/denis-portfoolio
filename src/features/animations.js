@@ -6,10 +6,11 @@ export function refreshAnimations() {
 }
 export function initAnimations() {
   const context = gsap.context(() => {
-    gsap.from('.flight-intro', {
+    gsap.from('.intro-identity,.intro-work', {
       opacity: 0,
       y: 18,
-      duration: 1,
+      duration: 0.6,
+      stagger: 0.1,
       ease: 'power3.out',
       clearProps: 'all',
     });

@@ -6,6 +6,8 @@ Portfólio „Na konci internetu“ tvorí jeden fosforovo zelený WebGL priesto
 
 ## Pracovná činnosť
 
+Úvod oddeľuje meno Denis Baláž vľavo hore, zachovaný kryštál pod ním a pracovné zameranie vpravo: „Weby. AI. Projektová práca.“ Popis výslovne uvádza podporu AI; tlačidlo „Objaviť projekty“ vstupuje do existujúceho letu. Mobil skladá identitu, kryštál a pracovný blok zvislo.
+
 Na začiatku je jeden členitý šesťboký kryštál zložený zo šiestich uzavretých nepravidelných projektových dielov. Prvý scroll ho rozdelí na projekty; spätný scroll ich spojí. Ďalej scroll ovláda let kamery cez šesť projektov: Štýlový chlpáč, Zákazko.sk, Corinex, Autokemping Tornaľa, Knižnica Horná Kráľová a Eurofondová agenda. Jeden projekt je hlavný, ostatné zostávajú menšie v hĺbke. Dráha má 420svh na počítači a 390svh na mobile. Malý index presúva kameru na projekt alebo záverečný kontakt; osobné predstavenie sa rozbaľuje pri kontakte.
 
 Myšou sa hologram odhalí pri priblížení k projektu, klávesnicou fokusom a na dotykovom zariadení prvým ťuknutím. Odkaz „Otvoriť príbeh“ nechá vybraný úlomok počas 560ms pokojne sa otvoriť a rozvinúť a potom otvorí príbeh. Escape alebo natívne Späť v prehliadači zruší čakajúci vstup. Priamy projektový odkaz sa otvorí okamžite; pri strate WebGL sa vstup dokončí cez fallback. Väčšia neviditeľná plocha cieľa a mostík k panelu udržujú náhľad pri presune kurzora. Odhalenie zastaví aj prebiehajúci plynulý posun. Počas hologramu a príbehu stojí hlavný let. Príbeh má vlastný pohyb kamery medzi kapitolami.
@@ -60,6 +62,8 @@ DESIGN.md                  Aktuálny vizuálny systém a normatívne tokeny
 
 `dist/` je generovaný výstup príkazu `npm run build` a nie je verzovaný. Vite používa relatívne cesty, aby výsledok fungoval aj v podpriečinku. Podrobnosti sú v [architektúre](docs/architecture.md).
 
+Vykresľovanie obmedzuje počet pixelov scény podľa veľkosti okna a hustoty displeja. Náročná procedurálna hmla sa počíta do menšieho priebežne obnovovaného zásobníka; HTML text zostáva ostrý. Projektové prvky sa presúvajú transformáciami s uloženými odkazmi na DOM.
+
 ## Overovanie
 
 `npm run check` spúšťa formátovanie, ESLint, Vitest/jsdom testy a produkčný build. Testy pokrývajú aj model letu, polohu hologramov, navigáciu, kontakt, adresy projektov, históriu a čítanie príbehov. jsdom neoveruje výsledný WebGL obraz ani fyzický pohyb myši a dotyku. Hologramy, presun kurzora cez mostík, gestá, návrat na uložený scroll a mobilné rozloženie sa kontrolujú v skutočnom prehliadači. Výsledok konkrétneho behu testov, CI a nasadenia sú samostatné stavy.
@@ -72,7 +76,7 @@ GitHub Actions pri pushi a pull requeste spúšťajú `npm run check`.
 
 Zelený priestor vytvára shader hmly, vrstvy svetla, krištalická geometria a jemná vertikálna os. Úlomky predstavujú projektové dáta. Hlavný let nepoužíva farebné klientské náhľady ani ich CSS filtrované karty. Štyri zelené rohy vlastného kurzora sa zobrazujú iba pri myši s presným ukazovateľom; mobil používa prirodzené dotykové ovládanie.
 
-Posledný štýl `world-finish.css` zjednocuje väčšiu typografiu, hologramy, otvorené čítacie plochy, číslovanie kapitol a kontakt. Každá kapitolová zastávka má objemový brúsený objekt. Pri kontakte posledný projektový ukazovateľ plynulo zmizne.
+`world-finish.css` zjednocuje väčšiu typografiu, hologramy, otvorené čítacie plochy, číslovanie kapitol a kontakt. Posledný import `intro.css` určuje novú kompozíciu úvodu a jej mobilné aj nízke varianty. Každá kapitolová zastávka má objemový brúsený objekt. Pri kontakte posledný projektový ukazovateľ plynulo zmizne.
 
 Hologram je natívny HTML panel s jemne priehľadným zeleným povrchom. Príbeh používa transparentný celoplošný dialóg a pokojné čítacie panely vedľa vlastných 3D úlomkov. Hlavná navigácia a informačné prvky letu sú počas čítania skryté. Dôkazy, obrazovky, prepínanie ukážok a zdrojové odkazy zostávajú zachované; existujúce obrazovky používajú pôvodný zelený prezentačný filter. Prezentácia nemení pôvodné súbory, faktické stavy ani rozlíšenie medzi autentickým záberom, ilustráciou a modelovými údajmi.
 
