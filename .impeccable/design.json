@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-09T11:52:37.548706+00:00",
+  "generatedAt": "2026-11-09T12:23:43.847753+00:00",
   "title": "Design System: Denis Baláž — Na konci internetu",
   "extensions": {
     "colorMeta": {
@@ -74,88 +74,144 @@
           "oklch(95% 0.0034 151.3)"
         ]
       },
-      "world-center": {
+      "flight-ground": {
         "role": "neutral",
-        "displayName": "World Center",
+        "displayName": "Flight Ground",
         "tonalRamp": [
-          "oklch(15% 0.0162 141.3)",
-          "oklch(26% 0.0324 141.3)",
-          "oklch(38% 0.0485 141.3)",
-          "oklch(49% 0.0582 141.3)",
-          "oklch(61% 0.0647 141.3)",
-          "oklch(72% 0.0582 141.3)",
-          "oklch(84% 0.0388 141.3)",
-          "oklch(95% 0.0129 141.3)"
+          "oklch(15% 0.0069 157.9)",
+          "oklch(26% 0.0138 157.9)",
+          "oklch(38% 0.0207 157.9)",
+          "oklch(49% 0.0248 157.9)",
+          "oklch(61% 0.0276 157.9)",
+          "oklch(72% 0.0248 157.9)",
+          "oklch(84% 0.0165 157.9)",
+          "oklch(95% 0.0055 157.9)"
         ]
       },
-      "world-middle": {
+      "shard-body": {
         "role": "neutral",
-        "displayName": "World Middle",
+        "displayName": "Shard Body",
         "tonalRamp": [
-          "oklch(15% 0.0074 148.3)",
-          "oklch(26% 0.0148 148.3)",
-          "oklch(38% 0.0221 148.3)",
-          "oklch(49% 0.0266 148.3)",
-          "oklch(61% 0.0295 148.3)",
-          "oklch(72% 0.0266 148.3)",
-          "oklch(84% 0.0177 148.3)",
-          "oklch(95% 0.0059 148.3)"
+          "oklch(15% 0.0170 151.4)",
+          "oklch(26% 0.0341 151.4)",
+          "oklch(38% 0.0511 151.4)",
+          "oklch(49% 0.0613 151.4)",
+          "oklch(61% 0.0681 151.4)",
+          "oklch(72% 0.0613 151.4)",
+          "oklch(84% 0.0409 151.4)",
+          "oklch(95% 0.0136 151.4)"
         ]
       },
-      "world-outer": {
+      "shard-emissive": {
         "role": "neutral",
-        "displayName": "World Outer",
+        "displayName": "Shard Emissive",
         "tonalRamp": [
-          "oklch(15% 0.0031 157.0)",
-          "oklch(26% 0.0063 157.0)",
-          "oklch(38% 0.0094 157.0)",
-          "oklch(49% 0.0113 157.0)",
-          "oklch(61% 0.0125 157.0)",
-          "oklch(72% 0.0113 157.0)",
-          "oklch(84% 0.0075 157.0)",
-          "oklch(95% 0.0025 157.0)"
+          "oklch(15% 0.0264 147.1)",
+          "oklch(26% 0.0528 147.1)",
+          "oklch(38% 0.0791 147.1)",
+          "oklch(49% 0.0950 147.1)",
+          "oklch(61% 0.1055 147.1)",
+          "oklch(72% 0.0950 147.1)",
+          "oklch(84% 0.0633 147.1)",
+          "oklch(95% 0.0211 147.1)"
         ]
       },
-      "fragment-title": {
+      "shard-edge": {
         "role": "primary",
-        "displayName": "Fragment Title",
+        "displayName": "Shard Edge",
         "tonalRamp": [
-          "oklch(15% 0.0309 135.6)",
-          "oklch(26% 0.0617 135.6)",
-          "oklch(38% 0.0926 135.6)",
-          "oklch(49% 0.1111 135.6)",
-          "oklch(61% 0.1234 135.6)",
-          "oklch(72% 0.1111 135.6)",
-          "oklch(84% 0.0741 135.6)",
-          "oklch(95% 0.0247 135.6)"
+          "oklch(15% 0.0462 136.3)",
+          "oklch(26% 0.0925 136.3)",
+          "oklch(38% 0.1387 136.3)",
+          "oklch(49% 0.1664 136.3)",
+          "oklch(61% 0.1849 136.3)",
+          "oklch(72% 0.1664 136.3)",
+          "oklch(84% 0.1110 136.3)",
+          "oklch(95% 0.0370 136.3)"
         ]
       },
-      "fragment-meta": {
+      "hologram-light": {
         "role": "neutral",
-        "displayName": "Fragment Meta",
+        "displayName": "Hologram Light",
         "tonalRamp": [
-          "oklch(15% 0.0328 135.8)",
-          "oklch(26% 0.0656 135.8)",
-          "oklch(38% 0.0984 135.8)",
-          "oklch(49% 0.1181 135.8)",
-          "oklch(61% 0.1312 135.8)",
-          "oklch(72% 0.1181 135.8)",
-          "oklch(84% 0.0787 135.8)",
-          "oklch(95% 0.0262 135.8)"
+          "oklch(15% 0.0156 154.5)",
+          "oklch(26% 0.0312 154.5)",
+          "oklch(38% 0.0467 154.5)",
+          "oklch(49% 0.0561 154.5)",
+          "oklch(61% 0.0623 154.5)",
+          "oklch(72% 0.0561 154.5)",
+          "oklch(84% 0.0374 154.5)",
+          "oklch(95% 0.0125 154.5)"
         ]
       },
-      "fragment-body": {
+      "hologram-dark": {
         "role": "neutral",
-        "displayName": "Fragment Body",
+        "displayName": "Hologram Dark",
         "tonalRamp": [
-          "oklch(15% 0.0107 136.3)",
-          "oklch(26% 0.0214 136.3)",
-          "oklch(38% 0.0320 136.3)",
-          "oklch(49% 0.0385 136.3)",
-          "oklch(61% 0.0427 136.3)",
-          "oklch(72% 0.0385 136.3)",
-          "oklch(84% 0.0256 136.3)",
-          "oklch(95% 0.0085 136.3)"
+          "oklch(15% 0.0081 162.3)",
+          "oklch(26% 0.0161 162.3)",
+          "oklch(38% 0.0242 162.3)",
+          "oklch(49% 0.0290 162.3)",
+          "oklch(61% 0.0322 162.3)",
+          "oklch(72% 0.0290 162.3)",
+          "oklch(84% 0.0193 162.3)",
+          "oklch(95% 0.0064 162.3)"
+        ]
+      },
+      "hologram-edge": {
+        "role": "neutral",
+        "displayName": "Hologram Edge",
+        "tonalRamp": [
+          "oklch(15% 0.0418 150.7)",
+          "oklch(26% 0.0836 150.7)",
+          "oklch(38% 0.1254 150.7)",
+          "oklch(49% 0.1505 150.7)",
+          "oklch(61% 0.1672 150.7)",
+          "oklch(72% 0.1505 150.7)",
+          "oklch(84% 0.1003 150.7)",
+          "oklch(95% 0.0334 150.7)"
+        ]
+      },
+      "hologram-title": {
+        "role": "neutral",
+        "displayName": "Hologram Title",
+        "tonalRamp": [
+          "oklch(15% 0.0162 147.7)",
+          "oklch(26% 0.0324 147.7)",
+          "oklch(38% 0.0486 147.7)",
+          "oklch(49% 0.0583 147.7)",
+          "oklch(61% 0.0648 147.7)",
+          "oklch(72% 0.0583 147.7)",
+          "oklch(84% 0.0389 147.7)",
+          "oklch(95% 0.0130 147.7)"
+        ]
+      },
+      "hologram-body": {
+        "role": "neutral",
+        "displayName": "Hologram Body",
+        "tonalRamp": [
+          "oklch(15% 0.0111 144.1)",
+          "oklch(26% 0.0222 144.1)",
+          "oklch(38% 0.0333 144.1)",
+          "oklch(49% 0.0400 144.1)",
+          "oklch(61% 0.0444 144.1)",
+          "oklch(72% 0.0400 144.1)",
+          "oklch(84% 0.0266 144.1)",
+          "oklch(95% 0.0089 144.1)"
+        ]
+      },
+      "hologram-kind": {
+        "role": "neutral",
+        "displayName": "Hologram Kind",
+        "tonalRamp": [
+          "oklch(15% 0.0260 152.3)",
+          "oklch(26% 0.0520 152.3)",
+          "oklch(38% 0.0780 152.3)",
+          "oklch(49% 0.0936 152.3)",
+          "oklch(61% 0.1040 152.3)",
+          "oklch(72% 0.0936 152.3)",
+          "oklch(84% 0.0624 152.3)",
+          "oklch(95% 0.0208 152.3)"
         ]
       },
       "article-ground": {
@@ -283,6 +339,20 @@
           "oklch(84% 0.0662 136.0)",
           "oklch(95% 0.0221 136.0)"
         ]
+      },
+      "cursor-edge": {
+        "role": "neutral",
+        "displayName": "Cursor Edge",
+        "tonalRamp": [
+          "oklch(15% 0.0265 150.0)",
+          "oklch(26% 0.0530 150.0)",
+          "oklch(38% 0.0795 150.0)",
+          "oklch(49% 0.0954 150.0)",
+          "oklch(61% 0.1060 150.0)",
+          "oklch(72% 0.0954 150.0)",
+          "oklch(84% 0.0636 150.0)",
+          "oklch(95% 0.0212 150.0)"
+        ]
       }
     },
     "typographyMeta": {
@@ -292,73 +362,72 @@
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Personal and contact headings."
+        "purpose": "Contact heading."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Project fragment headings."
+        "purpose": "Revealed hologram title."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Project summaries."
+        "purpose": "Hologram summary."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Monospace project categories."
+        "purpose": "Hologram category."
+      },
+      "coordinate": {
+        "displayName": "Coordinate",
+        "purpose": "World coordinate and depth metadata."
       }
     },
     "shadows": [
       {
-        "name": "axis-halo",
-        "value": "0 0 22px #6cff5455",
-        "purpose": "Luminous persistent axis."
-      },
-      {
-        "name": "fragment-halo",
-        "value": "0 0 70px #3d9a1e12",
-        "purpose": "Faint depth around a clipped plane."
-      },
-      {
         "name": "article",
         "value": "0 0 100px #02060399",
-        "purpose": "Separate the article from the same world."
+        "purpose": "Article separation from the same frozen world."
       },
       {
         "name": "index",
         "value": "0 20px 70px #000a",
         "purpose": "Dropdown separation."
+      },
+      {
+        "name": "cursor",
+        "value": "drop-shadow(0 0 3px #51de79)",
+        "purpose": "Fine-pointer target halo."
       }
     ],
     "motion": [
       {
-        "name": "fragment-scrub",
-        "value": "0.45",
-        "purpose": "GSAP ScrollTrigger scrub response in seconds."
+        "name": "flight-smoothing",
+        "value": "1 - exp(-dt * 12)",
+        "purpose": "Exponential interpolation from scroll target to camera progress; stops during reading lock."
       },
       {
-        "name": "fragment-approach",
-        "value": "scale 0.55 → 1; y 80px → 0; rotationY ±12deg → 0",
-        "purpose": "Approach the stable reading interval."
+        "name": "hologram-opacity",
+        "value": "0.18s",
+        "purpose": "Reveal opacity."
       },
       {
-        "name": "fragment-departure",
-        "value": "scale 1 → 1.12; y 0 → -60px; opacity 1 → 0",
-        "purpose": "Depart in the same scroll timeline."
+        "name": "hologram-transform",
+        "value": "0.3s",
+        "purpose": "Perspective turn and scale into the reading state."
       },
       {
         "name": "article-open",
         "value": "0.6s power3.out",
-        "purpose": "Horizontal article arrival."
+        "purpose": "Article arrival."
       },
       {
         "name": "article-switch",
         "value": "0.45s power3.out",
-        "purpose": "Change the article across the full six-project sequence."
+        "purpose": "Switch across all six articles."
       },
       {
-        "name": "background-phase",
-        "value": "0.025/s",
-        "purpose": "Autonomous canvas drift, independently pausable."
+        "name": "cursor-state",
+        "value": "0.18s",
+        "purpose": "Four-corner target response."
       }
     ],
     "breakpoints": [
@@ -367,8 +436,12 @@
         "value": "760px"
       },
       {
-        "name": "short-wide",
-        "value": "(max-height: 600px) and (min-width: 600px)"
+        "name": "short",
+        "value": "(max-height: 600px)"
+      },
+      {
+        "name": "custom-cursor",
+        "value": "(hover: hover) and (pointer: fine)"
       }
     ]
   },
@@ -380,22 +453,6 @@
       "description": "Native expandable archive index.",
       "html": "<details class=\"ds-index\"><summary>Index prác <span>＋</span></summary><nav aria-label=\"Priamy výber projektu\"><a href=\"#stop-stylovy-chlpac\"><span>01</span>Štýlový chlpáč</a><a href=\"#stop-zakazko\"><span>02</span>Zákazko.sk</a></nav></details>",
       "css": ".ds-index{font-family:Instrument,Arial,sans-serif;width:280px;font-size:12px}.ds-index summary{list-style:none;width:145px;padding:13px 16px;margin:auto;border:1px solid #63914c;background:#081108d9;color:#c7efb6;display:flex;justify-content:space-between;cursor:pointer}.ds-index summary::-webkit-details-marker{display:none}.ds-index[open] summary{width:auto;border-bottom:0}.ds-index[open] summary span{transform:rotate(45deg)}.ds-index nav{padding:5px 12px 12px;border:1px solid #63914c;border-top:0;background:#081108f5;box-shadow:0 20px 70px #000a}.ds-index a{display:flex;gap:14px;padding:13px 4px;color:#d1e9c6;line-height:1.3;text-decoration:none}.ds-index a span{font:10px monospace;color:#7ea96a;padding-top:2px}.ds-index a:hover{color:var(--signal-green,#a4ff61);background:#10220d}.ds-index summary:focus-visible,.ds-index a:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
-    },
-    {
-      "name": "Fragment plane",
-      "kind": "card",
-      "refersTo": "fragment-plane",
-      "description": "Clipped decorative archive plane; source preview artwork is supplied by the application.",
-      "html": "<div class=\"ds-plane\"><span class=\"ds-serial\">WEB / 01</span><span class=\"ds-corner\">↗</span></div>",
-      "css": ".ds-plane{position:relative;width:85%;height:clamp(240px,29vw,420px);background:#0e210e77;border:1px solid #659a4666;box-shadow:0 0 70px #3d9a1e12;transform:rotate(-4deg);clip-path:polygon(0 0,92% 0,100% 12%,100% 100%,8% 100%,0 88%);overflow:hidden}.ds-plane::after{content:\"\";position:absolute;inset:0;pointer-events:none;border:18px solid #06100644;background:repeating-linear-gradient(0deg,transparent 0 4px,#091b0644 4px 5px)}.ds-serial{position:absolute;left:20px;top:13px;font:9px monospace;letter-spacing:.12em;color:#bcff92}.ds-corner{position:absolute;bottom:17px;right:23px;font:30px Instrument,Arial,sans-serif;color:#b0ff80}"
-    },
-    {
-      "name": "Story link",
-      "kind": "button",
-      "refersTo": "fragment-link",
-      "description": "Underlined semantic entry point beneath a project summary.",
-      "html": "<a class=\"ds-story\" href=\"#projekt/stylovy-chlpac\">Otvoriť celý príbeh <span>→</span></a>",
-      "css": ".ds-story{font-family:Instrument,Arial,sans-serif;display:inline-flex;gap:35px;padding:12px 0;border-bottom:1px solid #5a8b3e;margin-top:12px;font-size:12px;color:var(--signal-green,#a4ff61);text-decoration:none}.ds-story:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
     },
     {
       "name": "Article toolbar",
@@ -419,55 +476,73 @@
       "refersTo": "contact-button",
       "description": "Contact action without a form or submission flow.",
       "html": "<button class=\"ds-copy\">Skopírovať e-mail ↗</button>",
-      "css": ".ds-copy{font-family:Instrument,Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:12px 19px;border:0;border-radius:0;background:#9fee64;color:#051005;font-size:11px;font-weight:700;line-height:1.25;cursor:pointer;transition:transform .3s,background .3s}.ds-copy:hover{transform:translateY(-3px)}.ds-copy:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+      "css": ".ds-copy{font-family:Instrument,Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 18px;border:0;border-radius:0;background:#9fee64;color:#051005;font-size:12px;font-weight:700;line-height:1.25;cursor:pointer;transition:transform .3s,background .3s}.ds-copy:hover{transform:translateY(-3px)}.ds-copy:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
     },
     {
       "name": "Background pause",
       "kind": "custom",
-      "description": "Freezes autonomous background drift; scrolling still updates depth.",
+      "description": "Freezes autonomous WebGL drift; scroll travel remains available.",
       "html": "<button class=\"ds-pause\" aria-pressed=\"false\">Pozastaviť pozadie</button>",
       "css": ".ds-pause{font-family:Instrument,Arial,sans-serif;padding:12px 5px;background:none;border:0;color:#92be7d;font-size:10px;text-decoration:underline;cursor:pointer}.ds-pause:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    },
+    {
+      "name": "Projected project beacon",
+      "kind": "button",
+      "refersTo": "beacon",
+      "description": "Invisible native hit area centered on projected crystal geometry; the panel preview omits the WebGL mesh.",
+      "html": "<button class=\"ds-beacon\" aria-expanded=\"false\" aria-label=\"Zobraziť projekt Štýlový chlpáč\"><span class=\"ds-brackets\" aria-hidden=\"true\"></span><span class=\"ds-name\">Štýlový chlpáč</span></button>",
+      "css": ".ds-beacon{font-family:Instrument,Arial,sans-serif;position:relative;width:130px;height:140px;padding:0;background:transparent;border:0;color:#c2f9a5;cursor:pointer}.ds-name{position:absolute;top:116px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px}.ds-brackets{position:absolute;inset:8px}.ds-brackets::before,.ds-brackets::after{content:\"\";position:absolute;width:13px;height:13px;border:1px solid #b2ff85;opacity:.75;transition:opacity .2s,transform .2s}.ds-brackets::before{left:0;top:0;border-width:1px 0 0 1px}.ds-brackets::after{right:0;bottom:0;border-width:0 1px 1px 0}.ds-beacon:hover .ds-brackets::before{transform:translate(-6px,-6px)}.ds-beacon:hover .ds-brackets::after{transform:translate(6px,6px)}.ds-beacon:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    },
+    {
+      "name": "Project hologram",
+      "kind": "card",
+      "refersTo": "hologram",
+      "description": "Native project summary shown after reveal; this snippet represents its visible state.",
+      "html": "<div class=\"ds-hologram\"><h2>Štýlový chlpáč</h2><p class=\"ds-kind\">Web · skutočná prevádzka</p><p>Web, rezervácie a správa salónu.</p><a class=\"ds-holo-open\" href=\"#projekt/stylovy-chlpac\">Otvoriť príbeh <span>↗</span></a><button class=\"ds-holo-dismiss\" aria-label=\"Zavrieť náhľad\">×</button></div>",
+      "css": ".ds-hologram{font-family:Instrument,Arial,sans-serif;position:relative;width:270px;padding:25px 25px 20px;background:linear-gradient(135deg,#163e26e8,#071b12ed);border:1px solid #80fca28c;color:#dcffe2;backdrop-filter:blur(12px)}.ds-hologram::before{content:\"\";position:absolute;inset:-5px 13px 5px -5px;border-left:1px solid #a3ffb866;border-top:1px solid #a3ffb866;pointer-events:none}.ds-hologram::after{content:\"\";position:absolute;left:0;right:0;top:31%;height:1px;background:#adffbe44;pointer-events:none}.ds-hologram h2{font-size:28px;font-weight:700;line-height:1.02;letter-spacing:-.03em;max-width:15ch;color:#d6ffda;margin:0}.ds-hologram p{font-size:13px;line-height:1.65;color:#c0d9bf;margin:0}.ds-hologram .ds-kind{font-size:10px;color:#96dfaa;margin:11px 0}.ds-holo-open{display:inline-flex;align-items:center;justify-content:space-between;gap:32px;border-bottom:1px solid #71b54d;padding:14px 0;color:#caffad;font-size:13px;min-height:48px;text-decoration:none}.ds-holo-open:hover{color:#fff;border-color:#c4ffba}.ds-holo-dismiss{font-family:Instrument,Arial,sans-serif;position:absolute;top:5px;right:5px;background:transparent;border:0;color:#b0f6bf;width:32px;height:32px;font-size:20px;cursor:pointer}.ds-hologram a:focus-visible,.ds-hologram button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
     }
   ],
   "narrative": {
     "northStar": "Na konci internetu",
-    "overview": "“Na konci internetu” is the owner-confirmed replacement world: one continuous phosphor-green space with a persistent vertical axis, sparse geometric data planes and six ordered fragments that approach and depart as the visitor scrolls. The background remains present from the opening sentence through the project archive and contact.\n\nDepth comes from perspective, scale, sparse linework and controlled glow. The fragments are pieces of a digital archive, not literal meteorites or a collection of separate card sections. Opening a project places a calmer reading surface over the same world; it does not replace that world with a different page identity.",
+    "overview": "“Na konci internetu” is one phosphor-green world experienced through a compact WebGL camera flight. Abstract crystalline data shards carry the six projects. A single primary project is legible at a time; smaller surrounding fragments establish depth. Green procedural fog, a faint vertical axis and sparse debris connect the introduction, projects and contact.\n\nThe project preview is an HTML hologram anchored beside the projected geometry. Revealing it freezes the world so the visitor can read and choose the article link. The article then opens as a calm inset surface over the same background. Client screenshots belong to the detailed evidence inside articles, not to the main flight's shard surfaces.",
     "keyCharacteristics": [
-      "A fixed green field and vertical axis persist through the whole journey.",
-      "Six project fragments alternate their desktop alignment and move through scroll-owned depth.",
-      "Large Instrument Sans headings pair with small monospace coordinates and category text.",
-      "Clipped planes, square controls and restrained phosphor glow replace rounded gallery cards.",
-      "An inset article surface preserves the surrounding space and factual project evidence."
+      "One green WebGL atmosphere with procedural fog and crystalline data shards.",
+      "A primary project surrounded by smaller fragments in depth.",
+      "Projected native HTML buttons and a separate readable hologram reveal.",
+      "A frozen world while a hologram or article is open.",
+      "Square controls, self-hosted Instrument Sans and a fine-pointer target cursor.",
+      "Native HTML project summaries and links when WebGL is unavailable."
     ],
     "rules": [
       {
         "name": "The Continuous World Rule",
-        "body": "Keep the field and axis present across intro, project fragments, personal text and contact; do not introduce unrelated section backgrounds.",
+        "body": "Keep the flight, hologram and article within one green atmosphere; preserve the world behind the reading surface.",
         "section": "colors"
       },
       {
-        "name": "The Reading Interval Rule",
-        "body": "Give each approaching fragment a stable, fully visible reading interval before it departs.",
+        "name": "The Reading Lock Rule",
+        "body": "Freeze autonomous world motion and camera interpolation while a hologram or article is open. Resume travel when reading closes or the visitor scrolls onward.",
         "section": "elevation"
       },
       {
-        "name": "The Evidence Rule",
-        "body": "Keep project status, Denis’s contribution and source captions readable inside the article; atmospheric treatment must not strengthen the underlying claims.",
+        "name": "The HTML Evidence Rule",
+        "body": "Keep project names, summaries, article links, states and evidence in semantic HTML independently of the WebGL geometry.",
         "section": "typography"
       }
     ],
     "dos": [
-      "**Do** preserve one continuous background and the ordered six-project sequence.",
-      "**Do** keep the small index, readable titles, visible focus outlines and explicit close control.",
-      "**Do** treat horizontal gestures as project switching and vertical gestures as article reading.",
-      "**Do** preserve the saved journey scroll position when the article closes.",
-      "**Do** distinguish presentation filters, illustrations, model data and authentic captures in the project evidence."
+      "**Do** keep one primary project and use smaller distant shards to establish depth.",
+      "**Do** reveal the HTML hologram on mouse hover, keyboard focus or first tap before the story link opens the article.",
+      "**Do** preserve a generous invisible hit area and a continuous pointer bridge to the panel.",
+      "**Do** keep native links available when WebGL fails or loses its context.",
+      "**Do** preserve the exact saved flight scroll position when the article closes."
     ],
     "donts": [
-      "**Don't** describe the geometric planes as literal meteorites or add unrelated space imagery.",
-      "**Don't** rebuild the former separate web/grant galleries or rounded navigation pill.",
-      "**Don't** make pause imply that all scroll-linked movement stops.",
-      "**Don't** promote grant approval or a contractual funding limit into payment or completed delivery."
+      "**Don't** place client-image previews or CSS-tinted screenshot cards in the main flight.",
+      "**Don't** turn the abstract crystalline data shards into literal meteorites.",
+      "**Don't** move the camera or ambient world while a hologram is being read.",
+      "**Don't** show the custom mouse cursor on coarse-pointer mobile devices.",
+      "**Don't** imply that pause disables scrolling or all article animation."
     ]
   }
 }

@@ -4,6 +4,8 @@ import { initNavigation } from './features/navigation.js';
 import { initContact } from './features/contact.js';
 import { initProjectBrowser } from './features/project-browser.js';
 import { initSignal } from './features/signal.js';
+import { initHolograms } from './features/holograms.js';
+import { initCursor } from './features/cursor.js';
 
 const dispose = [
   initNavigation(),
@@ -11,6 +13,8 @@ const dispose = [
   initAnimations(),
   initProjectBrowser(),
   initSignal(),
+  initHolograms(),
+  initCursor(),
 ];
 
 if (import.meta.hot) {

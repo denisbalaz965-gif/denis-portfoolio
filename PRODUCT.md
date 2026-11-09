@@ -20,22 +20,24 @@ The portfolio connects practical digital work with experience handling project e
 
 ## Operating Context
 
-Visitors move down one continuous scroll journey. Six ordered project fragments approach, remain readable and depart over a persistent green field and vertical axis. The small dropdown index jumps to each fragment, the personal introduction or contact. A selected project opens as an article over the same world, with independent vertical reading and horizontal swipe, arrows or left/right keyboard switching across all six projects. Closing restores the saved journey scroll position and returns focus to the opener. Stories retain shareable `#projekt/<id>` addresses, browser history and Escape dismissal. Contact is available by email and phone, with an email-copy control and a GitHub link. These describe the local implementation, not an independent runtime test result.
+Visitors scroll through one WebGL flight containing six ordered crystalline project fragments. One project is primary while others remain smaller in depth. A mouse hover, keyboard focus or first tap reveals its HTML hologram; the hologram's native story link opens the article. The world freezes while the hologram or article is open. A small dropdown index jumps to each project or the ending contact area, which includes an expandable personal introduction.
+
+Articles appear over the same green world, with independent vertical reading and horizontal swipe, arrows or left/right keyboard switching across all six projects. Closing restores the saved journey scroll position and focus. Stories retain shareable `#projekt/<id>` addresses, browser history and Escape dismissal. Email, phone, email-copy and GitHub links remain available. WebGL failure or context loss exposes the native HTML project summaries and story links. These are implementation descriptions, not independent evidence that every physical hover/touch sequence has been validated.
 
 ## Capabilities and Constraints
 
 - Six existing stories: Štýlový chlpáč, Zákazko.sk, Corinex, Autokemping Tornaľa, Knižnica Horná Kráľová and Eurofondová agenda.
-- The source uses HTML, modular JavaScript, CSS, GSAP and Vite. Project content remains in HTML/data rather than inside the decorative canvas.
+- The source uses HTML, modular JavaScript, CSS, Three.js (0.182.0), GSAP and Vite. Project content remains in HTML/data rather than inside the decorative canvas.
 - Denis has no company or trade licence. The stated route is remote work under an employment contract or agreement; do not present the portfolio as an invoicing agency or freelancer business.
 - Distinguish a live website, an illustration, a prototype, test results and real operating data. Current live status must be rechecked when updating the associated claim.
 - Grant references describe Denis's contribution within CASSIS Consult. Funding belongs to recipients. Approval, a contractual funding limit, payment and completed implementation are separate states.
-- The existing public version v9 has not been replaced by this local redesign at the time of this documentation update. Publication of the replacement, a custom public domain, response rates and employment outcomes are not established by the local implementation.
+- Publication, response rates and employment outcomes require separate evidence; source implementation does not establish them.
 - No hiring analytics target, application backend or contact form is established.
-- The background pause control freezes autonomous canvas drift; scroll-driven depth and project motion remain connected to scrolling. A failed canvas leaves the CSS world, axis, text and links present. It does not produce the former torus monogram fallback.
+- The background pause control freezes autonomous WebGL drift; scroll travel remains available. A revealed hologram or open article also freezes world movement for reading. WebGL failure/context loss falls back to native HTML links and summaries.
 
 ## Brand Commitments
 
-The identity is Denis Baláž and the content is Slovak. The owner explicitly confirmed a replacement design: an end-of-internet phosphor-green space, one persistent vertical axis and backdrop, six approaching/departing data fragments on scroll and a small dropdown index. Articles open over that world. The geometric data planes are not literal meteorites. Existing factual stories and their evidence distinctions remain authoritative. This visual commitment does not authorise stronger professional claims.
+The identity is Denis Baláž and the content is Slovak. The owner explicitly confirmed a replacement design: an end-of-internet phosphor-green space, one persistent vertical axis and backdrop, a compact WebGL camera flight through six crystalline data fragments, HTML hologram reveals and a small dropdown index. Articles open over that world. The fragments are abstract project data, not literal meteorites. The main flight uses no client-image previews; existing illustrative article scenes retain their separate evidence context. Existing factual stories and their evidence distinctions remain authoritative. This visual commitment does not authorise stronger professional claims.
 
 ## Evidence on Hand
 

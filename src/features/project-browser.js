@@ -268,6 +268,12 @@ export function initProjectBrowser({
     const group = current.group;
     const pushed = window.history.state?.portfolioViewerEntry === true;
     waitingForBack = pushed;
+    if (pushed)
+      root.dispatchEvent(
+        new CustomEvent('portfolio:return', {
+          detail: { hash: window.history.state.portfolioReturnHash ?? '' },
+        }),
+      );
     cleanupViewer();
     if (pushed) window.history.back();
     else {
@@ -298,7 +304,12 @@ export function initProjectBrowser({
         content.querySelector(`[id="${legacyStep}"]`)?.scrollIntoView({ block: 'start' });
       return;
     }
-    if (push) window.history.pushState({ portfolioViewerEntry: true }, '', `#projekt/${id}`);
+    if (push)
+      window.history.pushState(
+        { portfolioViewerEntry: true, portfolioReturnHash: window.location.hash },
+        '',
+        `#projekt/${id}`,
+      );
     else if (window.location.hash !== `#projekt/${id}`)
       window.history.replaceState(window.history.state, '', `#projekt/${id}`);
     disposeStory();

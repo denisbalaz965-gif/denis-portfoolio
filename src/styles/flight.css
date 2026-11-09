@@ -1,0 +1,635 @@
+/* The camera travels; the viewport remains one shared world. */
+.flight-track {
+  position: relative;
+  overflow: visible;
+}
+.flight-stage {
+  padding: 140px var(--gutter) 90px;
+}
+.flight-intro h1 {
+  font-size: clamp(56px, 7.3vw, 108px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+.flight-intro > p {
+  margin-top: 25px;
+  color: #b4d3a6;
+  font-size: 16px;
+}
+.flight-projects {
+  display: grid;
+  gap: 45px;
+  margin: 80px 0;
+}
+.fragment-beacon {
+  display: none;
+}
+.hologram {
+  max-width: 400px;
+}
+.hologram h2 {
+  font-size: 32px;
+  letter-spacing: -0.03em;
+}
+.hologram p {
+  color: #b9d6aa;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.hologram .holo-kind {
+  color: #a4ff61;
+  font-size: 11px;
+  margin: 13px 0;
+}
+.holo-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-bottom: 1px solid #71b54d;
+  padding: 14px 0;
+  color: #caffad;
+  font-size: 13px;
+  min-height: 48px;
+}
+.holo-dismiss {
+  display: none;
+}
+.flight-contact {
+  max-width: 700px;
+}
+.flight-contact h2 {
+  font-size: clamp(40px, 6vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.flight-contact > p {
+  color: #b9cfae;
+  max-width: 44ch;
+  margin-top: 22px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.flight-contact .employment-note {
+  color: #a5db88;
+  font-size: 12px;
+  margin: 18px 0 26px;
+}
+.flight-contact .email-link {
+  display: block;
+  width: fit-content;
+  font-size: clamp(17px, 2.4vw, 32px);
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+.flight-contact .phone-link {
+  display: block;
+  font-size: 15px;
+  margin: 0 0 22px;
+}
+.flight-contact .button {
+  font-size: 12px;
+  padding: 12px 18px;
+}
+.flight-contact .back-to-surface {
+  margin-top: 22px;
+}
+.flight-about {
+  margin-top: 25px;
+  max-width: 55ch;
+}
+.flight-about summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: #a7d68e;
+  padding: 8px 0;
+}
+.flight-about p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #b4cca7;
+  margin: 10px 0;
+}
+.flight-about a {
+  font-size: 12px;
+  color: #b8f095;
+}
+.flight-instruction,
+.flight-progress {
+  display: none;
+}
+.flight-ready .flight-track {
+  height: 420svh;
+}
+.flight-ready .flight-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  width: 100%;
+  padding: 0;
+  overflow: clip;
+}
+.flight-ready .flight-intro {
+  position: absolute;
+  left: 8%;
+  top: 29%;
+  width: 65%;
+  z-index: 2;
+  will-change: opacity, transform;
+}
+.flight-ready .flight-projects {
+  display: contents;
+}
+.flight-ready .flight-project {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.flight-ready .fragment-beacon {
+  display: block;
+  position: absolute;
+  left: -65px;
+  top: -65px;
+  width: 130px;
+  height: 140px;
+  background: transparent;
+  color: #c2f9a5;
+  pointer-events: auto;
+  padding: 0;
+  opacity: var(--beacon-opacity, 1);
+}
+.beacon-name {
+  position: absolute;
+  left: 50%;
+  top: 116px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 10px;
+  letter-spacing: 0.01em;
+  text-shadow:
+    0 2px 8px #020803,
+    0 0 16px #020803;
+}
+.flight-project:not(.is-primary):not(.is-revealed) .beacon-name {
+  font-size: 9px;
+  color: #9cc68e;
+}
+.beacon-brackets {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid transparent;
+}
+.beacon-brackets::before,
+.beacon-brackets::after {
+  content: '';
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-color: #b2ff85;
+  border-style: solid;
+  opacity: 0.35;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.beacon-brackets::before {
+  left: 0;
+  top: 0;
+  border-width: 1px 0 0 1px;
+}
+.beacon-brackets::after {
+  right: 0;
+  bottom: 0;
+  border-width: 0 1px 1px 0;
+}
+.is-primary .beacon-brackets::before,
+.is-primary .beacon-brackets::after {
+  opacity: 0.75;
+}
+.is-revealed .beacon-brackets::before {
+  transform: translate(-6px, -6px);
+  opacity: 1;
+}
+.is-revealed .beacon-brackets::after {
+  transform: translate(6px, 6px);
+  opacity: 1;
+}
+.flight-ready .hologram {
+  position: absolute;
+  left: var(--holo-x, 75px);
+  top: var(--holo-y, -95px);
+  width: var(--holo-width, 320px);
+  max-width: none;
+  padding: 25px 25px 20px;
+  background: linear-gradient(135deg, #163e26e8, #071b12ed);
+  border: 1px solid #80fca28c;
+  color: #dcffe2;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: perspective(600px) rotateY(-18deg) translateY(10px) scale(0.93);
+  transform-origin: left center;
+  transition:
+    opacity 0.18s,
+    transform 0.3s,
+    visibility 0.2s;
+  backdrop-filter: blur(12px);
+}
+.flight-ready .hologram::before {
+  content: '';
+  position: absolute;
+  inset: -5px 13px 5px -5px;
+  border-left: 1px solid #a3ffb866;
+  border-top: 1px solid #a3ffb866;
+  pointer-events: none;
+}
+.flight-ready .hologram::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 31%;
+  height: 1px;
+  background: #adffbe44;
+  pointer-events: none;
+}
+.flight-ready .hologram h2 {
+  font-size: 28px;
+  max-width: 15ch;
+  color: #d6ffda;
+}
+.flight-ready .hologram p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #c0d9bf;
+}
+.flight-ready .hologram .holo-kind {
+  font-size: 10px;
+  color: #96dfaa;
+  margin: 11px 0;
+}
+.flight-ready .is-revealed .hologram {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: perspective(600px) rotateY(0) translateY(0) scale(1);
+}
+.flight-ready .is-revealed::before {
+  content: '';
+  position: absolute;
+  left: var(--bridge-x, -65px);
+  top: var(--bridge-y, -95px);
+  width: var(--bridge-width, 420px);
+  height: var(--bridge-height, 260px);
+  pointer-events: auto;
+}
+.flight-ready .is-revealed .fragment-beacon {
+  z-index: 1;
+}
+.flight-ready .holo-dismiss {
+  display: block;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  color: #b0f6bf;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+}
+.holo-open:hover {
+  color: #fff;
+  border-color: #c4ffba;
+}
+.flight-ready .flight-contact {
+  position: absolute;
+  left: 15%;
+  top: 18%;
+  width: 70%;
+  opacity: 0;
+  pointer-events: none;
+}
+.flight-ready .flight-instruction {
+  display: block;
+  position: absolute;
+  bottom: 95px;
+  left: var(--gutter);
+  color: #c9e8bc;
+  font-size: 12px;
+  line-height: 1.8;
+  pointer-events: none;
+  opacity: 0;
+}
+.flight-instruction span {
+  color: #9abd8b;
+  font-size: 11px;
+}
+.flight-ready .flight-progress {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 55px;
+  display: flex;
+  gap: 30px;
+  font-size: 11px;
+  color: #b8e49e;
+}
+.flight-progress span:last-child {
+  color: #7ea86b;
+  font-variant-numeric: tabular-nums;
+}
+.flight-ready .boundary-field {
+  background: #031008;
+}
+.flight-ready #signal-canvas {
+  opacity: 1;
+}
+.flight-ready .field-vignette {
+  background: linear-gradient(90deg, #020b0655, transparent 65%, #020b0622);
+}
+.flight-ready .signal-axis {
+  opacity: 0.45;
+  left: 50%;
+  background: linear-gradient(#8dff9c00, #91ffbd66 48%, #8dff9c00);
+}
+.flight-ready .signal-axis i {
+  display: none;
+}
+.flight-ready .signal-axis::before {
+  width: 3px;
+  height: 3px;
+  left: -1px;
+  box-shadow: 0 0 15px #aaffbb;
+}
+.flight-ready .depth-readout {
+  right: 25px;
+  top: 42%;
+  color: #8ec798;
+}
+.route-status {
+  position: fixed;
+  top: 95px;
+  left: 20px;
+  right: 20px;
+  background: #081b0c;
+  z-index: 41;
+}
+.target-cursor {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+.target-cursor.cursor-visible {
+  opacity: 1;
+}
+.target-cursor i {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #b7ffc5;
+  transition:
+    width 0.18s,
+    height 0.18s,
+    left 0.18s,
+    right 0.18s,
+    top 0.18s,
+    bottom 0.18s;
+  filter: drop-shadow(0 0 3px #51de79);
+}
+.target-cursor i:nth-child(1) {
+  left: -12px;
+  top: -12px;
+  border-width: 1px 0 0 1px;
+}
+.target-cursor i:nth-child(2) {
+  right: -12px;
+  top: -12px;
+  border-width: 1px 1px 0 0;
+}
+.target-cursor i:nth-child(3) {
+  left: -12px;
+  bottom: -12px;
+  border-width: 0 0 1px 1px;
+}
+.target-cursor i:nth-child(4) {
+  right: -12px;
+  bottom: -12px;
+  border-width: 0 1px 1px 0;
+}
+.target-cursor span {
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  width: 2px;
+  height: 2px;
+  background: #dcffe1;
+}
+.cursor-target i:nth-child(1) {
+  left: -8px;
+  top: -8px;
+}
+.cursor-target i:nth-child(2) {
+  right: -8px;
+  top: -8px;
+}
+.cursor-target i:nth-child(3) {
+  left: -8px;
+  bottom: -8px;
+}
+.cursor-target i:nth-child(4) {
+  right: -8px;
+  bottom: -8px;
+}
+.cursor-pressed i {
+  width: 5px;
+  height: 5px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .custom-cursor,
+  .custom-cursor a,
+  .custom-cursor button,
+  .custom-cursor summary {
+    cursor: none;
+  }
+  .custom-cursor .target-cursor {
+    display: block;
+  }
+}
+@media (max-width: 760px) {
+  .flight-ready .flight-track {
+    height: 390svh;
+  }
+  .flight-ready .flight-intro {
+    left: 34px;
+    top: 26%;
+    width: calc(100% - 65px);
+  }
+  .flight-intro h1 {
+    font-size: clamp(46px, 13.6vw, 90px);
+  }
+  .flight-intro > p {
+    max-width: 26ch;
+    font-size: 14px;
+  }
+  .flight-ready .flight-contact {
+    left: 32px;
+    top: 17%;
+    width: calc(100% - 65px);
+  }
+  .flight-contact h2 {
+    font-size: clamp(37px, 10vw, 65px);
+  }
+  .flight-contact > p {
+    font-size: 13px;
+    margin-top: 18px;
+  }
+  .flight-contact .email-link {
+    font-size: clamp(15px, 4.2vw, 25px);
+  }
+  .flight-contact .employment-note {
+    font-size: 11px;
+    margin: 15px 0 23px;
+  }
+  .flight-contact .phone-link {
+    font-size: 13px;
+  }
+  .flight-contact .button {
+    min-height: 44px;
+  }
+  .flight-ready .flight-instruction {
+    left: 32px;
+    bottom: 96px;
+    font-size: 11px;
+  }
+  .flight-instruction span {
+    font-size: 10px;
+  }
+  .flight-ready .flight-progress {
+    left: 32px;
+    bottom: 58px;
+    font-size: 10px;
+    gap: 15px;
+  }
+  .flight-ready .depth-readout {
+    right: 12px;
+    top: 40%;
+  }
+  .flight-ready .hologram {
+    padding: 24px 21px 18px;
+  }
+  .flight-ready .hologram h2 {
+    font-size: 25px;
+  }
+  .beacon-name {
+    font-size: 10px;
+  }
+  .flight-ready .signal-axis {
+    left: 50%;
+    opacity: 0.3;
+  }
+  .flight-about p {
+    font-size: 12px;
+    max-height: 120px;
+    overflow: auto;
+  }
+  .flight-ready .field-coordinate {
+    left: 32px;
+  }
+}
+@media (max-height: 600px) {
+  .flight-ready .flight-contact {
+    top: 22%;
+    max-height: 68svh;
+    overflow-y: auto;
+  }
+  .flight-contact h2 {
+    font-size: 38px;
+  }
+  .flight-ready .hologram {
+    max-height: calc(100svh - 105px);
+    overflow-y: auto;
+  }
+  .flight-ready .flight-intro {
+    top: 28%;
+  }
+  .flight-intro h1 {
+    font-size: 64px;
+  }
+  .flight-intro > p {
+    font-size: 13px;
+    margin-top: 15px;
+  }
+  .flight-intro .journey-enter {
+    margin-top: 12px;
+  }
+  .flight-ready .flight-instruction {
+    bottom: 75px;
+  }
+  .flight-ready .flight-progress {
+    bottom: 43px;
+  }
+}
+.flight-ready .flight-project:not(.is-primary):not(.is-revealed) .beacon-name {
+  opacity: 0;
+}
+.flight-ready .flight-project:not(.is-primary):not(.is-revealed) .fragment-beacon {
+  width: 54px;
+  height: 54px;
+  left: -27px;
+  top: -27px;
+}
+.flight-ready .flight-project:not(.is-primary):not(.is-revealed) .beacon-brackets::before,
+.flight-ready .flight-project:not(.is-primary):not(.is-revealed) .beacon-brackets::after {
+  opacity: 0;
+}
+body:not(.flight-ready) .motion-control,
+body:not(.flight-ready) .depth-readout {
+  display: none;
+}
+.flight-ready .flight-project,
+.flight-ready .flight-intro,
+.flight-ready .flight-contact {
+  position: fixed;
+}
+.flight-ready .flight-stage {
+  z-index: 15;
+}
+.flight-ready .hologram {
+  z-index: 2;
+}
+.is-revealed .beacon-name {
+  opacity: 0;
+}
+.flight-ready .flight-contact {
+  max-height: calc(100svh - 145px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-bottom: 25px;
+}
+@media (max-width: 760px) {
+  .flight-instruction .instruction-pointer {
+    display: none;
+  }
+  .flight-instruction .instruction-touch {
+    display: inline;
+  }
+}
+@media (min-width: 761px) {
+  .flight-instruction .instruction-touch {
+    display: none;
+  }
+}
+.flight-ready .flight-project:not(.is-primary):not(.is-revealed) .fragment-beacon {
+  pointer-events: none;
+}
+.flight-ready .flight-project:not(.is-approached):not(.is-revealed) .fragment-beacon {
+  pointer-events: none;
+}

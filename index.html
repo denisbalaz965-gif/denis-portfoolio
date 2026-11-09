@@ -59,250 +59,252 @@
     <button type="button" id="signal-pause" class="motion-control" aria-pressed="false">
       Pozastaviť pozadie
     </button>
-    <main id="main" class="boundary-journey">
-      <div id="svet" class="journey-intro journey-node">
-        <div class="intro-copy">
+    <main id="main" class="boundary-journey flight-track">
+      <div class="flight-stage">
+        <div id="svet" class="flight-intro">
           <h1 aria-label="Na konci internetu.">
             Na konci<br /><em class="signal-word" data-text="internetu.">internetu.</em>
           </h1>
-          <p class="intro-description">Tu sa začína moja práca.</p>
-          <p class="intro-person">
-            Som Denis. Prepájam weby, digitálne produkty a AI s reálnou projektovou praxou.
-          </p>
-          <a class="journey-enter" href="#stop-stylovy-chlpac"
-            >Vstúp do mojich projektov <span>↓</span></a
-          >
+          <p>Som Denis. Weby, AI a projektová práca.</p>
+          <a class="journey-enter" href="#stop-stylovy-chlpac">Vstúp do priestoru <span>↓</span></a>
         </div>
-        <div class="boundary-seal" aria-hidden="true">
-          <span>ŽIADNY ĎALŠÍ ODKAZ.</span><b>IBA<br />HLBŠIE.</b><i>↓</i>
-        </div>
-      </div>
-      <p id="project-route-status" class="route-status" role="status" tabindex="-1" hidden>
-        Tento odkaz na projekt nie je platný. Vyber si projekt z indexu prác.
-      </p>
-      <div id="projekty" class="journey-anchor"></div>
-      <article
-        id="stop-stylovy-chlpac"
-        class="journey-node project-stop stop-left"
-        data-stop="stylovy-chlpac"
-        aria-labelledby="title-stylovy-chlpac"
-      >
-        <div class="project-fragment">
-          <a
-            class="fragment-art"
-            href="#projekt/stylovy-chlpac"
-            tabindex="-1"
-            aria-hidden="true"
-            data-art="salon"
-            ><span class="fragment-serial">WEB / 01</span>
-            <div class="fragment-preview" data-preview="stylovy-chlpac"></div>
-            <span class="fragment-corner">↗</span></a
+        <p class="flight-instruction">
+          Každý úlomok je projekt.<br /><span class="instruction-pointer"
+            >Priblíž sa kurzorom. Objav jeho príbeh.</span
+          ><span class="instruction-touch">Ťukni na úlomok. Objav jeho príbeh.</span>
+        </p>
+        <p id="project-route-status" class="route-status" role="status" tabindex="-1" hidden>
+          Tento odkaz na projekt nie je platný. Vyber si projekt z indexu prác.
+        </p>
+        <div id="projekty" class="journey-anchor"></div>
+        <div id="granty" class="journey-anchor"></div>
+        <div class="flight-projects" aria-label="Projekty v priestore">
+          <article
+            id="stop-stylovy-chlpac"
+            class="flight-project"
+            data-stop="stylovy-chlpac"
+            aria-labelledby="title-stylovy-chlpac"
           >
-          <div class="fragment-copy">
-            <h2 id="title-stylovy-chlpac">
-              <a class="fragment-title-link" href="#projekt/stylovy-chlpac"
-                >Štýlový chlpáč<span>↗</span></a
-              >
-            </h2>
-            <p class="fragment-kind">Web · rezervácie · administrácia</p>
-            <p>Od potrieb salónu po web a vlastnú správu prevádzky.</p>
-            <a class="fragment-link" href="#projekt/stylovy-chlpac"
-              >Otvoriť celý príbeh <span>→</span></a
+            <button
+              class="fragment-beacon"
+              type="button"
+              aria-label="Zobraziť projekt Štýlový chlpáč"
+              aria-expanded="false"
+              aria-controls="holo-stylovy-chlpac"
             >
-          </div>
-          <span class="fragment-number" aria-hidden="true">01</span>
-        </div>
-      </article>
-      <article
-        id="stop-zakazko"
-        class="journey-node project-stop stop-right"
-        data-stop="zakazko"
-        aria-labelledby="title-zakazko"
-      >
-        <div class="project-fragment">
-          <a
-            class="fragment-art"
-            href="#projekt/zakazko"
-            tabindex="-1"
-            aria-hidden="true"
-            data-art="quotes"
-            ><span class="fragment-serial">PRODUKT / 02</span>
-            <div class="fragment-preview" data-preview="zakazko"></div>
-            <span class="fragment-corner">↗</span></a
-          >
-          <div class="fragment-copy">
-            <h2 id="title-zakazko">
-              <a class="fragment-title-link" href="#projekt/zakazko">Zákazko.sk<span>↗</span></a>
-            </h2>
-            <p class="fragment-kind">Vlastný digitálny produkt</p>
-            <p>Jedna zákazka. Spoločné údaje. Tri nadväzujúce dokumenty.</p>
-            <a class="fragment-link" href="#projekt/zakazko">Otvoriť celý príbeh <span>→</span></a>
-          </div>
-          <span class="fragment-number" aria-hidden="true">02</span>
-        </div>
-      </article>
-      <div id="granty" class="journey-anchor"></div>
-      <article
-        id="stop-corinex"
-        class="journey-node project-stop stop-left"
-        data-stop="corinex"
-        aria-labelledby="title-corinex"
-      >
-        <div class="project-fragment">
-          <a
-            class="fragment-art"
-            href="#projekt/corinex"
-            tabindex="-1"
-            aria-hidden="true"
-            data-art="corinex"
-            ><span class="fragment-serial">PROJEKT / 03</span>
-            <div class="fragment-preview" data-preview="corinex"></div>
-            <span class="fragment-corner">↗</span></a
-          >
-          <div class="fragment-copy">
-            <h2 id="title-corinex">
-              <a class="fragment-title-link" href="#projekt/corinex">Corinex<span>↗</span></a>
-            </h2>
-            <p class="fragment-kind">Výskum a inovácie · CASSIS Consult</p>
-            <p>Pracovné balíky, projektové podklady a anotácia. Moja časť tímovej práce.</p>
-            <a class="fragment-link" href="#projekt/corinex">Otvoriť celý príbeh <span>→</span></a>
-          </div>
-          <span class="fragment-number" aria-hidden="true">03</span>
-        </div>
-      </article>
-      <article
-        id="stop-tornala"
-        class="journey-node project-stop stop-right"
-        data-stop="tornala"
-        aria-labelledby="title-tornala"
-      >
-        <div class="project-fragment">
-          <a
-            class="fragment-art"
-            href="#projekt/tornala"
-            tabindex="-1"
-            aria-hidden="true"
-            data-art="camp"
-            ><span class="fragment-serial">PROJEKT / 04</span>
-            <div class="fragment-preview" data-preview="tornala"></div>
-            <span class="fragment-corner">↗</span></a
-          >
-          <div class="fragment-copy">
-            <h2 id="title-tornala">
-              <a class="fragment-title-link" href="#projekt/tornala"
-                >Autokemping Tornaľa<span>↗</span></a
+              <span class="beacon-brackets" aria-hidden="true"></span
+              ><span class="beacon-name">Štýlový chlpáč</span>
+            </button>
+            <div id="holo-stylovy-chlpac" class="hologram">
+              <div class="holo-line" aria-hidden="true"></div>
+              <h2 id="title-stylovy-chlpac">Štýlový chlpáč</h2>
+              <p class="holo-kind">Web · skutočná prevádzka</p>
+              <p>Web, rezervácie a správa salónu.</p>
+              <a class="fragment-title-link holo-open" href="#projekt/stylovy-chlpac"
+                >Otvoriť príbeh <span>↗</span></a
+              ><button
+                class="holo-dismiss"
+                type="button"
+                aria-label="Zavrieť náhľad projektu Štýlový chlpáč"
               >
-            </h2>
-            <p class="fragment-kind">Cestovný ruch · CASSIS Consult</p>
-            <p>Od podkladov k žiadosti po administratívu počas realizácie.</p>
-            <a class="fragment-link" href="#projekt/tornala">Otvoriť celý príbeh <span>→</span></a>
-          </div>
-          <span class="fragment-number" aria-hidden="true">04</span>
-        </div>
-      </article>
-      <article
-        id="stop-horna-kralova"
-        class="journey-node project-stop stop-left"
-        data-stop="horna-kralova"
-        aria-labelledby="title-horna-kralova"
-      >
-        <div class="project-fragment">
-          <a
-            class="fragment-art"
-            href="#projekt/horna-kralova"
-            tabindex="-1"
-            aria-hidden="true"
-            data-art="library"
-            ><span class="fragment-serial">PROJEKT / 05</span>
-            <div class="fragment-preview" data-preview="horna-kralova"></div>
-            <span class="fragment-corner">↗</span></a
+                ×
+              </button>
+            </div>
+          </article>
+          <article
+            id="stop-zakazko"
+            class="flight-project"
+            data-stop="zakazko"
+            aria-labelledby="title-zakazko"
           >
-          <div class="fragment-copy">
-            <h2 id="title-horna-kralova">
-              <a class="fragment-title-link" href="#projekt/horna-kralova"
-                >Knižnica Horná Kráľová<span>↗</span></a
-              >
-            </h2>
-            <p class="fragment-kind">Obnova verejnej budovy · CASSIS Consult</p>
-            <p>Rozpočtové podklady, prílohy a koordinácia pred uzavretím zmluvy.</p>
-            <a class="fragment-link" href="#projekt/horna-kralova"
-              >Otvoriť celý príbeh <span>→</span></a
+            <button
+              class="fragment-beacon"
+              type="button"
+              aria-label="Zobraziť projekt Zákazko.sk"
+              aria-expanded="false"
+              aria-controls="holo-zakazko"
             >
-          </div>
-          <span class="fragment-number" aria-hidden="true">05</span>
-        </div>
-      </article>
-      <article
-        id="stop-eurofondova-agenda"
-        class="journey-node project-stop stop-right"
-        data-stop="eurofondova-agenda"
-        aria-labelledby="title-eurofondova-agenda"
-      >
-        <div class="project-fragment">
-          <a
-            class="fragment-art"
-            href="#projekt/eurofondova-agenda"
-            tabindex="-1"
-            aria-hidden="true"
-            data-art="agenda"
-            ><span class="fragment-serial">POSTUP / 06</span>
-            <div class="fragment-preview" data-preview="eurofondova-agenda"></div>
-            <span class="fragment-corner">↗</span></a
-          >
-          <div class="fragment-copy">
-            <h2 id="title-eurofondova-agenda">
-              <a class="fragment-title-link" href="#projekt/eurofondova-agenda"
-                >Od zámeru po implementáciu<span>↗</span></a
+              <span class="beacon-brackets" aria-hidden="true"></span
+              ><span class="beacon-name">Zákazko.sk</span>
+            </button>
+            <div id="holo-zakazko" class="hologram">
+              <div class="holo-line" aria-hidden="true"></div>
+              <h2 id="title-zakazko">Zákazko.sk</h2>
+              <p class="holo-kind">Vlastný digitálny produkt</p>
+              <p>Jedna zákazka a tri nadväzujúce dokumenty.</p>
+              <a class="fragment-title-link holo-open" href="#projekt/zakazko"
+                >Otvoriť príbeh <span>↗</span></a
+              ><button
+                class="holo-dismiss"
+                type="button"
+                aria-label="Zavrieť náhľad projektu Zákazko.sk"
               >
-            </h2>
-            <p class="fragment-kind">Grantová agenda · CASSIS Consult</p>
-            <p>Žiadosti, rozpočty, zmeny, platby a termíny. Takto na seba moja práca nadväzuje.</p>
-            <a class="fragment-link" href="#projekt/eurofondova-agenda"
-              >Otvoriť celý príbeh <span>→</span></a
+                ×
+              </button>
+            </div>
+          </article>
+          <article
+            id="stop-corinex"
+            class="flight-project"
+            data-stop="corinex"
+            aria-labelledby="title-corinex"
+          >
+            <button
+              class="fragment-beacon"
+              type="button"
+              aria-label="Zobraziť projekt Corinex"
+              aria-expanded="false"
+              aria-controls="holo-corinex"
             >
-          </div>
-          <span class="fragment-number" aria-hidden="true">06</span>
+              <span class="beacon-brackets" aria-hidden="true"></span
+              ><span class="beacon-name">Corinex</span>
+            </button>
+            <div id="holo-corinex" class="hologram">
+              <div class="holo-line" aria-hidden="true"></div>
+              <h2 id="title-corinex">Corinex</h2>
+              <p class="holo-kind">CASSIS Consult · tímová práca</p>
+              <p>Pracovné balíky, podklady a anotácia projektu.</p>
+              <a class="fragment-title-link holo-open" href="#projekt/corinex"
+                >Otvoriť príbeh <span>↗</span></a
+              ><button
+                class="holo-dismiss"
+                type="button"
+                aria-label="Zavrieť náhľad projektu Corinex"
+              >
+                ×
+              </button>
+            </div>
+          </article>
+          <article
+            id="stop-tornala"
+            class="flight-project"
+            data-stop="tornala"
+            aria-labelledby="title-tornala"
+          >
+            <button
+              class="fragment-beacon"
+              type="button"
+              aria-label="Zobraziť projekt Autokemping Tornaľa"
+              aria-expanded="false"
+              aria-controls="holo-tornala"
+            >
+              <span class="beacon-brackets" aria-hidden="true"></span
+              ><span class="beacon-name">Autokemping Tornaľa</span>
+            </button>
+            <div id="holo-tornala" class="hologram">
+              <div class="holo-line" aria-hidden="true"></div>
+              <h2 id="title-tornala">Autokemping Tornaľa</h2>
+              <p class="holo-kind">CASSIS Consult · tímová práca</p>
+              <p>Podklady k žiadosti a administratíva počas realizácie.</p>
+              <a class="fragment-title-link holo-open" href="#projekt/tornala"
+                >Otvoriť príbeh <span>↗</span></a
+              ><button
+                class="holo-dismiss"
+                type="button"
+                aria-label="Zavrieť náhľad projektu Autokemping Tornaľa"
+              >
+                ×
+              </button>
+            </div>
+          </article>
+          <article
+            id="stop-horna-kralova"
+            class="flight-project"
+            data-stop="horna-kralova"
+            aria-labelledby="title-horna-kralova"
+          >
+            <button
+              class="fragment-beacon"
+              type="button"
+              aria-label="Zobraziť projekt Knižnica Horná Kráľová"
+              aria-expanded="false"
+              aria-controls="holo-horna-kralova"
+            >
+              <span class="beacon-brackets" aria-hidden="true"></span
+              ><span class="beacon-name">Knižnica Horná Kráľová</span>
+            </button>
+            <div id="holo-horna-kralova" class="hologram">
+              <div class="holo-line" aria-hidden="true"></div>
+              <h2 id="title-horna-kralova">Knižnica Horná Kráľová</h2>
+              <p class="holo-kind">CASSIS Consult · tímová práca</p>
+              <p>Rozpočtové podklady, prílohy a koordinácia.</p>
+              <a class="fragment-title-link holo-open" href="#projekt/horna-kralova"
+                >Otvoriť príbeh <span>↗</span></a
+              ><button
+                class="holo-dismiss"
+                type="button"
+                aria-label="Zavrieť náhľad projektu Knižnica Horná Kráľová"
+              >
+                ×
+              </button>
+            </div>
+          </article>
+          <article
+            id="stop-eurofondova-agenda"
+            class="flight-project"
+            data-stop="eurofondova-agenda"
+            aria-labelledby="title-eurofondova-agenda"
+          >
+            <button
+              class="fragment-beacon"
+              type="button"
+              aria-label="Zobraziť projekt Eurofondová agenda"
+              aria-expanded="false"
+              aria-controls="holo-eurofondova-agenda"
+            >
+              <span class="beacon-brackets" aria-hidden="true"></span
+              ><span class="beacon-name">Eurofondová agenda</span>
+            </button>
+            <div id="holo-eurofondova-agenda" class="hologram">
+              <div class="holo-line" aria-hidden="true"></div>
+              <h2 id="title-eurofondova-agenda">Eurofondová agenda</h2>
+              <p class="holo-kind">CASSIS Consult · pracovný postup</p>
+              <p>Od zámeru cez prípravu po implementáciu.</p>
+              <a class="fragment-title-link holo-open" href="#projekt/eurofondova-agenda"
+                >Otvoriť príbeh <span>↗</span></a
+              ><button
+                class="holo-dismiss"
+                type="button"
+                aria-label="Zavrieť náhľad projektu Eurofondová agenda"
+              >
+                ×
+              </button>
+            </div>
+          </article>
         </div>
-      </article>
-      <div id="o-mne" class="journey-node personal-stop">
-        <div class="personal-copy">
-          <h2>Zvedavosť.<br /><em>Potom realizácia.</em></h2>
-          <p>
-            Pri digitálnych projektoch riešim návrh, texty, používateľský postup aj realizáciu s
-            podporou AI. Skúšam scenáre a zapracúvam spätnú väzbu.
-          </p>
-          <p>
-            V CASSIS Consult pripravujem a implementujem grantové projekty. Práca s podkladmi,
-            termínmi a súvislosťami je základ, ktorý prenášam aj do digitálnych riešení.
-          </p>
-          <p class="personal-signature">Denis Baláž <span>Weby / AI / Projektová práca</span></p>
-        </div>
-      </div>
-      <div id="kontakt" class="journey-node contact-stop">
-        <div class="contact-fragment">
-          <h2>Si tu.<br /><em>Čo vytvoríme?</em></h2>
+        <div id="kontakt" class="flight-contact">
+          <h2>Našli sme sa.<br /><em>Čo vytvoríme?</em></h2>
           <p>
             Hľadám prácu na diaľku na weboch, digitálnych produktoch a zlepšovaní pracovných
             postupov.
           </p>
           <p class="employment-note">Pracovná zmluva alebo dohoda</p>
           <a class="email-link" href="mailto:denisbalaz965@gmail.com">denisbalaz965@gmail.com ↗</a
-          ><a class="phone-link" href="tel:+421948835138">+421 948 835 138 ↗</a>
-          <div class="contact-actions">
-            <button class="button" id="copy-email">Skopírovať e-mail ↗</button
-            ><span id="copy-status" role="status"></span>
-          </div>
-          <a
-            class="source-code"
-            href="https://github.com/denisbalaz965-gif/denis-portfoolio"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Pozrieť kód na GitHube ↗</a
-          ><a class="back-to-surface" href="#svet">Späť na povrch ↑</a>
+          ><a class="phone-link" href="tel:+421948835138">+421 948 835 138 ↗</a
+          ><button class="button" id="copy-email">Skopírovať e-mail</button
+          ><span id="copy-status" role="status"></span>
+          <details id="o-mne" class="flight-about">
+            <summary>Viac o mne</summary>
+            <p>
+              Pri digitálnych projektoch riešim návrh, texty, používateľský postup aj realizáciu s
+              podporou AI. V tíme CASSIS Consult pripravujem a implementujem grantové projekty.
+              Overujem podklady, skúšam scenáre a zapracúvam spätnú väzbu.
+            </p>
+            <a
+              href="https://github.com/denisbalaz965-gif/denis-portfoolio"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Pozrieť kód na GitHube ↗</a
+            >
+          </details>
+          <a href="#svet" class="back-to-surface">Späť na povrch ↑</a>
+        </div>
+        <div class="flight-progress" aria-hidden="true">
+          <span id="flight-current">Objavuj posúvaním</span><span id="flight-count">00 / 06</span>
         </div>
       </div>
     </main>
-
+    <div class="target-cursor" aria-hidden="true"><i></i><i></i><i></i><i></i><span></span></div>
     <dialog id="project-viewer" class="project-viewer" aria-labelledby="case-title">
       <div class="case-scroll">
         <div class="case-page">

@@ -2,13 +2,15 @@
 
 Osobné portfólio spájajúce weby, digitálne produkty a pracovné postupy s AI so skúsenosťou z prípravy a implementácie grantových projektov.
 
-Portfólio „Na konci internetu“ tvorí jeden súvislý zelený priestor s projektmi, ktoré sa približujú pri posúvaní. [Otvoriť portfólio](https://denis-balaz-portfolio.denis-balaz567.chatgpt.site/).
+Portfólio „Na konci internetu“ tvorí jeden fosforovo zelený WebGL priestor s krištalickými dátovými úlomkami, hologramami projektov a článkami nad rovnakým pozadím. [Otvoriť portfólio](https://denis-balaz-portfolio.denis-balaz567.chatgpt.site/).
 
 ## Pracovná činnosť
 
-Jedna zvislá cesta vedie cez šesť projektov v poradí: Štýlový chlpáč, Zákazko.sk, Corinex, Autokemping Tornaľa, Knižnica Horná Kráľová a Eurofondová agenda. Fragmenty sa pri posúvaní približujú, zostávajú v čitateľnom intervale a vzďaľujú. Pozadie s vertikálnou osou pokračuje aj cez osobné predstavenie a kontakt. Malý rozbaľovací index presúva návštevníka na vybraný projekt alebo kontakt.
+Scroll ovláda let kamery cez šesť projektov: Štýlový chlpáč, Zákazko.sk, Corinex, Autokemping Tornaľa, Knižnica Horná Kráľová a Eurofondová agenda. Jeden projekt je hlavný, ostatné zostávajú menšie v hĺbke. Dráha má 420svh na počítači a 390svh na mobile. Malý index presúva kameru na projekt alebo záverečný kontakt; osobné predstavenie sa rozbaľuje pri kontakte.
 
-„Otvoriť celý príbeh“ otvorí článok nad tým istým pozadím. Číta sa zvislo; vodorovné potiahnutie, šípky na obrazovke alebo klávesy vľavo/vpravo prepínajú všetkých šesť projektov, vrátane prechodu medzi webmi a grantmi. Na konci sa poradie opakuje. Pripája sa vždy iba jeden príbeh. Zatvorenie obnoví uloženú polohu posúvania hlavnej cesty a fokus otváracieho odkazu. Ide o správanie implementované v zdroji, nie o samostatné potvrdenie výsledkov testovania.
+Myšou sa hologram odhalí pri priblížení k projektu, klávesnicou fokusom a na dotykovom zariadení prvým ťuknutím. Odkaz „Otvoriť príbeh“ potom otvorí článok. Väčšia neviditeľná plocha cieľa a mostík k panelu udržujú náhľad pri presune kurzora. Odhalenie zastaví aj prebiehajúci plynulý posun. Počas otvoreného hologramu alebo článku sa svet nehýbe.
+
+Článok sa číta zvislo. Vodorovné potiahnutie, šípky alebo klávesy vľavo/vpravo prepínajú všetkých šesť projektov s návratom na začiatok poradia. Pripája sa jeden príbeh naraz. Zatvorenie obnoví uloženú polohu hlavnej dráhy a fokus odkazu.
 
 - **Štýlový chlpáč:** päť krokov od zadania po spustenie; odkaz na [živý web](https://stylovychlpac.sk/). Verejné online rezervácie čakajú na doplnenie kalendára salónom. Príbeh obsahuje autentické zábery verejného webu a administrácie z oddeleného prostredia s modelovými údajmi, zjednodušenú schému katalógu a doložené výsledky testov súbehu.
 - **[Zákazko.sk](https://zakazko.sk/):** tri kroky vlastného produktu a ilustrované prepojenie troch dokumentov.
@@ -21,7 +23,7 @@ Grantové referencie opisujú moju úlohu v tímovej práci. Sumy podpory patria
 
 ## Spustenie
 
-Potrebuješ Node.js 24.15 alebo novší a npm. Nasledujúce príkazy opisujú postup spustenia a overenia; nie sú záznamom o tom, že aktuálna zmena už kontrolami prešla.
+Potrebuješ Node.js 24.15 alebo novší a npm.
 
 ```sh
 npm ci
@@ -39,13 +41,13 @@ npm run preview
 
 ## Architektúra
 
-HTML a bežný JavaScript s modulmi, CSS, GSAP a Vite. Obsah zostáva v HTML a projektových dátach, nezávisle od dekoratívneho canvasu. Každý fragment má jednu scrollovú časovú os; otvorené príbehy používajú vlastné pôvodné GSAP scény. Canvas 2D kreslí pevné pozadie s geometrickými rovinami a dátovými úlomkami. Funkcie vracajú cleanup pre bezpečné opätovné spustenie pri vývoji.
+HTML, modulárny JavaScript, CSS, Three.js 0.182.0, GSAP a Vite. Three.js vykresľuje krištalické fragmenty, častice a procedurálnu zelenú hmlu. Model letu prevádza scroll na kameru a projekciu natívnych HTML cieľov. Hologramy a články zostávajú v HTML. Pri nedostupnosti WebGL alebo strate kontextu sa zobrazia bežné HTML súhrny a odkazy. Podrobné články používajú vlastné GSAP scény. Funkcie vracajú cleanup pre opätovné spustenie pri vývoji.
 
 ```text
 index.html                 Obsah a sémantická štruktúra
 src/main.js                Zostavenie jednotlivých funkcií
 src/data/                  Register projektov a overené texty referencií
-src/features/              Index, kontakt, fragmenty, canvas a projektové príbehy
+src/features/              Let, WebGL, hologramy, kurzor, index a príbehy
 src/styles/                Základné, sekčné a responzívne štýly
 public/                    Obrázky, fonty, favicon a licenčné oznámenia
 tests/                     Funkčné testy v simulovanom DOM
@@ -60,23 +62,23 @@ DESIGN.md                  Aktuálny vizuálny systém a normatívne tokeny
 
 ## Overovanie
 
-Projekt obsahuje Vitest/jsdom testy navigácie, kontaktu, projektových odkazov, histórie, gest a príbehov. Aktuálny výsledok kontrol treba posudzovať podľa konkrétneho behu. Rozloženie, mobilnú kompozíciu, návrat na uloženú polohu a obojsmerný scroll je potrebné overovať aj v skutočnom prehliadači. Táto dokumentačná úprava sama žiadny taký výsledok nepotvrdzuje.
+`npm run check` spúšťa formátovanie, ESLint, Vitest/jsdom testy a produkčný build. Testy pokrývajú aj model letu, polohu hologramov, navigáciu, kontakt, adresy projektov, históriu a čítanie príbehov. jsdom neoveruje výsledný WebGL obraz ani fyzický pohyb myši a dotyku. Hologramy, presun kurzora cez mostík, gestá, návrat na uložený scroll a mobilné rozloženie sa kontrolujú v skutočnom prehliadači. Výsledok konkrétneho behu testov, CI a nasadenia sú samostatné stavy.
 
-Na výslovné zadanie majiteľa zostáva pohyb aktívny aj pri systémovom obmedzení pohybu. „Pozastaviť pozadie“ zastaví samostatný časový posun canvasu; posúvanie naďalej mení hĺbku a polohu fragmentov. Nejde o globálny vypínač animácií. Nastavenia počítača sa nemenia.
+Na výslovné zadanie majiteľa zostáva pohyb aktívny aj pri systémovom obmedzení pohybu. „Pozastaviť pozadie“ zastaví samostatný časový posun sveta; scroll stále ovláda let. Otvorený hologram alebo článok zastaví aj interpoláciu kamery. Ovládač nie je globálny vypínač animácií článkov a nemení nastavenia počítača.
 
-GitHub Actions pri pushi a pull requeste spúšťajú `npm run check`. Výsledok lokálnych kontrol, CI a živého nasadenia sú samostatné stavy.
+GitHub Actions pri pushi a pull requeste spúšťajú `npm run check`.
 
 ## Vizuál, AI a licencie
 
-Aktuálny lokálny smer používa jeden fosforovo zelený priestor, pevnú vertikálnu os, jemné skenovacie linky a riedke geometrické dátové roviny. Nie sú to doslovné meteority. Úvodný nadpis má úzky statický posunutý výrez. Projekty sa vynárajú a odchádzajú podľa scrollu; nevytvárajú oddelené farebné sekcie.
+Zelený priestor vytvára shader hmly, vrstvy svetla, krištalická geometria a jemná vertikálna os. Úlomky predstavujú projektové dáta. Hlavný let nepoužíva farebné klientské náhľady ani ich CSS filtrované karty. Štyri zelené rohy vlastného kurzora sa zobrazujú iba pri myši s presným ukazovateľom; mobil používa prirodzené dotykové ovládanie.
 
-Článok má pokojnejší tmavý povrch, jemný okraj a rozostrenie za sebou, takže okolitý priestor zostáva viditeľný. Náhľady scén a zachytené obrázky v článku používajú zelený monochromatický filter; pôvodné súbory ani rozlíšenie medzi autentickým záberom, ilustráciou a modelovými údajmi sa tým nemenia. Pôvodné faktické stavy a odkazy zostávajú v príbehoch.
+Hologram je natívny HTML panel s jemne priehľadným zeleným povrchom. Článok má pokojnejší tmavý povrch, okraj a rozostrenie za sebou. Jeho pôvodné ilustrované scény a zachytené obrázky zachovávajú zelený monochromatický filter. Prezentácia nemení pôvodné súbory, faktické stavy ani rozlíšenie medzi autentickým záberom, ilustráciou a modelovými údajmi.
 
-Na návrhu, textoch, implementácii a overovaní spolupracujem s AI. Pôvodný ilustračný ostrov vznikol pomocou OpenAI image_gen a zostáva medzi zdrojovými assetmi. Aktuálne dátové pozadie kreslí Canvas 2D a pohyb príbehov riadia CSS a GSAP. Pri nedostupnosti canvasu zostávajú CSS pozadie, os, HTML obsah a odkazy; aktuálny návrh nemá náhradný torus ani monogram canvasu. Pri skrytej karte sa priebežné kreslenie zastaví.
+Na návrhu, textoch, implementácii a overovaní spolupracujem s AI. Pôvodný ostrov vznikol pomocou OpenAI image_gen a zostáva medzi zdrojovými assetmi. Let vykresľuje Three.js/WebGL, pohyb článkov riadia CSS a GSAP. Pri skrytej karte sa priebežné kreslenie zastaví. WebGL fallback zachováva natívne HTML súhrny a odkazy.
 
-Historickou inšpiráciou pôvodného hravého priestoru bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Aktuálne kontinuálne zelené prostredie vychádza z potvrdeného zadania majiteľa. Interaktívny príbeh Štýlového chlpáča obsahuje ilustráciu, autentické zábery verejného webu a administráciu s modelovými údajmi; nejde o živú administráciu ani zákaznícke údaje.
+Historickou inšpiráciou pôvodného hravého priestoru bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Súčasný smer vychádza z potvrdeného zadania majiteľa. Príbeh Štýlového chlpáča zachováva autentické zábery verejného webu a administráciu s modelovými údajmi; nejde o živú administráciu ani zákaznícke údaje.
 
-Instrument Sans používa SIL Open Font License; znenie je v `public/licenses/InstrumentSans-OFL.txt`. GSAP a ScrollTrigger používajú [vlastnú licenciu](https://gsap.com/standard-license/). Licencie knižníc sa nemenia. Pôvod assetov je v `ASSET-SOURCES.json`.
+Instrument Sans používa SIL Open Font License; znenie je v `public/licenses/InstrumentSans-OFL.txt`. Three.js používa licenciu MIT. GSAP a ScrollTrigger používajú [vlastnú licenciu](https://gsap.com/standard-license/). Licencie knižníc sa nemenia. Pôvod assetov je v `ASSET-SOURCES.json`.
 
 ## Kontakt
 
