@@ -884,3 +884,7 @@ em {
   overflow-y: auto;
   overscroll-behavior: contain;
 }
+
+.case-scroll {
+  touch-action: pan-y pinch-zoom;
+}
