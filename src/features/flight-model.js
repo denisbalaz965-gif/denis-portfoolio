@@ -8,7 +8,8 @@ export function scrollForStop(index, start, distance) {
   return start + ((clamp(index, 0, FLIGHT_STOPS - 1) + 1) / FLIGHT_END) * distance;
 }
 export function activeStop(progress) {
-  return clamp(Math.round(progress - 1), 0, FLIGHT_STOPS - 1);
+  // Hand off while the previous fragment is leaving, before it clears the viewport.
+  return clamp(Math.floor(progress - 0.18), 0, FLIGHT_STOPS - 1);
 }
 export function hologramPosition(x, y, width, height) {
   const panelWidth = Math.min(320, width - 40);

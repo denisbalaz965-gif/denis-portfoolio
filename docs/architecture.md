@@ -10,6 +10,8 @@
 
 `flight.css`, načítaný po `signal.css`, definuje dráhu 420svh, respektíve 390svh do šírky 760px. Obsah je v režime pripraveného WebGL pevný vo viewporte. Indexové kotvy sa prevádzajú na polohy kamery. Kontakt je na konci dráhy a „O mne“ je natívny rozbaľovací obsah pri kontakte.
 
+`fragment-paths.js` určuje šesť odlišných oblúkov z rohov a bočných strán. Normalizované body kvadratických Bézierových kriviek sa prevádzajú do 3D podľa hĺbky a pomeru strán kamery. Príchod prejde do pokojnej zastávky a kratší odlet pokračuje iným smerom; spätný scroll sleduje tú istú dráhu opačne. Na mobile sa pokojné zastávky zbiehajú bližšie k stredu, kým smery príchodov zostávajú rôzne. Výber hlavného projektu sa pri odlete odovzdá nasledujúcemu ešte pred opustením obrazovky. Rovnaké dráhy používajú kapitolové fragmenty čítačky; poloha čítacieho HTML panelu sa nimi nemení. Pomocné súradnicové objekty sa opakovane používajú v existujúcej vykresľovacej slučke bez nového render passu.
+
 Pri odhalenom holograme, pokojnom otváraní projektu alebo otvorenom príbehu sa zastaví interpolácia hlavného letu a samostatný pohyb sveta. Aktívna čítačka má vlastný kamerový priebeh, zdieľa však ten istý renderer a zelený svet. Pauza samostatne zastaví časový pohyb, no scroll zostáva funkčný. Skrytá karta nevytvára pokračujúce snímky. Cleanup obnoví pôvodný `history.scrollRestoration`, odstráni udalosti a uvoľní geometrie, materiály a renderer.
 
 Zlyhanie vytvorenia WebGL alebo strata kontextu odstránia režim `flight-ready`. Bežný HTML zoznam zobrazuje názvy, súhrny a odkazy na články; nevyžaduje 3D zásah ani hover.

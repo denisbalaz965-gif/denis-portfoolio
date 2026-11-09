@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { fragmentWaypoint, waypointToWorld } from './fragment-paths.js';
 import { scenePixelRatio, fogDimensions, introCrystalPose } from './render-policy.js';
 import { restoreFlightFallback } from './flight-fallback.js';
 import { makeCrystalPiece, makeChapterShard } from './fracture-geometry.js';
@@ -93,7 +94,6 @@ export function initSignal() {
   scene.add(fog);
   let lastFogAt = -Infinity,
     lastFogTravel = -Infinity;
-  const positions = [0.85, -0.85, 0.75, -0.9, 0.85, -0.7];
   const projects = nodes.map((node, i) => {
     const group = new THREE.Group();
     const material = createCrystalMaterial(i);
@@ -135,8 +135,6 @@ export function initSignal() {
       group,
       node,
       beacon,
-      x: positions[i],
-      y: Math.sin(i * 3.1) * 0.35,
       z: -i * 7,
       material,
     };
@@ -299,6 +297,8 @@ export function initSignal() {
     pointerY = 0,
     lastActive = -1;
   const screen = new THREE.Vector3();
+  const waypoint = {},
+    worldPoint = {};
   const intro = document.querySelector('.flight-intro');
   const contact = document.querySelector('.flight-contact');
   const flightProgress = document.querySelector('.flight-progress');
@@ -420,24 +420,24 @@ export function initSignal() {
     const pose = introCrystalPose(width, height);
     merge.set(pose.x, pose.y, 4);
     projects.forEach((p, i) => {
+      const selected = i === primary && progress > 0.4;
+      if (p.primary !== selected) {
+        p.node.classList.toggle('is-primary', selected);
+        p.primary = selected;
+      }
       if (reader) {
         p.group.visible = false;
         return;
       }
-      destination.set(
-        p.x * (width < 761 ? 0.52 : 1) +
-          Math.sin(i * 2.4) * Math.max(0, camera.position.z - p.z - 6) * 0.16,
-        p.y +
-          Math.cos(i * 2.1) * Math.max(0, camera.position.z - p.z - 6) * 0.1 +
-          Math.sin(phase * 0.4 + i) * 0.025,
-        p.z,
-      );
+      fragmentWaypoint(i, progress - i - 1, width < 761, false, waypoint);
+      waypointToWorld(waypoint, camera.position.z - p.z, camera.aspect, worldPoint);
+      destination.set(worldPoint.x, worldPoint.y + Math.sin(phase * 0.4 + i) * 0.025, p.z);
       p.group.position.copy(merge).lerp(destination, fracture);
       p.group.scale.setScalar(THREE.MathUtils.lerp(pose.scale, 0.66, fracture));
       p.group.rotation.set(
         THREE.MathUtils.lerp(0.25, 0.2 + Math.sin(phase * 0.15 + i) * 0.15, fracture),
         phase * 0.06 + THREE.MathUtils.lerp(0.4, i * 0.8, fracture),
-        0.12,
+        0.12 + waypoint.roll * fracture,
       );
       p.group.children.forEach((child, j) => {
         child.visible = j === 0 || fracture > 0.22;
@@ -479,7 +479,6 @@ export function initSignal() {
         y < height - 90;
       p.node.style.visibility = visible ? 'visible' : 'hidden';
       p.node.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
-      p.node.classList.toggle('is-primary', i === primary && progress > 0.4);
       const approached =
         i === primary && progress > 0.4 && progress < 6.5 && Math.abs(target - progress) < 0.035;
       p.node.classList.toggle('is-approached', approached);
@@ -503,8 +502,11 @@ export function initSignal() {
     if (reader && readerGroup) {
       const base = projects[Math.max(0, reader.index)].z;
       readerGroup.children.forEach((piece, i) => {
-        piece.position.set(width < 761 ? -0.05 : -1.05, width < 761 ? 0.88 : 0.05, base - i * 5.5);
-        piece.rotation.y = phase * 0.05 + i * 0.2;
+        const z = base - i * 5.5;
+        fragmentWaypoint(i, readerMotion - i, width < 761, true, waypoint);
+        waypointToWorld(waypoint, camera.position.z - z, camera.aspect, worldPoint);
+        piece.position.set(worldPoint.x, worldPoint.y, z);
+        piece.rotation.set(0, phase * 0.05 + i * 0.2, waypoint.roll);
         piece.scale.setScalar(width < 761 ? 0.62 : 1.18);
       });
     }
