@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-09T12:23:43.847753+00:00",
+  "generatedAt": "2026-11-09T12:57:27.611305+00:00",
   "title": "Design System: Denis Baláž — Na konci internetu",
   "extensions": {
     "colorMeta": {
@@ -353,6 +353,118 @@
           "oklch(84% 0.0636 150.0)",
           "oklch(95% 0.0212 150.0)"
         ]
+      },
+      "reader-panel-light": {
+        "role": "neutral",
+        "displayName": "Reader Panel Light",
+        "tonalRamp": [
+          "oklch(15% 0.0104 160.3)",
+          "oklch(26% 0.0208 160.3)",
+          "oklch(38% 0.0312 160.3)",
+          "oklch(49% 0.0375 160.3)",
+          "oklch(61% 0.0416 160.3)",
+          "oklch(72% 0.0375 160.3)",
+          "oklch(84% 0.0250 160.3)",
+          "oklch(95% 0.0083 160.3)"
+        ]
+      },
+      "reader-panel-dark": {
+        "role": "neutral",
+        "displayName": "Reader Panel Dark",
+        "tonalRamp": [
+          "oklch(15% 0.0064 162.6)",
+          "oklch(26% 0.0129 162.6)",
+          "oklch(38% 0.0193 162.6)",
+          "oklch(49% 0.0232 162.6)",
+          "oklch(61% 0.0258 162.6)",
+          "oklch(72% 0.0232 162.6)",
+          "oklch(84% 0.0155 162.6)",
+          "oklch(95% 0.0052 162.6)"
+        ]
+      },
+      "reader-border": {
+        "role": "neutral",
+        "displayName": "Reader Border",
+        "tonalRamp": [
+          "oklch(15% 0.0312 153.1)",
+          "oklch(26% 0.0623 153.1)",
+          "oklch(38% 0.0935 153.1)",
+          "oklch(49% 0.1122 153.1)",
+          "oklch(61% 0.1247 153.1)",
+          "oklch(72% 0.1122 153.1)",
+          "oklch(84% 0.0748 153.1)",
+          "oklch(95% 0.0249 153.1)"
+        ]
+      },
+      "reader-text": {
+        "role": "neutral",
+        "displayName": "Reader Text",
+        "tonalRamp": [
+          "oklch(15% 0.0098 148.7)",
+          "oklch(26% 0.0197 148.7)",
+          "oklch(38% 0.0295 148.7)",
+          "oklch(49% 0.0354 148.7)",
+          "oklch(61% 0.0393 148.7)",
+          "oklch(72% 0.0354 148.7)",
+          "oklch(84% 0.0236 148.7)",
+          "oklch(95% 0.0079 148.7)"
+        ]
+      },
+      "reader-body": {
+        "role": "neutral",
+        "displayName": "Reader Body",
+        "tonalRamp": [
+          "oklch(15% 0.0109 145.2)",
+          "oklch(26% 0.0217 145.2)",
+          "oklch(38% 0.0326 145.2)",
+          "oklch(49% 0.0391 145.2)",
+          "oklch(61% 0.0434 145.2)",
+          "oklch(72% 0.0391 145.2)",
+          "oklch(84% 0.0261 145.2)",
+          "oklch(95% 0.0087 145.2)"
+        ]
+      },
+      "reader-toolbar": {
+        "role": "neutral",
+        "displayName": "Reader Toolbar",
+        "tonalRamp": [
+          "oklch(15% 0.0060 159.6)",
+          "oklch(26% 0.0120 159.6)",
+          "oklch(38% 0.0180 159.6)",
+          "oklch(49% 0.0216 159.6)",
+          "oklch(61% 0.0240 159.6)",
+          "oklch(72% 0.0216 159.6)",
+          "oklch(84% 0.0144 159.6)",
+          "oklch(95% 0.0048 159.6)"
+        ]
+      },
+      "reader-index-active": {
+        "role": "neutral",
+        "displayName": "Reader Index Active",
+        "tonalRamp": [
+          "oklch(15% 0.0324 150.6)",
+          "oklch(26% 0.0648 150.6)",
+          "oklch(38% 0.0971 150.6)",
+          "oklch(49% 0.1166 150.6)",
+          "oklch(61% 0.1295 150.6)",
+          "oklch(72% 0.1166 150.6)",
+          "oklch(84% 0.0777 150.6)",
+          "oklch(95% 0.0259 150.6)"
+        ]
+      },
+      "reader-index-ink": {
+        "role": "neutral",
+        "displayName": "Reader Index Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0051 158.3)",
+          "oklch(26% 0.0102 158.3)",
+          "oklch(38% 0.0152 158.3)",
+          "oklch(49% 0.0183 158.3)",
+          "oklch(61% 0.0203 158.3)",
+          "oklch(72% 0.0183 158.3)",
+          "oklch(84% 0.0122 158.3)",
+          "oklch(95% 0.0041 158.3)"
+        ]
       }
     },
     "typographyMeta": {
@@ -379,13 +491,25 @@
       "coordinate": {
         "displayName": "Coordinate",
         "purpose": "World coordinate and depth metadata."
+      },
+      "reader-heading": {
+        "displayName": "Reader Heading",
+        "purpose": "Reader introduction heading."
+      },
+      "reader-title": {
+        "displayName": "Reader Title",
+        "purpose": "Actual story-step heading."
+      },
+      "reader-body": {
+        "displayName": "Reader Body",
+        "purpose": "Full chapter and evidence text."
       }
     },
     "shadows": [
       {
         "name": "article",
         "value": "0 0 100px #02060399",
-        "purpose": "Article separation from the same frozen world."
+        "purpose": "Original inset fallback article separation; full-screen reader has no dialog shadow."
       },
       {
         "name": "index",
@@ -415,19 +539,34 @@
         "purpose": "Perspective turn and scale into the reading state."
       },
       {
-        "name": "article-open",
-        "value": "0.6s power3.out",
-        "purpose": "Article arrival."
-      },
-      {
-        "name": "article-switch",
-        "value": "0.45s power3.out",
-        "purpose": "Switch across all six articles."
-      },
-      {
         "name": "cursor-state",
         "value": "0.18s",
         "purpose": "Four-corner target response."
+      },
+      {
+        "name": "intro-fracture",
+        "value": "smoothstep((progress - 0.08) / 0.72)",
+        "purpose": "Reversible separation of six actual pieces from the assembled opening crystal."
+      },
+      {
+        "name": "laser-entry",
+        "value": "900ms",
+        "purpose": "Cancelable laser, impact and burst before story entry."
+      },
+      {
+        "name": "reader-travel",
+        "value": "smoothstep(clamp((phase - 0.5) / 0.45, 0, 1))",
+        "purpose": "Stable initial reading interval followed by movement to the next chapter."
+      },
+      {
+        "name": "reader-camera",
+        "value": "1 - exp(-dt * 13)",
+        "purpose": "Camera interpolation within the current story."
+      },
+      {
+        "name": "reader-settle",
+        "value": "240ms",
+        "purpose": "Land on the next or previous chapter in the last user scroll direction; preserve tracked programmatic jumps."
       }
     ],
     "breakpoints": [
@@ -455,12 +594,12 @@
       "css": ".ds-index{font-family:Instrument,Arial,sans-serif;width:280px;font-size:12px}.ds-index summary{list-style:none;width:145px;padding:13px 16px;margin:auto;border:1px solid #63914c;background:#081108d9;color:#c7efb6;display:flex;justify-content:space-between;cursor:pointer}.ds-index summary::-webkit-details-marker{display:none}.ds-index[open] summary{width:auto;border-bottom:0}.ds-index[open] summary span{transform:rotate(45deg)}.ds-index nav{padding:5px 12px 12px;border:1px solid #63914c;border-top:0;background:#081108f5;box-shadow:0 20px 70px #000a}.ds-index a{display:flex;gap:14px;padding:13px 4px;color:#d1e9c6;line-height:1.3;text-decoration:none}.ds-index a span{font:10px monospace;color:#7ea96a;padding-top:2px}.ds-index a:hover{color:var(--signal-green,#a4ff61);background:#10220d}.ds-index summary:focus-visible,.ds-index a:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
     },
     {
-      "name": "Article toolbar",
+      "name": "Reader toolbar",
       "kind": "nav",
-      "refersTo": "article-toolbar",
-      "description": "Close and wraparound project controls above an independently scrolling article.",
+      "refersTo": "reader-toolbar",
+      "description": "Project switching and close above the full-viewport chapter reader.",
       "html": "<header class=\"ds-toolbar\"><button class=\"ds-close\" aria-label=\"Zavrieť príbeh\">×</button><span>Štýlový chlpáč</span><div class=\"ds-switch\"><span>1 / 6</span><button aria-label=\"Predchádzajúci projekt\">←</button><button aria-label=\"Ďalší projekt\">→</button></div></header>",
-      "css": ".ds-toolbar{font-family:Instrument,Arial,sans-serif;display:flex;align-items:center;justify-content:space-between;gap:20px;height:76px;padding:0 24px;background:#0a170cef;color:#c9edb6;border-bottom:1px solid var(--signal-edge,#35552d);backdrop-filter:blur(16px);font-size:12px}.ds-toolbar button{font-family:Instrument,Arial,sans-serif;border-radius:0;min-height:44px;background:none;color:inherit;cursor:pointer}.ds-close{border:0;font-size:22px;padding:0 8px}.ds-switch{display:flex;gap:8px;align-items:center}.ds-switch span{font-size:11px;margin-right:15px}.ds-switch button{width:44px;border:1px solid #50713c;font-size:20px;color:var(--signal-green,#a4ff61)}.ds-toolbar button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+      "css": ".ds-toolbar{font-family:Instrument,Arial,sans-serif;display:flex;align-items:center;justify-content:space-between;gap:20px;height:76px;padding:0 24px;background:#07140de8;color:#c9edb6;border-bottom:1px solid var(--signal-edge,#35552d);backdrop-filter:blur(8px);font-size:12px}.ds-toolbar button{font-family:Instrument,Arial,sans-serif;border-radius:0;min-height:44px;background:none;color:inherit;cursor:pointer}.ds-close{border:0;font-size:22px;padding:0 8px}.ds-switch{display:flex;gap:8px;align-items:center}.ds-switch span{font-size:11px;margin-right:15px}.ds-switch button{width:44px;border:1px solid #50713c;font-size:20px;color:var(--signal-green,#a4ff61)}.ds-toolbar button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
     },
     {
       "name": "Evidence view choice",
@@ -497,21 +636,37 @@
       "name": "Project hologram",
       "kind": "card",
       "refersTo": "hologram",
-      "description": "Native project summary shown after reveal; this snippet represents its visible state.",
+      "description": "Native project summary shown after reveal; its explicit story link triggers laser entry.",
       "html": "<div class=\"ds-hologram\"><h2>Štýlový chlpáč</h2><p class=\"ds-kind\">Web · skutočná prevádzka</p><p>Web, rezervácie a správa salónu.</p><a class=\"ds-holo-open\" href=\"#projekt/stylovy-chlpac\">Otvoriť príbeh <span>↗</span></a><button class=\"ds-holo-dismiss\" aria-label=\"Zavrieť náhľad\">×</button></div>",
       "css": ".ds-hologram{font-family:Instrument,Arial,sans-serif;position:relative;width:270px;padding:25px 25px 20px;background:linear-gradient(135deg,#163e26e8,#071b12ed);border:1px solid #80fca28c;color:#dcffe2;backdrop-filter:blur(12px)}.ds-hologram::before{content:\"\";position:absolute;inset:-5px 13px 5px -5px;border-left:1px solid #a3ffb866;border-top:1px solid #a3ffb866;pointer-events:none}.ds-hologram::after{content:\"\";position:absolute;left:0;right:0;top:31%;height:1px;background:#adffbe44;pointer-events:none}.ds-hologram h2{font-size:28px;font-weight:700;line-height:1.02;letter-spacing:-.03em;max-width:15ch;color:#d6ffda;margin:0}.ds-hologram p{font-size:13px;line-height:1.65;color:#c0d9bf;margin:0}.ds-hologram .ds-kind{font-size:10px;color:#96dfaa;margin:11px 0}.ds-holo-open{display:inline-flex;align-items:center;justify-content:space-between;gap:32px;border-bottom:1px solid #71b54d;padding:14px 0;color:#caffad;font-size:13px;min-height:48px;text-decoration:none}.ds-holo-open:hover{color:#fff;border-color:#c4ffba}.ds-holo-dismiss{font-family:Instrument,Arial,sans-serif;position:absolute;top:5px;right:5px;background:transparent;border:0;color:#b0f6bf;width:32px;height:32px;font-size:20px;cursor:pointer}.ds-hologram a:focus-visible,.ds-hologram button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    },
+    {
+      "name": "Reader panel",
+      "kind": "card",
+      "refersTo": "reader-panel",
+      "description": "Stable HTML reading surface for a full actual chapter, with internal overflow.",
+      "html": "<article class=\"ds-reader-panel\"><p class=\"ds-kicker\">01 / Potreba</p><h3>Od potreby k riešeniu.</h3><p>Text skutočnej kapitoly zostáva v HTML spolu s prílohami, ukážkami a zdrojmi, ktoré do nej patria.</p></article>",
+      "css": ".ds-reader-panel{font-family:Instrument,Arial,sans-serif;max-width:526px;max-height:70vh;overflow-y:auto;padding:30px 32px;background:linear-gradient(130deg,#0d281be8,#07160feb);border:1px solid #6cc78a77;color:#dcf5df;scrollbar-width:thin;scrollbar-color:#557c57 #07160f}.ds-reader-panel h3{font-size:clamp(30px,3vw,43px);font-weight:700;line-height:1.06;letter-spacing:-.03em;margin:0}.ds-reader-panel p{font-size:16px;line-height:1.75;color:#bdd6bd;margin:22px 0 0}.ds-reader-panel .ds-kicker{font-size:10px;color:#a4e6b4;margin:0 0 17px}.ds-reader-panel a:focus-visible,.ds-reader-panel button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+    },
+    {
+      "name": "Chapter index",
+      "kind": "nav",
+      "refersTo": "reader-index",
+      "description": "Native buttons move within the current story; the toolbar separately switches projects.",
+      "html": "<nav class=\"ds-reader-index\" aria-label=\"Časti príbehu\"><button aria-label=\"Projekt\" aria-current=\"step\">01</button><button aria-label=\"Potreba\">02</button><button aria-label=\"Výsledok a podklady\">03</button></nav>",
+      "css": ".ds-reader-index{display:flex;gap:9px;flex-wrap:wrap}.ds-reader-index button{font-family:Instrument,Arial,sans-serif;width:36px;height:40px;background:#0b2115b3;border:1px solid #4d835d;color:#8fc39b;font-size:11px;cursor:pointer}.ds-reader-index button[aria-current=\"step\"]{background:#a4ffb9;color:#06100a;border-color:#a4ffb9}.ds-reader-index button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
     }
   ],
   "narrative": {
     "northStar": "Na konci internetu",
-    "overview": "“Na konci internetu” is one phosphor-green world experienced through a compact WebGL camera flight. Abstract crystalline data shards carry the six projects. A single primary project is legible at a time; smaller surrounding fragments establish depth. Green procedural fog, a faint vertical axis and sparse debris connect the introduction, projects and contact.\n\nThe project preview is an HTML hologram anchored beside the projected geometry. Revealing it freezes the world so the visitor can read and choose the article link. The article then opens as a calm inset surface over the same background. Client screenshots belong to the detailed evidence inside articles, not to the main flight's shard surfaces.",
+    "overview": "“Na konci internetu” begins with one large crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. Procedural fog, a faint axis and sparse debris connect the whole journey.\n\nNative HTML holograms make the 3D projects readable. The story action sends a brief laser into its project, produces an impact and burst, and enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.",
     "keyCharacteristics": [
-      "One green WebGL atmosphere with procedural fog and crystalline data shards.",
-      "A primary project surrounded by smaller fragments in depth.",
-      "Projected native HTML buttons and a separate readable hologram reveal.",
-      "A frozen world while a hologram or article is open.",
-      "Square controls, self-hosted Instrument Sans and a fine-pointer target cursor.",
-      "Native HTML project summaries and links when WebGL is unavailable."
+      "One large crystal reversibly separates into the six actual project pieces.",
+      "A primary project, smaller surrounding fragments and readable HTML holograms.",
+      "A brief laser, impact and fragment burst connects a project to its story.",
+      "Real article sections become fragment stops with stable, scrollable reading panels.",
+      "Native chapter buttons, toolbar project switching and exact main-position return.",
+      "One green world, the fine-pointer target cursor and original-content fallback."
     ],
     "rules": [
       {
@@ -521,7 +676,7 @@
       },
       {
         "name": "The Reading Lock Rule",
-        "body": "Freeze autonomous world motion and camera interpolation while a hologram or article is open. Resume travel when reading closes or the visitor scrolls onward.",
+        "body": "Freeze the main flight while the hologram or story is open. Within a story, move only its chapter camera from chapter scroll and keep the current reading panel stable during the reading interval.",
         "section": "elevation"
       },
       {
@@ -531,18 +686,18 @@
       }
     ],
     "dos": [
-      "**Do** keep one primary project and use smaller distant shards to establish depth.",
-      "**Do** reveal the HTML hologram on mouse hover, keyboard focus or first tap before the story link opens the article.",
-      "**Do** preserve a generous invisible hit area and a continuous pointer bridge to the panel.",
-      "**Do** keep native links available when WebGL fails or loses its context.",
-      "**Do** preserve the exact saved flight scroll position when the article closes."
+      "**Do** build the opening crystal from the six actual project pieces and keep fracture reversible.",
+      "**Do** keep the native hologram link as the explicit trigger for laser entry.",
+      "**Do** derive chapter stops from the full original content and retain evidence and source links.",
+      "**Do** keep a stable reading interval, internal overflow and native chapter buttons.",
+      "**Do** preserve exact main-flight return and original-content WebGL fallback."
     ],
     "donts": [
-      "**Don't** place client-image previews or CSS-tinted screenshot cards in the main flight.",
-      "**Don't** turn the abstract crystalline data shards into literal meteorites.",
-      "**Don't** move the camera or ambient world while a hologram is being read.",
-      "**Don't** show the custom mouse cursor on coarse-pointer mobile devices.",
-      "**Don't** imply that pause disables scrolling or all article animation."
+      "**Don't** replace real article sections with decorative one-line summaries.",
+      "**Don't** confuse chapter navigation with toolbar switching between projects.",
+      "**Don't** make the main flight drift while a hologram or story is open.",
+      "**Don't** add a video-service or audio dependency to the laser interaction.",
+      "**Don't** remove the fallback article or the original evidence distinctions."
     ]
   }
 }

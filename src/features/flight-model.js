@@ -18,3 +18,15 @@ export function hologramPosition(x, y, width, height) {
     width: panelWidth,
   };
 }
+
+export function introFracture(progress) {
+  const t = clamp((progress - 0.08) / 0.72, 0, 1);
+  return t * t * (3 - 2 * t);
+}
+export function chapterProgress(scrollTop, unit, count) {
+  const raw = clamp(scrollTop / Math.max(1, unit), 0, Math.max(0, count - 1));
+  const index = Math.floor(raw),
+    phase = raw - index;
+  const travel = clamp((phase - 0.5) / 0.45, 0, 1);
+  return index + travel * travel * (3 - 2 * travel);
+}

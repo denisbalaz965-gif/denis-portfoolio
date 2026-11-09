@@ -82,6 +82,7 @@ export function initHolograms({ root = document } = {}) {
     );
   }
   root.addEventListener('portfolio:flight-jump', close, options);
+  root.addEventListener('portfolio:shoot', close, options);
   root.addEventListener(
     'portfolio:flight-fallback',
     () => {

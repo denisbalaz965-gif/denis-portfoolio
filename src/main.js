@@ -11,8 +11,8 @@ const dispose = [
   initNavigation(),
   initContact(),
   initAnimations(),
-  initProjectBrowser(),
   initSignal(),
+  initProjectBrowser(),
   initHolograms(),
   initCursor(),
 ];

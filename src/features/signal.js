@@ -1,11 +1,13 @@
 import * as THREE from 'three';
 import { restoreFlightFallback } from './flight-fallback.js';
+import { makeCrystalPiece } from './fracture-geometry.js';
 import {
   flightAt,
   activeStop,
   hologramPosition,
   scrollForStop,
   FLIGHT_END,
+  introFracture,
 } from './flight-model.js';
 
 const fogVertex = `void main(){gl_Position=vec4(position.xy,0.999,1.0);}`;
@@ -13,6 +15,7 @@ const fogFragment = `
 uniform vec2 resolution;
 uniform float time;
 uniform float travel;
+uniform float impact;
 float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}
 float field(vec2 p){return noise(p)*.58+noise(p*2.03+4.0)*.28+noise(p*4.01+9.0)*.14;}
@@ -26,6 +29,7 @@ void main(){
  float center=1.0-smoothstep(.0,1.1,length(p-vec2(.16,.05)));
  vec3 color=vec3(.006,.018,.009)+vec3(.065,.40,.105)*fog*(.6+center)+vec3(.08,.35,.09)*vein;
  color*=.63+.37*(1.0-smoothstep(.2,1.0,length(p)));
+ color+=vec3(.22,.55,.32)*impact;
  gl_FragColor=vec4(color,1.0);
 }`;
 
@@ -58,6 +62,7 @@ export function initSignal() {
       resolution: { value: new THREE.Vector2(1, 1) },
       time: { value: 0 },
       travel: { value: 0 },
+      impact: { value: 0 },
     },
     vertexShader: fogVertex,
     fragmentShader: fogFragment,
@@ -86,10 +91,15 @@ export function initSignal() {
       flatShading: true,
     });
     for (let j = 0; j < 5; j++) {
-      const geometry = new THREE.OctahedronGeometry(j === 0 ? 0.38 : 0.12 + j * 0.018, 0);
+      const geometry =
+        j === 0 ? makeCrystalPiece(i) : new THREE.OctahedronGeometry(0.12 + j * 0.018, 0);
       const shard = new THREE.Mesh(geometry, material);
-      shard.scale.set(j === 0 ? 0.75 : 0.5, 1.3 + ((i + j) % 3) * 0.25, 0.55);
-      shard.rotation.set(j * 0.7 + i, j * 0.9, j * 0.65);
+      shard.scale.set(
+        j === 0 ? 1 : 0.5,
+        j === 0 ? 1.4 : 1.3 + ((i + j) % 3) * 0.25,
+        j === 0 ? 1 : 0.55,
+      );
+      shard.rotation.set(j === 0 ? 0 : j * 0.7 + i, j * 0.9, j * 0.65);
       shard.position.set(
         j === 0 ? 0 : Math.sin(j * 2 + i) * 0.43,
         j === 0 ? 0 : Math.cos(j * 3 + i) * 0.37,
@@ -105,6 +115,8 @@ export function initSignal() {
           }),
         ),
       );
+      shard.userData.home = shard.position.clone();
+      shard.userData.spin = shard.rotation.clone();
       group.add(shard);
     }
     const points = [];
@@ -124,6 +136,129 @@ export function initSignal() {
     scene.add(group);
     return { group, node, x: positions[i], y: Math.sin(i * 3.1) * 0.35, z: -i * 7, material };
   });
+  const laser = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]),
+    new THREE.LineBasicMaterial({
+      color: 0xc4ffd4,
+      transparent: true,
+      opacity: 1,
+      depthTest: false,
+    }),
+  );
+  laser.frustumCulled = false;
+  laser.visible = false;
+  laser.renderOrder = 100;
+  scene.add(laser);
+  const hit = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(0.1, 0),
+    new THREE.MeshBasicMaterial({
+      color: 0xbbffd4,
+      wireframe: true,
+      transparent: true,
+      opacity: 1,
+    }),
+  );
+  hit.visible = false;
+  scene.add(hit);
+  const beam = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.012, 0.012, 1, 6),
+    new THREE.MeshBasicMaterial({
+      color: 0xcaffd8,
+      transparent: true,
+      opacity: 0.85,
+      depthTest: false,
+    }),
+  );
+  beam.visible = false;
+  beam.renderOrder = 99;
+  scene.add(beam);
+  let shot = null,
+    reader = null,
+    readerGroup = null,
+    readerMotion = 0;
+  function clearReader() {
+    if (readerGroup) {
+      readerGroup.traverse((object) => {
+        object.geometry?.dispose();
+        object.material?.dispose();
+      });
+      scene.remove(readerGroup);
+      readerGroup = null;
+    }
+    reader = null;
+    readerMotion = 0;
+  }
+  function cancelShot() {
+    shot = null;
+    laser.visible = false;
+    beam.visible = false;
+    hit.visible = false;
+    document.body.classList.remove('portfolio-shooting');
+    fogMaterial.uniforms.impact.value = 0;
+  }
+  document.addEventListener(
+    'portfolio:shoot',
+    (event) => {
+      if (lost || shot) return;
+      const index = projects.findIndex((p) => p.node.dataset.stop === event.detail.id);
+      if (index < 0) return;
+      event.preventDefault();
+      shot = { index, started: performance.now(), complete: event.detail.complete };
+      document.body.classList.add('portfolio-shooting');
+      startDraw();
+    },
+    options,
+  );
+  document.addEventListener(
+    'portfolio:cancel-shot',
+    () => {
+      cancelShot();
+      startDraw();
+    },
+    options,
+  );
+  document.addEventListener(
+    'portfolio:reader',
+    (event) => {
+      const data = event.detail;
+      if (!data) {
+        clearReader();
+        startDraw();
+        return;
+      }
+      if (!reader || reader.project !== data.project) {
+        clearReader();
+        readerGroup = new THREE.Group();
+        scene.add(readerGroup);
+        for (let i = 0; i < data.count; i++) {
+          const piece = new THREE.Group();
+          const geometry = makeCrystalPiece(i);
+          const material = new THREE.MeshStandardMaterial({
+            color: 0x153d27,
+            emissive: 0x29653f,
+            emissiveIntensity: 0.55,
+            metalness: 0.8,
+            roughness: 0.25,
+            flatShading: true,
+          });
+          const mesh = new THREE.Mesh(geometry, material);
+          mesh.scale.set(1, 1.6, 1);
+          mesh.rotation.set(0.3, i * 0.9, 0.2);
+          mesh.add(
+            new THREE.LineSegments(
+              new THREE.EdgesGeometry(geometry),
+              new THREE.LineBasicMaterial({ color: 0xaaffc2, transparent: true, opacity: 0.8 }),
+            ),
+          );
+          piece.add(mesh);
+          readerGroup.add(piece);
+        }
+      }
+      reader = { ...data, index: projects.findIndex((p) => p.node.dataset.stop === data.project) };
+      startDraw();
+    },
+    options,
+  );
   const dustGeo = new THREE.BufferGeometry();
   const dust = [];
   for (let i = 0; i < 240; i++)
@@ -242,14 +377,20 @@ export function initSignal() {
     if (document.hidden || lost) return;
     const dt = Math.min((time - lastTime) / 1000 || 0, 0.05);
     lastTime = time;
-    const locked = Boolean(document.querySelector('.flight-project.is-revealed,dialog[open]'));
+    const locked = Boolean(
+      shot || document.querySelector('.flight-project.is-revealed,dialog[open]'),
+    );
     if (!paused && !locked) phase += dt;
     if (!locked) progress += (target - progress) * (1 - Math.exp(-dt * 12));
-    camera.position.set(
-      locked ? 0 : pointerX * 0.08,
-      locked ? 0 : pointerY * 0.06,
-      11 - progress * 7,
-    );
+    if (reader) {
+      readerMotion += (reader.progress - readerMotion) * (1 - Math.exp(-dt * 13));
+      camera.position.set(0, 0, projects[Math.max(0, reader.index)].z + 4 - readerMotion * 5.5);
+    } else
+      camera.position.set(
+        locked ? 0 : pointerX * 0.08,
+        locked ? 0 : pointerY * 0.06,
+        11 - progress * 7,
+      );
     camera.lookAt(0, 0, camera.position.z - 10);
     fill.position.copy(camera.position);
     fogMaterial.uniforms.time.value = phase;
@@ -274,8 +415,10 @@ export function initSignal() {
     document.querySelector('#depth-value').textContent = String(
       Math.round((progress / FLIGHT_END) * 999),
     ).padStart(3, '0');
+    const fracture = introFracture(progress);
+    const merge = new THREE.Vector3(width < 761 ? 0 : 1.9, width < 761 ? -1 : 0, 4);
     projects.forEach((p, i) => {
-      p.group.position.set(
+      const destination = new THREE.Vector3(
         p.x * (width < 761 ? 0.52 : 1) +
           Math.sin(i * 2.4) * Math.max(0, camera.position.z - p.z - 6) * 0.16,
         p.y +
@@ -283,14 +426,43 @@ export function initSignal() {
           Math.sin(phase * 0.4 + i) * 0.025,
         p.z,
       );
-      p.group.rotation.set(0.2 + Math.sin(phase * 0.15 + i) * 0.15, phase * 0.06 + i * 0.8, 0.12);
+      p.group.position.copy(merge).lerp(destination, fracture);
+      p.group.scale.setScalar(THREE.MathUtils.lerp(width < 761 ? 2 : 3.2, 0.72, fracture));
+      p.group.rotation.set(
+        THREE.MathUtils.lerp(0.25, 0.2 + Math.sin(phase * 0.15 + i) * 0.15, fracture),
+        phase * 0.06 + THREE.MathUtils.lerp(0.4, i * 0.8, fracture),
+        0.12,
+      );
+      p.group.children.forEach((child, j) => {
+        child.visible = j === 0 || fracture > 0.22;
+        if (!child.isMesh) return;
+        child.position.copy(child.userData.home);
+        child.rotation.copy(child.userData.spin);
+        if (shot?.index === i) {
+          const burst = clamp01(((performance.now() - shot.started) / 900 - 0.22) / 0.6);
+          child.position.addScaledVector(
+            new THREE.Vector3(Math.sin(j * 3 + i), Math.cos(j * 2 + i), j * 0.3 - 1),
+            burst * 2.5,
+          );
+          child.rotation.x += burst * (j + 1);
+          child.rotation.z += burst * 1.2;
+        }
+      });
       p.material.emissiveIntensity = p.node.classList.contains('is-revealed') ? 0.9 : 0.3;
-      const gap = camera.position.z - p.z;
-      p.group.visible = gap > 1.3 && gap < 75 && ending < 0.9;
+      const gap = camera.position.z - p.group.position.z;
+      p.group.visible = !reader && gap > 1.3 && gap < 75 && ending < 0.9;
       screen.copy(p.group.position).project(camera);
       const x = (screen.x * 0.5 + 0.5) * width,
         y = (-screen.y * 0.5 + 0.5) * height;
-      const visible = p.group.visible && x > 35 && x < width - 35 && y > 95 && y < height - 90;
+      const visible =
+        !reader &&
+        !shot &&
+        p.group.visible &&
+        fracture > 0.98 &&
+        x > 35 &&
+        x < width - 35 &&
+        y > 95 &&
+        y < height - 90;
       p.node.style.visibility = visible ? 'visible' : 'hidden';
       p.node.style.left = `${x}px`;
       p.node.style.top = `${y}px`;
@@ -315,11 +487,47 @@ export function initSignal() {
       p.node.style.setProperty('--bridge-width', `${Math.max(65, h.left - x + h.width) - bx}px`);
       p.node.style.setProperty('--bridge-height', `${Math.max(80, h.top - y + 240) - by}px`);
     });
+    if (reader && readerGroup) {
+      const base = projects[Math.max(0, reader.index)].z;
+      readerGroup.children.forEach((piece, i) => {
+        piece.position.set(width < 761 ? 0 : -0.9, width < 761 ? 0.95 : 0, base - i * 5.5);
+        piece.rotation.y = phase * 0.05 + i * 0.2;
+        piece.scale.setScalar(0.9);
+      });
+    }
+    if (shot) {
+      const elapsed = (performance.now() - shot.started) / 900;
+      const point = projects[shot.index].group.position;
+      const origin = camera.position.clone().add(new THREE.Vector3(0.15, -0.35, -0.6));
+      const tip = origin.clone().lerp(point, Math.min(1, elapsed / 0.24));
+      laser.geometry.setFromPoints([origin, tip]);
+      laser.visible = elapsed < 0.34;
+      const direction = tip.clone().sub(origin);
+      beam.visible = laser.visible && direction.length() > 0.01;
+      beam.position.copy(origin).add(tip).multiplyScalar(0.5);
+      beam.scale.y = direction.length();
+      beam.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
+      hit.visible = elapsed > 0.22 && elapsed < 0.85;
+      hit.position.copy(point);
+      hit.scale.setScalar(1 + Math.max(0, elapsed - 0.22) * 17);
+      hit.material.opacity = Math.max(0, 1 - (elapsed - 0.22) * 1.6);
+      fogMaterial.uniforms.impact.value = Math.max(0, 1 - Math.abs(elapsed - 0.25) * 12) * 0.35;
+      if (elapsed >= 1) {
+        const complete = shot.complete;
+        cancelShot();
+        complete();
+      }
+    }
     debris.forEach((mesh, i) => {
       mesh.rotation.z += !paused && !locked ? dt * 0.025 * (i % 2 ? 1 : -1) : 0;
     });
     renderer.render(scene, camera);
-    if ((!paused && !locked) || (!locked && Math.abs(target - progress) > 0.001))
+    if (
+      shot ||
+      (reader && Math.abs(reader.progress - readerMotion) > 0.001) ||
+      (!paused && !locked) ||
+      (!locked && Math.abs(target - progress) > 0.001)
+    )
       frame = requestAnimationFrame(draw);
   }
   function startDraw() {
@@ -353,7 +561,7 @@ export function initSignal() {
   );
   window.addEventListener('scroll', readScroll, { passive: true, signal: controller.signal });
   window.addEventListener('resize', resize, options);
-  window.addEventListener('hashchange', route, options);
+  window.addEventListener('hashchange', () => queueMicrotask(route), options);
   window.addEventListener('pageshow', route, options);
   window.addEventListener('load', () => requestAnimationFrame(route), {
     once: true,
@@ -391,7 +599,11 @@ export function initSignal() {
       if (frame) cancelAnimationFrame(frame);
       lost = true;
       frame = 0;
+      const complete = shot?.complete;
+      cancelShot();
+      clearReader();
       restoreFlightFallback();
+      complete?.();
     },
     options,
   );
@@ -409,6 +621,8 @@ export function initSignal() {
   return () => {
     controller.abort();
     viewerObserver.disconnect();
+    cancelShot();
+    clearReader();
     window.history.scrollRestoration = previousRestoration;
     if (frame) cancelAnimationFrame(frame);
     const geometries = new Set(),

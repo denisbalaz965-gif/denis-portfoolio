@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { findProject, projectsInGroup, portfolioProjects } from '../data/portfolio-projects.js';
 import { initScrollStories } from './scroll-stories.js';
+import { initFragmentReader } from './fragment-reader.js';
 
 const escapeHTML = (value) =>
   String(value).replace(
@@ -179,6 +180,8 @@ export function initProjectBrowser({
   let oldRootOverflow;
   let waitingForBack = false;
   let queuedOpen;
+  let entrySerial = 0;
+  let entryPending = false;
   let returnScroll = 0;
   const continuous = Boolean(root.querySelector('.boundary-journey'));
   const viewerProjects = (group) => (continuous ? portfolioProjects : projectsInGroup(group));
@@ -252,14 +255,22 @@ export function initProjectBrowser({
     document.body.style.overflow = oldOverflow ?? '';
     document.documentElement.style.overflow = oldRootOverflow ?? '';
     document.body.classList.remove('project-viewer-open');
-    const returnTo = opener?.isConnected
-      ? opener
-      : root.querySelector(
-          continuous
-            ? `#stop-${previous?.id} .fragment-title-link`
-            : `[data-project-group="${previous?.group || 'webs'}"] .gallery-open`,
-        );
-    returnTo?.focus({ preventScroll: true });
+    const originBeacon = opener?.closest('.flight-project')?.querySelector('.fragment-beacon');
+    const returnTo =
+      opener?.isConnected && !opener.closest('[inert]')
+        ? opener
+        : (originBeacon ??
+          root.querySelector(
+            continuous
+              ? `#stop-${previous?.id} .fragment-title-link`
+              : `[data-project-group="${previous?.group || 'webs'}"] .gallery-open`,
+          ));
+    const restoreFocus = () => {
+      if (returnTo?.isConnected && !dialog.open) returnTo.focus({ preventScroll: true });
+    };
+    if (continuous && document.body.classList.contains('flight-ready'))
+      requestAnimationFrame(restoreFocus);
+    else restoreFocus();
     if (continuous) window.scrollTo({ top: returnScroll, behavior: 'instant' });
   }
 
@@ -344,24 +355,51 @@ export function initProjectBrowser({
       dialog.showModal();
     }
     scroller.scrollTop = 0;
-    disposeStory = mountStories({ root: content, scroller });
+    disposeStory = document.body.classList.contains('flight-ready')
+      ? initFragmentReader({
+          root: content,
+          scroller,
+          project,
+          mountFallback: mountStories,
+          initialStep: legacyStep,
+        })
+      : mountStories({ root: content, scroller });
     const announcement = dialog.querySelector('[data-case-announcement]');
     if (announcement)
       announcement.textContent = `${project.name}. Projekt ${index + 1} zo ${projects.length}.`;
-    if (!keepControlFocus) content.querySelector('#case-title').focus({ preventScroll: true });
+    if (!keepControlFocus) {
+      const heading = dialog.classList.contains('reader-mode')
+        ? content.querySelector('.reader-panel.is-current h2,.reader-panel.is-current h3')
+        : content.querySelector('#case-title');
+      if (heading) {
+        heading.tabIndex = -1;
+        heading.focus({ preventScroll: true });
+      }
+    }
     if (animate)
-      transition = gsap.fromTo(
-        page,
-        { xPercent: direction * (wasOpen ? 7 : 35), opacity: 0 },
-        {
-          xPercent: 0,
-          opacity: 1,
-          duration: wasOpen ? 0.45 : 0.6,
-          ease: 'power3.out',
-          clearProps: 'opacity,transform',
-        },
-      );
-    if (legacyStep)
+      transition = dialog.classList.contains('reader-mode')
+        ? gsap.fromTo(
+            page,
+            { opacity: 0 },
+            { opacity: 1, duration: 0.35, ease: 'power2.out', clearProps: 'opacity' },
+          )
+        : gsap.fromTo(
+            page,
+            {
+              xPercent: dialog.classList.contains('reader-mode')
+                ? 0
+                : direction * (wasOpen ? 7 : 35),
+              opacity: 0,
+            },
+            {
+              xPercent: 0,
+              opacity: 1,
+              duration: wasOpen ? 0.45 : 0.6,
+              ease: 'power3.out',
+              clearProps: 'opacity,transform',
+            },
+          );
+    if (legacyStep && !dialog.classList.contains('reader-mode'))
       content.querySelector(`[id="${legacyStep}"]`)?.scrollIntoView({ block: 'start' });
   }
 
@@ -436,7 +474,25 @@ export function initProjectBrowser({
       } else if (target.matches('a[href^="#projekt/"]')) {
         event.preventDefault();
         opener = target;
-        openProject(target.getAttribute('href').slice(9), { push: true });
+        const id = target.getAttribute('href').slice(9);
+        if (entryPending) return;
+        const serial = ++entrySerial;
+        entryPending = true;
+        const complete = () => {
+          if (controller.signal.aborted || serial !== entrySerial) return;
+          entryPending = false;
+          openProject(id, { push: true });
+        };
+        const shot = new CustomEvent('portfolio:shoot', {
+          cancelable: true,
+          detail: { id, complete },
+        });
+        if (
+          !animate ||
+          !document.body.classList.contains('flight-ready') ||
+          root.dispatchEvent(shot)
+        )
+          complete();
       } else if (dialog.contains(target) && target.matches('a[href^="#"]')) {
         const anchor = content.querySelector(`[id="${target.getAttribute('href').slice(1)}"]`);
         if (anchor) {
@@ -454,9 +510,15 @@ export function initProjectBrowser({
         event.altKey ||
         event.ctrlKey ||
         event.metaKey ||
-        event.target.matches('input,textarea,select,[contenteditable]')
+        event.target.matches?.('input,textarea,select,[contenteditable]')
       )
         return;
+      if (event.key === 'Escape' && entryPending) {
+        entrySerial++;
+        entryPending = false;
+        root.dispatchEvent(new Event('portfolio:cancel-shot'));
+        return;
+      }
       if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
       const direction = event.key === 'ArrowRight' ? 1 : -1;
       if (dialog.open) {
@@ -487,6 +549,19 @@ export function initProjectBrowser({
   window.addEventListener(
     'popstate',
     () => {
+      if (entryPending) {
+        entrySerial++;
+        entryPending = false;
+        root.dispatchEvent(new Event('portfolio:cancel-shot'));
+      }
+      if (
+        current &&
+        !window.location.hash.startsWith('#projekt/') &&
+        !legacyRoutes[window.location.hash.slice(1)]
+      )
+        root.dispatchEvent(
+          new CustomEvent('portfolio:return', { detail: { hash: window.location.hash } }),
+        );
       waitingForBack = false;
       const next = queuedOpen;
       queuedOpen = null;
@@ -502,6 +577,8 @@ export function initProjectBrowser({
   syncRoute();
   return () => {
     controller.abort();
+    entrySerial++;
+    root.dispatchEvent(new Event('portfolio:cancel-shot'));
     cleanupViewer();
     galleries.forEach((gallery) => gsap.killTweensOf(gallery.querySelector('.gallery-project')));
   };

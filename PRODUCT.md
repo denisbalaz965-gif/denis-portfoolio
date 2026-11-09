@@ -20,9 +20,11 @@ The portfolio connects practical digital work with experience handling project e
 
 ## Operating Context
 
-Visitors scroll through one WebGL flight containing six ordered crystalline project fragments. One project is primary while others remain smaller in depth. A mouse hover, keyboard focus or first tap reveals its HTML hologram; the hologram's native story link opens the article. The world freezes while the hologram or article is open. A small dropdown index jumps to each project or the ending contact area, which includes an expandable personal introduction.
+The opening contains one large crystal. First scroll separates it into the six actual project pieces; reversing the scroll reassembles it. Visitors then travel through those projects, with one primary fragment and smaller surrounding fragments in depth. Mouse hover, keyboard focus or first tap reveals a native HTML hologram. Activating its story link runs a short laser, impact and fragment burst before opening the story; direct project routes remain available.
 
-Articles appear over the same green world, with independent vertical reading and horizontal swipe, arrows or left/right keyboard switching across all six projects. Closing restores the saved journey scroll position and focus. Stories retain shareable `#projekt/<id>` addresses, browser history and Escape dismissal. Email, phone, email-copy and GitHub links remain available. WebGL failure or context loss exposes the native HTML project summaries and story links. These are implementation descriptions, not independent evidence that every physical hover/touch sequence has been validated.
+In the WebGL reader, each actual content section has a 3D fragment. Article scrolling moves between chapter stops while stable HTML reading panels show the original introduction, story steps and evidence where present. Long panels retain internal vertical scrolling. A numbered native-button index jumps to chapters. The toolbar still switches all six projects; closing restores the exact saved main-flight position and focus. The main flight stays locked while reading, while the reader has its own scroll-driven camera movement. Native project routes, history, Escape and the four-corner fine-pointer cursor remain.
+
+Contact includes email, phone, email copy, an expandable personal introduction and GitHub. WebGL failure/context loss exposes native HTML project summaries and links; an active reader restores its cloned original article and mounts the original scroll-story behavior. These implementation descriptions are separate from independent physical mouse/touch and rendering validation.
 
 ## Capabilities and Constraints
 
@@ -33,11 +35,11 @@ Articles appear over the same green world, with independent vertical reading and
 - Grant references describe Denis's contribution within CASSIS Consult. Funding belongs to recipients. Approval, a contractual funding limit, payment and completed implementation are separate states.
 - Publication, response rates and employment outcomes require separate evidence; source implementation does not establish them.
 - No hiring analytics target, application backend or contact form is established.
-- The background pause control freezes autonomous WebGL drift; scroll travel remains available. A revealed hologram or open article also freezes world movement for reading. WebGL failure/context loss falls back to native HTML links and summaries.
+- The pause control freezes autonomous main-world drift; main scroll travel remains available. A revealed hologram or open story locks the main flight. The story reader moves its own camera between content stops. No video service or audio is part of the interaction.
 
 ## Brand Commitments
 
-The identity is Denis Baláž and the content is Slovak. The owner explicitly confirmed a replacement design: an end-of-internet phosphor-green space, one persistent vertical axis and backdrop, a compact WebGL camera flight through six crystalline data fragments, HTML hologram reveals and a small dropdown index. Articles open over that world. The fragments are abstract project data, not literal meteorites. The main flight uses no client-image previews; existing illustrative article scenes retain their separate evidence context. Existing factual stories and their evidence distinctions remain authoritative. This visual commitment does not authorise stronger professional claims.
+The identity is Denis Baláž and the content is Slovak. The owner explicitly confirmed a replacement design: an end-of-internet phosphor-green space, one persistent vertical axis and backdrop, a compact WebGL camera flight through six crystalline data fragments, HTML hologram reveals and a small dropdown index. The opening crystal fractures into the six project pieces, hologram entry uses a brief laser/impact, and articles continue into their own fragment-based chapter journey within that world. The fragments are abstract project data, not literal meteorites. The main flight uses no client-image previews; existing illustrative article scenes retain their separate evidence context. Existing factual stories and their evidence distinctions remain authoritative. This visual commitment does not authorise stronger professional claims.
 
 ## Evidence on Hand
 
