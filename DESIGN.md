@@ -180,13 +180,13 @@ components:
 
 “Na konci internetu” begins with one large crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. Procedural fog, a faint axis and sparse debris connect the whole journey.
 
-Native HTML holograms make the 3D projects readable. The story action sends a brief laser into its project, produces an impact and burst, and enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.
+Native HTML holograms make the 3D projects readable. The story action gently opens and expands its selected fragment over 560ms, then enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.
 
 **Key Characteristics:**
 
 - One large crystal reversibly separates into the six actual project pieces.
 - A primary project, smaller surrounding fragments and readable HTML holograms.
-- A brief laser, impact and fragment burst connects a project to its story.
+- A calm fragment opening and expansion connects a project to its story.
 - Real article sections become fragment stops with stable, scrollable reading panels.
 - Native chapter buttons, toolbar project switching and exact main-position return.
 - One green world, the fine-pointer target cursor and original-content fallback.
@@ -272,7 +272,7 @@ Square control corners, thin frames and sharp faceted geometry form the world. E
 
 ### Project beacon and hologram
 
-Native HTML buttons are projected from the WebGL project positions; the mesh itself is not the navigation control. Mouse hover, keyboard focus or first tap on the beacon reveals the hologram and updates `aria-expanded`. A separate “Otvoriť príbeh” link starts the laser entry and then opens the story. The reveal stops any in-progress smooth scroll at its current position. The background's autonomous motion and camera interpolation freeze while it remains open.
+Native HTML buttons are projected from the WebGL project positions; the mesh itself is not the navigation control. Mouse hover, keyboard focus or first tap on the beacon reveals the hologram and updates `aria-expanded`. A separate “Otvoriť príbeh” link starts the calm fragment entry and then opens the story. The reveal stops any in-progress smooth scroll at its current position. The background's autonomous motion and camera interpolation freeze while it remains open.
 
 The bridge covers target-to-panel pointer travel. Escape, the dismiss control, an outside pointer action, wheel/touch movement or leaving the project without retained focus closes it. Only one hologram is open. Hidden hologram content is inert. The panel opacity transition is (0.18s), transform (0.3s), and visibility (0.2s). The fallback exposes the same summaries and article links without a reveal requirement.
 
@@ -280,9 +280,9 @@ The bridge covers target-to-panel pointer travel. Escape, the dismiss control, a
 
 Native `details`/`summary` lists the six project anchors plus personal/contact destinations. It keeps the established square green border and translucent dark fill. Selecting a destination or clicking outside closes it; Escape restores focus to its summary. Flight routing maps those anchors to camera travel positions; personal text opens at contact.
 
-### Laser entry
+### Fragment entry
 
-The native story link dispatches a cancelable entry request. The shared renderer draws a laser line, impact wireframe, fog flash and project-fragment burst over (900ms), then opens the story. Pointer interaction with the main flight stage and header is disabled during the shot. Escape cancels a pending entry. Direct article routes and fallback mode enter without requiring that effect. This is a WebGL/CSS interaction with no video service or audio.
+The native story link dispatches the cancelable `portfolio:project-entry` request. The shared renderer gently separates and rotates the selected fragment’s pieces over (560ms), then opens the story. `portfolio-entering` disables pointer interaction with the main flight stage and header during this transition. Escape or native browser Back dispatches `portfolio:cancel-entry` to cancel a pending entry. Direct article routes open immediately; WebGL loss completes entry through the fallback. The transition uses no video service or audio.
 
 ### Fragment reader and evidence
 
@@ -311,7 +311,7 @@ The intro retains its static offset title slice. Motion is locally active even w
 ### Do:
 
 - **Do** build the opening crystal from the six actual project pieces and keep fracture reversible.
-- **Do** keep the native hologram link as the explicit trigger for laser entry.
+- **Do** keep the native hologram link as the explicit trigger for calm fragment entry.
 - **Do** derive chapter stops from the full original content and retain evidence and source links.
 - **Do** keep a stable reading interval, internal overflow and native chapter buttons.
 - **Do** preserve exact main-flight return and original-content WebGL fallback.
@@ -321,5 +321,5 @@ The intro retains its static offset title slice. Motion is locally active even w
 - **Don't** replace real article sections with decorative one-line summaries.
 - **Don't** confuse chapter navigation with toolbar switching between projects.
 - **Don't** make the main flight drift while a hologram or story is open.
-- **Don't** add a video-service or audio dependency to the laser interaction.
+- **Don't** add a video-service or audio dependency to the fragment-entry interaction.
 - **Don't** remove the fallback article or the original evidence distinctions.

@@ -125,16 +125,16 @@ describe('Reading the fragments', () => {
     expect(chapterProgress(9999, 400, 5)).toBe(4);
   });
 });
-describe('Project shot transition', () => {
-  it('waits for the hit animation, and Escape cancels a pending entry', () => {
+describe('Project fragment entry', () => {
+  it('waits for the fragment opening, and Escape cancels a pending entry', () => {
     document.body.classList.add('flight-ready');
     const captured = [];
-    const shot = (event) => {
+    const entry = (event) => {
       event.preventDefault();
       captured.push(event.detail);
     };
-    document.addEventListener('portfolio:shoot', shot);
-    dispose = () => document.removeEventListener('portfolio:shoot', shot);
+    document.addEventListener('portfolio:project-entry', entry);
+    dispose = () => document.removeEventListener('portfolio:project-entry', entry);
     const browser = initProjectBrowser({ animate: true, mountStories: () => () => {} });
     const previous = dispose;
     dispose = () => {
@@ -147,5 +147,10 @@ describe('Project shot transition', () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     captured[0].complete();
     expect(document.querySelector('dialog').open).toBe(false);
+    document.querySelector('.holo-open').click();
+    expect(captured).toHaveLength(2);
+    captured[1].complete();
+    expect(document.querySelector('dialog').open).toBe(true);
+    expect(document.querySelector('.reader-track').dataset.project).toBe('stylovy-chlpac');
   });
 });

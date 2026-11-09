@@ -10,13 +10,13 @@
 
 `flight.css`, načítaný po `signal.css`, definuje dráhu 420svh, respektíve 390svh do šírky 760px. Obsah je v režime pripraveného WebGL pevný vo viewporte. Indexové kotvy sa prevádzajú na polohy kamery. Kontakt je na konci dráhy a „O mne“ je natívny rozbaľovací obsah pri kontakte.
 
-Pri odhalenom holograme, laserovom vstupe alebo otvorenom príbehu sa zastaví interpolácia hlavného letu a samostatný pohyb sveta. Aktívna čítačka má vlastný kamerový priebeh, zdieľa však ten istý renderer a zelený svet. Pauza samostatne zastaví časový pohyb, no scroll zostáva funkčný. Skrytá karta nevytvára pokračujúce snímky. Cleanup obnoví pôvodný `history.scrollRestoration`, odstráni udalosti a uvoľní geometrie, materiály a renderer.
+Pri odhalenom holograme, pokojnom otváraní projektu alebo otvorenom príbehu sa zastaví interpolácia hlavného letu a samostatný pohyb sveta. Aktívna čítačka má vlastný kamerový priebeh, zdieľa však ten istý renderer a zelený svet. Pauza samostatne zastaví časový pohyb, no scroll zostáva funkčný. Skrytá karta nevytvára pokračujúce snímky. Cleanup obnoví pôvodný `history.scrollRestoration`, odstráni udalosti a uvoľní geometrie, materiály a renderer.
 
 Zlyhanie vytvorenia WebGL alebo strata kontextu odstránia režim `flight-ready`. Bežný HTML zoznam zobrazuje názvy, súhrny a odkazy na články; nevyžaduje 3D zásah ani hover.
 
 ## Hologramy a vstupy
 
-`holograms.js` vlastní jediný odhalený panel. Odhalí ho mouse pointerenter, fokus tlačidla alebo prvé kliknutie/ťuknutie. Pred otvorením zastaví rozbehnutý smooth scroll na aktuálnej polohe. Odkaz v paneli vyvolá cancelable `portfolio:shoot`. Renderer počas 900ms kreslí laser, zásah, shaderový záblesk a rozlet častí, potom callback otvorí príbeh. Escape zruší čakajúci vstup; priamy odkaz a režim bez WebGL nevyžadujú efekt. Pri strate kontextu sa čakajúci prechod dokončí cez fallback. Interakcia nepoužíva video službu ani zvuk. `aria-expanded` a `inert` držia prístupnosť ovládania v súlade s odhaleným stavom.
+`holograms.js` vlastní jediný odhalený panel. Odhalí ho mouse pointerenter, fokus tlačidla alebo prvé kliknutie/ťuknutie. Pred otvorením zastaví rozbehnutý smooth scroll na aktuálnej polohe. Odkaz v paneli vyvolá cancelable `portfolio:project-entry`. Renderer počas 560ms pokojne rozvinie a mierne pootočí časti vybraného úlomku, potom callback otvorí príbeh. Stav `portfolio-entering` počas prechodu vypne pointer interakciu hlavnej scény a hlavičky. Escape alebo natívne Späť vyvolá `portfolio:cancel-entry` a zruší čakajúci vstup. Priame projektové odkazy sa otvárajú okamžite. Pri strate kontextu sa čakajúci prechod dokončí cez fallback. Interakcia nepoužíva video službu ani zvuk. `aria-expanded` a `inert` držia prístupnosť ovládania v súlade s odhaleným stavom.
 
 Primárna neviditeľná plocha tlačidla má 130 × 140px; vzdialené ciele majú 54 × 54px. Dynamický neviditeľný mostík spája cieľ s panelom. Hologram sa ohraničuje vo viewporte. Escape, zatváranie, kliknutie mimo alebo pokračovanie scrollu panel skryjú. Udalosť `portfolio:hologram` prebudí vykresľovanie a čítací zámok.
 
@@ -38,6 +38,6 @@ HTML a dátový register odlišujú Denisovu konkrétnu úlohu, tím CASSIS Cons
 
 ## Overenie a zostavenie
 
-`npm run check` skladá formátovanie, ESLint, Vitest a build. Čistý model letu a natívne DOM interakcie sa dajú kontrolovať bez WebGL. Rekonštrukcia kryštálu, laser, prechod čítačky, vnútorné posúvanie dôkazov, fyzický hover cez mostík, dotykové sekvencie a presný návrat kamery vyžadujú aj kontrolu v skutočnom prehliadači; samotný počet unit testov ich nepotvrdzuje. `dist/` je generovaný výstup Vite. Lokálny build, CI a publikovanie sú samostatné výsledky.
+`npm run check` skladá formátovanie, ESLint, Vitest a build. Čistý model letu a natívne DOM interakcie sa dajú kontrolovať bez WebGL. Rekonštrukcia kryštálu, pokojné otvorenie projektu, prechod čítačky, vnútorné posúvanie dôkazov, fyzický hover cez mostík, dotykové sekvencie a presný návrat kamery vyžadujú aj kontrolu v skutočnom prehliadači; samotný počet unit testov ich nepotvrdzuje. `dist/` je generovaný výstup Vite. Lokálny build, CI a publikovanie sú samostatné výsledky.
 
 Na miestny pokyn majiteľa je pohyb aktívny aj pri systémovom reduced-motion. Pauza pozadia nemení nastavenia systému ani nenahrádza ovládanie príbehov.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-09T12:57:27.611305+00:00",
+  "generatedAt": "2026-11-09T13:30:16.987185+00:00",
   "title": "Design System: Denis Baláž — Na konci internetu",
   "extensions": {
     "colorMeta": {
@@ -549,9 +549,9 @@
         "purpose": "Reversible separation of six actual pieces from the assembled opening crystal."
       },
       {
-        "name": "laser-entry",
-        "value": "900ms",
-        "purpose": "Cancelable laser, impact and burst before story entry."
+        "name": "project-entry",
+        "value": "560ms",
+        "purpose": "Cancelable calm fragment opening and expansion before story entry."
       },
       {
         "name": "reader-travel",
@@ -636,7 +636,7 @@
       "name": "Project hologram",
       "kind": "card",
       "refersTo": "hologram",
-      "description": "Native project summary shown after reveal; its explicit story link triggers laser entry.",
+      "description": "Native project summary shown after reveal; its explicit story link triggers calm fragment entry.",
       "html": "<div class=\"ds-hologram\"><h2>Štýlový chlpáč</h2><p class=\"ds-kind\">Web · skutočná prevádzka</p><p>Web, rezervácie a správa salónu.</p><a class=\"ds-holo-open\" href=\"#projekt/stylovy-chlpac\">Otvoriť príbeh <span>↗</span></a><button class=\"ds-holo-dismiss\" aria-label=\"Zavrieť náhľad\">×</button></div>",
       "css": ".ds-hologram{font-family:Instrument,Arial,sans-serif;position:relative;width:270px;padding:25px 25px 20px;background:linear-gradient(135deg,#163e26e8,#071b12ed);border:1px solid #80fca28c;color:#dcffe2;backdrop-filter:blur(12px)}.ds-hologram::before{content:\"\";position:absolute;inset:-5px 13px 5px -5px;border-left:1px solid #a3ffb866;border-top:1px solid #a3ffb866;pointer-events:none}.ds-hologram::after{content:\"\";position:absolute;left:0;right:0;top:31%;height:1px;background:#adffbe44;pointer-events:none}.ds-hologram h2{font-size:28px;font-weight:700;line-height:1.02;letter-spacing:-.03em;max-width:15ch;color:#d6ffda;margin:0}.ds-hologram p{font-size:13px;line-height:1.65;color:#c0d9bf;margin:0}.ds-hologram .ds-kind{font-size:10px;color:#96dfaa;margin:11px 0}.ds-holo-open{display:inline-flex;align-items:center;justify-content:space-between;gap:32px;border-bottom:1px solid #71b54d;padding:14px 0;color:#caffad;font-size:13px;min-height:48px;text-decoration:none}.ds-holo-open:hover{color:#fff;border-color:#c4ffba}.ds-holo-dismiss{font-family:Instrument,Arial,sans-serif;position:absolute;top:5px;right:5px;background:transparent;border:0;color:#b0f6bf;width:32px;height:32px;font-size:20px;cursor:pointer}.ds-hologram a:focus-visible,.ds-hologram button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
     },
@@ -659,11 +659,11 @@
   ],
   "narrative": {
     "northStar": "Na konci internetu",
-    "overview": "“Na konci internetu” begins with one large crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. Procedural fog, a faint axis and sparse debris connect the whole journey.\n\nNative HTML holograms make the 3D projects readable. The story action sends a brief laser into its project, produces an impact and burst, and enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.",
+    "overview": "“Na konci internetu” begins with one large crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. Procedural fog, a faint axis and sparse debris connect the whole journey.\n\nNative HTML holograms make the 3D projects readable. The story action gently opens and expands its selected fragment over 560ms, then enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.",
     "keyCharacteristics": [
       "One large crystal reversibly separates into the six actual project pieces.",
       "A primary project, smaller surrounding fragments and readable HTML holograms.",
-      "A brief laser, impact and fragment burst connects a project to its story.",
+      "A calm fragment opening and expansion connects a project to its story.",
       "Real article sections become fragment stops with stable, scrollable reading panels.",
       "Native chapter buttons, toolbar project switching and exact main-position return.",
       "One green world, the fine-pointer target cursor and original-content fallback."
@@ -687,7 +687,7 @@
     ],
     "dos": [
       "**Do** build the opening crystal from the six actual project pieces and keep fracture reversible.",
-      "**Do** keep the native hologram link as the explicit trigger for laser entry.",
+      "**Do** keep the native hologram link as the explicit trigger for calm fragment entry.",
       "**Do** derive chapter stops from the full original content and retain evidence and source links.",
       "**Do** keep a stable reading interval, internal overflow and native chapter buttons.",
       "**Do** preserve exact main-flight return and original-content WebGL fallback."
@@ -696,7 +696,7 @@
       "**Don't** replace real article sections with decorative one-line summaries.",
       "**Don't** confuse chapter navigation with toolbar switching between projects.",
       "**Don't** make the main flight drift while a hologram or story is open.",
-      "**Don't** add a video-service or audio dependency to the laser interaction.",
+      "**Don't** add a video-service or audio dependency to the fragment-entry interaction.",
       "**Don't** remove the fallback article or the original evidence distinctions."
     ]
   }

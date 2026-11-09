@@ -15,7 +15,6 @@ const fogFragment = `
 uniform vec2 resolution;
 uniform float time;
 uniform float travel;
-uniform float impact;
 float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}
 float field(vec2 p){return noise(p)*.58+noise(p*2.03+4.0)*.28+noise(p*4.01+9.0)*.14;}
@@ -29,7 +28,6 @@ void main(){
  float center=1.0-smoothstep(.0,1.1,length(p-vec2(.16,.05)));
  vec3 color=vec3(.006,.018,.009)+vec3(.065,.40,.105)*fog*(.6+center)+vec3(.08,.35,.09)*vein;
  color*=.63+.37*(1.0-smoothstep(.2,1.0,length(p)));
- color+=vec3(.22,.55,.32)*impact;
  gl_FragColor=vec4(color,1.0);
 }`;
 
@@ -62,7 +60,6 @@ export function initSignal() {
       resolution: { value: new THREE.Vector2(1, 1) },
       time: { value: 0 },
       travel: { value: 0 },
-      impact: { value: 0 },
     },
     vertexShader: fogVertex,
     fragmentShader: fogFragment,
@@ -136,43 +133,7 @@ export function initSignal() {
     scene.add(group);
     return { group, node, x: positions[i], y: Math.sin(i * 3.1) * 0.35, z: -i * 7, material };
   });
-  const laser = new THREE.Line(
-    new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]),
-    new THREE.LineBasicMaterial({
-      color: 0xc4ffd4,
-      transparent: true,
-      opacity: 1,
-      depthTest: false,
-    }),
-  );
-  laser.frustumCulled = false;
-  laser.visible = false;
-  laser.renderOrder = 100;
-  scene.add(laser);
-  const hit = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.1, 0),
-    new THREE.MeshBasicMaterial({
-      color: 0xbbffd4,
-      wireframe: true,
-      transparent: true,
-      opacity: 1,
-    }),
-  );
-  hit.visible = false;
-  scene.add(hit);
-  const beam = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.012, 0.012, 1, 6),
-    new THREE.MeshBasicMaterial({
-      color: 0xcaffd8,
-      transparent: true,
-      opacity: 0.85,
-      depthTest: false,
-    }),
-  );
-  beam.visible = false;
-  beam.renderOrder = 99;
-  scene.add(beam);
-  let shot = null,
+  let entry = null,
     reader = null,
     readerGroup = null,
     readerMotion = 0;
@@ -188,31 +149,27 @@ export function initSignal() {
     reader = null;
     readerMotion = 0;
   }
-  function cancelShot() {
-    shot = null;
-    laser.visible = false;
-    beam.visible = false;
-    hit.visible = false;
-    document.body.classList.remove('portfolio-shooting');
-    fogMaterial.uniforms.impact.value = 0;
+  function cancelEntry() {
+    entry = null;
+    document.body.classList.remove('portfolio-entering');
   }
   document.addEventListener(
-    'portfolio:shoot',
+    'portfolio:project-entry',
     (event) => {
-      if (lost || shot) return;
+      if (lost || entry) return;
       const index = projects.findIndex((p) => p.node.dataset.stop === event.detail.id);
       if (index < 0) return;
       event.preventDefault();
-      shot = { index, started: performance.now(), complete: event.detail.complete };
-      document.body.classList.add('portfolio-shooting');
+      entry = { index, started: performance.now(), complete: event.detail.complete };
+      document.body.classList.add('portfolio-entering');
       startDraw();
     },
     options,
   );
   document.addEventListener(
-    'portfolio:cancel-shot',
+    'portfolio:cancel-entry',
     () => {
-      cancelShot();
+      cancelEntry();
       startDraw();
     },
     options,
@@ -378,7 +335,7 @@ export function initSignal() {
     const dt = Math.min((time - lastTime) / 1000 || 0, 0.05);
     lastTime = time;
     const locked = Boolean(
-      shot || document.querySelector('.flight-project.is-revealed,dialog[open]'),
+      entry || document.querySelector('.flight-project.is-revealed,dialog[open]'),
     );
     if (!paused && !locked) phase += dt;
     if (!locked) progress += (target - progress) * (1 - Math.exp(-dt * 12));
@@ -438,14 +395,15 @@ export function initSignal() {
         if (!child.isMesh) return;
         child.position.copy(child.userData.home);
         child.rotation.copy(child.userData.spin);
-        if (shot?.index === i) {
-          const burst = clamp01(((performance.now() - shot.started) / 900 - 0.22) / 0.6);
+        if (entry?.index === i) {
+          const opening = clamp01((performance.now() - entry.started) / 560);
+          const spread = opening * opening * (3 - 2 * opening);
           child.position.addScaledVector(
             new THREE.Vector3(Math.sin(j * 3 + i), Math.cos(j * 2 + i), j * 0.3 - 1),
-            burst * 2.5,
+            spread * 1.1,
           );
-          child.rotation.x += burst * (j + 1);
-          child.rotation.z += burst * 1.2;
+          child.rotation.x += spread * (j + 1) * 0.35;
+          child.rotation.z += spread * 0.4;
         }
       });
       p.material.emissiveIntensity = p.node.classList.contains('is-revealed') ? 0.9 : 0.3;
@@ -456,7 +414,7 @@ export function initSignal() {
         y = (-screen.y * 0.5 + 0.5) * height;
       const visible =
         !reader &&
-        !shot &&
+        !entry &&
         p.group.visible &&
         fracture > 0.98 &&
         x > 35 &&
@@ -495,26 +453,11 @@ export function initSignal() {
         piece.scale.setScalar(0.9);
       });
     }
-    if (shot) {
-      const elapsed = (performance.now() - shot.started) / 900;
-      const point = projects[shot.index].group.position;
-      const origin = camera.position.clone().add(new THREE.Vector3(0.15, -0.35, -0.6));
-      const tip = origin.clone().lerp(point, Math.min(1, elapsed / 0.24));
-      laser.geometry.setFromPoints([origin, tip]);
-      laser.visible = elapsed < 0.34;
-      const direction = tip.clone().sub(origin);
-      beam.visible = laser.visible && direction.length() > 0.01;
-      beam.position.copy(origin).add(tip).multiplyScalar(0.5);
-      beam.scale.y = direction.length();
-      beam.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
-      hit.visible = elapsed > 0.22 && elapsed < 0.85;
-      hit.position.copy(point);
-      hit.scale.setScalar(1 + Math.max(0, elapsed - 0.22) * 17);
-      hit.material.opacity = Math.max(0, 1 - (elapsed - 0.22) * 1.6);
-      fogMaterial.uniforms.impact.value = Math.max(0, 1 - Math.abs(elapsed - 0.25) * 12) * 0.35;
+    if (entry) {
+      const elapsed = (performance.now() - entry.started) / 560;
       if (elapsed >= 1) {
-        const complete = shot.complete;
-        cancelShot();
+        const complete = entry.complete;
+        cancelEntry();
         complete();
       }
     }
@@ -523,7 +466,7 @@ export function initSignal() {
     });
     renderer.render(scene, camera);
     if (
-      shot ||
+      entry ||
       (reader && Math.abs(reader.progress - readerMotion) > 0.001) ||
       (!paused && !locked) ||
       (!locked && Math.abs(target - progress) > 0.001)
@@ -599,8 +542,8 @@ export function initSignal() {
       if (frame) cancelAnimationFrame(frame);
       lost = true;
       frame = 0;
-      const complete = shot?.complete;
-      cancelShot();
+      const complete = entry?.complete;
+      cancelEntry();
       clearReader();
       restoreFlightFallback();
       complete?.();
@@ -621,7 +564,7 @@ export function initSignal() {
   return () => {
     controller.abort();
     viewerObserver.disconnect();
-    cancelShot();
+    cancelEntry();
     clearReader();
     window.history.scrollRestoration = previousRestoration;
     if (frame) cancelAnimationFrame(frame);

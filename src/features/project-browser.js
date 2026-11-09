@@ -483,14 +483,14 @@ export function initProjectBrowser({
           entryPending = false;
           openProject(id, { push: true });
         };
-        const shot = new CustomEvent('portfolio:shoot', {
+        const entry = new CustomEvent('portfolio:project-entry', {
           cancelable: true,
           detail: { id, complete },
         });
         if (
           !animate ||
           !document.body.classList.contains('flight-ready') ||
-          root.dispatchEvent(shot)
+          root.dispatchEvent(entry)
         )
           complete();
       } else if (dialog.contains(target) && target.matches('a[href^="#"]')) {
@@ -516,7 +516,7 @@ export function initProjectBrowser({
       if (event.key === 'Escape' && entryPending) {
         entrySerial++;
         entryPending = false;
-        root.dispatchEvent(new Event('portfolio:cancel-shot'));
+        root.dispatchEvent(new Event('portfolio:cancel-entry'));
         return;
       }
       if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
@@ -552,7 +552,7 @@ export function initProjectBrowser({
       if (entryPending) {
         entrySerial++;
         entryPending = false;
-        root.dispatchEvent(new Event('portfolio:cancel-shot'));
+        root.dispatchEvent(new Event('portfolio:cancel-entry'));
       }
       if (
         current &&
@@ -578,7 +578,7 @@ export function initProjectBrowser({
   return () => {
     controller.abort();
     entrySerial++;
-    root.dispatchEvent(new Event('portfolio:cancel-shot'));
+    root.dispatchEvent(new Event('portfolio:cancel-entry'));
     cleanupViewer();
     galleries.forEach((gallery) => gsap.killTweensOf(gallery.querySelector('.gallery-project')));
   };
