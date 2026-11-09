@@ -8,17 +8,31 @@ export function presentationAt(progress, count = 6) {
   return relative >= (first ? -0.18 : -0.6) && relative <= 0.16 ? index : -1;
 }
 
-export function presentationLayout(index, width, height) {
+export function presentationLayout(
+  index,
+  width,
+  height,
+  { copyHeight = 160, captionHeight = 170 } = {},
+) {
   const right = index % 2 === 0;
   const narrow = width < 761 && !(width >= 600 && height < 600);
   const gutter = narrow ? 24 : Math.max(40, width * 0.07);
-  const panelWidth = narrow ? width - 48 : Math.min(460, width * 0.36);
+  const panelWidth = narrow ? width - 48 : Math.min(480, width * 0.36);
+  const copyTop = narrow ? Math.max(108, height * 0.145) : Math.max(135, height * 0.34);
+  const top = narrow
+    ? Math.max(280, height * 0.38, copyTop + copyHeight + 24)
+    : Math.max(96, height * 0.16);
+  const markHeight = Math.max(
+    64,
+    Math.min(narrow ? 170 : 220, height - top - captionHeight - (narrow ? 68 : 60)),
+  );
   return {
     right,
     left: narrow ? gutter : right ? width / 2 + gutter * 0.72 : gutter,
-    top: narrow ? Math.max(300, height * 0.39) : Math.max(112, height * 0.29),
+    top,
     width: panelWidth,
+    markHeight,
     copyLeft: narrow ? gutter : right ? gutter : width / 2 + gutter * 0.72,
-    copyTop: narrow ? Math.max(108, height * 0.145) : Math.max(135, height * 0.34),
+    copyTop,
   };
 }

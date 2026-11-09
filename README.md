@@ -10,7 +10,7 @@ Prvý viewport sústreďuje pozornosť na zostavený zelený kryštál uprostred
 
 Na začiatku je jeden členitý šesťboký kryštál zložený zo šiestich uzavretých nepravidelných projektových dielov. Prvý scroll ho rozdelí na projekty; spätný scroll ich spojí. Ďalej scroll ovláda let kamery cez šesť projektov: Attila Park Caravans, PREVIA, PH Laboratories, New Era Barbers, Tatra Scool a Štýlový chlpáč. Jeden projekt je hlavný, ostatné zostávajú menšie v hĺbke. Dráha má 420svh na počítači a 390svh na mobile. Malý index presúva kameru na projekt alebo záverečný kontakt; služby a prístup sa rozbaľujú pri kontakte.
 
-Každá zastávka automaticky otvorí stručný HTML náhľad so zeleno upraveným existujúcim záberom webu, vecným rozsahom práce a odkazom „Otvoriť príbeh“. Služba je na opačnej strane osi; strany sa striedajú. Názvy sú v náhľadoch, nie na pohybujúcich sa úlomkoch. Úzky viewport skladá text a náhľad zvislo a zmenšuje úlomok; nízky landscape umožňuje natívne posúvanie vnútri náhľadu. Automatické zobrazenie nezastaví let ani samostatný pohyb sveta. Hover alebo fokus panel podrží a zastaví interpoláciu; pokračovanie scrollu toto podržanie uvoľní. Escape skryje automatický náhľad do ďalšej zastávky; tlačidlo úlomku ho vie znovu otvoriť.
+Každá zastávka automaticky ukáže pôvodné logo alebo značku, presný názov projektu, stručný vecný rozsah a odkaz „Otvoriť príbeh“. Identita je priamo v zelenom svete: bez panelu, rámu, tieňa alebo záberu webu. Logo aj samostatná článková akcia sú natívne odkazy. Služba je na opačnej strane osi; strany sa striedajú. Názvy sú pod logami, nie na pohybujúcich sa úlomkoch. Úzky viewport skladá službu a identitu zvislo a zmenšuje úlomok. Výška loga sa prispôsobí nameranej výške textu a dostupnému viewportu, aby článková akcia zostala dostupná aj v nízkom landscape bez vnútorného posúvania. Automatické zobrazenie nezastaví let ani samostatný pohyb sveta. Hover alebo fokus panel podrží a zastaví interpoláciu; pokračovanie scrollu toto podržanie uvoľní. Escape skryje automatický náhľad do ďalšej zastávky; tlačidlo úlomku ho vie znovu otvoriť.
 
 Celý článok sa otvorí až explicitným odkazom „Otvoriť príbeh“. Vybraný úlomok sa počas 560ms pokojne rozvinie a potom otvorí príbeh. Escape alebo natívne Späť v prehliadači zruší čakajúci vstup. Priamy projektový odkaz sa otvorí okamžite; pri strate WebGL sa vstup dokončí cez fallback. Väčšia neviditeľná plocha cieľa a mostík k panelu podporujú presun kurzora. Počas vstupu a príbehu stojí hlavný let; príbeh má vlastný pohyb kamery medzi kapitolami. Úprava celých článkov zostáva odložená.
 
@@ -21,6 +21,8 @@ Každá skutočná časť článku dostane vlastný 3D úlomok: úvod, jednotliv
 - **New Era Barbers:** web barbershopu.
 - **Tatra Scool:** konkrétny vzdelávací web `tatrabanka.sk/tatrascool/`, bez tvrdenia o autorstve bankovej aplikácie alebo celého webu banky.
 - **Štýlový chlpáč:** webová realizácia s podporou AI; príbeh zachováva rozlíšenie verejného webu od administrácie s modelovými údajmi.
+
+Šesť originálnych značiek je v `public/images/brand-marks/`; zdroje a dátum získania uchováva `provenance.json`, štyri PNG aj vložené metadáta pôvodu. Zelené zjednotenie robí iba CSS, proporcie zachováva `object-fit: contain`. Symbol Tatra banky pochádza z konkrétneho webu Tatra Scool a je výslovne spojený s týmto názvom a obmedzeným rozsahom.
 
 Autorstvo dodané majiteľom zostáva interným kontextom v `PRODUCT.md`; verejné články nepoužívajú osobné mená. Päť novších webových článkov má úvod, dve obsahové kapitoly a dôkazový blok so skutočným záberom webu z 9. 11. 2026. Lokálne JPEG súbory a zdroje sú v `public/images/team-work/` vrátane `provenance.json`; zelený CSS filter mení iba prezentáciu, odkazy vedú na originálne weby.
 
@@ -75,7 +77,7 @@ DESIGN.md                  Aktuálny vizuálny systém a normatívne tokeny
 
 `dist/` je generovaný výstup príkazu `npm run build` a nie je verzovaný. Vite používa relatívne cesty, aby výsledok fungoval aj v podpriečinku. Podrobnosti sú v [architektúre](docs/architecture.md).
 
-Vykresľovanie obmedzuje počet pixelov scény podľa veľkosti okna a hustoty displeja. Náročná procedurálna hmla sa počíta do menšieho priebežne obnovovaného zásobníka; HTML text zostáva ostrý. Projektové prvky sa presúvajú transformáciami s uloženými odkazmi na DOM.
+Vykresľovanie obmedzuje počet pixelov scény podľa veľkosti okna a hustoty displeja. Náročná procedurálna hmla sa počíta do menšieho priebežne obnovovaného zásobníka; HTML text zostáva ostrý. Projektové prvky sa presúvajú transformáciami s uloženými odkazmi na DOM. Ich yaw vykoná jednu plnú otáčku podľa scrollu cez `scrollTurn()` do `FLIGHT_END = 7.25`; spätný scroll ju obráti a ustálený scroll ju zastaví. Čítačka používa rovnaký normalizovaný prevod. Samostatná časová fáza zostáva pre atmosféru, nie projektový yaw.
 
 ## Overovanie
 
@@ -87,17 +89,17 @@ GitHub Actions pri pushi a pull requeste spúšťajú `npm run check`.
 
 ## Vizuál, AI a licencie
 
-Zelený priestor vytvára shader hmly, vrstvy svetla, krištalická geometria a jemná vertikálna os. Úlomky predstavujú projektové dáta. Hlavný let na výslovné nové zadanie používa existujúce skutočné zábery klientskych webov so zeleným CSS filtrom v stručných automatických náhľadoch. Štyri zelené rohy vlastného kurzora sa zobrazujú iba pri myši s presným ukazovateľom; mobil používa prirodzené dotykové ovládanie.
+Zelený priestor vytvára shader hmly, vrstvy svetla, krištalická geometria a jemná vertikálna os. Úlomky predstavujú projektové dáta. Hlavný let podľa najnovšej korekcie majiteľa používa šesť skutočných log alebo značiek so zeleným CSS filtrom; zábery webov zostávajú iba v celých článkoch. Štyri zelené rohy vlastného kurzora sa zobrazujú iba pri myši s presným ukazovateľom; mobil používa prirodzené dotykové ovládanie.
 
 `world-finish.css` zjednocuje väčšiu typografiu, hologramy, otvorené čítacie plochy, číslovanie kapitol a kontakt. Import `intro.css` určuje základ úvodu; `team.css` pridáva miestne úpravy typografie, služieb, kontaktu a screenshotových článkov; `demos.css` vlastní formulárové ukážky. Posledný import `flight-presentation.css` určuje aktuálne miestne rozloženie úvodu a dvojíc služby/náhľadu. [Povrch štúdia a ukážok](docs/team-surface.md) ich odlišuje od zachovaného globálneho sveta v `DESIGN.md` a `.impeccable/design.json`. Každá kapitolová zastávka má objemový brúsený objekt. Pri kontakte posledný projektový ukazovateľ plynulo zmizne.
 
-Hologram je natívny HTML panel s jemne priehľadným zeleným povrchom. Príbeh používa transparentný celoplošný dialóg a pokojné čítacie panely vedľa vlastných 3D úlomkov. Hlavná navigácia a informačné prvky letu sú počas čítania skryté. Dôkazy, obrazovky, prepínanie ukážok a zdrojové odkazy zostávajú zachované; existujúce obrazovky používajú pôvodný zelený prezentačný filter. Prezentácia nemení pôvodné súbory, faktické stavy ani rozlíšenie medzi autentickým záberom, ilustráciou a modelovými údajmi.
+Hlavná projektová identita je natívny HTML obsah s úplne transparentným wrapperom, logom a popisom pod ním. Staršie panelové štýly nie sú pokynom pre aktuálny hlavný let. Príbeh používa transparentný celoplošný dialóg a pokojné čítacie panely vedľa vlastných 3D úlomkov. Hlavná navigácia a informačné prvky letu sú počas čítania skryté. Dôkazy, obrazovky, prepínanie ukážok a zdrojové odkazy zostávajú zachované; existujúce obrazovky používajú pôvodný zelený prezentačný filter. Prezentácia nemení pôvodné súbory, faktické stavy ani rozlíšenie medzi autentickým záberom, ilustráciou a modelovými údajmi.
 
 Pri tejto prezentácii sa využíva AI; tým sa nepripisuje rovnaký postup všetkým referenciám. Pôvodný ostrov vznikol pomocou OpenAI image_gen a zostáva medzi zdrojovými assetmi. Let, rozpad kryštálu, pokojné otvorenie projektu aj kapitolové úlomky vykresľuje rovnaký Three.js/WebGL renderer; CSS vlastní čítacie panely a GSAP pôvodné fallback príbehy. Otvorenie projektu nepoužíva video službu ani zvuk. Pri skrytej karte sa priebežné kreslenie zastaví. WebGL fallback zachováva natívne HTML súhrny a odkazy aj úplný pôvodný článok.
 
-Historickou inšpiráciou pôvodného hravého priestoru bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Súčasný smer vychádza z potvrdeného zadania majiteľa. Príbeh Štýlového chlpáča zachováva autentické zábery verejného webu a administráciu s modelovými údajmi; nejde o živú administráciu ani zákaznícke údaje.
+Historickou inšpiráciou pôvodného hravého priestoru bol Tatrascool; maskot ani jeho scénické assety sa nepoužívajú. Aktuálna referencia Tatra Scool používa pôvodný bankový symbol z tohto konkrétneho webu s presným názvom a vecným rozsahom. Súčasný smer vychádza z potvrdeného zadania majiteľa. Príbeh Štýlového chlpáča zachováva autentické zábery verejného webu a administráciu s modelovými údajmi; nejde o živú administráciu ani zákaznícke údaje.
 
-Instrument Sans používa SIL Open Font License; znenie je v `public/licenses/InstrumentSans-OFL.txt`. Three.js používa licenciu MIT. GSAP a ScrollTrigger používajú [vlastnú licenciu](https://gsap.com/standard-license/). Licencie knižníc sa nemenia. Pôvod assetov je v `ASSET-SOURCES.json`.
+Instrument Sans používa SIL Open Font License; znenie je v `public/licenses/InstrumentSans-OFL.txt`. Three.js používa licenciu MIT. GSAP a ScrollTrigger používajú [vlastnú licenciu](https://gsap.com/standard-license/). Licencie knižníc sa nemenia. Historický pôvod assetov je v `ASSET-SOURCES.json`; aktuálne značky a článkové zábery majú vlastné záznamy v `public/images/brand-marks/provenance.json` a `public/images/team-work/provenance.json`.
 
 ## Kontakt
 

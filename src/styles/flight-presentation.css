@@ -118,28 +118,40 @@
   transform: none;
   pointer-events: auto;
 }
+.holo-artwork {
+  display: block;
+}
+.holo-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.holo-caption {
+  margin-top: 20px;
+}
+.holo-artwork img {
+  margin: 0;
+}
 .flight-ready .hologram {
-  padding: 24px;
-  max-height: calc(71svh - 100px);
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
+  width: min(480px, 36vw);
+  padding: 0;
+  max-height: none;
+  overflow: visible;
+  overscroll-behavior-y: auto;
   border: 0;
-  background: #04130ded;
+  background: transparent;
   backdrop-filter: none;
-  transform: translateY(-12px) scale(0.94);
+  box-shadow: none;
+  transform: translateY(12px) scale(0.98);
   transform-origin: center top;
-  clip-path: polygon(42% 0, 58% 0, 66% 100%, 34% 100%);
+  clip-path: none;
   transition:
-    opacity 0.28s ease-out,
-    transform 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-    clip-path 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-    visibility 0.28s;
+    opacity 0.25s ease-out,
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.25s;
 }
-.flight-ready .hologram::before {
-  inset: 0;
-  border: 0;
-  border-top: 1px solid var(--world-rule);
-}
+.flight-ready .hologram::before,
 .flight-ready .hologram::after {
   display: none;
 }
@@ -149,38 +161,61 @@
   visibility: visible;
   pointer-events: auto;
   transform: none;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: none;
+}
+.flight-ready .holo-artwork {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: var(--mark-height, 200px);
+  width: 100%;
+  max-width: 100%;
+  color: var(--phosphor);
+  border: 0;
+  padding: 0;
+  line-height: 0;
+}
+.brand-mark {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 220px;
+}
+.flight-ready .brand-mark {
+  width: min(100%, 340px);
+  height: 100%;
+  max-width: min(100%, 340px);
+  max-height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  filter: brightness(0) saturate(100%) invert(93%) sepia(25%) saturate(1200%) hue-rotate(30deg)
+    brightness(105%);
 }
 .flight-ready .hologram h2 {
-  font-size: clamp(24px, 2.5vw, 34px);
-  line-height: 1.06;
-  max-width: calc(100% - 18px);
-}
-.flight-ready .hologram .holo-kind {
-  margin: 10px 0 16px;
-  font-size: 12px;
-}
-.flight-ready .holo-preview {
-  height: clamp(100px, 16svh, 155px);
-  object-fit: cover;
-  object-position: top;
-  margin: 0 0 18px;
-}
-.flight-ready .hologram p {
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: clamp(24px, 2.3vw, 30px);
+  line-height: 1.12;
+  max-width: none;
+  padding-top: 5px;
+  text-shadow: 0 2px 16px var(--world-ink);
 }
 .flight-ready .hologram .holo-scope {
-  color: #a8cbb3;
-  font-size: 12px;
+  color: var(--world-copy);
+  font-size: 14px;
   line-height: 1.6;
-  margin: 12px 0 0;
+  margin: 8px 0 0;
+  max-width: 46ch;
+  text-shadow: 0 2px 12px var(--world-ink);
 }
 .flight-ready .holo-open {
+  display: inline-flex;
+  width: auto;
+  min-width: 180px;
+  gap: 40px;
   background: transparent;
   color: var(--phosphor);
   padding: 12px 0;
-  margin-top: 10px;
+  margin-top: 12px;
   border: 0;
   border-bottom: 1px solid var(--world-rule);
   min-height: 44px;
@@ -191,10 +226,12 @@
   color: var(--phosphor-white);
 }
 .flight-ready .holo-dismiss {
+  position: static;
+  flex: 0 0 40px;
   width: 40px;
   height: 40px;
-  right: 2px;
-  top: 2px;
+  margin-right: -8px;
+  margin-top: -3px;
 }
 .flight-ready .beacon-brackets {
   opacity: 0.5;
@@ -255,29 +292,23 @@
     min-height: 40px;
   }
   .flight-ready .hologram {
-    padding: 18px;
-    max-height: calc(61svh - 85px);
+    width: calc(100vw - 48px);
+    padding: 0;
+    max-height: none;
   }
   .flight-ready .hologram h2 {
     font-size: 25px;
   }
-  .flight-ready .hologram .holo-kind {
-    margin: 8px 0 12px;
-    font-size: 11px;
-  }
-  .flight-ready .holo-preview {
-    height: 105px;
-    margin-bottom: 12px;
-  }
-  .flight-ready .hologram p {
-    font-size: 13px;
+  .flight-ready .holo-caption {
+    margin-top: 16px;
   }
   .flight-ready .hologram .holo-scope {
-    font-size: 11px;
+    font-size: 13px;
+    line-height: 1.5;
     margin-top: 8px;
   }
   .flight-ready .holo-open {
-    margin-top: 4px;
+    margin-top: 8px;
   }
   .flight-ready .flight-progress {
     bottom: 48px;
@@ -308,12 +339,19 @@
     font-size: 13px;
     margin-top: 14px;
   }
-  .flight-ready .hologram {
-    max-height: calc(100svh - 165px);
-    padding: 18px;
+  .flight-ready .holo-caption {
+    margin-top: 12px;
   }
-  .flight-ready .holo-preview {
-    height: 90px;
+  .flight-ready .hologram h2 {
+    font-size: 22px;
+  }
+  .flight-ready .hologram .holo-scope {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .flight-ready .holo-open {
+    margin-top: 4px;
+    padding: 8px 0;
   }
 }
 body:not(.flight-ready) .flight-copy {

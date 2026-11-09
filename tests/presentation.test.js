@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { presentationAt, presentationLayout } from '../src/features/flight-presentation.js';
+import { scrollTurn, FLIGHT_END } from '../src/features/flight-model.js';
 
 describe('A continuous statement and its proof', () => {
   it('leaves the first view and contact clear, then exposes the matching project at each stop', () => {
@@ -28,5 +29,35 @@ describe('A continuous statement and its proof', () => {
     expect(p.left).toBe(24);
     expect(p.left + p.width).toBe(366);
     expect(p.top - p.copyTop).toBeGreaterThan(180);
+  });
+  it('fits a brand mark and measured caption without hiding the article action', () => {
+    for (const [width, height, copyHeight, captionHeight] of [
+      [1280, 900, 200, 168],
+      [390, 844, 190, 162],
+      [320, 740, 220, 180],
+      [844, 390, 145, 140],
+    ]) {
+      const p = presentationLayout(0, width, height, { copyHeight, captionHeight });
+      expect(p.markHeight).toBeGreaterThanOrEqual(64);
+      expect(p.top + p.markHeight + captionHeight).toBeLessThan(height - 45);
+      if (width < 600) expect(p.top).toBeGreaterThanOrEqual(p.copyTop + copyHeight + 24);
+    }
+  });
+  it('makes a single smooth full turn over travel, deterministic and reversible', () => {
+    expect(scrollTurn(0)).toBe(0);
+    expect(scrollTurn(FLIGHT_END)).toBeCloseTo(Math.PI * 2);
+    expect(scrollTurn(-10)).toBe(0);
+    expect(scrollTurn(FLIGHT_END + 10)).toBeCloseTo(Math.PI * 2);
+    const path = [0, 1, 2, 3, 4, 5, 6, FLIGHT_END];
+    const angles = path.map((p) => scrollTurn(p));
+    expect(angles).toEqual([...angles].sort((a, b) => a - b));
+    expect(
+      [...path]
+        .reverse()
+        .map((p) => scrollTurn(p))
+        .reverse(),
+    ).toEqual(angles);
+    expect(scrollTurn(3.01) - scrollTurn(3)).toBeLessThan(0.01);
+    expect(scrollTurn(1.5, 3)).toBeCloseTo(Math.PI);
   });
 });

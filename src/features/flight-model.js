@@ -1,6 +1,9 @@
 export const FLIGHT_STOPS = 6;
 export const FLIGHT_END = 7.25;
 export const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+export function scrollTurn(progress, distance = FLIGHT_END) {
+  return clamp(progress / Math.max(1, distance), 0, 1) * Math.PI * 2;
+}
 export function flightAt(scrollY, start, distance) {
   return clamp((scrollY - start) / Math.max(1, distance), 0, 1) * FLIGHT_END;
 }

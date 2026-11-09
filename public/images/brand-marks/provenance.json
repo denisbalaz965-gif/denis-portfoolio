@@ -1,0 +1,44 @@
+[
+  {
+    "file": "attilapark.png",
+    "source": "https://www.attilaparkcaravans.sk/",
+    "retrieved": "2026-11-09",
+    "acquisition": "Pôvodné PNG bez zmeny pixelov vybraté z data:image/png v header .header-logo svg verejného webu.",
+    "usage": "Pôvodný znak značky; zjednotenie farby iba cez CSS, bez zmeny originálu."
+  },
+  {
+    "file": "previa.png",
+    "source": "https://previa.sk/images/previa-logo.png",
+    "retrieved": "2026-11-09",
+    "acquisition": "originálny súbor z verejnej stránky; Tatra Scool cez natívny inventár pozorovaných médií",
+    "usage": "Pôvodný znak značky; zjednotenie farby iba cez CSS, bez zmeny originálu."
+  },
+  {
+    "file": "phlaboratories.png",
+    "source": "https://phlaboratories.sk/logo/logo_ph_black.png",
+    "retrieved": "2026-11-09",
+    "acquisition": "originálny súbor z verejnej stránky; Tatra Scool cez natívny inventár pozorovaných médií",
+    "usage": "Pôvodný znak značky; zjednotenie farby iba cez CSS, bez zmeny originálu."
+  },
+  {
+    "file": "newera.png",
+    "source": "https://newerabarbers.sk/assets/img/new%20era%20logo.png",
+    "retrieved": "2026-11-09",
+    "acquisition": "originálny súbor z verejnej stránky; Tatra Scool cez natívny inventár pozorovaných médií",
+    "usage": "Pôvodný znak značky; zjednotenie farby iba cez CSS, bez zmeny originálu."
+  },
+  {
+    "file": "tatrascool.svg",
+    "source": "https://www.tatrabanka.sk/tatrascool/img/tatra_logo.svg",
+    "retrieved": "2026-11-09",
+    "acquisition": "originálny súbor z verejnej stránky; Tatra Scool cez natívny inventár pozorovaných médií",
+    "usage": "Pôvodný znak značky; zjednotenie farby iba cez CSS, bez zmeny originálu."
+  },
+  {
+    "file": "stylovy-chlpac.svg",
+    "source": "https://stylovychlpac.sk/assets/logo-stylovy-chlpac-web.svg",
+    "retrieved": "2026-11-09",
+    "acquisition": "originálny súbor z verejnej stránky; Tatra Scool cez natívny inventár pozorovaných médií",
+    "usage": "Pôvodný znak značky; zjednotenie farby iba cez CSS, bez zmeny originálu."
+  }
+]

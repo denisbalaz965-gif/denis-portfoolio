@@ -19,6 +19,20 @@ beforeEach(() => {
 afterEach(() => dispose());
 
 describe('Team work and retained experience', () => {
+  it('uses sourced brand identities in the main journey and retains website captures inside articles', () => {
+    const marks = [...document.querySelectorAll('.flight-project .brand-mark')];
+    expect(marks).toHaveLength(6);
+    expect(document.querySelector('.flight-project .holo-preview')).toBeNull();
+    for (const mark of marks) {
+      const path = mark.getAttribute('src');
+      expect(path).toMatch(/^\/images\/brand-marks\//);
+      expect(readFileSync(resolve('public', path.slice(1))).byteLength).toBeGreaterThan(100);
+      expect(mark.closest('a').getAttribute('href')).toMatch(/^#projekt\//);
+    }
+    expect(
+      buildProjectContent(findProject('previa')).querySelector('.case-showcase img'),
+    ).not.toBeNull();
+  });
   it('presents the studio without personal names across every article', () => {
     expect(document.body.textContent).not.toMatch(
       /Denis|Martin|Miroš|Pracujem|riešim|AI mi|Moja úloha/,

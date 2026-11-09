@@ -5,7 +5,14 @@ import { scenePixelRatio, fogDimensions, introCrystalPose } from './render-polic
 import { restoreFlightFallback } from './flight-fallback.js';
 import { makeCrystalPiece, makeChapterShard } from './fracture-geometry.js';
 import { createCrystalMaterial } from './crystal-material.js';
-import { flightAt, activeStop, scrollForStop, FLIGHT_END, introFracture } from './flight-model.js';
+import {
+  flightAt,
+  activeStop,
+  scrollForStop,
+  FLIGHT_END,
+  introFracture,
+  scrollTurn,
+} from './flight-model.js';
 
 const fogVertex = `void main(){gl_Position=vec4(position.xy,0.999,1.0);}`;
 const fogFragment = `
@@ -131,6 +138,9 @@ export function initSignal() {
       node,
       beacon,
       copy: node.querySelector('.flight-copy'),
+      caption: node.querySelector('.holo-caption'),
+      copyHeight: 160,
+      captionHeight: 170,
       z: -i * 7,
       material,
     };
@@ -458,8 +468,8 @@ export function initSignal() {
           (1 - introReveal * 0.45),
       );
       p.group.rotation.set(
-        THREE.MathUtils.lerp(0.25, 0.2 + Math.sin(phase * 0.15 + i) * 0.15, fracture),
-        phase * 0.06 + THREE.MathUtils.lerp(0.4, i * 0.8, fracture),
+        THREE.MathUtils.lerp(0.25, 0.2 + Math.sin(progress * 0.6 + i) * 0.15, fracture),
+        scrollTurn(progress) + THREE.MathUtils.lerp(0.4, i * 0.8, fracture),
         0.12 + waypoint.roll * fracture,
       );
       p.group.children.forEach((child, j) => {
@@ -518,7 +528,8 @@ export function initSignal() {
         String(i === primary ? 1 : Math.max(0.3, 1 - gap / 65)),
       );
       p.node.style.zIndex = p.node.classList.contains('is-revealed') ? '35' : String(20 - i);
-      const h = presentationLayout(i, width, height);
+      const h = presentationLayout(i, width, height, p);
+      p.node.style.setProperty('--mark-height', `${h.markHeight}px`);
       p.node.classList.toggle('proof-right', h.right);
       p.copy.style.left = `${h.copyLeft - x}px`;
       p.copy.style.top = `${h.copyTop - y}px`;
@@ -539,7 +550,11 @@ export function initSignal() {
         fragmentWaypoint(i, readerMotion - i, width < 761, true, waypoint);
         waypointToWorld(waypoint, camera.position.z - z, camera.aspect, worldPoint);
         piece.position.set(worldPoint.x, worldPoint.y, z);
-        piece.rotation.set(0, phase * 0.05 + i * 0.2, waypoint.roll);
+        piece.rotation.set(
+          0,
+          scrollTurn(readerMotion, Math.max(1, reader.count - 1)) + i * 0.2,
+          waypoint.roll,
+        );
         piece.scale.setScalar(width < 761 ? 0.62 : 1.18);
       });
     }
@@ -591,6 +606,11 @@ export function initSignal() {
     lastFogAt = -Infinity;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    projects.forEach((p) => {
+      p.copyHeight = p.copy.offsetHeight;
+      p.captionHeight =
+        p.caption.offsetHeight + parseFloat(window.getComputedStyle(p.caption).marginTop || 0);
+    });
     readScroll();
   }
   pause.addEventListener(
