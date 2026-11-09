@@ -6,14 +6,18 @@ export function initHolograms({ root = document } = {}) {
   const controller = new AbortController();
   const options = { signal: controller.signal };
   let open;
+  let presented;
+  let dismissed;
   let blocked;
   let openedAt = 0;
   function close() {
     if (!open) return;
     blocked = open;
     open.classList.remove('is-revealed');
-    open.querySelector('.fragment-beacon').setAttribute('aria-expanded', 'false');
-    open.querySelector('.hologram').inert = true;
+    open
+      .querySelector('.fragment-beacon')
+      .setAttribute('aria-expanded', String(open === presented && open !== dismissed));
+    open.querySelector('.hologram').inert = open !== presented || open === dismissed;
     open = null;
     root.dispatchEvent(new Event('portfolio:hologram'));
   }
@@ -31,6 +35,13 @@ export function initHolograms({ root = document } = {}) {
   for (const project of projects) {
     const beacon = project.querySelector('.fragment-beacon');
     project.querySelector('.hologram').inert = true;
+    project.querySelector('.hologram').addEventListener(
+      'pointerenter',
+      (event) => {
+        if (event.pointerType === 'mouse' && project === presented) reveal(project);
+      },
+      options,
+    );
     beacon.addEventListener(
       'pointerenter',
       (event) => {
@@ -74,6 +85,10 @@ export function initHolograms({ root = document } = {}) {
     project.querySelector('.holo-dismiss').addEventListener(
       'click',
       () => {
+        if (presented === project) {
+          dismissed = project;
+          project.classList.remove('is-presented');
+        }
         close();
         beacon.focus({ preventScroll: true });
         close();
@@ -81,6 +96,23 @@ export function initHolograms({ root = document } = {}) {
       options,
     );
   }
+  root.addEventListener(
+    'portfolio:presentation',
+    (event) => {
+      const next = projects.find((project) => project.dataset.stop === event.detail.id);
+      if (presented === next) return;
+      close();
+      dismissed = null;
+      presented = next;
+      projects.forEach((project) => {
+        const current = project === presented;
+        project.classList.toggle('is-presented', current);
+        project.querySelector('.hologram').inert = !current;
+        project.querySelector('.fragment-beacon').setAttribute('aria-expanded', String(current));
+      });
+    },
+    options,
+  );
   root.addEventListener('portfolio:flight-jump', close, options);
   root.addEventListener('portfolio:project-entry', close, options);
   root.addEventListener(
@@ -97,7 +129,15 @@ export function initHolograms({ root = document } = {}) {
   root.addEventListener(
     'keydown',
     (event) => {
-      if (event.key === 'Escape') close();
+      if (event.key === 'Escape') {
+        dismissed = presented;
+        presented?.classList.remove('is-presented');
+        close();
+        if (dismissed) {
+          dismissed.querySelector('.hologram').inert = true;
+          dismissed.querySelector('.fragment-beacon').setAttribute('aria-expanded', 'false');
+        }
+      }
     },
     options,
   );

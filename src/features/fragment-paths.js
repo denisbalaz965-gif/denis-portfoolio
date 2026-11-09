@@ -63,10 +63,12 @@ export function fragmentWaypoint(index, relative, narrow = false, reader = false
       ? 0.52
       : 0.29 + ((index % 3) - 1) * 0.02
     : narrow
-      ? 0.5 + (route.hold[0] - 0.5) * 0.2
-      : route.hold[0];
-  const holdY = reader ? (narrow ? 0.22 : 0.48 + (index % 2 ? 0.025 : -0.025)) : route.hold[1];
-  const arrival = smooth((relative + 1.25) / 1.1);
+      ? 0.88
+      : index % 2 === 0
+        ? 0.73
+        : 0.27;
+  const holdY = reader ? (narrow ? 0.22 : 0.48 + (index % 2 ? 0.025 : -0.025)) : 0.22;
+  const arrival = smooth((relative + 1.25) / (reader ? 1.1 : 0.65));
   const departure = smooth((relative - 0.08) / 0.26);
   if (relative <= 0.08) {
     out.x = bezier(route.enter[0], route.bend[0], holdX, arrival);

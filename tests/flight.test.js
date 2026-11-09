@@ -81,6 +81,32 @@ describe('Projected project holograms', () => {
     expect(document.querySelectorAll('.holo-open')).toHaveLength(6);
     expect([...document.querySelectorAll('.hologram')].every((panel) => !panel.inert)).toBe(true);
   });
+  it('automatically pairs one preview with the scroll without opening a dialog or locking it as a hover', () => {
+    dispose = initHolograms();
+    const present = (id) =>
+      document.dispatchEvent(new CustomEvent('portfolio:presentation', { detail: { id } }));
+    present('attilapark');
+    expect(document.querySelectorAll('.is-presented')).toHaveLength(1);
+    expect(document.querySelector('#holo-attilapark').inert).toBe(false);
+    expect(document.querySelector('.is-revealed')).toBeNull();
+    expect(document.querySelector('dialog').open).toBe(false);
+    present('previa');
+    expect(document.querySelector('#holo-attilapark').inert).toBe(true);
+    expect(document.querySelector('#holo-previa').inert).toBe(false);
+    present(null);
+    expect(document.querySelectorAll('.is-presented')).toHaveLength(0);
+    expect(document.querySelector('#holo-previa').inert).toBe(true);
+  });
+  it('lets Escape dismiss the automatic preview until the next stop and retains an explicit way to reopen', () => {
+    dispose = initHolograms();
+    document.dispatchEvent(new CustomEvent('portfolio:presentation', { detail: { id: 'previa' } }));
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(document.querySelector('.is-presented')).toBeNull();
+    expect(document.querySelector('#holo-previa').inert).toBe(true);
+    document.querySelector('#stop-previa .fragment-beacon').click();
+    expect(document.querySelector('#holo-previa').inert).toBe(false);
+    expect(document.querySelector('dialog').open).toBe(false);
+  });
 });
 describe('Flight navigation', () => {
   it('jumps to every project and reverses without changing the order', () => {

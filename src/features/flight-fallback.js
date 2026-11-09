@@ -11,5 +11,8 @@ export function restoreFlightFallback({ root = document } = {}) {
     for (const property of ['visibility', 'transform', 'left', 'top', 'z-index'])
       node.style.removeProperty(property);
     node.querySelector('.hologram').inert = false;
+    const copy = node.querySelector('.flight-copy');
+    copy?.removeAttribute('style');
+    if (copy) copy.inert = false;
   });
 }

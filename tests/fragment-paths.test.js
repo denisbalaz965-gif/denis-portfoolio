@@ -47,8 +47,9 @@ describe('Fragments arrive from different directions', () => {
   it('keeps mobile stops accessible and reader stops in their dedicated reading area', () => {
     for (let i = 0; i < 7; i++) {
       const mobile = fragmentWaypoint(i, 0, true);
-      expect(mobile.x).toBeGreaterThan(0.45);
-      expect(mobile.x).toBeLessThan(0.55);
+      expect(mobile.x).toBeGreaterThan(0.75);
+      expect(mobile.x).toBeLessThan(0.9);
+      expect(mobile.y).toBeLessThan(0.3);
       const reader = fragmentWaypoint(i, 0, false, true);
       expect(reader.x).toBeLessThan(0.4);
       const world = waypointToWorld(reader, 4, 1.5, {});

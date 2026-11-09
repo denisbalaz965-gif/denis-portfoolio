@@ -17,12 +17,12 @@ export function fogDimensions(width, height) {
 export function introCrystalPose(width, height) {
   const narrow = width < 761,
     short = height < 600 && width >= 600;
-  const x = short ? 0.29 : narrow ? 0.55 : 0.32;
-  const y = short ? 0.65 : narrow ? (height < 680 ? 0.39 : 0.435) : 0.59;
+  const x = 0.5;
+  const y = 0.49;
   const span = 2 * 7 * Math.tan((24 * Math.PI) / 180);
   return {
     x: ((x - 0.5) * span * width) / Math.max(1, height),
     y: (0.5 - y) * span,
-    scale: short ? 1.1 : narrow ? (height < 680 ? 0.8 : 1.05) : 2.05,
+    scale: short ? 1.3 : narrow ? (height < 680 ? 1.05 : 1.4) : 2.3,
   };
 }

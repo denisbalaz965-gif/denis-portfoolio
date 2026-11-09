@@ -20,9 +20,11 @@ Three broadly capable collaborators who can take a digital project from an initi
 
 ## Operating Context
 
-The incumbent continuous green end-of-internet world remains. The intro says “Nápad máte. My tvoríme.” with the approved d/m/m name, a concrete service statement and links into selected work and functional demonstrations. The owner selected d/m/m and explicitly requested a company-style portfolio without personal names. The header says “Digitálne štúdio”; no legal entity or registered-company claim is established.
+The incumbent continuous green end-of-internet world remains. Following the owner's next direction on 9 November 2026, the first view leads with only the assembled green crystal, navigation and a scroll cue. Side texts appear during its reversible fracture: “Tri pohľady. Jeden tím.” and the concrete services. The studio uses the approved d/m/m name with no personal profiles or legal-entity claim.
 
-Six primary fragments preserve the compact journey and existing crystal: Attila Park Caravans, PREVIA, PH Laboratories, New Era Barbers, Tatra Scool and Štýlový chlpáč. Each arrives on a curved path from different corners/sides and offers a native hologram and story. Main stories cycle within these six selected works. The five additional personal stories remain available through the team introduction, old project routes and old stop-route aliases; their viewer cycle is separate from the selected web work.
+Six primary fragments preserve the compact journey: Attila Park Caravans, PREVIA, PH Laboratories, New Era Barbers, Tatra Scool and Štýlový chlpáč. Each comes from a curved path, settles to one side of the persistent axis and automatically opens a concise native project preview. Related service copy occupies the opposite side; sides alternate. The previews contain an existing actual website capture in a unified green treatment, a factual scope line and a normal link to the whole story. Project names no longer float on the moving geometry. Narrow screens stack the statement and evidence with a smaller fragment; low-height previews allow native internal scrolling.
+
+The owner explicitly confirmed an automatic concise preview and full article only on click, and deferred redesigning the articles themselves. Six selected stories retain their own viewer cycle. The five additional prior-work stories remain available through the service/contact disclosure and old routes; functional demos retain a separate two-item cycle.
 
 The studio-name intro link and service link open the existing contact-space disclosure. Personal profiles have been removed; the content describes services and approach. Contact retains the existing email destination and phone, with a public “Napíšte nám” label rather than an individual's name. No contact backend, submitted inquiry flow or agency mailbox is established.
 
@@ -41,7 +43,7 @@ The shared WebGL reader pairs real content sections with moving chapter fragment
 
 ## Brand Commitments
 
-Slovak content. Preserve the phosphor-green space, one persistent axis, reversible six-piece crystal fracture, abstract data fragments, native HTML holograms and article journeys. The owner explicitly asked to retain the graphic concept when changing to a team website. Keep one continuous world rather than introducing a conventional stack of agency sections. The main flight contains no client-image previews; actual client-web captures appear inside articles in a unified green treatment with links to the originals.
+Slovak content. Preserve the phosphor-green space, one persistent axis, reversible six-piece crystal fracture, abstract data fragments, native HTML holograms and article journeys. The owner explicitly asked to retain the graphic concept when changing to a team website. Keep one continuous world rather than introducing a conventional stack of agency sections. The latest owner direction extends actual client-web captures into automatic main-flight previews. The same green treatment and original links remain in articles; no new screenshots or other artwork were generated for this iteration.
 
 ## Functional Demonstrations
 

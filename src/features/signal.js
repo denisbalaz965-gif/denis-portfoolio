@@ -1,17 +1,11 @@
 import * as THREE from 'three';
 import { fragmentWaypoint, waypointToWorld } from './fragment-paths.js';
+import { presentationAt, presentationLayout } from './flight-presentation.js';
 import { scenePixelRatio, fogDimensions, introCrystalPose } from './render-policy.js';
 import { restoreFlightFallback } from './flight-fallback.js';
 import { makeCrystalPiece, makeChapterShard } from './fracture-geometry.js';
 import { createCrystalMaterial } from './crystal-material.js';
-import {
-  flightAt,
-  activeStop,
-  hologramPosition,
-  scrollForStop,
-  FLIGHT_END,
-  introFracture,
-} from './flight-model.js';
+import { flightAt, activeStop, scrollForStop, FLIGHT_END, introFracture } from './flight-model.js';
 
 const fogVertex = `void main(){gl_Position=vec4(position.xy,0.999,1.0);}`;
 const fogFragment = `
@@ -131,10 +125,12 @@ export function initSignal() {
     node.style.left = '0px';
     node.style.top = '0px';
     const beacon = node.querySelector('.fragment-beacon');
+    node.querySelector('.flight-copy').inert = true;
     return {
       group,
       node,
       beacon,
+      copy: node.querySelector('.flight-copy'),
       z: -i * 7,
       material,
     };
@@ -295,7 +291,8 @@ export function initSignal() {
   let pendingReturnHash = null;
   let pointerX = 0,
     pointerY = 0,
-    lastActive = -1;
+    lastActive = -1,
+    lastPresentation = -1;
   const screen = new THREE.Vector3();
   const waypoint = {},
     worldPoint = {};
@@ -402,20 +399,30 @@ export function initSignal() {
     fogMaterial.uniforms.time.value = phase;
     fogMaterial.uniforms.travel.value = progress;
     const primary = activeStop(progress);
-    intro.style.opacity = String(clamp01(1 - progress * 1.7));
-    intro.inert = progress > 0.4;
-    intro.style.transform = `translate3d(0,${-progress * 60}px,0)`;
+    const introReveal = clamp01((progress - 0.06) / 0.18) * clamp01((0.76 - progress) / 0.2);
+    intro.style.opacity = String(introReveal);
+    intro.inert = introReveal < 0.6;
+    intro.style.transform = `translate3d(0,${(1 - introReveal) * 16}px,0)`;
+    const presented = reader || entry ? -1 : presentationAt(progress, projects.length);
+    if (presented !== lastPresentation) {
+      lastPresentation = presented;
+      document.dispatchEvent(
+        new CustomEvent('portfolio:presentation', {
+          detail: { id: nodes[presented]?.dataset.stop ?? null },
+        }),
+      );
+    }
     const ending = clamp01((progress - 6.45) / 0.65);
     flightProgress.style.opacity = String(1 - ending);
     contact.style.opacity = String(ending);
     contact.inert = ending < 0.8;
     contact.style.pointerEvents = ending > 0.8 ? 'auto' : 'none';
-    instruction.style.opacity = String(progress > 0.45 && progress < 6.5 ? 1 : 0);
+    instruction.style.opacity = String(progress < 0.08 ? 1 : 0);
     const labelIndex = progress < 0.4 ? -1 : primary;
     if (lastActive !== labelIndex) {
       lastActive = labelIndex;
       currentLabel.textContent =
-        progress < 0.4 ? 'Objavuj posúvaním' : nodes[primary].querySelector('h2').textContent;
+        progress < 0.4 ? 'Rozviňte nápad posúvaním' : 'Služba a jej realizácia';
       countLabel.textContent = progress < 0.4 ? '00 / 06' : `0${primary + 1} / 06`;
     }
     const depth = String(Math.round((progress / FLIGHT_END) * 999)).padStart(3, '0');
@@ -427,6 +434,8 @@ export function initSignal() {
     const pose = introCrystalPose(width, height);
     merge.set(pose.x, pose.y, 4);
     projects.forEach((p, i) => {
+      p.copy.inert = i !== presented;
+      p.node.classList.toggle('has-presentation', i === presented);
       const selected = i === primary && progress > 0.4;
       if (p.primary !== selected) {
         p.node.classList.toggle('is-primary', selected);
@@ -438,9 +447,16 @@ export function initSignal() {
       }
       fragmentWaypoint(i, progress - i - 1, width < 761, false, waypoint);
       waypointToWorld(waypoint, camera.position.z - p.z, camera.aspect, worldPoint);
-      destination.set(worldPoint.x, worldPoint.y + Math.sin(phase * 0.4 + i) * 0.025, p.z);
+      destination.set(
+        worldPoint.x * (1 - introReveal * 0.8),
+        worldPoint.y + Math.sin(phase * 0.4 + i) * 0.025,
+        p.z,
+      );
       p.group.position.copy(merge).lerp(destination, fracture);
-      p.group.scale.setScalar(THREE.MathUtils.lerp(pose.scale, 0.66, fracture));
+      p.group.scale.setScalar(
+        THREE.MathUtils.lerp(pose.scale, width < 761 ? 0.29 : 0.66, fracture) *
+          (1 - introReveal * 0.45),
+      );
       p.group.rotation.set(
         THREE.MathUtils.lerp(0.25, 0.2 + Math.sin(phase * 0.15 + i) * 0.15, fracture),
         phase * 0.06 + THREE.MathUtils.lerp(0.4, i * 0.8, fracture),
@@ -462,7 +478,14 @@ export function initSignal() {
           child.rotation.z += spread * 0.4;
         }
       });
-      p.material.uniforms.focus.value = p.node.classList.contains('is-revealed') ? 1 : 0;
+      const unfolding = i === presented || p.node.classList.contains('is-revealed');
+      if (unfolding && !entry) {
+        p.group.children.forEach((child, j) => {
+          child.position.x += (j % 2 ? -1 : 1) * 0.14;
+          child.rotation.z += (j % 2 ? -1 : 1) * 0.12;
+        });
+      }
+      p.material.uniforms.focus.value = unfolding ? 1 : 0;
       p.material.uniforms.time.value = phase;
       const gap = camera.position.z - p.group.position.z;
       p.group.visible = !reader && gap > 1.3 && gap < 75 && ending < 0.9;
@@ -495,7 +518,10 @@ export function initSignal() {
         String(i === primary ? 1 : Math.max(0.3, 1 - gap / 65)),
       );
       p.node.style.zIndex = p.node.classList.contains('is-revealed') ? '35' : String(20 - i);
-      const h = hologramPosition(x, y, width, height);
+      const h = presentationLayout(i, width, height);
+      p.node.classList.toggle('proof-right', h.right);
+      p.copy.style.left = `${h.copyLeft - x}px`;
+      p.copy.style.top = `${h.copyTop - y}px`;
       p.node.style.setProperty('--holo-x', `${h.left - x}px`);
       p.node.style.setProperty('--holo-y', `${h.top - y}px`);
       p.node.style.setProperty('--holo-width', `${h.width}px`);
