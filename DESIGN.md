@@ -149,8 +149,8 @@ components:
     backgroundColor: '{colors.reader-toolbar}'
     height: '80px'
   reader-index:
-    backgroundColor: '#0b2115b3'
-    textColor: '#8fc39b'
+    backgroundColor: 'transparent'
+    textColor: '#98bca4'
     width: '48px'
     height: '48px'
   reader-index-current:
@@ -159,7 +159,7 @@ components:
   article-toolbar:
     backgroundColor: '{colors.article-toolbar}'
     textColor: '#c9edb6'
-    height: '80px'
+    height: '76px'
   evidence-choice:
     textColor: '#c7e7b6'
     rounded: '{rounded.control}'
