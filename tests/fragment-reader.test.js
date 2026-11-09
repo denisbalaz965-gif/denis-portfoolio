@@ -168,6 +168,6 @@ describe('Project fragment entry', () => {
     expect(captured).toHaveLength(2);
     captured[1].complete();
     expect(document.querySelector('dialog').open).toBe(true);
-    expect(document.querySelector('.reader-track').dataset.project).toBe('stylovy-chlpac');
+    expect(document.querySelector('.reader-track').dataset.project).toBe('attilapark');
   });
 });

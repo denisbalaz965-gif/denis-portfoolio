@@ -1,0 +1,52 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { beforeEach, afterEach, describe, expect, it } from 'vitest';
+import { teamProjects } from '../src/data/team-projects.js';
+import { findProject, projectsForViewer } from '../src/data/portfolio-projects.js';
+import { buildProjectContent, initProjectBrowser } from '../src/features/project-browser.js';
+import { initScrollStories } from '../src/features/scroll-stories.js';
+
+const page = readFileSync(resolve(process.cwd(), 'index.html'), 'utf8');
+let dispose = () => {};
+beforeEach(() => {
+  window.history.replaceState(null, '', '/');
+  document.body.innerHTML = new DOMParser().parseFromString(page, 'text/html').body.innerHTML;
+});
+afterEach(() => dispose());
+
+describe('Team work and retained experience', () => {
+  it('keeps client-facing selection separate from personal grant experience', () => {
+    const featured = projectsForViewer(findProject('attilapark'));
+    const personal = projectsForViewer(findProject('corinex'));
+    expect(featured).toHaveLength(6);
+    expect(featured.map((p) => p.id)).not.toContain('corinex');
+    expect(personal.map((p) => p.id)).toContain('zakazko');
+    expect(personal.map((p) => p.id)).not.toContain('attilapark');
+  });
+  it.each(teamProjects)(
+    'preserves attribution, live link and evidence for $name without WebGL',
+    (project) => {
+      const chapter = buildProjectContent(project);
+      document.body.append(chapter);
+      expect(chapter.querySelector('.case-contribution').textContent).toBe(project.credit);
+      expect(chapter.querySelector('.chapter-link').href).toBe(project.url);
+      expect(chapter.querySelector('.case-showcase img').getAttribute('src')).toContain(
+        project.screenshot,
+      );
+      dispose = initScrollStories({ root: chapter });
+      expect(chapter.classList.contains('story-is-animated')).toBe(false);
+      expect(chapter.querySelectorAll('.story-step')).toHaveLength(2);
+      expect(chapter.querySelector('.section-kicker')).toBeNull();
+      expect(chapter.querySelector('.story-step > div').firstElementChild.tagName).toBe('H3');
+    },
+  );
+  it('keeps an old shared stop URL usable and closes to the team overview', async () => {
+    window.history.replaceState(null, '', '/#stop-corinex');
+    dispose = initProjectBrowser({ animate: false, mountStories: () => () => {} });
+    expect(document.querySelector('dialog').dataset.project).toBe('corinex');
+    document.querySelector('[data-case-close]').click();
+    await Promise.resolve();
+    expect(document.querySelector('dialog').open).toBe(false);
+    expect(location.hash).toBe('#o-mne');
+  });
+});

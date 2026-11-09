@@ -226,6 +226,8 @@ export function initScrollStories({ root = document, scroller } = {}) {
       const chapters = [...root.querySelectorAll('[data-story]')];
       for (const chapter of chapters) {
         const stage = chapter.querySelector('.story-stage');
+        // Screenshot-led references retain normal reading when WebGL is absent.
+        if (!stage) continue;
         const steps = [...chapter.querySelectorAll('[data-story-step]')];
         const links = [...stage.querySelectorAll('.story-index a')];
         const timeline =

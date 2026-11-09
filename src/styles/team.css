@@ -1,0 +1,250 @@
+/* The team inherits the existing continuous phosphor world. */
+.boundary-nav .brand {
+  font-size: 24px;
+  letter-spacing: -0.035em;
+  gap: 8px;
+}
+.brand-name {
+  letter-spacing: 0;
+}
+.flight-ready .intro-name {
+  font-size: clamp(52px, 6.4vw, 88px);
+}
+.intro-name span {
+  display: block;
+}
+.intro-context a {
+  color: #bddac7;
+  pointer-events: auto;
+  text-underline-offset: 5px;
+}
+.intro-context a:hover {
+  color: var(--phosphor);
+}
+.flight-ready .intro-services {
+  font-size: clamp(30px, 3.5vw, 54px);
+}
+.flight-ready .intro-description {
+  max-width: 29ch;
+}
+.team-contact-label {
+  font-size: 12px !important;
+  margin: 23px 0 12px !important;
+  color: #a8cbb3;
+}
+.flight-ready .team-about {
+  max-width: 100%;
+}
+.flight-ready .flight-contact {
+  max-height: calc(78svh - 85px);
+  overscroll-behavior-y: contain;
+}
+.flight-ready:has(.flight-contact:not([inert])) .depth-readout {
+  opacity: 0;
+  pointer-events: none;
+}
+.team-about > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 18px 0;
+  font-size: 15px;
+  border-bottom: 1px solid #74c5984d;
+}
+.team-about[open] > summary span {
+  transform: rotate(45deg);
+}
+.team-content {
+  padding: 22px 0 10px;
+}
+.team-content h3 {
+  font-size: clamp(24px, 2.8vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #e0f5e2;
+}
+.team-content > p {
+  max-width: 65ch;
+}
+.team-members {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin: 30px 0 42px;
+}
+.team-members article {
+  padding-top: 18px;
+  border-top: 1px solid #74c5984d;
+}
+.team-members h4 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #b6ff7c;
+}
+.team-members p {
+  margin: 12px 0 20px;
+}
+.team-members a,
+.team-experience > a {
+  display: block;
+  padding: 9px 0;
+  line-height: 1.4;
+}
+.team-services dl {
+  margin: 20px 0 32px;
+}
+.team-services dl > div {
+  display: grid;
+  grid-template-columns: 35% 1fr;
+  gap: 24px;
+  padding: 18px 0;
+  border-bottom: 1px solid #74c5984d;
+}
+.team-services dt {
+  font-size: 16px;
+  color: #dff5e2;
+}
+.team-services dd {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #bcd3c4;
+}
+.team-experience > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+.team-work-note {
+  color: #a8cbb3;
+  font-size: 12px !important;
+  margin-top: 24px !important;
+}
+.case-contribution {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #b6ff9e;
+  margin: 18px 0 24px;
+}
+.reader-panel .case-contribution {
+  font-size: 13px !important;
+  color: #b6ff9e;
+}
+.team-web-evidence h3 {
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 22px;
+}
+.team-web-evidence figure {
+  margin: 0 0 22px;
+}
+.team-web-evidence img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) sepia(0.45) hue-rotate(75deg) saturate(0.65) brightness(0.8);
+}
+.team-web-evidence figcaption {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #a8cbb3;
+  margin-top: 10px;
+}
+.team-web-story > .story-layout {
+  display: block;
+}
+.team-web-story > .story-layout .story-steps {
+  width: 100%;
+  margin: 0;
+}
+.team-web-story > .story-layout .story-step {
+  min-height: 0;
+  padding: 50px 0;
+}
+.team-web-story > .story-layout .story-step > div {
+  max-width: 68ch;
+}
+.team-web-story > .case-showcase {
+  margin-top: 40px;
+}
+.project-index nav {
+  max-height: min(70svh, 560px);
+  overflow-y: auto;
+}
+@media (max-width: 760px) {
+  .boundary-nav .brand {
+    font-size: 21px;
+  }
+  .flight-ready .intro-name {
+    font-size: clamp(34px, 10vw, 54px);
+  }
+  .flight-ready .intro-identity {
+    top: 16%;
+  }
+  .flight-ready .intro-services {
+    font-size: clamp(25px, 6.7vw, 34px);
+  }
+  .flight-ready .intro-work {
+    top: 60%;
+  }
+  .flight-ready .intro-services span {
+    display: inline;
+  }
+  .flight-ready .intro-services span:first-child {
+    display: block;
+  }
+  .flight-ready .flight-contact h2 {
+    font-size: clamp(33px, 8.7vw, 54px);
+  }
+  .flight-ready .flight-contact {
+    max-height: calc(80svh - 75px);
+  }
+  .team-members {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .team-members p {
+    max-width: 60ch;
+    margin-bottom: 10px;
+  }
+  .team-services dl > div {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .team-services dt {
+    font-size: 17px;
+  }
+  .team-about > summary {
+    font-size: 13px;
+  }
+}
+@media (max-width: 599px) and (max-height: 679px) {
+  .flight-ready .intro-name {
+    font-size: 34px;
+  }
+  .flight-ready .intro-work {
+    top: 55%;
+  }
+  .flight-ready .intro-services {
+    font-size: 23px;
+  }
+}
+@media (min-width: 600px) and (max-height: 600px) {
+  .flight-ready .intro-name {
+    font-size: 40px;
+  }
+  .flight-ready .intro-services {
+    font-size: 26px;
+  }
+  .flight-ready .intro-work {
+    top: 25%;
+  }
+  .flight-ready .intro-services span:last-child {
+    display: block;
+  }
+}

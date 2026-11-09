@@ -329,6 +329,11 @@ export function initSignal() {
     startDraw();
     if (hash) window.history.pushState(null, '', hash);
   }
+  function revealTeam() {
+    const about = document.querySelector('.flight-about');
+    about.open = true;
+    contact.scrollTop = about.offsetTop;
+  }
   function route() {
     const hash = window.location.hash;
     if (pendingReturnHash !== null && hash === pendingReturnHash) {
@@ -339,7 +344,8 @@ export function initSignal() {
     if (index >= 0) jump(index, null, 'instant');
     else if (['#kontakt', '#o-mne'].includes(hash)) {
       jump('contact', null, 'instant');
-      if (hash === '#o-mne') document.querySelector('.flight-about').open = true;
+      if (hash === '#o-mne') revealTeam();
+      else contact.scrollTop = 0;
     } else if (hash === '#svet') jump('intro', null, 'instant');
   }
   document.addEventListener(
@@ -364,7 +370,8 @@ export function initSignal() {
       } else if (['#kontakt', '#o-mne'].includes(hash)) {
         event.preventDefault();
         jump('contact', hash);
-        if (hash === '#o-mne') document.querySelector('.flight-about').open = true;
+        if (hash === '#o-mne') revealTeam();
+        else contact.scrollTop = 0;
       } else if (hash === '#svet') {
         event.preventDefault();
         jump('intro', hash);

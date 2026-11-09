@@ -1,6 +1,10 @@
+import { teamProjects } from './team-projects.js';
+
 export const portfolioProjects = [
   {
     id: 'stylovy-chlpac',
+    featured: true,
+    credit: 'Denis · návrh, texty a realizácia s podporou AI',
     group: 'webs',
     name: 'Štýlový chlpáč',
     title: ['Štýlový', 'chlpáč.'],
@@ -170,6 +174,11 @@ export const portfolioProjects = [
       'Ako prepájam prípravu žiadostí, rozpočty, zmeny, termíny a podklady počas implementácie.',
   },
 ];
+
+portfolioProjects.push(...teamProjects);
+export const featuredProjects = [...teamProjects, portfolioProjects[0]];
+export const projectsForViewer = (project) =>
+  project.featured ? featuredProjects : portfolioProjects.filter((item) => !item.featured);
 
 export const findProject = (id) => portfolioProjects.find((project) => project.id === id);
 export const projectsInGroup = (group) =>

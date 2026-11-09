@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { findProject, projectsInGroup, portfolioProjects } from '../data/portfolio-projects.js';
+import { findProject, projectsInGroup, projectsForViewer } from '../data/portfolio-projects.js';
 import { initScrollStories } from './scroll-stories.js';
 import { initFragmentReader } from './fragment-reader.js';
 
@@ -32,7 +32,13 @@ function referenceCover(project) {
 export function artwork(project, root) {
   const wrapper = document.createElement('div');
   wrapper.className = 'gallery-preview';
-  if (project.cover === 'salon') {
+  if (project.cover === 'team-web') {
+    const capture = document.createElement('img');
+    capture.src = `/images/team-work/${project.screenshot}.jpg`;
+    capture.alt = `Web ${project.name}`;
+    capture.loading = 'lazy';
+    wrapper.append(capture);
+  } else if (project.cover === 'salon') {
     wrapper.append(
       root.querySelector('#salon-template').content.querySelector('.web-scene').cloneNode(true),
     );
@@ -51,7 +57,15 @@ function storyIndex(project) {
 
 export function buildProjectContent(project, root = document) {
   let chapter;
-  if (project.template === 'quotes') {
+  if (project.template === 'team-web') {
+    chapter = document.createElement('section');
+    chapter.className = 'story-chapter chapter-web section-pad team-web-story';
+    chapter.dataset.story = 'team-web';
+    chapter.innerHTML = `<div class="chapter-heading"><h2 id="case-title">${lines(project.title)}</h2><div><p>${escapeHTML(project.introduction)}</p><a class="chapter-link" href="${escapeHTML(project.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(project.linkLabel)} <span>↗</span></a></div></div><p class="case-contribution">${escapeHTML(project.credit)}</p><div class="story-layout">${storySteps(project)}</div><section class="case-showcase team-web-evidence"><h3>Skutočný web.</h3><figure><a href="${escapeHTML(project.url)}" target="_blank" rel="noopener noreferrer" aria-label="Otvoriť ${escapeHTML(project.name)}"><img src="/images/team-work/${escapeHTML(project.screenshot)}.jpg" alt="Zachytená úvodná obrazovka webu ${escapeHTML(project.name)}" width="960" height="800" loading="lazy"></a><figcaption>Zachytené 9. 11. 2026. Farebné zjednotenie patrí tejto prezentácii.</figcaption></figure><p>${escapeHTML(project.credit)}. Ukážka práce člena tímu.</p><a class="chapter-link" href="${escapeHTML(project.url)}" target="_blank" rel="noopener noreferrer">Otvoriť web v pôvodných farbách ↗</a></section>`;
+    chapter.querySelectorAll('.story-step').forEach((step) => {
+      step.querySelector('h3').after(step.querySelector('.step-kicker'));
+    });
+  } else if (project.template === 'quotes') {
     chapter = document.createElement('section');
     chapter.className = 'story-chapter chapter-web section-pad';
     chapter.dataset.story = 'quotes';
@@ -85,6 +99,15 @@ export function buildProjectContent(project, root = document) {
     }
   }
   chapter.setAttribute('aria-labelledby', 'case-title');
+  if (project.template !== 'team-web') {
+    const credit = document.createElement('p');
+    credit.className = 'case-contribution';
+    credit.textContent =
+      project.credit ?? 'Denis · osobná projektová skúsenosť v tíme CASSIS Consult';
+    if (project.id === 'zakazko')
+      credit.textContent = 'Denis · vlastný produkt, realizácia s podporou AI';
+    chapter.querySelector('.chapter-heading').after(credit);
+  }
   if (project.sourceNote) {
     const note = document.createElement('p');
     note.className = 'case-source-note';
@@ -94,7 +117,7 @@ export function buildProjectContent(project, root = document) {
   chapter.querySelector('#case-title').tabIndex = -1;
   // Project category is supporting metadata, placed after the title rather than above it.
   const metadata = chapter.querySelector('.section-kicker');
-  metadata.classList.add('case-category');
+  metadata?.classList.add('case-category');
   chapter.querySelectorAll('.eyebrow').forEach((label) => {
     const heading = label.nextElementSibling;
     if (heading?.matches('h2,h3')) heading.after(label);
@@ -102,7 +125,7 @@ export function buildProjectContent(project, root = document) {
   const hint = document.createElement('p');
   hint.className = 'case-reading-hint';
   hint.textContent = 'Čítaj nadol. Projekty prepínaj šípkami alebo potiahnutím do strán.';
-  chapter.querySelector('.chapter-heading').after(metadata, hint);
+  chapter.querySelector('.chapter-heading').after(...(metadata ? [metadata] : []), hint);
   return chapter;
 }
 
@@ -143,6 +166,11 @@ export function bindProjectSwipe(element, onSwipe, signal, accepts = () => true)
 }
 
 const legacyRoutes = {
+  'stop-zakazko': 'zakazko',
+  'stop-corinex': 'corinex',
+  'stop-tornala': 'tornala',
+  'stop-horna-kralova': 'horna-kralova',
+  'stop-eurofondova-agenda': 'eurofondova-agenda',
   'web-zadanie': 'stylovy-chlpac',
   'web-podoba': 'stylovy-chlpac',
   'web-system': 'stylovy-chlpac',
@@ -184,7 +212,8 @@ export function initProjectBrowser({
   let entryPending = false;
   let returnScroll = 0;
   const continuous = Boolean(root.querySelector('.boundary-journey'));
-  const viewerProjects = (group) => (continuous ? portfolioProjects : projectsInGroup(group));
+  const viewerProjects = (group) =>
+    continuous ? projectsForViewer(current) : projectsInGroup(group);
 
   function moveGallery(group, delta) {
     const projects = projectsInGroup(group);
@@ -262,14 +291,19 @@ export function initProjectBrowser({
         : (originBeacon ??
           root.querySelector(
             continuous
-              ? `#stop-${previous?.id} .fragment-title-link`
+              ? previous?.featured
+                ? `#stop-${previous.id} .fragment-title-link`
+                : '.flight-about > summary'
               : `[data-project-group="${previous?.group || 'webs'}"] .gallery-open`,
           ));
     const restoreFocus = () => {
       if (returnTo?.isConnected && !dialog.open) returnTo.focus({ preventScroll: true });
     };
     if (continuous && document.body.classList.contains('flight-ready'))
-      requestAnimationFrame(restoreFocus);
+      requestAnimationFrame(() => {
+        if (previous?.featured) restoreFocus();
+        else requestAnimationFrame(restoreFocus);
+      });
     else restoreFocus();
     if (continuous) window.scrollTo({ top: returnScroll, behavior: 'instant' });
   }
@@ -277,6 +311,7 @@ export function initProjectBrowser({
   function closeViewer() {
     if (!current) return;
     const group = current.group;
+    const destinationProject = current.featured;
     const pushed = window.history.state?.portfolioViewerEntry === true;
     waitingForBack = pushed;
     if (pushed)
@@ -289,9 +324,12 @@ export function initProjectBrowser({
     if (pushed) window.history.back();
     else {
       const destination = continuous
-        ? `#stop-${group === 'webs' ? 'stylovy-chlpac' : 'corinex'}`
+        ? destinationProject
+          ? '#stop-attilapark'
+          : '#o-mne'
         : groupAnchor(group);
       window.history.replaceState(null, '', destination);
+      if (continuous) queueMicrotask(() => window.dispatchEvent(new HashChangeEvent('hashchange')));
       if (!continuous) root.querySelector(destination)?.scrollIntoView?.({ block: 'start' });
     }
   }

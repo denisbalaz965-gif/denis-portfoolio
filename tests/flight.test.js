@@ -31,9 +31,7 @@ describe('Projected project holograms', () => {
     expect(button.getAttribute('aria-expanded')).toBe('true');
     expect(project.querySelector('.hologram').inert).toBe(false);
     expect(document.querySelector('dialog').open).toBe(false);
-    expect(project.querySelector('.holo-open').getAttribute('href')).toBe(
-      '#projekt/stylovy-chlpac',
-    );
+    expect(project.querySelector('.holo-open').getAttribute('href')).toBe('#projekt/attilapark');
   });
   it('keeps the panel open while moving from the object to its link, then closes on departure', () => {
     dispose = initHolograms();

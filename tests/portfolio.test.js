@@ -45,7 +45,7 @@ describe('Project index', () => {
     dispose = initNavigation();
     const menu = document.querySelector('.project-index');
     menu.open = true;
-    menu.querySelector('a[href="#stop-corinex"]').click();
+    menu.querySelector('a[href="#stop-previa"]').click();
     expect(menu.open).toBe(false);
   });
   it('closes when clicking outside the index', () => {
@@ -129,25 +129,25 @@ describe('Project selection and full-page stories', () => {
   it('offers six ordered fragments without mounting long articles on the main page', () => {
     dispose = initProjectBrowser({ animate: false, mountStories });
     expect([...document.querySelectorAll('[data-stop]')].map((node) => node.dataset.stop)).toEqual([
+      'attilapark',
+      'previa',
+      'phlaboratories',
+      'newera',
+      'tatrascool',
       'stylovy-chlpac',
-      'zakazko',
-      'corinex',
-      'tornala',
-      'horna-kralova',
-      'eurofondova-agenda',
     ]);
     expect(document.querySelector('dialog').open).toBe(false);
     expect(document.querySelector('main [data-story]')).toBeNull();
     expect(mountStories).not.toHaveBeenCalled();
   });
-  it('cycles between all six projects across web and grant work', () => {
+  it('cycles through the six featured team projects', () => {
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('#stop-zakazko .fragment-title-link').click();
+    document.querySelector('#stop-previa .fragment-title-link').click();
     document.querySelector('.case-switch [data-case-next]').click();
-    expect(document.querySelector('dialog').dataset.project).toBe('corinex');
+    expect(document.querySelector('dialog').dataset.project).toBe('phlaboratories');
     expect(document.querySelector('[data-case-counter]').textContent).toBe('3 / 6');
     document.querySelector('.case-switch [data-case-prev]').click();
-    expect(document.querySelector('dialog').dataset.project).toBe('zakazko');
+    expect(document.querySelector('dialog').dataset.project).toBe('previa');
   });
   it('restores the exact main-page position after closing the reader', () => {
     const restore = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
@@ -165,7 +165,7 @@ describe('Project selection and full-page stories', () => {
     const teardown = vi.fn();
     mountStories.mockReturnValueOnce(teardown).mockReturnValue(() => {});
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('.fragment-title-link').click();
+    document.querySelector('#stop-stylovy-chlpac .fragment-title-link').click();
     expect(document.querySelector('dialog').open).toBe(true);
     expect(document.querySelector('.case-content [data-story]').dataset.story).toBe('web');
     expect(location.hash).toBe('#projekt/stylovy-chlpac');
@@ -174,9 +174,9 @@ describe('Project selection and full-page stories', () => {
     expect(teardown).toHaveBeenCalledTimes(1);
     expect(mountStories.mock.calls.length).toBe(callsBefore + 1);
     expect(document.querySelectorAll('.case-content [data-story]')).toHaveLength(1);
-    expect(document.querySelector('.case-content [data-story]').dataset.story).toBe('quotes');
+    expect(document.querySelector('.case-content [data-story]').dataset.story).toBe('team-web');
     expect(document.querySelector('.case-scroll').scrollTop).toBe(0);
-    expect(location.hash).toBe('#projekt/zakazko');
+    expect(location.hash).toBe('#projekt/attilapark');
   });
 
   it('opens a shared project directly, then Escape restores the overview and focus', () => {
@@ -188,10 +188,8 @@ describe('Project selection and full-page stories', () => {
     expect(document.querySelector('dialog').open).toBe(false);
     expect(document.querySelector('.case-content').children).toHaveLength(0);
     expect(document.body.style.overflow).toBe('');
-    expect(location.hash).toBe('#stop-corinex');
-    expect(document.activeElement).toBe(
-      document.querySelector('#stop-horna-kralova .fragment-title-link'),
-    );
+    expect(location.hash).toBe('#o-mne');
+    expect(document.activeElement).toBe(document.querySelector('.flight-about > summary'));
   });
 
   it('returns to the overview when browser history leaves the project route', () => {
@@ -208,12 +206,12 @@ describe('Project selection and full-page stories', () => {
     window.history.replaceState(null, '', '/#projekt/stylovy-chlpac');
     dispose = initProjectBrowser({ animate: false, mountStories });
     document.querySelector('[data-case-close]').click();
-    document.querySelector('#stop-corinex .fragment-title-link').click();
+    document.querySelector('#stop-phlaboratories .fragment-title-link').click();
     const dialog = document.querySelector('dialog');
-    expect(dialog.dataset.project).toBe('corinex');
+    expect(dialog.dataset.project).toBe('phlaboratories');
     dialog.dispatchEvent(new Event('close'));
     expect(dialog.open).toBe(true);
-    expect(dialog.dataset.project).toBe('corinex');
+    expect(dialog.dataset.project).toBe('phlaboratories');
     expect(document.querySelector('.case-content').children).toHaveLength(1);
   });
 
@@ -245,13 +243,15 @@ describe('Audit regressions', () => {
 
   it('moves focus from a removed story control to the new project heading', () => {
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('.fragment-title-link').click();
+    document.querySelector('#stop-stylovy-chlpac .fragment-title-link').click();
     const step = document.querySelector('dialog .story-index a');
     step.focus();
     step.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
-    expect(document.querySelector('dialog').dataset.project).toBe('zakazko');
+    expect(document.querySelector('dialog').dataset.project).toBe('attilapark');
     expect(document.activeElement).toBe(document.querySelector('dialog #case-title'));
-    expect(document.querySelector('[data-case-announcement]').textContent).toContain('Zákazko.sk');
+    expect(document.querySelector('[data-case-announcement]').textContent).toContain(
+      'Attila Park Caravans',
+    );
   });
 
   it.each(['metaKey', 'ctrlKey', 'shiftKey'])('leaves %s clicks to the browser', (modifier) => {
@@ -294,7 +294,7 @@ describe('Audit regressions', () => {
 
   it('switches real captures without showing multiple panels or losing button focus', () => {
     dispose = initProjectBrowser({ animate: false, mountStories });
-    document.querySelector('.fragment-title-link').click();
+    document.querySelector('#stop-stylovy-chlpac .fragment-title-link').click();
     const button = document.querySelector('[data-salon-view="admin"]');
     button.focus();
     button.click();
@@ -303,7 +303,7 @@ describe('Audit regressions', () => {
     expect(button.getAttribute('aria-pressed')).toBe('true');
     expect(document.activeElement).toBe(button);
     document.querySelector('.case-switch [data-case-next]').click();
-    expect(document.querySelector('.case-showcase')).toBeNull();
+    expect(document.querySelector('[data-salon-panel]')).toBeNull();
   });
 });
 
