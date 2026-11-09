@@ -6,13 +6,15 @@
 
 `flight-model.js` obsahuje čistý prevod scrollu na priebeh letu, výber hlavného projektu, spätné určenie scrollu projektu a ohraničenie polohy hologramu. Šesť zastávok používa priebeh do `FLIGHT_END = 7.25`. `introFracture()` určuje reverzibilný rozpad úvodu; `chapterProgress()` ponechá prvú polovicu kapitolového intervalu stabilnú a potom plynulo presunie kameru k ďalšej zastávke.
 
-`signal.js` vlastní Three.js 0.182.0 renderer, perspektívnu kameru, shader zelenej hmly, šesť skupín krištalických fragmentov, svetlá, prach a geometrické úlomky. Kamera interpoluje scrollový cieľ; projekcia 3D pozícií nastavuje polohy natívnych HTML tlačidiel. Jeden projekt je hlavný a ostatné zostávajú menšie v hĺbke. `fracture-geometry.js` vytvára šesť uzavretých pyramíd od spoločného stredu ku šiestim stenám kocky. V úvode rekonštruujú jeden kryštál; scroll presunie tie isté diely do pozícií projektov a spätný scroll ich opäť spojí. Pixel ratio je obmedzené na 1.25 na počítači a 1 na mobile.
+`signal.js` vlastní Three.js 0.182.0 renderer, perspektívnu kameru, shader zelenej hmly, šesť skupín krištalických fragmentov, svetlá, prach a geometrické úlomky. Kamera interpoluje scrollový cieľ; projekcia 3D pozícií nastavuje polohy natívnych HTML tlačidiel. Jeden projekt je hlavný a ostatné zostávajú menšie v hĺbke. `fracture-geometry.js` vytvára šesť uzavretých pyramíd od spoločného stredu ku šiestim stenám členitého šesťbokého kryštálu. V úvode rekonštruujú jeden kryštál; scroll presunie tie isté diely do pozícií projektov a spätný scroll ich opäť spojí. Pixel ratio je obmedzené na 1.25 na počítači a 1 na mobile.
 
 `flight.css`, načítaný po `signal.css`, definuje dráhu 420svh, respektíve 390svh do šírky 760px. Obsah je v režime pripraveného WebGL pevný vo viewporte. Indexové kotvy sa prevádzajú na polohy kamery. Kontakt je na konci dráhy a „O mne“ je natívny rozbaľovací obsah pri kontakte.
 
 Pri odhalenom holograme, pokojnom otváraní projektu alebo otvorenom príbehu sa zastaví interpolácia hlavného letu a samostatný pohyb sveta. Aktívna čítačka má vlastný kamerový priebeh, zdieľa však ten istý renderer a zelený svet. Pauza samostatne zastaví časový pohyb, no scroll zostáva funkčný. Skrytá karta nevytvára pokračujúce snímky. Cleanup obnoví pôvodný `history.scrollRestoration`, odstráni udalosti a uvoľní geometrie, materiály a renderer.
 
 Zlyhanie vytvorenia WebGL alebo strata kontextu odstránia režim `flight-ready`. Bežný HTML zoznam zobrazuje názvy, súhrny a odkazy na články; nevyžaduje 3D zásah ani hover.
+
+`crystal-material.js` vytvára procedurálny obsidiánovo-fosforový ShaderMaterial: odlesky, hrany, pásy a jemný povrch. `fracture-geometry.js` skladá šesť vodotesných klinov pozdĺž spoločnej osi; vonkajšie steny majú ďalšie fazety. Čítačka používa objemový vonkajší plášť `makeChapterShard`, nie tenkú projektovú stenu. Svet dopĺňa 920 bodov a 100 priestorových vláken. `world-finish.css` je posledný import a vlastní finálnu typografiu, hologramy, čítačku aj kontakt. Projektový HUD sa s nástupom kontaktu stráca.
 
 ## Hologramy a vstupy
 

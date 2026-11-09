@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { restoreFlightFallback } from './flight-fallback.js';
-import { makeCrystalPiece } from './fracture-geometry.js';
+import { makeCrystalPiece, makeChapterShard } from './fracture-geometry.js';
+import { createCrystalMaterial } from './crystal-material.js';
 import {
   flightAt,
   activeStop,
@@ -25,8 +26,11 @@ void main(){
  float b=field(p*4.5+vec2(a*2.5-time*.025,time*.045));
  float fog=pow(max(0.0,a*b),1.2);
  float vein=pow(max(0.0,1.0-abs(b-.47)*12.0),3.0)*.11;
+ float contour=pow(max(0.,1.-abs(fract(a*7.+b*3.)-.5)*85.),2.);
+ float rift=exp(-abs(p.x+.12+sin(p.y*2.+b*2.+time*.018)*.23)*9.);
+ float streak=pow(max(0.,1.-abs(sin(atan(p.y,p.x)*17.+a*3.))*18.),8.)*.012;
  float center=1.0-smoothstep(.0,1.1,length(p-vec2(.16,.05)));
- vec3 color=vec3(.006,.018,.009)+vec3(.065,.40,.105)*fog*(.6+center)+vec3(.08,.35,.09)*vein;
+ vec3 color=vec3(.003,.012,.010)+vec3(.045,.33,.14)*fog*(.8+center*1.4)+vec3(.06,.5,.18)*vein+vec3(.07,.52,.22)*rift*.18+vec3(.08,.42,.18)*contour*.18+vec3(.1,.6,.28)*streak;
  color*=.63+.37*(1.0-smoothstep(.2,1.0,length(p)));
  gl_FragColor=vec4(color,1.0);
 }`;
@@ -79,21 +83,14 @@ export function initSignal() {
   const positions = [0.85, -0.85, 0.75, -0.9, 0.85, -0.7];
   const projects = nodes.map((node, i) => {
     const group = new THREE.Group();
-    const material = new THREE.MeshStandardMaterial({
-      color: 0x123c20,
-      emissive: 0x1c5d29,
-      emissiveIntensity: 0.3,
-      metalness: 0.8,
-      roughness: 0.28,
-      flatShading: true,
-    });
+    const material = createCrystalMaterial(i);
     for (let j = 0; j < 5; j++) {
       const geometry =
         j === 0 ? makeCrystalPiece(i) : new THREE.OctahedronGeometry(0.12 + j * 0.018, 0);
       const shard = new THREE.Mesh(geometry, material);
       shard.scale.set(
         j === 0 ? 1 : 0.5,
-        j === 0 ? 1.4 : 1.3 + ((i + j) % 3) * 0.25,
+        j === 0 ? 1 : 1.3 + ((i + j) % 3) * 0.25,
         j === 0 ? 1 : 0.55,
       );
       shard.rotation.set(j === 0 ? 0 : j * 0.7 + i, j * 0.9, j * 0.65);
@@ -106,9 +103,9 @@ export function initSignal() {
         new THREE.LineSegments(
           new THREE.EdgesGeometry(geometry),
           new THREE.LineBasicMaterial({
-            color: 0xa8ff7d,
+            color: 0x99ffba,
             transparent: true,
-            opacity: j === 0 ? 0.8 : 0.4,
+            opacity: j === 0 ? 0.52 : 0.24,
           }),
         ),
       );
@@ -116,19 +113,6 @@ export function initSignal() {
       shard.userData.spin = shard.rotation.clone();
       group.add(shard);
     }
-    const points = [];
-    for (let j = 0; j < 8; j++) {
-      const a = (j / 8) * Math.PI * 2;
-      points.push(Math.cos(a) * 0.65, Math.sin(a) * 0.4, 0);
-    }
-    const path = new THREE.BufferGeometry();
-    path.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
-    group.add(
-      new THREE.LineLoop(
-        path,
-        new THREE.LineBasicMaterial({ color: 0x62c849, transparent: true, opacity: 0.35 }),
-      ),
-    );
     group.scale.setScalar(0.72);
     scene.add(group);
     return { group, node, x: positions[i], y: Math.sin(i * 3.1) * 0.35, z: -i * 7, material };
@@ -189,17 +173,10 @@ export function initSignal() {
         scene.add(readerGroup);
         for (let i = 0; i < data.count; i++) {
           const piece = new THREE.Group();
-          const geometry = makeCrystalPiece(i);
-          const material = new THREE.MeshStandardMaterial({
-            color: 0x153d27,
-            emissive: 0x29653f,
-            emissiveIntensity: 0.55,
-            metalness: 0.8,
-            roughness: 0.25,
-            flatShading: true,
-          });
+          const geometry = makeChapterShard(i);
+          const material = createCrystalMaterial(i + 2);
           const mesh = new THREE.Mesh(geometry, material);
-          mesh.scale.set(1, 1.6, 1);
+          mesh.scale.set(1, 1, 1);
           mesh.rotation.set(0.3, i * 0.9, 0.2);
           mesh.add(
             new THREE.LineSegments(
@@ -208,6 +185,19 @@ export function initSignal() {
             ),
           );
           piece.add(mesh);
+          for (let j = 0; j < 3; j++) {
+            const satellite = new THREE.Mesh(makeCrystalPiece(i + j + 1), material);
+            satellite.scale.setScalar(0.18 + j * 0.06);
+            satellite.position.set(Math.sin(j * 2.7 + i) * 0.68, -0.4 + j * 0.25, -0.12 + j * 0.08);
+            satellite.rotation.set(j * 0.5, j * 0.7 + i, 0.4);
+            satellite.add(
+              new THREE.LineSegments(
+                new THREE.EdgesGeometry(satellite.geometry),
+                new THREE.LineBasicMaterial({ color: 0x73fda4, transparent: true, opacity: 0.25 }),
+              ),
+            );
+            piece.add(satellite);
+          }
           readerGroup.add(piece);
         }
       }
@@ -218,7 +208,7 @@ export function initSignal() {
   );
   const dustGeo = new THREE.BufferGeometry();
   const dust = [];
-  for (let i = 0; i < 240; i++)
+  for (let i = 0; i < 920; i++)
     dust.push(Math.sin(i * 127.3) * 19, Math.cos(i * 53.9) * 11, -(i * 0.731) % 100);
   dustGeo.setAttribute('position', new THREE.Float32BufferAttribute(dust, 3));
   scene.add(
@@ -226,11 +216,33 @@ export function initSignal() {
       dustGeo,
       new THREE.PointsMaterial({
         color: 0x94f57b,
-        size: 0.025,
+        size: 0.014,
         transparent: true,
-        opacity: 0.55,
+        opacity: 0.6,
         depthWrite: false,
       }),
+    ),
+  );
+  const filamentVertices = [];
+  for (let i = 0; i < 100; i++) {
+    const x = Math.sin(i * 37.1) * 13,
+      y = Math.cos(i * 23.7) * 8,
+      z = 8 - i * 0.88;
+    filamentVertices.push(
+      x,
+      y,
+      z,
+      x + Math.sin(i) * 0.09,
+      y + Math.cos(i) * 0.14,
+      z - 0.35 - (i % 5) * 0.1,
+    );
+  }
+  const filamentGeometry = new THREE.BufferGeometry();
+  filamentGeometry.setAttribute('position', new THREE.Float32BufferAttribute(filamentVertices, 3));
+  scene.add(
+    new THREE.LineSegments(
+      filamentGeometry,
+      new THREE.LineBasicMaterial({ color: 0x4dba82, transparent: true, opacity: 0.25 }),
     ),
   );
   const debris = [];
@@ -265,6 +277,7 @@ export function initSignal() {
   const screen = new THREE.Vector3();
   const intro = document.querySelector('.flight-intro');
   const contact = document.querySelector('.flight-contact');
+  const flightProgress = document.querySelector('.flight-progress');
   const instruction = document.querySelector('.flight-instruction');
   function readScroll() {
     target = flightAt(window.scrollY, start, distance);
@@ -357,6 +370,7 @@ export function initSignal() {
     intro.inert = progress > 0.4;
     intro.style.transform = `translate3d(0,${-progress * 60}px,0)`;
     const ending = clamp01((progress - 6.45) / 0.65);
+    flightProgress.style.opacity = String(1 - ending);
     contact.style.opacity = String(ending);
     contact.inert = ending < 0.8;
     contact.style.pointerEvents = ending > 0.8 ? 'auto' : 'none';
@@ -373,7 +387,7 @@ export function initSignal() {
       Math.round((progress / FLIGHT_END) * 999),
     ).padStart(3, '0');
     const fracture = introFracture(progress);
-    const merge = new THREE.Vector3(width < 761 ? 0 : 1.9, width < 761 ? -1 : 0, 4);
+    const merge = new THREE.Vector3(width < 761 ? 0 : 1.9, width < 761 ? -1.2 : 0, 4);
     projects.forEach((p, i) => {
       const destination = new THREE.Vector3(
         p.x * (width < 761 ? 0.52 : 1) +
@@ -384,7 +398,7 @@ export function initSignal() {
         p.z,
       );
       p.group.position.copy(merge).lerp(destination, fracture);
-      p.group.scale.setScalar(THREE.MathUtils.lerp(width < 761 ? 2 : 3.2, 0.72, fracture));
+      p.group.scale.setScalar(THREE.MathUtils.lerp(width < 761 ? 1.45 : 2.2, 0.66, fracture));
       p.group.rotation.set(
         THREE.MathUtils.lerp(0.25, 0.2 + Math.sin(phase * 0.15 + i) * 0.15, fracture),
         phase * 0.06 + THREE.MathUtils.lerp(0.4, i * 0.8, fracture),
@@ -406,7 +420,8 @@ export function initSignal() {
           child.rotation.z += spread * 0.4;
         }
       });
-      p.material.emissiveIntensity = p.node.classList.contains('is-revealed') ? 0.9 : 0.3;
+      p.material.uniforms.focus.value = p.node.classList.contains('is-revealed') ? 1 : 0;
+      p.material.uniforms.time.value = phase;
       const gap = camera.position.z - p.group.position.z;
       p.group.visible = !reader && gap > 1.3 && gap < 75 && ending < 0.9;
       screen.copy(p.group.position).project(camera);
@@ -448,9 +463,9 @@ export function initSignal() {
     if (reader && readerGroup) {
       const base = projects[Math.max(0, reader.index)].z;
       readerGroup.children.forEach((piece, i) => {
-        piece.position.set(width < 761 ? 0 : -0.9, width < 761 ? 0.95 : 0, base - i * 5.5);
+        piece.position.set(width < 761 ? -0.05 : -1.05, width < 761 ? 0.88 : 0.05, base - i * 5.5);
         piece.rotation.y = phase * 0.05 + i * 0.2;
-        piece.scale.setScalar(0.9);
+        piece.scale.setScalar(width < 761 ? 0.62 : 1.18);
       });
     }
     if (entry) {

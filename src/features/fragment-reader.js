@@ -65,6 +65,10 @@ export function initFragmentReader({
     frame.id = chunk.id;
     frame.dataset.chapter = String(i);
     frame.append(chunk.content);
+    // The sequence is carried by the chapter index; keep the title first.
+    const heading = frame.querySelector('h3');
+    const kicker = frame.querySelector('.step-kicker');
+    if (heading && kicker) heading.after(kicker);
     panels.append(frame);
     const button = document.createElement('button');
     button.type = 'button';
@@ -80,7 +84,16 @@ export function initFragmentReader({
   ending.innerHTML =
     '<button type="button" data-case-next>Ďalší projekt →</button><button type="button" data-case-close>Späť do priestoru</button>';
   frames.at(-1).append(ending);
-  stage.append(panels, nav, indicator);
+  const emblem = document.createElement('div');
+  emblem.className = 'reader-emblem';
+  emblem.setAttribute('aria-hidden', 'true');
+  const numeral = document.createElement('span');
+  numeral.className = 'reader-emblem-number';
+  const name = document.createElement('span');
+  name.className = 'reader-emblem-name';
+  name.textContent = project.name;
+  emblem.append(numeral, name);
+  stage.append(emblem, panels, nav, indicator);
   track.append(stage);
   root.replaceChildren(track);
   dialog.classList.add('reader-mode');
@@ -112,6 +125,7 @@ export function initFragmentReader({
     });
     if (active !== index) {
       active = index;
+      numeral.textContent = String(index + 1).padStart(2, '0');
       indicator.textContent = `${String(index + 1).padStart(2, '0')} / ${String(frames.length).padStart(2, '0')} — ${chunks[index].label}`;
     }
     send({ project: project.id, count: frames.length, progress });

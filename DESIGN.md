@@ -2,63 +2,65 @@
 name: Denis Baláž — Na konci internetu
 description: A reversible crystal fracture, six project holograms and fragment-based reading.
 colors:
+  world-rule: '#74c5984d'
+  world-copy: '#bfd6c6'
+  world-ink: '#020a07'
+  phosphor-white: '#e6ffe8'
+  phosphor: '#b6ff7c'
   signal-green: '#a4ff61'
   signal-text: '#e0f3d4'
   signal-muted: '#a7bea0'
   signal-edge: '#35552d'
   world-ground: '#030804'
   flight-ground: '#031008'
-  shard-body: '#123c20'
-  shard-emissive: '#1c5d29'
-  shard-edge: '#a8ff7d'
-  hologram-light: '#163e26e8'
-  hologram-dark: '#071b12ed'
-  hologram-edge: '#80fca28c'
-  hologram-title: '#d6ffda'
-  hologram-body: '#c0d9bf'
-  hologram-kind: '#96dfaa'
+  shard-edge: '#99ffba'
+  hologram-light: '#103c26f2'
+  hologram-dark: '#061a10f5'
+  hologram-edge: '#70d99d99'
+  hologram-title: '#e1ffe7'
+  hologram-body: '#c5ddcb'
+  hologram-kind: '#9ddab2'
   article-ground: '#071009ed'
   article-text: '#dcecd5'
   article-muted: '#b2c5a7'
   article-toolbar: '#0a170cef'
-  button-fill: '#9fee64'
-  button-ink: '#051005'
+  button-fill: '#b6ff9e'
+  button-ink: '#092315'
   index-panel: '#081108f5'
   index-hover: '#10220d'
   index-edge: '#63914c'
   cursor-edge: '#b7ffc5'
-  reader-panel-light: '#0d281be8'
-  reader-panel-dark: '#07160feb'
-  reader-border: '#6cc78a77'
-  reader-text: '#dcf5df'
-  reader-body: '#bdd6bd'
-  reader-toolbar: '#07140de8'
-  reader-index-active: '#a4ffb9'
-  reader-index-ink: '#06100a'
+  reader-panel-light: '#03110bd6'
+  reader-panel-dark: '#04140ee8'
+  reader-text: '#e0f5e2'
+  reader-body: '#bcd3c4'
+  reader-toolbar: '#03100bd9'
+  reader-index-active: '#d6ffc5'
+  reader-index-ink: '#205e3533'
 typography:
   display:
     fontFamily: 'Instrument, Arial, sans-serif'
-    fontSize: 'clamp(56px, 7.3vw, 108px)'
+    fontSize: 'clamp(64px, 8vw, 96px)'
     fontWeight: 700
-    lineHeight: 0.95
+    lineHeight: 0.94
     letterSpacing: '-0.04em'
   headline:
     fontFamily: 'Instrument, Arial, sans-serif'
-    fontSize: 'clamp(40px, 6vw, 84px)'
+    fontSize: 'clamp(50px, 6.3vw, 88px)'
     fontWeight: 700
     lineHeight: 1
     letterSpacing: '-0.04em'
   title:
     fontFamily: 'Instrument, Arial, sans-serif'
-    fontSize: '28px'
+    fontSize: '30px'
     fontWeight: 700
-    lineHeight: 1.02
+    lineHeight: 1
     letterSpacing: '-0.03em'
   body:
     fontFamily: 'Instrument, Arial, sans-serif'
-    fontSize: '13px'
+    fontSize: '14px'
     fontWeight: 400
-    lineHeight: 1.65
+    lineHeight: 1.6
   label:
     fontFamily: 'Instrument, Arial, sans-serif'
     fontSize: '10px'
@@ -69,31 +71,31 @@ typography:
     letterSpacing: '0.12em'
   reader-heading:
     fontFamily: 'Instrument, Arial, sans-serif'
-    fontSize: 'clamp(38px, 4vw, 62px)'
+    fontSize: 'clamp(48px, 4.9vw, 88px)'
     fontWeight: 700
-    lineHeight: 1.02
+    lineHeight: 0.98
   reader-title:
     fontFamily: 'Instrument, Arial, sans-serif'
-    fontSize: 'clamp(30px, 3vw, 43px)'
+    fontSize: 'clamp(37px, 3.8vw, 66px)'
     fontWeight: 700
-    lineHeight: 1.06
+    lineHeight: 1.05
     letterSpacing: '-0.03em'
   reader-body:
     fontFamily: 'Instrument, Arial, sans-serif'
-    fontSize: '16px'
+    fontSize: '18px'
     fontWeight: 400
-    lineHeight: 1.75
+    lineHeight: 1.7
 rounded:
   control: '0'
 spacing:
   gutter: 'clamp(24px, 5vw, 90px)'
   index-trigger: '13px 16px'
-  hologram: '25px 25px 20px'
-  hologram-mobile: '24px 21px 18px'
+  hologram: '32px 27px 24px'
+  hologram-mobile: '31px 24px 22px'
   story-link: '14px 0'
   contact-button: '12px 18px'
-  reader-panel: '30px 32px'
-  reader-panel-mobile: '24px'
+  reader-panel: '24px 34px 36px'
+  reader-panel-mobile: '23px 0 24px'
 components:
   index-trigger:
     backgroundColor: '#081108d9'
@@ -141,23 +143,23 @@ components:
   reader-panel:
     textColor: '{colors.reader-text}'
     padding: '{spacing.reader-panel}'
-    width: 'min(590px, 43%)'
+    width: 'min(760px, 46%)'
     rounded: '{rounded.control}'
   reader-toolbar:
     backgroundColor: '{colors.reader-toolbar}'
-    height: '76px'
+    height: '80px'
   reader-index:
     backgroundColor: '#0b2115b3'
     textColor: '#8fc39b'
-    width: '36px'
-    height: '40px'
+    width: '48px'
+    height: '48px'
   reader-index-current:
-    backgroundColor: '{colors.reader-index-active}'
-    textColor: '{colors.reader-index-ink}'
+    backgroundColor: '{colors.reader-index-ink}'
+    textColor: '{colors.reader-index-active}'
   article-toolbar:
     backgroundColor: '{colors.article-toolbar}'
     textColor: '#c9edb6'
-    height: '76px'
+    height: '80px'
   evidence-choice:
     textColor: '#c7e7b6'
     rounded: '{rounded.control}'
@@ -193,7 +195,7 @@ Native HTML holograms make the 3D projects readable. The story action gently ope
 
 ## Colors
 
-The world uses deep green-black, brighter green fog and luminous green edges. The frontmatter records reusable source values. `flight.css`, imported after `signal.css`, owns flight-specific overrides; `fragment-reader.css`, imported last, owns the full-viewport chapter reader and its panels. The original article layout remains the WebGL fallback.
+The world uses green-black, phosphor actions and a procedural obsidian surface. `world-finish.css`, imported last after `fragment-reader.css`, owns the final visual hierarchy, holograms, reading panels and contact. The earlier styles retain the native fallback. The colours in the frontmatter are CSS values; the material shader derives reflections and facets procedurally rather than using one flat body colour.
 
 ### Primary
 
@@ -205,12 +207,12 @@ The world uses deep green-black, brighter green fog and luminous green edges. Th
 ### Neutral
 
 - **World Ground / Flight Ground** (`world-ground`, `flight-ground`): the page and WebGL-ready ground.
-- **Crystal Body / Emission** (`shard-body`, `shard-emissive`): faceted dark-green material and its low green emission.
+- **Crystal material:** the procedural shader supplies the dark body, directional reflections and rim colour; these are not a single flat CSS token.
 - **Signal Text / Muted / Edge** (`signal-text`, `signal-muted`, `signal-edge`): content and boundaries.
 - **Article Ground / Text / Muted / Toolbar** (`article-ground`, `article-text`, `article-muted`, `article-toolbar`): calm reading surfaces.
 - **Index Panel / Hover / Edge** (`index-panel`, `index-hover`, `index-edge`): dropdown navigation.
 - **Cursor Green** (`cursor-edge`): four fine-pointer targeting corners.
-- **Reader Panel / Border / Text** (`reader-panel-light`, `reader-panel-dark`, `reader-border`, `reader-text`, `reader-body`): stable chapter-reading material.
+- **Reader Panel / Border / Text** (`reader-panel-light`, `reader-panel-dark`, `reader-text`, `reader-body`): stable chapter-reading material.
 - **Reader Toolbar / Current Index** (`reader-toolbar`, `reader-index-active`, `reader-index-ink`): chapter mode chrome and current-step state.
 
 **The Continuous World Rule.** Keep the flight, hologram and article within one green atmosphere; preserve the world behind the reading surface.
@@ -224,13 +226,13 @@ The fog shader builds continuously varying green from noise rather than a static
 
 ### Hierarchy
 
-- **Display:** the opening statement uses the frontmatter display role. Mobile uses `clamp(46px, 13.6vw, 90px)`; at viewport heights at or below (600px), the short-screen override is (64px).
-- **Headline:** contact uses the headline role, changing to `clamp(37px, 10vw, 65px)` on mobile and (38px) on short screens.
-- **Title:** the ready-state hologram uses (28px), reducing to (25px) on mobile. The native fallback title is (32px).
-- **Body:** the hologram uses (13px / 1.65); fallback summaries use (14px / 1.7). Contact text is (15px / 1.6), reducing to (13px) on mobile.
-- **Label:** hologram categories use (10px); project beacons use (10px) and distant labels are hidden until their project is primary or revealed. Coordinate/depth text stays compact.
-
-Reader intro headings, chapter titles and body text use the dedicated frontmatter roles. Mobile uses (36px) intro headings, (30px) chapter titles and (15px / 1.7) body text. Short landscape viewports use (34px), (29px) and (14px) respectively. The fallback retains its original story hierarchy. Keep the short hologram summary distinct from the full chapter evidence.
+- **Display:** Instrument Sans 700, `clamp(64px, 8vw, 96px)`, line-height (.94), tracking (-.04em); mobile `clamp(46px, 13.6vw, 78px)`.
+- **Contact:** `clamp(50px, 6.3vw, 88px)`; mobile `clamp(40px, 10vw, 64px)`.
+- **Hologram:** (30px) title / (14px, 1.6) summary / (11px) category; mobile title (29px).
+- **Reader introduction:** `clamp(48px, 4.9vw, 88px)`; mobile `clamp(37px, 10vw, 56px)`.
+- **Reader chapter:** `clamp(37px, 3.8vw, 66px)`; mobile `clamp(31px, 8.1vw, 42px)`.
+- **Reader text:** (18px / 1.7), mobile (16px / 1.65), low landscape (14px). Titles precede sequence metadata. Actual body/evidence text is preserved.
+- **Navigation:** chapter segments (12px), location (11px); mobile (11px / 10px). Decorative large chapter numerals carry no independent factual claim.
 
 **The HTML Evidence Rule.** Keep project names, summaries, article links, states and evidence in semantic HTML independently of the WebGL geometry.
 
@@ -240,11 +242,11 @@ With WebGL ready, the flight track is (420svh) high on desktop and (390svh) at w
 
 The primary beacon uses a generous invisible hit area (130 × 140px). Distant project hit areas shrink to (54 × 54px). Projection positions the HTML controls beside their geometry. A hologram is at most (320px) wide, constrained to viewport width minus (40px), and clamped away from screen edges. Its invisible bridge spans the gap between target and panel so pointer travel does not close the reveal.
 
-The intro sits at (8%) from the left and (29%) from the top; contact sits at (15%) / (18%). Mobile uses left offsets around (32–34px), a narrower content width and smaller type. Short viewports allow the contact area and hologram to scroll internally. The contact area's native details element contains the personal introduction and GitHub link.
+The intro sits at (7.5%) from the left and (30%) from the top, switching to (9%) left above (1500px). Its text occupies (57%) width. Mobile uses (26px) left and (22%) top; contact uses (18%) / (22%) desktop and (26px) / (20%) mobile. The contact headline, mail and copy action share the phosphor palette. The project HUD fades with contact progression, preventing a stale project name from colliding with the return link.
 
-The WebGL story reader occupies the full viewport with a transparent dialog, retaining the shared scene. Main flight DOM is hidden and inert throughout reading; only its shared canvas remains visible. Its sticky stage begins below the toolbar at (76px), or (64px) on mobile. Desktop reading panels sit at (52%) from the left, (8svh) from the stage top, with width `min(590px, 43%)`, maximum height (70svh), and internal vertical overflow. On mobile they sit at (20px) from the left and (32svh) from the top, with width `calc(100% - 40px)` and maximum height `calc(63svh - 72px)`.
+The WebGL story reader occupies the full viewport, with the main flight DOM hidden/inert and the shared canvas retained. Its toolbar and sticky-stage offset are (80px) desktop and (64px) mobile. Desktop text starts at (49%) left / (6svh) stage top, width `min(760px, 46%)`, max-height `calc(100svh - 200px)`, padding (24px 34px 36px). Above (1500px), it starts at (50%) / (9svh), padding (30px 42px 44px). Mobile uses (24px) left, (23svh) stage top, width `calc(100% - 48px)`, max-height `calc(77svh - 182px)`, padding (23px 0 24px). Long evidence remains internally scrollable. Low landscape uses (43%) left, (53%) width and a viewport-bound height.
 
-Native chapter buttons sit beside the fragments on desktop and above the reading panel on mobile. The dynamic count follows actual content: introduction, story steps and an evidence section when present; the salon story has seven chapters. The scroll unit is `max(230px, 55% of viewport height)`. Its first half provides a stable reading interval; the latter part travels to the next fragment. After (240ms) of quiet, native movement settles to the next or previous stop in the last user scroll direction. Programmatic jumps are tracked separately so a small slow wheel movement can advance rather than snap backward.
+Native chapter buttons use thin segment lines instead of boxed tiles: (48px) square on desktop, (40px × 44px) mobile, and an active phosphor top rule. They sit at (7%) left / (73px) bottom desktop and (24px) left / (49px) bottom mobile. The dynamic number follows real content. The scroll unit remains `max(230px, 55% of viewport height)`; its initial half is stable reading time, followed by travel. After (240ms) quiet, movement lands in the last user direction. A decorative numeral and project name identify the current chapter without replacing native controls.
 
 Closing restores the exact main scroll position. Toolbar arrows, left/right keyboard controls and horizontal gestures still switch the six projects. The original inset article layout remains available as the fallback when WebGL is absent or lost.
 
@@ -252,9 +254,9 @@ Without WebGL, the ready-state layout is absent: native HTML summaries and links
 
 ## Elevation & Depth
 
-Six closed face-pyramid geometries share a core and reconstruct one cubic crystal. The same six actual pieces separate into project positions, with smaller octahedral satellite geometry, fine edge lines, sparse particles and small debris. A fullscreen procedural shader supplies greener fog behind the geometry. Depth uses the camera's perspective, fog, smaller distant fragments and one primary project. The main flight has no client-image thumbnails, CSS-filter preview cards or DOM approach/hold/depart timelines.
+Six watertight irregular wedges share an internal axis and assemble one faceted hexagonal crystal. Each exterior face is cut into three facets; the original six solid pieces separate into the six project positions. `crystal-material.js` provides the authored obsidian/phosphor shader with rim response, directional light strips, fine bands and a seam. Main shards retain small octahedral satellites. Each article stop uses a volumetric outer hull from `makeChapterShard`, plus three small satellite wedges, so it stays dimensional at every angle. The background layers a stronger procedural fog, rift contours, 920 dust points, 100 spatial filament segments and 34 debris meshes. No external environment map, stock model or video is needed.
 
-The hologram combines a green translucent gradient, a fine border, offset frame lines and backdrop blur (12px). It reveals from a slight perspective turn and scale. The chapter reader uses stable green-gradient HTML panels over its own scroll-driven fragment path. Its transparent full-screen dialog has a faint dark backdrop without blur; the toolbar uses blur (8px). The original inset fallback retains its own article shadow and backdrop treatment.
+The hologram combines a deep translucent green surface, a fine border, an offset frame and backdrop blur (18px). It opens from a slight perspective turn and has a full-width green story action. Reading panels use a quiet green-black gradient without a full frame; the toolbar uses blur (14px). The original inset fallback keeps its own article treatment.
 
 ### Shadow Vocabulary
 
@@ -266,7 +268,7 @@ The hologram combines a green translucent gradient, a fine border, offset frame 
 
 ## Shapes
 
-Square control corners, thin frames and sharp faceted geometry form the world. Each project uses one of the six closed crystal pieces, four smaller satellites, luminous edge geometry and a sparse orbit line. The opening merges the six core pieces before their scroll-controlled separation. Each story chapter receives another crystal piece as its stop marker. The hologram is a rectangular HTML surface with offset frame details. The custom mouse cursor consists of four separate green corners around a small center point. Article illustrations retain their contained object shapes.
+Square controls, thin cut edges and irregular volumetric geometry form the world. The main crystal is built from six real wedges rather than a box. Chapter objects use the faceted outer hull. Holograms retain a fine frame and a short phosphor line; native actions use the soft green fill. The chapter text sits on a quiet borderless surface with one short top rule, rather than a small outlined card. A decorative chapter numeral and project name balance the left-hand object; both are aria-hidden because the native chapter index and live location already convey the state.
 
 ## Components
 
@@ -304,7 +306,7 @@ Four green corners track mouse movement only under `(hover: hover) and (pointer:
 
 Three.js (0.182.0) renders the field with a capped pixel ratio (1.25 desktop / 1 mobile). Pause freezes autonomous drift while scroll travel remains available. Hologram/story locks stop main-flight interpolation and ambient drift. The story camera separately interpolates its chapter progress, so scrolling still moves between story fragments. Rendering stops while the page is hidden. On renderer creation failure or context loss, the native HTML project list and the restored original article remain accessible; no publication or device-performance result follows from having that fallback in source.
 
-The intro retains its static offset title slice. Motion is locally active even when the system requests reduced motion; the pause control is not a global article-animation toggle.
+The intro uses a clean phosphor word rather than the former static duplicated title slice. Motion is locally active even when the system requests reduced motion; the pause control is not a global article-animation toggle.
 
 ## Do's and Don'ts
 

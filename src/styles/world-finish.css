@@ -1,0 +1,742 @@
+/* One visual language: cut obsidian, phosphor edges and open editorial space. */
+:root {
+  --phosphor: #b6ff7c;
+  --phosphor-white: #e6ffe8;
+  --world-ink: #020a07;
+  --world-copy: #bfd6c6;
+  --world-rule: #74c5984d;
+}
+::selection {
+  background: #b6ff7c;
+  color: #06130c;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #426f52 #041009;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #426f52;
+}
+:focus-visible {
+  outline: 2px solid var(--phosphor);
+  outline-offset: 5px;
+}
+.boundary-nav {
+  padding-top: 30px;
+  align-items: center;
+}
+.boundary-nav .brand {
+  color: var(--phosphor);
+}
+.brand-name {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+.project-index summary {
+  background: #08170d99;
+  border-color: #78aa6459;
+  min-height: 46px;
+}
+.project-index summary:hover {
+  border-color: var(--phosphor);
+  background: #102919;
+}
+.boundary-contact {
+  font-size: 13px;
+  color: #c7e7c5;
+}
+.flight-ready .field-vignette {
+  background:
+    radial-gradient(ellipse at 65% 48%, transparent 15%, #01090680 90%),
+    linear-gradient(90deg, #02090633, transparent 50%);
+}
+.flight-ready .signal-axis {
+  opacity: 0.65;
+  background: linear-gradient(transparent, #74e7a044 30%, #a8f7b766 60%, transparent);
+}
+.flight-ready .flight-intro {
+  left: 7.5%;
+  top: 30%;
+  width: 57%;
+}
+.flight-intro h1 {
+  font-size: clamp(64px, 8vw, 96px);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  color: #e5f4df;
+}
+.flight-intro .signal-word {
+  color: var(--phosphor);
+  font-style: normal;
+}
+.flight-intro .signal-word::before,
+.flight-intro .signal-word::after {
+  display: none;
+}
+.flight-intro > p {
+  font-size: 17px;
+  color: #bbd3c0;
+  line-height: 1.6;
+  max-width: 30ch;
+  margin-top: 30px;
+}
+.flight-intro .journey-enter {
+  margin-top: 35px;
+  padding: 16px 0;
+  min-width: 195px;
+  color: var(--phosphor-white);
+  border-color: #7fcf8d;
+  font-size: 13px;
+}
+.journey-enter span {
+  transition: transform 0.3s;
+}
+.journey-enter:hover span {
+  transform: translateY(5px);
+}
+.flight-ready .flight-instruction {
+  font-size: 13px;
+  bottom: 115px;
+  color: #d2ead7;
+}
+.flight-instruction span {
+  font-size: 12px;
+  color: #9bbba4;
+}
+.flight-ready .flight-progress {
+  bottom: 64px;
+  gap: 24px;
+  font-size: 12px;
+  align-items: center;
+}
+.flight-progress::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: #9ef1ac;
+}
+.flight-progress span:last-child {
+  color: #a5caab;
+}
+.field-coordinate {
+  font-size: 10px;
+  color: #94b79e;
+  letter-spacing: 0.1em;
+}
+.flight-ready .depth-readout {
+  right: 35px;
+  font-size: 9px;
+}
+.depth-readout b {
+  color: #c8ffb4;
+}
+.motion-control {
+  color: #a7c6ac;
+  font-size: 11px;
+  text-underline-offset: 5px;
+}
+.beacon-name {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  top: 130px;
+  color: #d8ffe0;
+}
+.beacon-brackets {
+  inset: 0;
+}
+.beacon-brackets::before,
+.beacon-brackets::after {
+  width: 17px;
+  height: 17px;
+  border-color: #a0fbb6;
+}
+.flight-ready .hologram {
+  padding: 32px 27px 24px;
+  background: linear-gradient(120deg, #103c26f2, #061a10f5 80%);
+  border: 1px solid #70d99d99;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 22px 60px #01070380;
+  transform: perspective(800px) rotateY(-12deg) translateX(-8px) scale(0.95);
+}
+.flight-ready .hologram::before {
+  inset: -8px 25px 8px -8px;
+  border-color: #89eca96b;
+}
+.flight-ready .hologram::after {
+  top: auto;
+  bottom: 13px;
+  left: auto;
+  right: 13px;
+  width: 6px;
+  height: 6px;
+  background: var(--phosphor);
+}
+.flight-ready .hologram h2 {
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #e1ffe7;
+  max-width: 14ch;
+}
+.flight-ready .hologram p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #c5ddcb;
+}
+.flight-ready .hologram .holo-kind {
+  font-size: 11px;
+  color: #9ddab2;
+  margin: 13px 0 20px;
+}
+.holo-line {
+  position: absolute;
+  top: 15px;
+  left: 27px;
+  width: 35px;
+  height: 2px;
+  background: var(--phosphor);
+}
+.flight-ready .holo-open {
+  margin-top: 22px;
+  width: 100%;
+  padding: 13px 16px;
+  color: #092315;
+  background: #b6ff9e;
+  border: 0;
+  min-height: 48px;
+  font-weight: 700;
+}
+.flight-ready .holo-open:hover {
+  background: #dbffd0;
+}
+.flight-ready .holo-dismiss {
+  top: 7px;
+  right: 7px;
+  width: 36px;
+  height: 36px;
+  color: #a7dfb7;
+}
+.flight-ready .flight-contact {
+  left: 18%;
+  top: 22%;
+  width: 66%;
+  max-width: 960px;
+}
+.flight-contact h2 {
+  font-size: clamp(50px, 6.3vw, 88px);
+  color: #e5f6df;
+  max-width: 16ch;
+}
+.flight-contact > p {
+  font-size: 17px;
+  max-width: 46ch;
+  color: #bdd5c4;
+}
+.flight-contact .email-link {
+  margin-top: 28px;
+  color: var(--phosphor);
+  font-size: clamp(21px, 2.6vw, 40px);
+}
+.flight-contact .employment-note {
+  color: #a9c7af;
+}
+.flight-contact .phone-link {
+  color: #d1e6d2;
+}
+.flight-contact .button {
+  border-radius: 0;
+  background: #b6ff9e;
+  color: #092315;
+}
+
+/* Article text sits in the world, rather than in a small framed card. */
+.project-viewer.reader-mode::backdrop {
+  background: #0108051a;
+}
+.reader-mode .case-toolbar {
+  height: 80px;
+  background: #03100bd9;
+  border-bottom: 1px solid #7ab98b33;
+  backdrop-filter: blur(14px);
+  padding: 0 5%;
+}
+.reader-mode .case-toolbar .case-close {
+  color: #c0dfc7;
+}
+.reader-mode .case-toolbar .case-toolbar-title {
+  font-size: 13px;
+}
+.reader-mode .case-toolbar button {
+  border-color: #75ac8359;
+  border-radius: 0;
+}
+.reader-mode .case-toolbar button:hover {
+  background: #123b24;
+  color: var(--phosphor);
+}
+.reader-stage {
+  top: 80px;
+  height: calc(100svh - 80px);
+}
+.reader-panel {
+  left: 49%;
+  top: 6svh;
+  width: min(760px, 46%);
+  max-height: calc(100svh - 200px);
+  padding: 24px 34px 36px;
+  background: linear-gradient(110deg, #03110bd6, #04140ee8);
+  border: 0;
+  box-shadow: none;
+  color: #e0f5e2;
+}
+.reader-panel::before {
+  left: 34px;
+  right: auto;
+  width: 56px;
+  height: 2px;
+  background: #a0f4b4;
+}
+.reader-panel::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: 0;
+  height: 5px;
+  width: 5px;
+  border: 1px solid #7cc794;
+}
+.reader-panel .chapter-heading h2,
+.reader-mode .reader-panel .chapter-heading h2 {
+  font-size: clamp(48px, 4.9vw, 88px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: #e6ffe8;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+.reader-panel h3 {
+  font-size: clamp(37px, 3.8vw, 66px);
+  line-height: 1.05;
+  color: #e1f7e6;
+  text-wrap: balance;
+}
+.reader-panel p:not(.step-kicker):not(.step-note),
+.reader-panel .chapter-heading > div {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #bcd3c4;
+}
+.reader-panel .chapter-heading > div {
+  margin-top: 24px;
+}
+.reader-panel h3 + p,
+.reader-panel p + p {
+  margin-top: 24px;
+}
+.reader-panel .step-kicker {
+  margin: 18px 0 24px;
+  color: #92bda0;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+}
+.reader-panel .step-tags {
+  margin-top: 26px;
+  gap: 8px;
+}
+.reader-panel .step-tags span {
+  border: 1px solid #57876a66;
+  border-radius: 0;
+  padding: 7px 10px;
+  color: #b6d4bd;
+  background: transparent;
+  font-size: 11px;
+}
+.reader-panel .story-button,
+.reader-panel .chapter-link {
+  border-radius: 0;
+  color: #c7ffb8;
+}
+.reader-panel .story-button {
+  background: #b6ff9e;
+  color: #0a2717;
+  padding: 15px 18px;
+  font-size: 13px;
+}
+.reader-panel .case-live-status {
+  background: #18332366;
+  border: 0;
+  padding: 17px 20px;
+  color: #bcd3c4;
+  font-size: 14px;
+}
+.reader-panel .case-live-status strong {
+  color: #c5fda7;
+}
+.reader-panel .case-source-note {
+  font-size: 13px !important;
+}
+.reader-emblem {
+  position: absolute;
+  pointer-events: none;
+  left: 6.8%;
+  top: 5svh;
+  max-width: 35%;
+}
+.reader-emblem-number {
+  display: block;
+  font-size: clamp(100px, 14vw, 230px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #8fdca519;
+}
+.reader-emblem-name {
+  display: block;
+  max-width: 18ch;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #a4cdb1;
+  margin-top: 10px;
+}
+.reader-index {
+  left: 7%;
+  bottom: 73px;
+  gap: 0;
+  max-width: 36%;
+}
+.reader-index button {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-top: 1px solid #6bad854d;
+  background: transparent;
+  color: #98bca4;
+  font-size: 12px;
+  position: relative;
+}
+.reader-index button::after {
+  content: '';
+  height: 2px;
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 0;
+  background: #b6ff9e;
+  transition: width 0.3s;
+}
+.reader-index button:hover {
+  color: #e1ffe9;
+  background: #14402555;
+}
+.reader-index button[aria-current='step'] {
+  color: #d6ffc5;
+  background: #205e3533;
+  border-color: transparent;
+}
+.reader-index button[aria-current='step']::after {
+  width: 100%;
+}
+.reader-location {
+  left: 7%;
+  bottom: 37px;
+  color: #9fc4ab;
+  font-size: 11px;
+  max-width: 36%;
+}
+.reader-ending {
+  border-color: #72a7814d;
+  padding-top: 20px;
+  margin-top: 30px;
+}
+.reader-ending button {
+  color: #c7f9ba;
+  font-size: 13px;
+  text-underline-offset: 6px;
+}
+.reader-panel .case-showcase-heading > p {
+  font-size: 15px;
+}
+.reader-panel .case-view-controls {
+  gap: 6px;
+}
+.reader-panel .case-view-controls button {
+  border-radius: 0;
+  padding: 11px;
+  min-height: 44px;
+  font-size: 11px;
+}
+.reader-panel .case-capture {
+  border-radius: 0;
+}
+.reader-panel .case-test-result {
+  border-color: #6e9d774d;
+}
+.reader-panel .case-system-map {
+  background: #092417;
+}
+.reader-panel .grant-name h3 {
+  font-size: 27px;
+}
+.reader-panel .grant-result strong {
+  color: #c4ffaa;
+}
+
+@media (min-width: 1500px) {
+  .flight-ready .flight-intro {
+    left: 9%;
+  }
+  .flight-intro h1 {
+    font-size: 96px;
+  }
+  .flight-intro > p {
+    font-size: 19px;
+  }
+  .reader-panel {
+    left: 50%;
+    top: 9svh;
+    padding: 30px 42px 44px;
+  }
+  .reader-panel::before {
+    left: 42px;
+  }
+  .reader-emblem-name {
+    font-size: 16px;
+  }
+}
+@media (max-width: 1000px) and (min-width: 761px) {
+  .reader-panel {
+    left: 44%;
+    width: 52%;
+    padding: 26px;
+  }
+  .reader-panel .chapter-heading h2,
+  .reader-mode .reader-panel .chapter-heading h2 {
+    font-size: 52px;
+  }
+  .reader-panel h3 {
+    font-size: 38px;
+  }
+  .reader-panel p:not(.step-kicker):not(.step-note),
+  .reader-panel .chapter-heading > div {
+    font-size: 16px;
+  }
+  .reader-index {
+    left: 4%;
+    max-width: 38%;
+  }
+  .reader-index button {
+    width: 42px;
+  }
+  .reader-emblem {
+    left: 4%;
+  }
+}
+@media (max-width: 760px) {
+  .boundary-nav {
+    padding-top: 22px;
+  }
+  .flight-ready .flight-intro {
+    left: 26px;
+    top: 22%;
+    width: calc(100% - 48px);
+  }
+  .flight-intro h1 {
+    font-size: clamp(46px, 13.6vw, 78px);
+  }
+  .flight-intro > p {
+    font-size: 14px;
+    max-width: 25ch;
+    margin-top: 23px;
+  }
+  .flight-intro .journey-enter {
+    min-width: 180px;
+    margin-top: 24px;
+  }
+  .flight-ready .flight-instruction {
+    left: 26px;
+    bottom: 115px;
+    font-size: 12px;
+  }
+  .flight-instruction span {
+    font-size: 11px;
+  }
+  .flight-ready .flight-progress {
+    left: 26px;
+    bottom: 66px;
+    font-size: 11px;
+  }
+  .flight-ready .depth-readout {
+    right: 13px;
+  }
+  .flight-ready .field-coordinate {
+    left: 26px;
+  }
+  .flight-ready .hologram {
+    padding: 31px 24px 22px;
+  }
+  .flight-ready .hologram h2 {
+    font-size: 29px;
+  }
+  .flight-ready .flight-contact {
+    left: 26px;
+    top: 20%;
+    width: calc(100% - 52px);
+  }
+  .flight-contact h2 {
+    font-size: clamp(40px, 10vw, 64px);
+  }
+  .flight-contact > p {
+    font-size: 14px;
+  }
+  .flight-contact .email-link {
+    font-size: clamp(16px, 4.3vw, 26px);
+  }
+  .reader-mode .case-toolbar {
+    height: 64px;
+    padding: 0 20px;
+  }
+  .reader-stage {
+    top: 64px;
+    height: calc(100svh - 64px);
+  }
+  .reader-panel {
+    left: 24px;
+    top: 23svh;
+    width: calc(100% - 48px);
+    max-height: calc(77svh - 182px);
+    padding: 23px 0 24px;
+    background: linear-gradient(#03110be8, #04140ef2);
+  }
+  .reader-panel::before {
+    left: 0;
+  }
+  .reader-panel::after {
+    right: 0;
+  }
+  .reader-panel .chapter-heading h2,
+  .reader-mode .reader-panel .chapter-heading h2 {
+    font-size: clamp(37px, 10vw, 56px);
+  }
+  .reader-panel h3 {
+    font-size: clamp(31px, 8.1vw, 42px);
+  }
+  .reader-panel p:not(.step-kicker):not(.step-note),
+  .reader-panel .chapter-heading > div {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .reader-emblem {
+    left: 25px;
+    top: 12px;
+    max-width: 42%;
+  }
+  .reader-emblem-number {
+    font-size: 72px;
+  }
+  .reader-emblem-name {
+    font-size: 11px;
+    max-width: 14ch;
+    margin-top: 6px;
+  }
+  .reader-index {
+    left: 24px;
+    right: 24px;
+    top: auto;
+    bottom: 49px;
+    max-width: none;
+    gap: 0;
+  }
+  .reader-index button {
+    width: 40px;
+    height: 44px;
+    font-size: 11px;
+  }
+  .reader-location {
+    left: 24px;
+    right: 24px;
+    bottom: 20px;
+    max-width: none;
+    font-size: 10px;
+  }
+  .reader-panel .case-view-controls button {
+    font-size: 10px;
+    padding: 10px 8px;
+  }
+  .reader-panel .grant-name h3 {
+    font-size: 24px;
+  }
+}
+@media (max-height: 600px) and (min-width: 600px) {
+  .flight-ready .flight-intro {
+    top: 25%;
+    width: 65%;
+  }
+  .flight-intro h1 {
+    font-size: 54px;
+  }
+  .flight-intro > p {
+    margin-top: 16px;
+    font-size: 13px;
+  }
+  .flight-intro .journey-enter {
+    margin-top: 8px;
+  }
+  .reader-panel {
+    top: 15px;
+    left: 43%;
+    width: 53%;
+    max-height: calc(100svh - 104px);
+    padding: 18px 22px;
+  }
+  .reader-panel .chapter-heading h2,
+  .reader-mode .reader-panel .chapter-heading h2 {
+    font-size: 35px;
+  }
+  .reader-panel h3 {
+    font-size: 31px;
+  }
+  .reader-panel p:not(.step-kicker):not(.step-note),
+  .reader-panel .chapter-heading > div {
+    font-size: 14px;
+  }
+  .reader-emblem {
+    top: 10px;
+    left: 25px;
+  }
+  .reader-emblem-number {
+    font-size: 65px;
+  }
+  .reader-index {
+    left: 25px;
+    right: auto;
+    bottom: 36px;
+    max-width: 38%;
+  }
+  .reader-index button {
+    width: 34px;
+    height: 40px;
+  }
+  .reader-location {
+    left: 25px;
+    bottom: 12px;
+    max-width: 36%;
+    font-size: 9px;
+  }
+}
+.reader-panel :is(h2, h3)[tabindex='-1']:focus {
+  outline: none;
+}
+.reader-panel .step-tags li {
+  border-radius: 0;
+  border-color: #57876a66;
+  padding: 7px 10px;
+  color: #b6d4bd;
+  background: transparent;
+  font-size: 11px;
+}

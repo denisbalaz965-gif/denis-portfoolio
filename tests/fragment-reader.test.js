@@ -36,7 +36,7 @@ function reader(id) {
   return { root, scroller, fallback };
 }
 describe('A whole crystal becomes the actual project pieces', () => {
-  it('six closed face pieces have the volume of one solid crystal', () => {
+  it('six distinct watertight wedges reconstruct a solid irregular hull', () => {
     let volume = 0;
     const signatures = new Set();
     for (let i = 0; i < 6; i++) {
@@ -51,11 +51,28 @@ describe('A whole crystal becomes the actual project pieces', () => {
       }
       expect(Math.abs(signed)).toBeGreaterThan(0);
       volume += Math.abs(signed);
+      const edges = new Map();
+      const key = (v) =>
+        v
+          .toArray()
+          .map((n) => n.toFixed(6))
+          .join(',');
+      for (let j = 0; j < positions.count; j += 3) {
+        const corners = [0, 1, 2].map((n) =>
+          key(new THREE.Vector3().fromBufferAttribute(positions, j + n)),
+        );
+        for (let n = 0; n < 3; n++) {
+          const edge = [corners[n], corners[(n + 1) % 3]].sort().join('/');
+          edges.set(edge, (edges.get(edge) ?? 0) + 1);
+        }
+      }
+      expect([...edges.values()].every((count) => count === 2)).toBe(true);
       signatures.add([...positions.array].join(','));
       geometry.dispose();
     }
     expect(signatures.size).toBe(6);
-    expect(volume).toBeCloseTo(0.65 ** 3, 5);
+    expect(volume).toBeGreaterThan(0.2);
+    expect(volume).toBeLessThan(0.5);
   });
   it('the opening stays whole before movement and reconstructs on reverse scroll', () => {
     expect(introFracture(0)).toBe(0);

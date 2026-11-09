@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-09T13:30:16.987185+00:00",
+  "generatedAt": "2026-11-09T14:13:42.487318+00:00",
   "title": "Design System: Denis Baláž — Na konci internetu",
   "extensions": {
     "colorMeta": {
@@ -88,131 +88,40 @@
           "oklch(95% 0.0055 157.9)"
         ]
       },
-      "shard-body": {
-        "role": "neutral",
-        "displayName": "Shard Body",
-        "tonalRamp": [
-          "oklch(15% 0.0170 151.4)",
-          "oklch(26% 0.0341 151.4)",
-          "oklch(38% 0.0511 151.4)",
-          "oklch(49% 0.0613 151.4)",
-          "oklch(61% 0.0681 151.4)",
-          "oklch(72% 0.0613 151.4)",
-          "oklch(84% 0.0409 151.4)",
-          "oklch(95% 0.0136 151.4)"
-        ]
-      },
-      "shard-emissive": {
-        "role": "neutral",
-        "displayName": "Shard Emissive",
-        "tonalRamp": [
-          "oklch(15% 0.0264 147.1)",
-          "oklch(26% 0.0528 147.1)",
-          "oklch(38% 0.0791 147.1)",
-          "oklch(49% 0.0950 147.1)",
-          "oklch(61% 0.1055 147.1)",
-          "oklch(72% 0.0950 147.1)",
-          "oklch(84% 0.0633 147.1)",
-          "oklch(95% 0.0211 147.1)"
-        ]
-      },
       "shard-edge": {
-        "role": "primary",
+        "role": "neutral",
         "displayName": "Shard Edge",
-        "tonalRamp": [
-          "oklch(15% 0.0462 136.3)",
-          "oklch(26% 0.0925 136.3)",
-          "oklch(38% 0.1387 136.3)",
-          "oklch(49% 0.1664 136.3)",
-          "oklch(61% 0.1849 136.3)",
-          "oklch(72% 0.1664 136.3)",
-          "oklch(84% 0.1110 136.3)",
-          "oklch(95% 0.0370 136.3)"
-        ]
+        "canonical": "#99ffba"
       },
       "hologram-light": {
         "role": "neutral",
         "displayName": "Hologram Light",
-        "tonalRamp": [
-          "oklch(15% 0.0156 154.5)",
-          "oklch(26% 0.0312 154.5)",
-          "oklch(38% 0.0467 154.5)",
-          "oklch(49% 0.0561 154.5)",
-          "oklch(61% 0.0623 154.5)",
-          "oklch(72% 0.0561 154.5)",
-          "oklch(84% 0.0374 154.5)",
-          "oklch(95% 0.0125 154.5)"
-        ]
+        "canonical": "#103c26f2"
       },
       "hologram-dark": {
         "role": "neutral",
         "displayName": "Hologram Dark",
-        "tonalRamp": [
-          "oklch(15% 0.0081 162.3)",
-          "oklch(26% 0.0161 162.3)",
-          "oklch(38% 0.0242 162.3)",
-          "oklch(49% 0.0290 162.3)",
-          "oklch(61% 0.0322 162.3)",
-          "oklch(72% 0.0290 162.3)",
-          "oklch(84% 0.0193 162.3)",
-          "oklch(95% 0.0064 162.3)"
-        ]
+        "canonical": "#061a10f5"
       },
       "hologram-edge": {
         "role": "neutral",
         "displayName": "Hologram Edge",
-        "tonalRamp": [
-          "oklch(15% 0.0418 150.7)",
-          "oklch(26% 0.0836 150.7)",
-          "oklch(38% 0.1254 150.7)",
-          "oklch(49% 0.1505 150.7)",
-          "oklch(61% 0.1672 150.7)",
-          "oklch(72% 0.1505 150.7)",
-          "oklch(84% 0.1003 150.7)",
-          "oklch(95% 0.0334 150.7)"
-        ]
+        "canonical": "#70d99d99"
       },
       "hologram-title": {
         "role": "neutral",
         "displayName": "Hologram Title",
-        "tonalRamp": [
-          "oklch(15% 0.0162 147.7)",
-          "oklch(26% 0.0324 147.7)",
-          "oklch(38% 0.0486 147.7)",
-          "oklch(49% 0.0583 147.7)",
-          "oklch(61% 0.0648 147.7)",
-          "oklch(72% 0.0583 147.7)",
-          "oklch(84% 0.0389 147.7)",
-          "oklch(95% 0.0130 147.7)"
-        ]
+        "canonical": "#e1ffe7"
       },
       "hologram-body": {
         "role": "neutral",
         "displayName": "Hologram Body",
-        "tonalRamp": [
-          "oklch(15% 0.0111 144.1)",
-          "oklch(26% 0.0222 144.1)",
-          "oklch(38% 0.0333 144.1)",
-          "oklch(49% 0.0400 144.1)",
-          "oklch(61% 0.0444 144.1)",
-          "oklch(72% 0.0400 144.1)",
-          "oklch(84% 0.0266 144.1)",
-          "oklch(95% 0.0089 144.1)"
-        ]
+        "canonical": "#c5ddcb"
       },
       "hologram-kind": {
         "role": "neutral",
         "displayName": "Hologram Kind",
-        "tonalRamp": [
-          "oklch(15% 0.0260 152.3)",
-          "oklch(26% 0.0520 152.3)",
-          "oklch(38% 0.0780 152.3)",
-          "oklch(49% 0.0936 152.3)",
-          "oklch(61% 0.1040 152.3)",
-          "oklch(72% 0.0936 152.3)",
-          "oklch(84% 0.0624 152.3)",
-          "oklch(95% 0.0208 152.3)"
-        ]
+        "canonical": "#9ddab2"
       },
       "article-ground": {
         "role": "neutral",
@@ -273,30 +182,12 @@
       "button-fill": {
         "role": "primary",
         "displayName": "Button Fill",
-        "tonalRamp": [
-          "oklch(15% 0.0471 133.8)",
-          "oklch(26% 0.0941 133.8)",
-          "oklch(38% 0.1412 133.8)",
-          "oklch(49% 0.1694 133.8)",
-          "oklch(61% 0.1882 133.8)",
-          "oklch(72% 0.1694 133.8)",
-          "oklch(84% 0.1129 133.8)",
-          "oklch(95% 0.0376 133.8)"
-        ]
+        "canonical": "#b6ff9e"
       },
       "button-ink": {
         "role": "neutral",
         "displayName": "Button Ink",
-        "tonalRamp": [
-          "oklch(15% 0.0076 144.0)",
-          "oklch(26% 0.0152 144.0)",
-          "oklch(38% 0.0227 144.0)",
-          "oklch(49% 0.0273 144.0)",
-          "oklch(61% 0.0303 144.0)",
-          "oklch(72% 0.0273 144.0)",
-          "oklch(84% 0.0182 144.0)",
-          "oklch(95% 0.0061 144.0)"
-        ]
+        "canonical": "#092315"
       },
       "index-panel": {
         "role": "neutral",
@@ -357,114 +248,62 @@
       "reader-panel-light": {
         "role": "neutral",
         "displayName": "Reader Panel Light",
-        "tonalRamp": [
-          "oklch(15% 0.0104 160.3)",
-          "oklch(26% 0.0208 160.3)",
-          "oklch(38% 0.0312 160.3)",
-          "oklch(49% 0.0375 160.3)",
-          "oklch(61% 0.0416 160.3)",
-          "oklch(72% 0.0375 160.3)",
-          "oklch(84% 0.0250 160.3)",
-          "oklch(95% 0.0083 160.3)"
-        ]
+        "canonical": "#03110bd6"
       },
       "reader-panel-dark": {
         "role": "neutral",
         "displayName": "Reader Panel Dark",
-        "tonalRamp": [
-          "oklch(15% 0.0064 162.6)",
-          "oklch(26% 0.0129 162.6)",
-          "oklch(38% 0.0193 162.6)",
-          "oklch(49% 0.0232 162.6)",
-          "oklch(61% 0.0258 162.6)",
-          "oklch(72% 0.0232 162.6)",
-          "oklch(84% 0.0155 162.6)",
-          "oklch(95% 0.0052 162.6)"
-        ]
-      },
-      "reader-border": {
-        "role": "neutral",
-        "displayName": "Reader Border",
-        "tonalRamp": [
-          "oklch(15% 0.0312 153.1)",
-          "oklch(26% 0.0623 153.1)",
-          "oklch(38% 0.0935 153.1)",
-          "oklch(49% 0.1122 153.1)",
-          "oklch(61% 0.1247 153.1)",
-          "oklch(72% 0.1122 153.1)",
-          "oklch(84% 0.0748 153.1)",
-          "oklch(95% 0.0249 153.1)"
-        ]
+        "canonical": "#04140ee8"
       },
       "reader-text": {
         "role": "neutral",
         "displayName": "Reader Text",
-        "tonalRamp": [
-          "oklch(15% 0.0098 148.7)",
-          "oklch(26% 0.0197 148.7)",
-          "oklch(38% 0.0295 148.7)",
-          "oklch(49% 0.0354 148.7)",
-          "oklch(61% 0.0393 148.7)",
-          "oklch(72% 0.0354 148.7)",
-          "oklch(84% 0.0236 148.7)",
-          "oklch(95% 0.0079 148.7)"
-        ]
+        "canonical": "#e0f5e2"
       },
       "reader-body": {
         "role": "neutral",
         "displayName": "Reader Body",
-        "tonalRamp": [
-          "oklch(15% 0.0109 145.2)",
-          "oklch(26% 0.0217 145.2)",
-          "oklch(38% 0.0326 145.2)",
-          "oklch(49% 0.0391 145.2)",
-          "oklch(61% 0.0434 145.2)",
-          "oklch(72% 0.0391 145.2)",
-          "oklch(84% 0.0261 145.2)",
-          "oklch(95% 0.0087 145.2)"
-        ]
+        "canonical": "#bcd3c4"
       },
       "reader-toolbar": {
         "role": "neutral",
         "displayName": "Reader Toolbar",
-        "tonalRamp": [
-          "oklch(15% 0.0060 159.6)",
-          "oklch(26% 0.0120 159.6)",
-          "oklch(38% 0.0180 159.6)",
-          "oklch(49% 0.0216 159.6)",
-          "oklch(61% 0.0240 159.6)",
-          "oklch(72% 0.0216 159.6)",
-          "oklch(84% 0.0144 159.6)",
-          "oklch(95% 0.0048 159.6)"
-        ]
+        "canonical": "#03100bd9"
       },
       "reader-index-active": {
         "role": "neutral",
         "displayName": "Reader Index Active",
-        "tonalRamp": [
-          "oklch(15% 0.0324 150.6)",
-          "oklch(26% 0.0648 150.6)",
-          "oklch(38% 0.0971 150.6)",
-          "oklch(49% 0.1166 150.6)",
-          "oklch(61% 0.1295 150.6)",
-          "oklch(72% 0.1166 150.6)",
-          "oklch(84% 0.0777 150.6)",
-          "oklch(95% 0.0259 150.6)"
-        ]
+        "canonical": "#d6ffc5"
       },
       "reader-index-ink": {
         "role": "neutral",
         "displayName": "Reader Index Ink",
-        "tonalRamp": [
-          "oklch(15% 0.0051 158.3)",
-          "oklch(26% 0.0102 158.3)",
-          "oklch(38% 0.0152 158.3)",
-          "oklch(49% 0.0183 158.3)",
-          "oklch(61% 0.0203 158.3)",
-          "oklch(72% 0.0183 158.3)",
-          "oklch(84% 0.0122 158.3)",
-          "oklch(95% 0.0041 158.3)"
-        ]
+        "canonical": "#205e3533"
+      },
+      "phosphor": {
+        "role": "primary",
+        "displayName": "Phosphor",
+        "canonical": "#b6ff7c"
+      },
+      "phosphor-white": {
+        "role": "neutral",
+        "displayName": "Phosphor White",
+        "canonical": "#e6ffe8"
+      },
+      "world-ink": {
+        "role": "neutral",
+        "displayName": "World Ink",
+        "canonical": "#020a07"
+      },
+      "world-copy": {
+        "role": "neutral",
+        "displayName": "World Copy",
+        "canonical": "#bfd6c6"
+      },
+      "world-rule": {
+        "role": "neutral",
+        "displayName": "World Rule",
+        "canonical": "#74c5984d"
       }
     },
     "typographyMeta": {
@@ -638,15 +477,15 @@
       "refersTo": "hologram",
       "description": "Native project summary shown after reveal; its explicit story link triggers calm fragment entry.",
       "html": "<div class=\"ds-hologram\"><h2>Štýlový chlpáč</h2><p class=\"ds-kind\">Web · skutočná prevádzka</p><p>Web, rezervácie a správa salónu.</p><a class=\"ds-holo-open\" href=\"#projekt/stylovy-chlpac\">Otvoriť príbeh <span>↗</span></a><button class=\"ds-holo-dismiss\" aria-label=\"Zavrieť náhľad\">×</button></div>",
-      "css": ".ds-hologram{font-family:Instrument,Arial,sans-serif;position:relative;width:270px;padding:25px 25px 20px;background:linear-gradient(135deg,#163e26e8,#071b12ed);border:1px solid #80fca28c;color:#dcffe2;backdrop-filter:blur(12px)}.ds-hologram::before{content:\"\";position:absolute;inset:-5px 13px 5px -5px;border-left:1px solid #a3ffb866;border-top:1px solid #a3ffb866;pointer-events:none}.ds-hologram::after{content:\"\";position:absolute;left:0;right:0;top:31%;height:1px;background:#adffbe44;pointer-events:none}.ds-hologram h2{font-size:28px;font-weight:700;line-height:1.02;letter-spacing:-.03em;max-width:15ch;color:#d6ffda;margin:0}.ds-hologram p{font-size:13px;line-height:1.65;color:#c0d9bf;margin:0}.ds-hologram .ds-kind{font-size:10px;color:#96dfaa;margin:11px 0}.ds-holo-open{display:inline-flex;align-items:center;justify-content:space-between;gap:32px;border-bottom:1px solid #71b54d;padding:14px 0;color:#caffad;font-size:13px;min-height:48px;text-decoration:none}.ds-holo-open:hover{color:#fff;border-color:#c4ffba}.ds-holo-dismiss{font-family:Instrument,Arial,sans-serif;position:absolute;top:5px;right:5px;background:transparent;border:0;color:#b0f6bf;width:32px;height:32px;font-size:20px;cursor:pointer}.ds-hologram a:focus-visible,.ds-hologram button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+      "css": ".ds-hologram{font-family:Instrument,Arial,sans-serif;position:relative;width:270px;padding:32px 27px 24px;background:linear-gradient(135deg,#103c26f2,#061a10f5);border:1px solid #70d99d99;color:#dcffe2;backdrop-filter:blur(18px)}.ds-hologram::before{content:\"\";position:absolute;inset:-5px 13px 5px -5px;border-left:1px solid #a3ffb866;border-top:1px solid #a3ffb866;pointer-events:none}.ds-hologram::after{content:\"\";position:absolute;left:0;right:0;top:31%;height:1px;background:#adffbe44;pointer-events:none}.ds-hologram h2{font-size:30px;font-weight:700;line-height:1.02;letter-spacing:-.03em;max-width:15ch;color:#e1ffe7;margin:0}.ds-hologram p{font-size:14px;line-height:1.65;color:#c5ddcb;margin:0}.ds-hologram .ds-kind{font-size:10px;color:#96dfaa;margin:11px 0}.ds-holo-open{display:inline-flex;align-items:center;justify-content:space-between;gap:32px;border-bottom:1px solid #71b54d;padding:14px 0;color:#caffad;font-size:14px;min-height:48px;text-decoration:none}.ds-holo-open:hover{color:#fff;border-color:#c4ffba}.ds-holo-dismiss{font-family:Instrument,Arial,sans-serif;position:absolute;top:5px;right:5px;background:transparent;border:0;color:#b0f6bf;width:32px;height:32px;font-size:20px;cursor:pointer}.ds-hologram a:focus-visible,.ds-hologram button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;} .ds-holo-open{display:flex;width:100%;box-sizing:border-box;padding:13px 16px;margin-top:22px;background:#b6ff9e;color:#092315;border:0;font-weight:700}"
     },
     {
       "name": "Reader panel",
       "kind": "card",
       "refersTo": "reader-panel",
-      "description": "Stable HTML reading surface for a full actual chapter, with internal overflow.",
-      "html": "<article class=\"ds-reader-panel\"><p class=\"ds-kicker\">01 / Potreba</p><h3>Od potreby k riešeniu.</h3><p>Text skutočnej kapitoly zostáva v HTML spolu s prílohami, ukážkami a zdrojmi, ktoré do nej patria.</p></article>",
-      "css": ".ds-reader-panel{font-family:Instrument,Arial,sans-serif;max-width:526px;max-height:70vh;overflow-y:auto;padding:30px 32px;background:linear-gradient(130deg,#0d281be8,#07160feb);border:1px solid #6cc78a77;color:#dcf5df;scrollbar-width:thin;scrollbar-color:#557c57 #07160f}.ds-reader-panel h3{font-size:clamp(30px,3vw,43px);font-weight:700;line-height:1.06;letter-spacing:-.03em;margin:0}.ds-reader-panel p{font-size:16px;line-height:1.75;color:#bdd6bd;margin:22px 0 0}.ds-reader-panel .ds-kicker{font-size:10px;color:#a4e6b4;margin:0 0 17px}.ds-reader-panel a:focus-visible,.ds-reader-panel button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+      "description": "Borderless editorial chapter surface over the shared spatial world, with internal overflow.",
+      "html": "<article class=\"ds-reader-panel\"><h3>Od potreby k riešeniu.</h3><p class=\"ds-sequence\">01 / Potreba</p><p>Text skutočnej kapitoly zostáva v HTML spolu s prílohami, ukážkami a zdrojmi, ktoré do nej patria.</p></article>",
+      "css": ".ds-reader-panel{font-family:Instrument,Arial,sans-serif;max-width:760px;max-height:70vh;overflow-y:auto;padding:24px 34px 36px;background:linear-gradient(110deg,#03110bd6,#04140ee8);color:#e0f5e2}.ds-reader-panel h3{font-size:clamp(37px,3.8vw,66px);font-weight:700;line-height:1.05;letter-spacing:-.03em;margin:0}.ds-reader-panel p{font-size:18px;line-height:1.7;color:#bcd3c4;margin:24px 0 0}.ds-reader-panel .ds-sequence{font-size:10px;color:#92bda0;margin:18px 0 24px}"
     },
     {
       "name": "Chapter index",
@@ -654,19 +493,22 @@
       "refersTo": "reader-index",
       "description": "Native buttons move within the current story; the toolbar separately switches projects.",
       "html": "<nav class=\"ds-reader-index\" aria-label=\"Časti príbehu\"><button aria-label=\"Projekt\" aria-current=\"step\">01</button><button aria-label=\"Potreba\">02</button><button aria-label=\"Výsledok a podklady\">03</button></nav>",
-      "css": ".ds-reader-index{display:flex;gap:9px;flex-wrap:wrap}.ds-reader-index button{font-family:Instrument,Arial,sans-serif;width:36px;height:40px;background:#0b2115b3;border:1px solid #4d835d;color:#8fc39b;font-size:11px;cursor:pointer}.ds-reader-index button[aria-current=\"step\"]{background:#a4ffb9;color:#06100a;border-color:#a4ffb9}.ds-reader-index button:focus-visible{outline:2px solid var(--signal-green,#a4ff61);outline-offset:6px;}"
+      "css": ".ds-reader-index{display:flex;gap:0;flex-wrap:wrap}.ds-reader-index button{font-family:Instrument,Arial,sans-serif;width:48px;height:48px;background:transparent;border:0;border-top:1px solid #6bad854d;color:#98bca4;font-size:12px;cursor:pointer}.ds-reader-index button[aria-current=\"step\"]{background:#205e3533;color:#d6ffc5;border-top:2px solid #b6ff9e}.ds-reader-index button:focus-visible{outline:2px solid #a4ff61;outline-offset:6px}"
     }
   ],
   "narrative": {
     "northStar": "Na konci internetu",
-    "overview": "“Na konci internetu” begins with one large crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. Procedural fog, a faint axis and sparse debris connect the whole journey.\n\nNative HTML holograms make the 3D projects readable. The story action gently opens and expands its selected fragment over 560ms, then enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.",
+    "overview": "“Na konci internetu” begins with one large faceted hexagonal crystal assembled from the six actual project pieces. First scroll fractures it into those six projects; reverse scroll reassembles it. A compact green camera flight then makes one project primary while smaller pieces establish depth. Procedural fog, a faint axis and sparse debris connect the whole journey.\n\nNative HTML holograms make the 3D projects readable. The story action gently opens and expands its selected fragment over 560ms, then enters a chapter journey over the same world. Each real content section has its own 3D fragment and stable reading panel. Source text, evidence captures and links stay in HTML rather than being replaced by decorative chapter summaries.\n\nThe finished visual system uses cut obsidian/phosphor reflections, contour fog and real spatial filaments. Larger editorial titles balance volumetric chapter objects and a decorative sequence numeral. The final contact fades the stale project HUD away. `world-finish.css` is the final visual authority.",
     "keyCharacteristics": [
       "One large crystal reversibly separates into the six actual project pieces.",
       "A primary project, smaller surrounding fragments and readable HTML holograms.",
       "A calm fragment opening and expansion connects a project to its story.",
       "Real article sections become fragment stops with stable, scrollable reading panels.",
       "Native chapter buttons, toolbar project switching and exact main-position return.",
-      "One green world, the fine-pointer target cursor and original-content fallback."
+      "One green world, the fine-pointer target cursor and original-content fallback.",
+      "Irregular watertight crystal wedges and procedural obsidian/phosphor material.",
+      "Borderless editorial chapter surfaces, larger type and segmented chapter navigation.",
+      "Contact transition removes the project HUD; professional claims remain unchanged."
     ],
     "rules": [
       {

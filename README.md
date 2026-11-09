@@ -6,7 +6,7 @@ Portfólio „Na konci internetu“ tvorí jeden fosforovo zelený WebGL priesto
 
 ## Pracovná činnosť
 
-Na začiatku je jeden veľký kryštál zložený zo šiestich skutočných projektových dielov. Prvý scroll ho rozdelí na projekty; spätný scroll ich spojí. Ďalej scroll ovláda let kamery cez šesť projektov: Štýlový chlpáč, Zákazko.sk, Corinex, Autokemping Tornaľa, Knižnica Horná Kráľová a Eurofondová agenda. Jeden projekt je hlavný, ostatné zostávajú menšie v hĺbke. Dráha má 420svh na počítači a 390svh na mobile. Malý index presúva kameru na projekt alebo záverečný kontakt; osobné predstavenie sa rozbaľuje pri kontakte.
+Na začiatku je jeden členitý šesťboký kryštál zložený zo šiestich uzavretých nepravidelných projektových dielov. Prvý scroll ho rozdelí na projekty; spätný scroll ich spojí. Ďalej scroll ovláda let kamery cez šesť projektov: Štýlový chlpáč, Zákazko.sk, Corinex, Autokemping Tornaľa, Knižnica Horná Kráľová a Eurofondová agenda. Jeden projekt je hlavný, ostatné zostávajú menšie v hĺbke. Dráha má 420svh na počítači a 390svh na mobile. Malý index presúva kameru na projekt alebo záverečný kontakt; osobné predstavenie sa rozbaľuje pri kontakte.
 
 Myšou sa hologram odhalí pri priblížení k projektu, klávesnicou fokusom a na dotykovom zariadení prvým ťuknutím. Odkaz „Otvoriť príbeh“ nechá vybraný úlomok počas 560ms pokojne sa otvoriť a rozvinúť a potom otvorí príbeh. Escape alebo natívne Späť v prehliadači zruší čakajúci vstup. Priamy projektový odkaz sa otvorí okamžite; pri strate WebGL sa vstup dokončí cez fallback. Väčšia neviditeľná plocha cieľa a mostík k panelu udržujú náhľad pri presune kurzora. Odhalenie zastaví aj prebiehajúci plynulý posun. Počas hologramu a príbehu stojí hlavný let. Príbeh má vlastný pohyb kamery medzi kapitolami.
 
@@ -41,7 +41,7 @@ npm run preview
 
 ## Architektúra
 
-HTML, modulárny JavaScript, CSS, Three.js 0.182.0, GSAP a Vite. Three.js vykresľuje krištalické fragmenty, častice a procedurálnu zelenú hmlu. Model letu prevádza scroll na kameru a projekciu natívnych HTML cieľov. Hologramy a články zostávajú v HTML. Pri nedostupnosti WebGL alebo strate kontextu sa zobrazia bežné HTML súhrny a odkazy. Čítačka rozdelí pôvodný úplný článok na reálne obsahové kapitoly a cez udalosti ovláda rovnaký Three.js renderer. Pri strate WebGL obnoví klon pôvodného článku s jeho pôvodnými GSAP scénami. WebGL sa inicializuje pred prehliadačom článkov, aby aj priamy projektový odkaz správne vybral čítačku. Funkcie vracajú cleanup pre opätovné spustenie pri vývoji.
+HTML, modulárny JavaScript, CSS, Three.js 0.182.0, GSAP a Vite. Three.js vykresľuje nepravidelné brúsené fragmenty, 920 častíc, 100 priestorových vláken a procedurálnu zelenú hmlu s kontúrami. Vlastný obsidiánovo-fosforový shader vytvára odlesky a povrchové pásy bez cudzieho modelu či environment mapy. Model letu prevádza scroll na kameru a projekciu natívnych HTML cieľov. Hologramy a články zostávajú v HTML. Pri nedostupnosti WebGL alebo strate kontextu sa zobrazia bežné HTML súhrny a odkazy. Čítačka rozdelí pôvodný úplný článok na reálne obsahové kapitoly a cez udalosti ovláda rovnaký Three.js renderer. Pri strate WebGL obnoví klon pôvodného článku s jeho pôvodnými GSAP scénami. WebGL sa inicializuje pred prehliadačom článkov, aby aj priamy projektový odkaz správne vybral čítačku. Funkcie vracajú cleanup pre opätovné spustenie pri vývoji.
 
 ```text
 index.html                 Obsah a sémantická štruktúra
@@ -71,6 +71,8 @@ GitHub Actions pri pushi a pull requeste spúšťajú `npm run check`.
 ## Vizuál, AI a licencie
 
 Zelený priestor vytvára shader hmly, vrstvy svetla, krištalická geometria a jemná vertikálna os. Úlomky predstavujú projektové dáta. Hlavný let nepoužíva farebné klientské náhľady ani ich CSS filtrované karty. Štyri zelené rohy vlastného kurzora sa zobrazujú iba pri myši s presným ukazovateľom; mobil používa prirodzené dotykové ovládanie.
+
+Posledný štýl `world-finish.css` zjednocuje väčšiu typografiu, hologramy, otvorené čítacie plochy, číslovanie kapitol a kontakt. Každá kapitolová zastávka má objemový brúsený objekt. Pri kontakte posledný projektový ukazovateľ plynulo zmizne.
 
 Hologram je natívny HTML panel s jemne priehľadným zeleným povrchom. Príbeh používa transparentný celoplošný dialóg a pokojné čítacie panely vedľa vlastných 3D úlomkov. Hlavná navigácia a informačné prvky letu sú počas čítania skryté. Dôkazy, obrazovky, prepínanie ukážok a zdrojové odkazy zostávajú zachované; existujúce obrazovky používajú pôvodný zelený prezentačný filter. Prezentácia nemení pôvodné súbory, faktické stavy ani rozlíšenie medzi autentickým záberom, ilustráciou a modelovými údajmi.
 
