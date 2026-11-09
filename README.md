@@ -1,30 +1,38 @@
-# Denis · Martin · Miroš — digitálny tím
+# d/m/m — digitálne štúdio
 
-Spoločná prezentácia troch spolupracovníkov pre vlastných klientov: weby a aplikácie, reklamy a obsah, automatizácie a AI. Práce členov ukazujú konkrétny príspevok jednotlivých ľudí; nejde automaticky o spoločné zákazky tímu. Hlavička d/m/m a „Digitálny tím“ sú dočasné označenie do výberu názvu. Agentúrna prezentácia neustanovuje firmu ani fakturačný subjekt.
+Klientské portfólio pod schváleným názvom d/m/m: weby a aplikácie, reklamy a obsah, automatizácie a AI. Verejné rozhranie nepoužíva osobné mená ani profily. Referencie zahŕňajú aj predchádzajúce práce členov tímu; neustanovujú automaticky zákazky d/m/m. Názov štúdia neustanovuje právnickú osobu ani fakturačný subjekt.
 
 Portfólio „Na konci internetu“ tvorí jeden fosforovo zelený WebGL priestor s krištalickými dátovými úlomkami, hologramami projektov a článkami nad rovnakým pozadím. [Existujúca adresa webu](https://denis-balaz-portfolio.denis-balaz567.chatgpt.site/).
 
-## Tím a výber prác
+## Štúdio a výber prác
 
-Úvod oddeľuje „Nápad máte. My tvoríme.“ vľavo hore, zachovaný kryštál pod ním a služby „Weby. Reklamy. Automatizácie.“ vpravo. Odkaz „Pozrieť naše práce“ vstupuje do existujúceho letu. Mená Denis · Martin · Miroš a indexový odkaz „Náš tím a služby“ otvoria tímové predstavenie pri kontakte a posunú ho do viditeľnej časti. Mobil skladá identitu, kryštál a pracovný blok zvislo.
+Úvod oddeľuje „Nápad máte. My tvoríme.“ vľavo hore, zachovaný kryštál pod ním a služby „Weby. Reklamy. Automatizácie.“ vpravo. Odkaz „Pozrieť naše práce“ vstupuje do existujúceho letu. Označenie „d/m/m · Digitálne štúdio“ a indexový odkaz „Služby a prístup“ otvoria služby pri kontakte. Úvod aj index ponúkajú funkčné interaktívne ukážky. Mobil skladá identitu, kryštál a pracovný blok zvislo.
 
-Na začiatku je jeden členitý šesťboký kryštál zložený zo šiestich uzavretých nepravidelných projektových dielov. Prvý scroll ho rozdelí na projekty; spätný scroll ich spojí. Ďalej scroll ovláda let kamery cez šesť projektov: Attila Park Caravans, PREVIA, PH Laboratories, New Era Barbers, Tatra Scool a Štýlový chlpáč. Jeden projekt je hlavný, ostatné zostávajú menšie v hĺbke. Dráha má 420svh na počítači a 390svh na mobile. Malý index presúva kameru na projekt alebo záverečný kontakt; tímové predstavenie a služby sa rozbaľujú pri kontakte.
+Na začiatku je jeden členitý šesťboký kryštál zložený zo šiestich uzavretých nepravidelných projektových dielov. Prvý scroll ho rozdelí na projekty; spätný scroll ich spojí. Ďalej scroll ovláda let kamery cez šesť projektov: Attila Park Caravans, PREVIA, PH Laboratories, New Era Barbers, Tatra Scool a Štýlový chlpáč. Jeden projekt je hlavný, ostatné zostávajú menšie v hĺbke. Dráha má 420svh na počítači a 390svh na mobile. Malý index presúva kameru na projekt alebo záverečný kontakt; služby a prístup sa rozbaľujú pri kontakte.
 
 Myšou sa hologram odhalí pri priblížení k projektu, klávesnicou fokusom a na dotykovom zariadení prvým ťuknutím. Odkaz „Otvoriť príbeh“ nechá vybraný úlomok počas 560ms pokojne sa otvoriť a rozvinúť a potom otvorí príbeh. Escape alebo natívne Späť v prehliadači zruší čakajúci vstup. Priamy projektový odkaz sa otvorí okamžite; pri strate WebGL sa vstup dokončí cez fallback. Väčšia neviditeľná plocha cieľa a mostík k panelu udržujú náhľad pri presune kurzora. Odhalenie zastaví aj prebiehajúci plynulý posun. Počas hologramu a príbehu stojí hlavný let. Príbeh má vlastný pohyb kamery medzi kapitolami.
 
-Každá skutočná časť článku dostane vlastný 3D úlomok: úvod, jednotlivé kroky a sekcia dôkazov, ak existuje. Scroll presúva kameru medzi zastávkami a ponecháva interval na čítanie stabilného HTML panelu. Dlhšie texty a podklady sa dajú posúvať aj vnútri panelu. Číslovaný index natívnych tlačidiel prepína kapitoly; počet vychádza z obsahu, pri salóne je ich sedem. Šípky hornej lišty, klávesy vľavo/vpravo a vodorovné gesto prepínajú šesť vybraných projektov; päť ďalších Denisových príbehov má samostatný cyklus. Zatvorenie obnoví presnú uloženú polohu hlavného letu a fokus odkazu.
+Každá skutočná časť článku dostane vlastný 3D úlomok: úvod, jednotlivé kroky a sekcia dôkazov, ak existuje. Scroll presúva kameru medzi zastávkami a ponecháva interval na čítanie stabilného HTML panelu. Dlhšie texty a podklady sa dajú posúvať aj vnútri panelu. Číslovaný index natívnych tlačidiel prepína kapitoly; počet vychádza z obsahu, pri salóne je ich sedem. Šípky hornej lišty, klávesy vľavo/vpravo a vodorovné gesto prepínajú šesť vybraných projektov; päť ďalších príbehov predchádzajúcich skúseností má samostatný cyklus. Zatvorenie obnoví presnú uloženú polohu hlavného letu a fokus odkazu.
 
-- **Attila Park Caravans:** Martin · celý web, v spolupráci s Mirošom.
-- **PREVIA, PH Laboratories a New Era Barbers:** Martin · celý web.
-- **Tatra Scool:** Martin · celý konkrétny vzdelávací web `tatrabanka.sk/tatrascool/`, bez tvrdenia o autorstve bankovej aplikácie alebo celého webu banky.
-- **Štýlový chlpáč:** Denisova realizácia s podporou AI; príbeh zachováva pôvodné dôkazy a rozlíšenie verejného webu od administrácie s modelovými údajmi.
+- **Attila Park Caravans:** web prenájmu karavanov.
+- **PREVIA a PH Laboratories:** weby a e-shopy vlasovej kozmetiky.
+- **New Era Barbers:** web barbershopu.
+- **Tatra Scool:** konkrétny vzdelávací web `tatrabanka.sk/tatrascool/`, bez tvrdenia o autorstve bankovej aplikácie alebo celého webu banky.
+- **Štýlový chlpáč:** webová realizácia s podporou AI; príbeh zachováva rozlíšenie verejného webu od administrácie s modelovými údajmi.
 
-Autorstvo a rozsah piatich Martinových referencií potvrdil Denis 9. 11. 2026; nejde o nezávislé overenie autorstva ani dôkaz priamej zmluvy nového tímu s danou značkou. Ich články majú úvod, dve obsahové kapitoly a dôkazový blok so skutočným záberom webu z 9. 11. 2026. Lokálne JPEG súbory a zdroje sú v `public/images/team-work/` vrátane `provenance.json`; zelený CSS filter mení iba prezentáciu, odkazy vedú na originálne weby.
+Autorstvo dodané majiteľom zostáva interným kontextom v `PRODUCT.md`; verejné články nepoužívajú osobné mená. Päť novších webových článkov má úvod, dve obsahové kapitoly a dôkazový blok so skutočným záberom webu z 9. 11. 2026. Lokálne JPEG súbory a zdroje sú v `public/images/team-work/` vrátane `provenance.json`; zelený CSS filter mení iba prezentáciu, odkazy vedú na originálne weby.
 
-**Ďalšie Denisove skúsenosti** zostávajú dostupné cez tímové predstavenie aj pôvodné adresy: Zákazko.sk, Corinex, Autokemping Tornaľa, Knižnica Horná Kráľová a Eurofondová agenda. Zákazko je jeho vlastný produkt s podporou AI. Grantové referencie patria jeho práci v tíme CASSIS Consult, nie klientom nového tímu.
+**Ďalšie projektové skúsenosti** zostávajú dostupné cez pôvodné adresy: Zákazko.sk, Corinex, Autokemping Tornaľa, Knižnica Horná Kráľová a Eurofondová agenda. Grantové skúsenosti z práce v CASSIS Consult sú označené ako predchádzajúca práca, nie zákazky d/m/m.
+
 Každý príbeh má adresu `#projekt/<id>`, dostupný návrat, prepínanie na ďalší projekt a zatvorenie klávesom Escape. Späť/vpred v prehliadači funguje aj pri otvorenom príbehu. Pôvodné odkazy ako `#web-system` sa prenesú na príslušný príbeh.
 
-Grantové referencie opisujú Denisovu konkrétnu úlohu v CASSIS Consult. Sumy podpory patria prijímateľom; schválenie a zmluva sa odlišujú od dokončenej realizácie. Súkromné projektové dokumenty a e-maily v repozitári nie sú.
+Grantové referencie zachovávajú vecný rozsah práce v CASSIS Consult. Sumy podpory patria prijímateľom; schválenie a zmluva sa odlišujú od dokončenej realizácie. Súkromné projektové dokumenty a e-maily v repozitári nie sú.
+
+## Funkčné ukážky
+
+Dve lokálne demonštrácie majú samostatný dvojpoložkový cyklus a stabilné formuláre nad rovnakým zeleným svetom. Rezervačný model ponúka 30- a 60-minútové služby, kontroluje prekryv s modelovým kalendárom, po potvrdení odstráni kolidujúce termíny a umožní reset. Nevykonáva skutočnú rezerváciu.
+
+Reklamné zadanie skladá zo vstupov živý textový náhľad a stiahne `dmm-reklamne-zadanie.txt`. Ide o deterministickú kompozíciu, bez AI odpovede alebo pripojenia k reklamnému účtu. Ukážky nemajú backend, platbu, odosielanie ani trvalé úložisko; modelové údaje a ich hranice sú uvedené priamo v rozhraní.
 
 ## Spustenie
 
@@ -79,11 +87,11 @@ GitHub Actions pri pushi a pull requeste spúšťajú `npm run check`.
 
 Zelený priestor vytvára shader hmly, vrstvy svetla, krištalická geometria a jemná vertikálna os. Úlomky predstavujú projektové dáta. Hlavný let nepoužíva farebné klientské náhľady ani ich CSS filtrované karty. Štyri zelené rohy vlastného kurzora sa zobrazujú iba pri myši s presným ukazovateľom; mobil používa prirodzené dotykové ovládanie.
 
-`world-finish.css` zjednocuje väčšiu typografiu, hologramy, otvorené čítacie plochy, číslovanie kapitol a kontakt. Import `intro.css` určuje kompozíciu úvodu; posledný `team.css` pridáva miestne tímové úpravy typografie, rozbaľovacieho predstavenia a screenshotových článkov. [Tímový povrch](docs/team-surface.md) ich odlišuje od zachovaného globálneho sveta v `DESIGN.md` a `.impeccable/design.json`. Každá kapitolová zastávka má objemový brúsený objekt. Pri kontakte posledný projektový ukazovateľ plynulo zmizne.
+`world-finish.css` zjednocuje väčšiu typografiu, hologramy, otvorené čítacie plochy, číslovanie kapitol a kontakt. Import `intro.css` určuje kompozíciu úvodu; `team.css` pridáva miestne úpravy typografie, služieb, kontaktu a screenshotových článkov; posledný `demos.css` vlastní formulárové ukážky. [Povrch štúdia a ukážok](docs/team-surface.md) ich odlišuje od zachovaného globálneho sveta v `DESIGN.md` a `.impeccable/design.json`. Každá kapitolová zastávka má objemový brúsený objekt. Pri kontakte posledný projektový ukazovateľ plynulo zmizne.
 
 Hologram je natívny HTML panel s jemne priehľadným zeleným povrchom. Príbeh používa transparentný celoplošný dialóg a pokojné čítacie panely vedľa vlastných 3D úlomkov. Hlavná navigácia a informačné prvky letu sú počas čítania skryté. Dôkazy, obrazovky, prepínanie ukážok a zdrojové odkazy zostávajú zachované; existujúce obrazovky používajú pôvodný zelený prezentačný filter. Prezentácia nemení pôvodné súbory, faktické stavy ani rozlíšenie medzi autentickým záberom, ilustráciou a modelovými údajmi.
 
-Denis pri návrhu, textoch, implementácii a overovaní využíva AI; tým sa nepripisuje rovnaký postup Martinovým referenciám. Pôvodný ostrov vznikol pomocou OpenAI image_gen a zostáva medzi zdrojovými assetmi. Let, rozpad kryštálu, pokojné otvorenie projektu aj kapitolové úlomky vykresľuje rovnaký Three.js/WebGL renderer; CSS vlastní čítacie panely a GSAP pôvodné fallback príbehy. Otvorenie projektu nepoužíva video službu ani zvuk. Pri skrytej karte sa priebežné kreslenie zastaví. WebGL fallback zachováva natívne HTML súhrny a odkazy aj úplný pôvodný článok.
+Pri tejto prezentácii sa využíva AI; tým sa nepripisuje rovnaký postup všetkým referenciám. Pôvodný ostrov vznikol pomocou OpenAI image_gen a zostáva medzi zdrojovými assetmi. Let, rozpad kryštálu, pokojné otvorenie projektu aj kapitolové úlomky vykresľuje rovnaký Three.js/WebGL renderer; CSS vlastní čítacie panely a GSAP pôvodné fallback príbehy. Otvorenie projektu nepoužíva video službu ani zvuk. Pri skrytej karte sa priebežné kreslenie zastaví. WebGL fallback zachováva natívne HTML súhrny a odkazy aj úplný pôvodný článok.
 
 Historickou inšpiráciou pôvodného hravého priestoru bol Tatrascool; jeho logo, maskot ani assety sa nepoužívajú. Súčasný smer vychádza z potvrdeného zadania majiteľa. Príbeh Štýlového chlpáča zachováva autentické zábery verejného webu a administráciu s modelovými údajmi; nejde o živú administráciu ani zákaznícke údaje.
 
@@ -91,6 +99,4 @@ Instrument Sans používa SIL Open Font License; znenie je v `public/licenses/In
 
 ## Kontakt
 
-Denis Baláž · denisbalaz965@gmail.com · +421 948 835 138
-
-Prvý kontakt s tímom je Denis. Kontaktný formulár, agentúrna schránka ani backend odosielania nie sú zavedené. Denis uviedol, že nemá firmu ani živnosť; zmluvný a fakturačný subjekt tímu zostáva neurčený. Samotná prezentácia a ponuka nedokladajú dopyt, objednávku ani výsledky kampaní.
+Verejné „Napíšte nám“ používa existujúcu kontaktnú adresu a telefón +421 948 835 138. Nevytvára novú firemnú schránku. Kontaktný formulár ani backend odosielania nie sú zavedené; zmluvný a fakturačný subjekt zostáva neurčený. Samotná prezentácia a ukážky nedokladajú dopyt, objednávku ani výsledky kampaní.

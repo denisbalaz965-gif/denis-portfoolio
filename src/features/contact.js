@@ -14,7 +14,7 @@ export function initContact({ root = document, clipboard = navigator.clipboard }
         await clipboard.writeText(email);
         status.textContent = 'E-mail je skopírovaný.';
       } catch {
-        status.textContent = `E-mail: ${email}`;
+        status.textContent = 'Kopírovanie sa nepodarilo. Použite odkaz Napíšte nám.';
       }
     },
     { signal: controller.signal },

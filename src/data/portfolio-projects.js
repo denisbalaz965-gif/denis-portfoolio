@@ -1,10 +1,11 @@
 import { teamProjects } from './team-projects.js';
+import { demoProjects } from './demo-projects.js';
 
 export const portfolioProjects = [
   {
     id: 'stylovy-chlpac',
     featured: true,
-    credit: 'Denis · návrh, texty a realizácia s podporou AI',
+    credit: 'Web a digitálna prevádzka · realizácia s podporou AI',
     group: 'webs',
     name: 'Štýlový chlpáč',
     title: ['Štýlový', 'chlpáč.'],
@@ -39,7 +40,7 @@ export const portfolioProjects = [
       {
         label: 'Riešenie',
         title: ['Údaje raz.', 'Dokumenty spolu.'],
-        text: 'Údaje o zákazke tvoria spoločný základ pre jednotlivé dokumenty. Ide o vlastný digitálny produkt, na ktorom prepájam návrh používateľského postupu s realizáciou pomocou AI.',
+        text: 'Údaje o zákazke tvoria spoločný základ pre jednotlivé dokumenty. Ide o vlastný digitálny produkt, ktorý prepája návrh používateľského postupu s realizáciou pomocou AI.',
         tags: ['Spoločné údaje', 'Nadväzujúce výstupy'],
       },
       {
@@ -69,19 +70,19 @@ export const portfolioProjects = [
       {
         label: 'Projekt',
         title: ['Výskum a inovácie.', 'Konkrétna skúsenosť.'],
-        text: 'Corinex je jednou z firemných projektových referencií z mojej práce v tíme CASSIS Consult.',
+        text: 'Referencia zachytáva projektovú skúsenosť z tímu CASSIS Consult pri firemnom projekte Corinex.',
         tags: ['Firemný projekt', 'Tímová spolupráca'],
       },
       {
-        label: 'Moja úloha',
+        label: 'Príspevok v projekte',
         title: ['Štruktúra projektu', 'a jeho podklady.'],
-        text: 'Moja práca zahŕňala pracovné balíky, projektové podklady a anotáciu projektu. Táto referencia opisuje konkrétnu časť tímovej práce.',
+        text: 'Príspevok v projekte zahŕňal pracovné balíky, projektové podklady a anotáciu projektu. Táto referencia opisuje konkrétnu časť tímovej práce.',
         tags: ['Pracovné balíky', 'Anotácia', 'Podklady'],
       },
       {
         label: 'Doložený stav',
         title: ['Do 482 293 €', 'podľa dodatku.'],
-        text: 'Maximálna dotácia podľa zmluvy 261/2025 v znení dodatku č. 1 predstavuje 482 293 €. Ide o zmluvný limit podpory, nie o doklad jej vyplatenia. Na projekte som sa podieľal v tíme CASSIS Consult.',
+        text: 'Maximálna dotácia podľa zmluvy 261/2025 v znení dodatku č. 1 predstavuje 482 293 €. Ide o zmluvný limit podpory, nie o doklad jej vyplatenia. Referencia vychádza z práce v tíme CASSIS Consult.',
         tags: ['Zmluva 261/2025', 'Dodatok č. 1'],
         action: true,
       },
@@ -105,19 +106,19 @@ export const portfolioProjects = [
       {
         label: 'Projekt',
         title: ['Projekt pre', 'cestovný ruch.'],
-        text: 'Autokemping Tornaľa je samosprávna projektová referencia z práce v tíme CASSIS Consult.',
+        text: 'Referencia zachytáva skúsenosť z práce v tíme CASSIS Consult na samosprávnom projekte Autokemping Tornaľa.',
         tags: ['Tornaľa', 'Cestovný ruch'],
       },
       {
-        label: 'Moja úloha',
+        label: 'Príspevok v projekte',
         title: ['Od podkladov', 'k administratíve.'],
-        text: 'Na projekte som pracoval s podkladmi k žiadosti aj s projektovou administratívou počas realizácie.',
+        text: 'Príspevok zahŕňal podklady k žiadosti aj projektovú administratívu počas realizácie v tíme CASSIS Consult.',
         tags: ['Podklady k žiadosti', 'Administratíva počas realizácie'],
       },
       {
         label: 'Doložený stav',
         title: ['293 500 €', 'podľa zmluvy.'],
-        text: 'Príspevok podľa zmluvy FNPCR predstavuje 293 500 €. Moja referencia zahŕňa prípravu podkladov a projektovú administratívu počas realizácie.',
+        text: 'Príspevok podľa zmluvy FNPCR predstavuje 293 500 €. Referencia zahŕňa prípravu podkladov a projektovú administratívu počas realizácie.',
         tags: ['Príspevok FNPCR'],
         action: true,
       },
@@ -144,13 +145,13 @@ export const portfolioProjects = [
       {
         label: 'Projekt',
         title: ['Obnova', 'obecnej knižnice.'],
-        text: 'Knižnica v Hornej Kráľovej je projektová referencia z environmentálnej agendy samospráv, na ktorej pracujeme v CASSIS Consult.',
+        text: 'Knižnica v Hornej Kráľovej je projektová referencia z environmentálnej agendy samospráv, z práce v tíme CASSIS Consult.',
         tags: ['Horná Kráľová', 'Verejná budova'],
       },
       {
-        label: 'Moja úloha',
+        label: 'Príspevok v projekte',
         title: ['Podklady a koordinácia', 'pred zmluvou.'],
-        text: 'Rozpočtové podklady, prílohy a koordinácia pred uzavretím zmluvy boli mojou časťou práce na projekte.',
+        text: 'Rozpočtové podklady, prílohy a koordinácia pred uzavretím zmluvy boli súčasťou práce v tíme CASSIS Consult.',
         tags: ['Rozpočtové podklady', 'Prílohy', 'Koordinácia'],
       },
       {
@@ -169,16 +170,20 @@ export const portfolioProjects = [
     kind: 'Pracovný postup · CASSIS Consult',
     template: 'agenda',
     cover: 'agenda',
-    status: 'Používam v práci',
+    status: 'Pracovný postup',
     summary:
-      'Ako prepájam prípravu žiadostí, rozpočty, zmeny, termíny a podklady počas implementácie.',
+      'Prepojenie prípravy žiadostí, rozpočty, zmeny, termíny a podklady počas implementácie.',
   },
 ];
 
-portfolioProjects.push(...teamProjects);
+portfolioProjects.push(...teamProjects, ...demoProjects);
 export const featuredProjects = [...teamProjects, portfolioProjects[0]];
 export const projectsForViewer = (project) =>
-  project.featured ? featuredProjects : portfolioProjects.filter((item) => !item.featured);
+  project.demo
+    ? demoProjects
+    : project.featured
+      ? featuredProjects
+      : portfolioProjects.filter((item) => !item.featured && !item.demo);
 
 export const findProject = (id) => portfolioProjects.find((project) => project.id === id);
 export const projectsInGroup = (group) =>

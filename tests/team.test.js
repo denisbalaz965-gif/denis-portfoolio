@@ -2,7 +2,11 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { beforeEach, afterEach, describe, expect, it } from 'vitest';
 import { teamProjects } from '../src/data/team-projects.js';
-import { findProject, projectsForViewer } from '../src/data/portfolio-projects.js';
+import {
+  findProject,
+  projectsForViewer,
+  portfolioProjects,
+} from '../src/data/portfolio-projects.js';
 import { buildProjectContent, initProjectBrowser } from '../src/features/project-browser.js';
 import { initScrollStories } from '../src/features/scroll-stories.js';
 
@@ -15,6 +19,16 @@ beforeEach(() => {
 afterEach(() => dispose());
 
 describe('Team work and retained experience', () => {
+  it('presents the studio without personal names across every article', () => {
+    expect(document.body.textContent).not.toMatch(
+      /Denis|Martin|Miroš|Pracujem|riešim|AI mi|Moja úloha/,
+    );
+    expect(document.querySelector('.team-members')).toBeNull();
+    for (const project of portfolioProjects)
+      expect(buildProjectContent(project).textContent).not.toMatch(
+        /Denis|Martin|Miroš|Pracujem|riešim|AI mi|Moja úloha/,
+      );
+  });
   it('keeps client-facing selection separate from personal grant experience', () => {
     const featured = projectsForViewer(findProject('attilapark'));
     const personal = projectsForViewer(findProject('corinex'));

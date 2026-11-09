@@ -75,7 +75,7 @@ describe('Contact', () => {
     document.querySelector('#copy-email').click();
     await vi.waitFor(() =>
       expect(document.querySelector('#copy-status').textContent).toBe(
-        'E-mail: denisbalaz965@gmail.com',
+        'Kopírovanie sa nepodarilo. Použite odkaz Napíšte nám.',
       ),
     );
   });

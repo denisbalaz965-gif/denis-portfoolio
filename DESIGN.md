@@ -1,5 +1,5 @@
 ---
-name: Denis Baláž — Na konci internetu
+name: d/m/m — Na konci internetu
 description: A reversible crystal fracture, six project holograms and fragment-based reading.
 colors:
   world-rule: '#74c5984d'
@@ -180,7 +180,7 @@ components:
     padding: '{spacing.contact-button}'
 ---
 
-# Design System: Denis Baláž — Na konci internetu
+# Design System: d/m/m — Na konci internetu
 
 ## Overview
 

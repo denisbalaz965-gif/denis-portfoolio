@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 import { findProject, projectsInGroup, projectsForViewer } from '../data/portfolio-projects.js';
 import { initScrollStories } from './scroll-stories.js';
 import { initFragmentReader } from './fragment-reader.js';
+import { buildDemoContent, mountDemo } from './demos.js';
 
 const escapeHTML = (value) =>
   String(value).replace(
@@ -26,7 +27,7 @@ function referenceCover(project) {
   const summary = workflow
     ? '<div class="cover-workflow-path"><span>01 / Zámer</span><span>02 / Príprava</span><span>03 / Implementácia</span></div>'
     : `<div><b>${escapeHTML(project.amount)}</b><small>${escapeHTML(project.evidence)}</small></div><i></i><i></i>`;
-  return `<div class="reference-cover cover-${escapeHTML(project.cover)}" aria-hidden="true"><div class="cover-orbit"></div><span class="cover-symbol">${icons[project.cover]}</span><div class="cover-reference-paper"><span>${escapeHTML(project.kind.split(' · ')[0])}</span><strong>${lines(project.title)}</strong>${summary}</div><span class="cover-label">${workflow ? 'Ako pracujem' : 'Projektová referencia'}</span></div>`;
+  return `<div class="reference-cover cover-${escapeHTML(project.cover)}" aria-hidden="true"><div class="cover-orbit"></div><span class="cover-symbol">${icons[project.cover]}</span><div class="cover-reference-paper"><span>${escapeHTML(project.kind.split(' · ')[0])}</span><strong>${lines(project.title)}</strong>${summary}</div><span class="cover-label">${workflow ? 'Pracovný postup' : 'Projektová referencia'}</span></div>`;
 }
 
 export function artwork(project, root) {
@@ -56,6 +57,7 @@ function storyIndex(project) {
 }
 
 export function buildProjectContent(project, root = document) {
+  if (project.demo) return buildDemoContent(project);
   let chapter;
   if (project.template === 'team-web') {
     chapter = document.createElement('section');
@@ -92,7 +94,7 @@ export function buildProjectContent(project, root = document) {
       chapter.querySelector('.input-need strong').textContent = project.name;
       chapter.querySelector('.input-call strong').textContent = project.status;
       chapter.querySelector('.input-call>span').textContent = 'DOLOŽENÝ STAV';
-      chapter.querySelector('.grant-document strong').innerHTML = 'Moja úloha<br>v projekte.';
+      chapter.querySelector('.grant-document strong').innerHTML = 'Príspevok<br>v projekte.';
       chapter.querySelector('.grant-document>span').textContent = 'PROJEKTOVÉ PODKLADY';
       chapter.querySelector('.grant-proof').innerHTML =
         `<span>DOLOŽENÝ STAV PODPORY</span><div><i>${icons[project.cover]}</i><b>${escapeHTML(project.name)}<small>${escapeHTML(project.kind.split(' · ')[0])}</small></b></div><strong class="case-support-amount">${escapeHTML(project.amount)}</strong><p class="case-support-status">${escapeHTML(project.status)}</p><p>${escapeHTML(project.evidence)}</p><p>Podpora patrí prijímateľovi. Tímová práca CASSIS Consult.</p>`;
@@ -102,10 +104,9 @@ export function buildProjectContent(project, root = document) {
   if (project.template !== 'team-web') {
     const credit = document.createElement('p');
     credit.className = 'case-contribution';
-    credit.textContent =
-      project.credit ?? 'Denis · osobná projektová skúsenosť v tíme CASSIS Consult';
+    credit.textContent = project.credit ?? 'Projektová skúsenosť · v rámci tímu CASSIS Consult';
     if (project.id === 'zakazko')
-      credit.textContent = 'Denis · vlastný produkt, realizácia s podporou AI';
+      credit.textContent = 'Vlastný digitálny produkt · realizácia s podporou AI';
     chapter.querySelector('.chapter-heading').after(credit);
   }
   if (project.sourceNote) {
@@ -280,6 +281,7 @@ export function initProjectBrowser({
     disposeStory();
     disposeStory = () => {};
     if (dialog.open) dialog.close();
+    dialog.classList.remove('demo-mode');
     content.replaceChildren();
     document.body.style.overflow = oldOverflow ?? '';
     document.documentElement.style.overflow = oldRootOverflow ?? '';
@@ -366,9 +368,16 @@ export function initProjectBrowser({
     current = project;
     renderGallery(project.group, id);
     content.replaceChildren(buildProjectContent(project, root));
+    dialog.classList.toggle('demo-mode', Boolean(project.demo));
     dialog.dataset.project = id;
     dialog.dataset.group = project.group;
     dialog.querySelector('[data-case-name]').textContent = project.name;
+    dialog.querySelector('.case-toolbar [data-case-close] span').textContent = project.demo
+      ? 'Zavrieť ukážku'
+      : 'Zavrieť príbeh';
+    dialog.querySelector('.case-footer > p').textContent = project.demo
+      ? 'Vyskúšajte aj ďalšiu ukážku.'
+      : 'Každý projekt má svoj príbeh.';
     const projects = viewerProjects(project.group);
     const index = projects.findIndex((p) => p.id === id);
     dialog.querySelector('[data-case-counter]').textContent = `${index + 1} / ${projects.length}`;
@@ -378,11 +387,14 @@ export function initProjectBrowser({
       .querySelector('[data-case-prev]')
       .setAttribute(
         'aria-label',
-        `Predchádzajúci projekt: ${projects[(index - 1 + projects.length) % projects.length].name}`,
+        `${project.demo ? 'Predchádzajúca ukážka' : 'Predchádzajúci projekt'}: ${projects[(index - 1 + projects.length) % projects.length].name}`,
       );
     dialog
       .querySelector('.case-switch [data-case-next]')
-      .setAttribute('aria-label', `Ďalší projekt: ${next.name}`);
+      .setAttribute(
+        'aria-label',
+        `${project.demo ? 'Ďalšia ukážka' : 'Ďalší projekt'}: ${next.name}`,
+      );
     if (!wasOpen) {
       returnScroll = window.scrollY;
       oldOverflow = document.body.style.overflow;
@@ -393,18 +405,20 @@ export function initProjectBrowser({
       dialog.showModal();
     }
     scroller.scrollTop = 0;
-    disposeStory = document.body.classList.contains('flight-ready')
-      ? initFragmentReader({
-          root: content,
-          scroller,
-          project,
-          mountFallback: mountStories,
-          initialStep: legacyStep,
-        })
-      : mountStories({ root: content, scroller });
+    disposeStory = project.demo
+      ? mountDemo(content, project)
+      : document.body.classList.contains('flight-ready')
+        ? initFragmentReader({
+            root: content,
+            scroller,
+            project,
+            mountFallback: mountStories,
+            initialStep: legacyStep,
+          })
+        : mountStories({ root: content, scroller });
     const announcement = dialog.querySelector('[data-case-announcement]');
     if (announcement)
-      announcement.textContent = `${project.name}. Projekt ${index + 1} zo ${projects.length}.`;
+      announcement.textContent = `${project.name}. ${project.demo ? 'Ukážka' : 'Projekt'} ${index + 1} zo ${projects.length}.`;
     if (!keepControlFocus) {
       const heading = dialog.classList.contains('reader-mode')
         ? content.querySelector('.reader-panel.is-current h2,.reader-panel.is-current h3')
@@ -415,28 +429,29 @@ export function initProjectBrowser({
       }
     }
     if (animate)
-      transition = dialog.classList.contains('reader-mode')
-        ? gsap.fromTo(
-            page,
-            { opacity: 0 },
-            { opacity: 1, duration: 0.35, ease: 'power2.out', clearProps: 'opacity' },
-          )
-        : gsap.fromTo(
-            page,
-            {
-              xPercent: dialog.classList.contains('reader-mode')
-                ? 0
-                : direction * (wasOpen ? 7 : 35),
-              opacity: 0,
-            },
-            {
-              xPercent: 0,
-              opacity: 1,
-              duration: wasOpen ? 0.45 : 0.6,
-              ease: 'power3.out',
-              clearProps: 'opacity,transform',
-            },
-          );
+      transition =
+        dialog.classList.contains('reader-mode') || project.demo
+          ? gsap.fromTo(
+              page,
+              { opacity: 0 },
+              { opacity: 1, duration: 0.35, ease: 'power2.out', clearProps: 'opacity' },
+            )
+          : gsap.fromTo(
+              page,
+              {
+                xPercent: dialog.classList.contains('reader-mode')
+                  ? 0
+                  : direction * (wasOpen ? 7 : 35),
+                opacity: 0,
+              },
+              {
+                xPercent: 0,
+                opacity: 1,
+                duration: wasOpen ? 0.45 : 0.6,
+                ease: 'power3.out',
+                clearProps: 'opacity,transform',
+              },
+            );
     if (legacyStep && !dialog.classList.contains('reader-mode'))
       content.querySelector(`[id="${legacyStep}"]`)?.scrollIntoView({ block: 'start' });
   }
@@ -548,7 +563,8 @@ export function initProjectBrowser({
         event.altKey ||
         event.ctrlKey ||
         event.metaKey ||
-        event.target.matches?.('input,textarea,select,[contenteditable]')
+        event.target.matches?.('input,textarea,select,[contenteditable]') ||
+        event.target.closest?.('.demo-tool')
       )
         return;
       if (event.key === 'Escape' && entryPending) {
