@@ -66,3 +66,7 @@ Two local interactive demonstrations are available from the intro and index in a
 3. Keep independent work distinct from projects delivered together.
 4. Preserve readable content and contact access independently of canvas or hover.
 5. Separate supplied claims, observed public features and measured outcomes.
+
+## Eurofondové príbehy — dostupnosť
+
+Po upozornení majiteľa na chýbajúce eurofondové projekty boli všetky štyri existujúce príbehy sprístupnené priamo v indexe: Corinex, Autokemping Tornaľa, Knižnica Horná Kráľová a Eurofondová agenda. Viditeľný odkaz „Eurofondové projekty“ je aj v úvodnom predstavení služieb a pri poslednej webovej zastávke. Príbehy zostávajú v samostatnom cykle predchádzajúcich skúseností s označením CASSIS Consult; nie sú označené za zákazky d/m/m. Hlavná šesťdielna geometria sa touto navigačnou opravou nemení. Otázka pridania vlastných eurofondových úlomkov čaká na odpoveď majiteľa.

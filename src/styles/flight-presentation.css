@@ -357,3 +357,18 @@
 body:not(.flight-ready) .flight-copy {
   margin-top: 50px;
 }
+
+.project-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  margin-top: 18px;
+}
+.project-quick-links .demo-entry,
+.project-quick-links .flight-demo-link {
+  margin-top: 0;
+  font-size: 12px;
+  gap: 10px;
+  min-height: 44px;
+}

@@ -71,3 +71,7 @@ Predchádzajúce lokálne overenie aktuálnej značkovej kompozície zahŕňalo 
 Recenzia v `outputs/volne-nahlady/review.txt` nadradeného pracovného chatu prijala vizuálny rozsah; jej jediný nález bol zastaraný opis rámovaného panelu v `DESIGN.md`. Tento dokumentačný krok opravuje iba príslušnú prózu a sprievodnú dokumentáciu, zachováva frontmatter aj sidecar a neopakuje runtime kontrolu, build ani snímky. Skorší screenshotový stav bol medzičasom používateľom odmietnutý a nie je aktuálnym cieľom.
 
 Ide o lokálne overenie, nie dôkaz fyzického telefónu, nameraných FPS, vnímanej kadencie, obchodného výsledku alebo publikovania. Statické zábery nepreukazujú plynulosť otáčania; deterministický uhol, ohraničenie, spätný smer a malé kroky dokladajú zdroj a testy.
+
+## Priamy vstup do eurofondových príbehov
+
+Štyri existujúce eurofondové príbehy sú dostupné priamo v indexe prác. Odkaz „Eurofondové projekty“ vedie z úvodného pracovného bloku aj z poslednej webovej zastávky na Corinex; článkové šípky sprístupnia ďalšie zachované skúsenosti. Na úzkom a nízkom viewporte sa odkazy na demo a eurofondy zoskupujú do krátkeho pružného radu s cieľmi minimálne 44px. Označenie práce v CASSIS Consult zostáva v článkoch, počet šiestich hlavných projektových úlomkov sa nemení.
