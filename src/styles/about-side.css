@@ -38,6 +38,9 @@ html.about-open .about-layer {
 html.about-cut .about-veil {
   opacity: 1;
 }
+html.about-reading .about-layer > :not(.about-veil) {
+  visibility: hidden;
+}
 .about-layer :focus-visible {
   outline: 2px solid #a4ff61;
   outline-offset: 4px;
@@ -56,11 +59,13 @@ html.about-cut .about-veil {
 }
 /* A section holds its stop for most of its height; a panel taller than the
    window first scrolls to its end (negative sticky offset), then holds. */
-.about-section {
-  min-height: 185svh;
+.about-section::after {
+  content: '';
+  display: block;
+  height: 85svh;
 }
-.about-section:last-child {
-  min-height: 100svh;
+.about-section:last-child::after {
+  display: none;
 }
 .about-panel {
   position: sticky;
@@ -483,8 +488,8 @@ html.about-fallback .about-scroller {
   position: static;
   overflow: visible;
 }
-html.about-fallback .about-section {
-  min-height: 0;
+html.about-fallback .about-section::after {
+  display: none;
 }
 html.about-fallback .about-panel,
 html.about-fallback .about-section[data-kind='arrival'] .about-panel {
