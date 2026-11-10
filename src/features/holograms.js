@@ -35,13 +35,22 @@ export function initHolograms({ root = document } = {}) {
   for (const project of projects) {
     const beacon = project.querySelector('.fragment-beacon');
     project.querySelector('.hologram').inert = true;
-    project.querySelector('.hologram').addEventListener(
-      'pointerenter',
-      (event) => {
-        if (event.pointerType === 'mouse' && project === presented) reveal(project);
-      },
-      options,
-    );
+    for (const surface of project.querySelectorAll('.hologram,.flight-copy')) {
+      surface.addEventListener(
+        'pointerenter',
+        (event) => {
+          if (event.pointerType === 'mouse' && project === presented) reveal(project);
+        },
+        options,
+      );
+      surface.addEventListener(
+        'focusin',
+        () => {
+          if (project === presented) reveal(project);
+        },
+        options,
+      );
+    }
     beacon.addEventListener(
       'pointerenter',
       (event) => {

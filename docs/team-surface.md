@@ -75,3 +75,13 @@ Ide o lokálne overenie, nie dôkaz fyzického telefónu, nameraných FPS, vním
 ## Priamy vstup do eurofondových príbehov
 
 Štyri existujúce eurofondové príbehy sú dostupné priamo v indexe prác. Odkaz „Eurofondové projekty“ vedie z úvodného pracovného bloku aj z poslednej webovej zastávky na Corinex; článkové šípky sprístupnia ďalšie zachované skúsenosti. Na úzkom a nízkom viewporte sa odkazy na demo a eurofondy zoskupujú do krátkeho pružného radu s cieľmi minimálne 44px. Označenie práce v CASSIS Consult zostáva v článkoch, počet šiestich hlavných projektových úlomkov sa nemení.
+
+## Aktuálna miestna kompozícia — 10. 11. 2026
+
+Táto zmena nahrádza staršiu hierarchiu servisného sloganu a názvu pod logom. Presný názov projektu vedie na pôvodnej strane textu (`clamp(42px, 4.7vw, 68px)`, mobil 32–42px, nízky landscape 30px). Pod ním je stručný opis (18–24px, mobil 17px), rozsah (13px, mobil 12px) a explicitný natívny odkaz „Pozrieť príbeh projektu“ s minimálnou výškou 48px / 44px. Názov sa neduplikuje pod logom. Menší pôvodný znak na protiľahlej strane má maximum 240px, na mobile a nízkom landscape 160px, vždy contain. Odkaz loga ostáva druhým natívnym vstupom do rovnakého článku.
+
+Recenzia je blízko pod článkovým odkazom s vlastným väčším odstupom (36px, mobil 24px, nízky landscape 12px). Päť rovnakou kresbou vytvorených SVG hviezd má brúsené plochy; nejde o štandardné znaky Unicode. Holografický účinok vytvára jemný lokálny svetelný závoj a textová žiara, bez blikania, ďalšej renderovacej slučky či WebGL vrstvy. Pri každom citáte sú naraz viditeľné „Demo recenzia“ aj vysvetlenie „Ilustračný text · nie je hodnotením klienta“. Nie je tu vymyslené meno, portrét, číselný súhrn ani skutočné hodnotenie.
+
+`presentationLayout()` vertikálne centruje skutočne zmeraný text na desktope s hornou hranicou aspoň 88px. Mobil začína text od 96px alebo 12 percent výšky; logo nasleduje s medzerou aspoň 24px a má najviac 96px na výšku. Výška značky aj caption sa započítava do dostupného priestoru. Každý opis, odkaz a demo citát ostáva natívny HTML obsah aj pri výpadku WebGL. Hover alebo fokus na textovom povrchu podrží čítanie rovnako ako hover na značke; scroll podržanie uvoľní.
+
+Zelený svet, šesť projektov, pomalá scrollová otáčka, úvod, priame eurofondové vstupy, funkčné ukážky a existujúce celé články zostávajú zachované. Ide o lokálne rozšírenie schváleného sveta, nie o zmenu globálnych tokenov v DESIGN.md alebo sidecare.

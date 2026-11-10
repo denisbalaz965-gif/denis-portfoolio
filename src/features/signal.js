@@ -431,8 +431,7 @@ export function initSignal() {
     const labelIndex = progress < 0.4 ? -1 : primary;
     if (lastActive !== labelIndex) {
       lastActive = labelIndex;
-      currentLabel.textContent =
-        progress < 0.4 ? 'Rozviňte nápad posúvaním' : 'Služba a jej realizácia';
+      currentLabel.textContent = progress < 0.4 ? 'Rozviňte nápad posúvaním' : 'Vybrané realizácie';
       countLabel.textContent = progress < 0.4 ? '00 / 06' : `0${primary + 1} / 06`;
     }
     const depth = String(Math.round((progress / FLIGHT_END) * 999)).padStart(3, '0');

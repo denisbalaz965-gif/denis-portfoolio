@@ -31,7 +31,9 @@ describe('Projected project holograms', () => {
     expect(button.getAttribute('aria-expanded')).toBe('true');
     expect(project.querySelector('.hologram').inert).toBe(false);
     expect(document.querySelector('dialog').open).toBe(false);
-    expect(project.querySelector('.holo-open').getAttribute('href')).toBe('#projekt/attilapark');
+    expect(project.querySelector('.project-story-link').getAttribute('href')).toBe(
+      '#projekt/attilapark',
+    );
   });
   it('keeps the panel open while moving from the object to its link, then closes on departure', () => {
     dispose = initHolograms();
@@ -43,7 +45,7 @@ describe('Projected project holograms', () => {
     };
     project.querySelector('.fragment-beacon').dispatchEvent(pointer('pointerenter'));
     expect(project.classList.contains('is-revealed')).toBe(true);
-    project.querySelector('.holo-open').dispatchEvent(pointer('pointerenter'));
+    project.querySelector('.project-story-link').dispatchEvent(pointer('pointerenter'));
     expect(project.querySelector('.hologram').inert).toBe(false);
     project.dispatchEvent(pointer('pointerleave'));
     expect(project.querySelector('.hologram').inert).toBe(true);
@@ -78,7 +80,7 @@ describe('Projected project holograms', () => {
   it('keeps article links available when WebGL has no enhanced view', () => {
     document.body.className = 'flight-fallback';
     dispose = initHolograms();
-    expect(document.querySelectorAll('.holo-open')).toHaveLength(6);
+    expect(document.querySelectorAll('.project-story-link')).toHaveLength(6);
     expect([...document.querySelectorAll('.hologram')].every((panel) => !panel.inert)).toBe(true);
   });
   it('automatically pairs one preview with the scroll without opening a dialog or locking it as a hover', () => {

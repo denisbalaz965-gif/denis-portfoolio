@@ -158,13 +158,13 @@ describe('Project fragment entry', () => {
       browser();
       previous();
     };
-    document.querySelector('.holo-open').click();
+    document.querySelector('.project-story-link').click();
     expect(document.querySelector('dialog').open).toBe(false);
     expect(captured).toHaveLength(1);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     captured[0].complete();
     expect(document.querySelector('dialog').open).toBe(false);
-    document.querySelector('.holo-open').click();
+    document.querySelector('.project-story-link').click();
     expect(captured).toHaveLength(2);
     captured[1].complete();
     expect(document.querySelector('dialog').open).toBe(true);

@@ -28,18 +28,6 @@
   color: var(--phosphor);
   font-size: 14px;
 }
-.holo-preview {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 18px 0;
-  filter: grayscale(1) sepia(0.45) hue-rotate(75deg) saturate(0.65) brightness(0.8);
-}
-.hologram .holo-scope {
-  margin: 12px 0;
-  font-size: 12px;
-  color: #a8cbb3;
-}
 .flight-ready .flight-intro {
   inset: 0;
   width: 100%;
@@ -121,12 +109,6 @@
 .holo-artwork {
   display: block;
 }
-.holo-heading {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-}
 .holo-caption {
   margin-top: 20px;
 }
@@ -191,39 +173,6 @@
   object-position: left center;
   filter: brightness(0) saturate(100%) invert(93%) sepia(25%) saturate(1200%) hue-rotate(30deg)
     brightness(105%);
-}
-.flight-ready .hologram h2 {
-  font-size: clamp(24px, 2.3vw, 30px);
-  line-height: 1.12;
-  max-width: none;
-  padding-top: 5px;
-  text-shadow: 0 2px 16px var(--world-ink);
-}
-.flight-ready .hologram .holo-scope {
-  color: var(--world-copy);
-  font-size: 14px;
-  line-height: 1.6;
-  margin: 8px 0 0;
-  max-width: 46ch;
-  text-shadow: 0 2px 12px var(--world-ink);
-}
-.flight-ready .holo-open {
-  display: inline-flex;
-  width: auto;
-  min-width: 180px;
-  gap: 40px;
-  background: transparent;
-  color: var(--phosphor);
-  padding: 12px 0;
-  margin-top: 12px;
-  border: 0;
-  border-bottom: 1px solid var(--world-rule);
-  min-height: 44px;
-  font-size: 13px;
-}
-.flight-ready .holo-open:hover {
-  background: transparent;
-  color: var(--phosphor-white);
 }
 .flight-ready .holo-dismiss {
   position: static;
@@ -296,19 +245,8 @@
     padding: 0;
     max-height: none;
   }
-  .flight-ready .hologram h2 {
-    font-size: 25px;
-  }
   .flight-ready .holo-caption {
     margin-top: 16px;
-  }
-  .flight-ready .hologram .holo-scope {
-    font-size: 13px;
-    line-height: 1.5;
-    margin-top: 8px;
-  }
-  .flight-ready .holo-open {
-    margin-top: 8px;
   }
   .flight-ready .flight-progress {
     bottom: 48px;
@@ -342,17 +280,6 @@
   .flight-ready .holo-caption {
     margin-top: 12px;
   }
-  .flight-ready .hologram h2 {
-    font-size: 22px;
-  }
-  .flight-ready .hologram .holo-scope {
-    font-size: 12px;
-    margin-top: 4px;
-  }
-  .flight-ready .holo-open {
-    margin-top: 4px;
-    padding: 8px 0;
-  }
 }
 body:not(.flight-ready) .flight-copy {
   margin-top: 50px;
@@ -371,4 +298,218 @@ body:not(.flight-ready) .flight-copy {
   font-size: 12px;
   gap: 10px;
   min-height: 44px;
+}
+
+/* Project-led case-study previews. The quote is a labelled composition demo. */
+.flight-copy p.project-summary {
+  max-width: 32ch;
+  font-size: clamp(18px, 1.65vw, 24px);
+  line-height: 1.45;
+  margin-top: 24px;
+  color: var(--phosphor-white);
+}
+.flight-copy p.project-scope {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 12px;
+  max-width: 42ch;
+  color: var(--world-copy);
+}
+.project-story-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 48px;
+  margin-top: 20px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--world-rule);
+  color: var(--phosphor);
+  font-size: 14px;
+  font-weight: 700;
+}
+.project-story-link:hover {
+  color: var(--phosphor-white);
+  border-color: currentColor;
+}
+.flight-copy .project-review {
+  margin: 36px 0 0;
+  max-width: 40ch;
+}
+.review-rating {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.rating-shards {
+  display: flex;
+  gap: 5px;
+  color: var(--phosphor);
+}
+.rating-shards svg {
+  display: block;
+  width: 18px;
+  height: 22px;
+  overflow: visible;
+}
+.rating-shards svg path:first-child {
+  fill: currentColor;
+  fill-opacity: 0.78;
+  stroke: currentColor;
+  stroke-width: 0.8;
+}
+.rating-shards svg path:last-child {
+  fill: none;
+  stroke: var(--world-ink);
+  stroke-opacity: 0.65;
+  stroke-width: 0.8;
+}
+.rating-shards svg:nth-child(even) {
+  transform: rotate(12deg) scale(0.92);
+}
+.review-demo,
+.project-review figcaption {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--world-copy);
+}
+.project-review blockquote {
+  position: relative;
+  margin: 14px 0 10px;
+  isolation: isolate;
+}
+.project-review blockquote::before {
+  content: '';
+  position: absolute;
+  inset: -8px -16px;
+  z-index: -1;
+  background: radial-gradient(ellipse at 20% 50%, #429f6220, transparent 75%);
+  pointer-events: none;
+}
+.flight-copy .project-review blockquote p {
+  margin: 0;
+  max-width: 38ch;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--phosphor-white);
+  text-shadow: 0 0 12px #72f49b35;
+}
+.flight-ready .flight-copy h2 {
+  font-size: clamp(42px, 4.7vw, 68px);
+  line-height: 1.01;
+  letter-spacing: -0.035em;
+  color: var(--phosphor-white);
+  max-width: 12ch;
+}
+.flight-ready .holo-artwork {
+  justify-content: center;
+}
+.flight-ready .brand-mark {
+  width: min(100%, 240px);
+  max-width: min(100%, 240px);
+  object-position: center;
+  opacity: 0.84;
+}
+.flight-ready .holo-caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+.brand-context {
+  margin: 0;
+  color: var(--world-copy);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.flight-ready .holo-dismiss {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+}
+@media (max-width: 760px) {
+  .flight-ready .flight-copy h2 {
+    font-size: clamp(32px, 8.8vw, 42px);
+    max-width: 15ch;
+  }
+  .flight-copy p.project-summary {
+    font-size: 17px;
+    line-height: 1.4;
+    margin-top: 16px;
+    max-width: 32ch;
+  }
+  .flight-copy p.project-scope {
+    font-size: 12px;
+    margin-top: 8px;
+    max-width: 40ch;
+  }
+  .project-story-link {
+    font-size: 13px;
+    margin-top: 12px;
+    min-height: 44px;
+  }
+  .flight-copy .project-review {
+    margin-top: 24px;
+  }
+  .flight-copy .project-review blockquote p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .project-review blockquote {
+    margin: 10px 0 8px;
+  }
+  .flight-ready .brand-mark {
+    max-width: 160px;
+    width: min(100%, 160px);
+  }
+  .flight-ready .holo-caption {
+    margin-top: 8px;
+  }
+  .brand-context {
+    font-size: 11px;
+  }
+}
+@media (min-width: 600px) and (max-height: 620px) {
+  .flight-ready .flight-copy h2 {
+    font-size: 30px;
+    max-width: 15ch;
+  }
+  .flight-copy p.project-summary {
+    font-size: 14px;
+    margin-top: 12px;
+    line-height: 1.4;
+  }
+  .flight-copy p.project-scope {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  .project-story-link {
+    margin-top: 4px;
+    font-size: 12px;
+    min-height: 44px;
+  }
+  .flight-copy .project-review {
+    margin-top: 12px;
+  }
+  .rating-shards svg {
+    width: 14px;
+    height: 17px;
+  }
+  .flight-copy .project-review blockquote p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .project-review blockquote {
+    margin: 8px 0 4px;
+  }
+  .flight-ready .brand-mark {
+    width: min(100%, 160px);
+    max-width: 160px;
+  }
+}
+body:not(.flight-ready) .project-review {
+  margin-bottom: 28px;
 }
