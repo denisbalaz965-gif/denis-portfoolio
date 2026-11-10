@@ -1,0 +1,79 @@
+/* One cue at the starting crystal; the wheel is the only animated detail. */
+.scroll-cue {
+  display: none;
+}
+.flight-ready .scroll-cue {
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: clamp(22px, 4svh, 42px);
+  width: 32px;
+  height: 48px;
+  transform: translateX(-50%);
+  color: var(--signal-green);
+  pointer-events: none;
+}
+.scroll-cue svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.scroll-mouse {
+  stroke: currentColor;
+  stroke-width: 1;
+  opacity: 0.46;
+}
+.scroll-wheel {
+  fill: currentColor;
+  animation: wheel-guide 3s ease-in-out infinite;
+}
+@keyframes wheel-guide {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+.motion-paused .scroll-wheel {
+  animation-play-state: paused;
+}
+.reader-world .scroll-cue,
+body:has(.project-viewer[open]) .scroll-cue {
+  display: none;
+}
+
+.motion-control {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  text-decoration: none;
+}
+.motion-control svg {
+  width: 20px;
+  height: 20px;
+}
+.motion-play {
+  display: none;
+}
+.motion-paused .motion-play {
+  display: block;
+}
+.motion-paused .motion-pause {
+  display: none;
+}
+.motion-control:hover {
+  color: var(--signal-green);
+}
+/* A lost drawing buffer must not cover the CSS world behind it. */
+.flight-fallback #signal-canvas {
+  display: none;
+}
+
+.flight-booting .flight-copy,
+.flight-booting .hologram {
+  transition: none;
+}

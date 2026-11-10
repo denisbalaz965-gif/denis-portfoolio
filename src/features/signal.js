@@ -15,7 +15,6 @@ import {
   activeStop,
   scrollForStop,
   scrollForContact,
-  FLIGHT_END,
   introFracture,
   scrollTurn,
   finaleAt,
@@ -80,7 +79,7 @@ export function initSignal({ about = null } = {}) {
     restoreFlightFallback();
     return () => {};
   }
-  document.body.classList.add('flight-ready');
+  document.body.classList.add('flight-ready', 'flight-booting');
   const controller = new AbortController();
   const options = { signal: controller.signal };
   const scene = new THREE.Scene();
@@ -301,17 +300,33 @@ export function initSignal({ about = null } = {}) {
       new THREE.LineBasicMaterial({ color: 0x4dba82, transparent: true, opacity: 0.25 }),
     ),
   );
-  const debris = [];
-  for (let i = 0; i < 34; i++) {
-    const geo = new THREE.BoxGeometry(0.12 + (i % 4) * 0.08, 0.015, 0.04);
-    const mesh = new THREE.Mesh(
-      geo,
-      new THREE.MeshBasicMaterial({ color: 0x386d39, wireframe: i % 3 === 0 }),
+  // The same 34 background fragments share two draw calls, rather than 34.
+  const debrisPose = new THREE.Object3D();
+  const debris = [false, true].map((wireframe) => {
+    const items = Array.from({ length: 34 }, (_, i) => i).filter(
+      (i) => (i % 3 === 0) === wireframe,
     );
-    mesh.position.set(Math.sin(i * 19.7) * 10, Math.cos(i * 13.2) * 6, -i * 2.4);
-    mesh.rotation.set(i * 0.3, i * 0.7, i * 0.9);
+    const mesh = new THREE.InstancedMesh(
+      new THREE.BoxGeometry(1, 1, 1),
+      new THREE.MeshBasicMaterial({ color: 0x386d39, wireframe }),
+      items.length,
+    );
+    mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    mesh.frustumCulled = false;
     scene.add(mesh);
-    debris.push(mesh);
+    return { mesh, items };
+  });
+  function placeDebris() {
+    debris.forEach(({ mesh, items }) => {
+      items.forEach((i, index) => {
+        debrisPose.position.set(Math.sin(i * 19.7) * 10, Math.cos(i * 13.2) * 6, -i * 2.4);
+        debrisPose.rotation.set(i * 0.3, i * 0.7, i * 0.9 + phase * 0.025 * (i % 2 ? 1 : -1));
+        debrisPose.scale.set(0.12 + (i % 4) * 0.08, 0.015, 0.04);
+        debrisPose.updateMatrix();
+        mesh.setMatrixAt(index, debrisPose.matrix);
+      });
+      mesh.instanceMatrix.needsUpdate = true;
+    });
   }
   // ---- The other side (About) ------------------------------------------------
   // The same six wedges regroup as three thirds, one per team member. Stars and
@@ -464,7 +479,6 @@ export function initSignal({ about = null } = {}) {
   let pendingReturnHash = null;
   let pointerX = 0,
     pointerY = 0,
-    lastActive = -1,
     lastPresentation = -1;
   const screen = new THREE.Vector3();
   const waypoint = {},
@@ -472,15 +486,20 @@ export function initSignal({ about = null } = {}) {
   const intro = document.querySelector('.flight-intro');
   const contact = document.querySelector('.flight-contact');
   const footer = document.querySelector('.flight-footer');
-  const flightProgress = document.querySelector('.flight-progress');
-  const instruction = document.querySelector('.flight-instruction');
-  const depthValue = document.querySelector('#depth-value');
-  const depthReadout = document.querySelector('.depth-readout');
-  const currentLabel = document.querySelector('#flight-current');
-  const countLabel = document.querySelector('#flight-count');
-  let currentDepth = '';
+  const scrollCue = document.querySelector('.scroll-cue');
+  const styles = new WeakMap();
+  function put(node, property, value) {
+    if (!node) return;
+    let previous = styles.get(node);
+    if (!previous) styles.set(node, (previous = {}));
+    if (previous[property] === value) return;
+    previous[property] = value;
+    if (property.startsWith('--')) node.style.setProperty(property, value);
+    else node.style[property] = value;
+  }
   const destination = new THREE.Vector3(),
-    merge = new THREE.Vector3();
+    merge = new THREE.Vector3(),
+    entryDirection = new THREE.Vector3();
   function readScroll() {
     target = flightAt(window.scrollY, start, distance);
     startDraw();
@@ -607,9 +626,9 @@ export function initSignal({ about = null } = {}) {
     fogMaterial.uniforms.pan.value = reader ? 0 : phases.pan;
     const primary = activeStop(progress);
     const introReveal = clamp01((progress - 0.06) / 0.18) * clamp01((0.76 - progress) / 0.2);
-    intro.style.opacity = String(introReveal * phases.front);
+    put(intro, 'opacity', String(introReveal * phases.front));
     intro.inert = introReveal * phases.front < 0.6;
-    intro.style.transform = `translate3d(0,${(1 - introReveal) * 16}px,0)`;
+    put(intro, 'transform', `translate3d(0,${(1 - introReveal) * 16}px,0)`);
     const presented = reader || entry || aboutOn ? -1 : presentationAt(progress, projects.length);
     if (presented !== lastPresentation) {
       lastPresentation = presented;
@@ -620,12 +639,11 @@ export function initSignal({ about = null } = {}) {
       );
     }
     const finale = finaleAt(progress);
-    flightProgress.style.opacity = String(finale.hud * phases.front);
     const contactShow = finale.contact * phases.front;
-    contact.style.opacity = String(contactShow);
-    contact.style.transform = `translate3d(${(1 - finale.contact) * 22}px,0,0)`;
+    put(contact, 'opacity', String(contactShow));
+    put(contact, 'transform', `translate3d(${(1 - finale.contact) * 22}px,0,0)`);
     contact.inert = contactShow < 0.98;
-    contact.style.pointerEvents = contactShow >= 0.98 ? 'auto' : 'none';
+    put(contact, 'pointerEvents', contactShow >= 0.98 ? 'auto' : 'none');
     contact.dataset.phase =
       finale.contact >= 0.98
         ? 'ready'
@@ -636,25 +654,15 @@ export function initSignal({ about = null } = {}) {
             : 'gathering';
     const footerReveal =
       reader || entry || document.querySelector('dialog[open]') ? 0 : finale.footer * phases.front;
-    footer.style.opacity = String(footerReveal);
-    footer.style.transform = `translate3d(0,${(1 - footerReveal) * 24}px,0)`;
+    put(footer, 'opacity', String(footerReveal));
+    put(footer, 'transform', `translate3d(0,${(1 - footerReveal) * 24}px,0)`);
     footer.inert = footerReveal < 0.98;
-    footer.style.pointerEvents = footerReveal >= 0.98 ? 'auto' : 'none';
+    put(footer, 'pointerEvents', footerReveal >= 0.98 ? 'auto' : 'none');
     document.body.classList.toggle('at-footer', footerReveal > 0.6);
-    instruction.style.opacity = String((progress < 0.08 ? 1 : 0) * phases.front);
-    if (side && depthReadout)
-      depthReadout.style.opacity = phases.front < 1 ? String(phases.front) : '';
-    const labelIndex = progress < 0.4 ? -1 : primary;
-    if (lastActive !== labelIndex) {
-      lastActive = labelIndex;
-      currentLabel.textContent = progress < 0.4 ? 'Rozviňte nápad posúvaním' : 'Vybrané realizácie';
-      countLabel.textContent = progress < 0.4 ? '00 / 06' : `0${primary + 1} / 06`;
-    }
-    const depth = String(Math.round((progress / FLIGHT_END) * 999)).padStart(3, '0');
-    if (depth !== currentDepth) {
-      depthValue.textContent = depth;
-      currentDepth = depth;
-    }
+    // One quiet cue at the crystal; the page itself takes over once explored.
+    const cueOpacity = (1 - clamp01(progress / 0.12)) * phases.front;
+    put(scrollCue, 'opacity', cueOpacity.toFixed(2));
+    scrollCue?.setAttribute('aria-hidden', String(cueOpacity < 0.5));
     const fracture = introFracture(progress);
     const pose = introCrystalPose(width, height);
     const finalPose = finaleCrystalPose(width, height, finale.slide);
@@ -762,7 +770,13 @@ export function initSignal({ about = null } = {}) {
         p.group.scale.setScalar(THREE.MathUtils.lerp(p.group.scale.x, third.scale, phases.gather));
       }
       p.group.children.forEach((child, j) => {
-        child.visible = j === 0 || (fracture > 0.22 && finale.gather < 0.12 && !aboutOn);
+        // Tiny satellites in the distance add draw calls without readable detail.
+        child.visible =
+          j === 0 ||
+          (fracture > 0.22 &&
+            finale.gather < 0.12 &&
+            !aboutOn &&
+            camera.position.z - p.group.position.z < 26);
         if (!child.isMesh) return;
         child.position.copy(child.userData.home);
         child.rotation.copy(child.userData.spin);
@@ -770,7 +784,7 @@ export function initSignal({ about = null } = {}) {
           const opening = clamp01((performance.now() - entry.started) / 560);
           const spread = opening * opening * (3 - 2 * opening);
           child.position.addScaledVector(
-            new THREE.Vector3(Math.sin(j * 3 + i), Math.cos(j * 2 + i), j * 0.3 - 1),
+            entryDirection.set(Math.sin(j * 3 + i), Math.cos(j * 2 + i), j * 0.3 - 1),
             spread * 1.1,
           );
           child.rotation.x += spread * (j + 1) * 0.35;
@@ -793,7 +807,7 @@ export function initSignal({ about = null } = {}) {
       const gap = camera.position.z - p.group.position.z;
       p.group.visible = !reader && (aboutOn || (gap > 1.3 && gap < 75));
       if (!p.group.visible || fracture <= 0.98 || entry || finale.gather > 0 || aboutOn) {
-        p.node.style.visibility = 'hidden';
+        put(p.node, 'visibility', 'hidden');
         p.node.classList.remove('is-approached');
         p.beacon.tabIndex = -1;
         return;
@@ -810,31 +824,26 @@ export function initSignal({ about = null } = {}) {
         x < width - 35 &&
         y > 95 &&
         y < height - 90;
-      p.node.style.visibility = visible ? 'visible' : 'hidden';
-      p.node.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
+      put(p.node, 'visibility', visible ? 'visible' : 'hidden');
+      put(p.node, 'transform', `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`);
       const approached =
         i === primary && progress > 0.4 && progress < 6.5 && Math.abs(target - progress) < 0.035;
       p.node.classList.toggle('is-approached', approached);
       p.beacon.tabIndex = approached ? 0 : -1;
-      p.node.style.setProperty(
-        '--beacon-opacity',
-        String(i === primary ? 1 : Math.max(0.3, 1 - gap / 65)),
-      );
-      p.node.style.zIndex = p.node.classList.contains('is-revealed') ? '35' : String(20 - i);
-      const h = presentationLayout(i, width, height, p);
-      p.node.classList.toggle('proof-right', h.right);
-      p.copy.style.width = `${h.copyWidth}px`;
-      p.copy.style.left = `${h.copyLeft - x}px`;
-      p.copy.style.top = `${h.copyTop - y}px`;
-      p.node.style.setProperty('--holo-x', `${h.left - x}px`);
-      p.node.style.setProperty('--holo-y', `${h.top - y}px`);
-      p.node.style.setProperty('--holo-width', `${h.width}px`);
+      put(p.node, '--beacon-opacity', String(i === primary ? 1 : Math.max(0.3, 1 - gap / 65)));
+      put(p.node, 'zIndex', p.node.classList.contains('is-revealed') ? '35' : String(20 - i));
+      const h = p.layout;
+      put(p.copy, 'left', `${(h.copyLeft - x).toFixed(1)}px`);
+      put(p.copy, 'top', `${(h.copyTop - y).toFixed(1)}px`);
+      put(p.node, '--holo-x', `${h.left - x}px`);
+      put(p.node, '--holo-y', `${h.top - y}px`);
+      put(p.node, '--holo-width', `${h.width}px`);
       const bx = Math.min(-65, h.left - x),
         by = Math.min(-65, h.top - y);
-      p.node.style.setProperty('--bridge-x', `${bx}px`);
-      p.node.style.setProperty('--bridge-y', `${by}px`);
-      p.node.style.setProperty('--bridge-width', `${Math.max(65, h.left - x + h.width) - bx}px`);
-      p.node.style.setProperty('--bridge-height', `${Math.max(80, h.top - y + 240) - by}px`);
+      put(p.node, '--bridge-x', `${bx}px`);
+      put(p.node, '--bridge-y', `${by}px`);
+      put(p.node, '--bridge-width', `${Math.max(65, h.left - x + h.width) - bx}px`);
+      put(p.node, '--bridge-height', `${Math.max(80, h.top - y + 240) - by}px`);
     });
     if (reader && readerGroup) {
       const base = projects[Math.max(0, reader.index)].z;
@@ -859,9 +868,7 @@ export function initSignal({ about = null } = {}) {
         complete();
       }
     }
-    debris.forEach((mesh, i) => {
-      mesh.rotation.z += !paused && !locked ? dt * 0.025 * (i % 2 ? 1 : -1) : 0;
-    });
+    if (!paused && !locked) placeDebris();
     if (stars) {
       stars.group.visible = phases.space > 0 && !reader;
       stars.group.position.copy(pivot);
@@ -955,19 +962,26 @@ export function initSignal({ about = null } = {}) {
     lastFogAt = -Infinity;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    projects.forEach((p) => {
+    projects.forEach((p, i) => {
       p.copyHeight = p.copy.offsetHeight;
       p.captionHeight =
         p.caption.offsetHeight + parseFloat(window.getComputedStyle(p.caption).marginTop || 0);
+      p.layout = presentationLayout(i, width, height, p);
+      p.node.classList.toggle('proof-right', p.layout.right);
+      p.copy.style.width = `${p.layout.copyWidth}px`;
     });
+    placeDebris();
     readScroll();
   }
   pause.addEventListener(
     'click',
     () => {
       paused = !paused;
+      document.body.classList.toggle('motion-paused', paused);
       pause.setAttribute('aria-pressed', String(paused));
-      pause.textContent = paused ? 'Spustiť pozadie' : 'Pozastaviť pozadie';
+      const label = paused ? 'Spustiť pozadie' : 'Pozastaviť pozadie';
+      pause.setAttribute('aria-label', label);
+      pause.title = label;
       startDraw();
     },
     options,
@@ -1038,6 +1052,8 @@ export function initSignal({ about = null } = {}) {
     homePending = false;
     settle();
     startDraw();
+    // Do not animate all fallback summaries out during the first WebGL paint.
+    requestAnimationFrame(() => document.body.classList.remove('flight-booting'));
   });
   startDraw();
   return () => {
@@ -1059,7 +1075,12 @@ export function initSignal({ about = null } = {}) {
     fogMaterial.dispose();
     fogTarget.dispose();
     renderer.dispose();
-    document.body.classList.remove('flight-ready', 'flight-fallback');
+    document.body.classList.remove(
+      'flight-ready',
+      'flight-fallback',
+      'flight-booting',
+      'motion-paused',
+    );
   };
 }
 function clamp01(value) {

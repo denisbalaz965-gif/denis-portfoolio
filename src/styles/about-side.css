@@ -336,41 +336,15 @@ html.about-side .signal-axis {
   font-style: normal;
   color: var(--about-edge);
 }
-.about-cue {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 34px;
-  margin: 0;
-  text-align: center;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--about-muted);
-  opacity: 0;
-}
 
-/* Entries. At the start the page goes both ways; the cue says what is above. */
-.about-up-cue {
-  position: absolute;
-  z-index: 31;
-  top: 84px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 14px;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #caffad;
-}
+/* About entries share the existing navigation. */
 .boundary-about {
   margin-left: auto;
   margin-right: 26px;
   font-size: 13px;
   color: #c7e7c5;
 }
-.boundary-about:hover,
-.about-up-cue:hover {
+.boundary-about:hover {
   color: #a4ff61;
 }
 .about-entry-line {
@@ -444,12 +418,6 @@ html.about-side .signal-axis {
     padding: 34px 0 44px;
     background: linear-gradient(#03080400, #030804f2 42%);
   }
-  .about-cue {
-    bottom: 104px;
-  }
-  .about-up-cue {
-    top: 72px;
-  }
 }
 @media (max-width: 760px) {
   .boundary-about {
@@ -480,12 +448,6 @@ html.about-side .signal-axis {
   .about-title {
     font-size: 40px;
   }
-  .about-cue {
-    display: none;
-  }
-  .about-up-cue {
-    top: 70px;
-  }
 }
 
 /* Without WebGL: an ordinary readable section in the document. */
@@ -513,8 +475,6 @@ html.about-fallback .about-section[data-kind='arrival'] .about-panel {
 html.about-fallback .about-names,
 html.about-fallback .about-facet-tags,
 html.about-fallback .about-nav,
-html.about-fallback .about-cue,
-html.about-fallback .about-up-cue,
 html.about-fallback .about-span {
   display: none;
 }

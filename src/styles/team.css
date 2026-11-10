@@ -39,10 +39,6 @@
   max-height: calc(78svh - 85px);
   overscroll-behavior-y: contain;
 }
-.flight-ready:has(.flight-contact:not([inert])) .depth-readout {
-  opacity: 0;
-  pointer-events: none;
-}
 .team-about > summary {
   display: flex;
   align-items: center;

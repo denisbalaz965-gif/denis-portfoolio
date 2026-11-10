@@ -308,8 +308,3 @@
     font-size: 14px;
   }
 }
-
-.flight-ready.at-footer .depth-readout {
-  opacity: 0;
-  pointer-events: none;
-}

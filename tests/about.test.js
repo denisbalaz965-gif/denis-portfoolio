@@ -93,9 +93,9 @@ describe('About layer in the document', () => {
     );
     expect(layer.querySelector('.about-cta').getAttribute('href')).toBe('#kontakt');
     expect(layer.querySelector('.about-leave').getAttribute('href')).toBe('#svet');
-    // Header, index, the upward cue at the start, contact and footer.
-    expect(document.querySelectorAll('.about-entry')).toHaveLength(5);
-    expect(document.querySelector('.flight-stage .about-up-cue').textContent).toContain('O nás');
+    // Header, index, contact and footer; one shared scroll cue at the crystal.
+    expect(document.querySelectorAll('.about-entry')).toHaveLength(4);
+    expect(document.querySelector('.scroll-cue').getAttribute('aria-label')).toContain('hore');
     expect(document.querySelector('.flight-intro a[href="#o-nas"]')).not.toBeNull();
     const nav = [...layer.querySelectorAll('.about-nav button')];
     expect(nav.map((b) => b.getAttribute('aria-label'))).toEqual([

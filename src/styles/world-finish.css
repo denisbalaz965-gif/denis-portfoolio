@@ -100,41 +100,10 @@
 .journey-enter:hover span {
   transform: translateY(5px);
 }
-.flight-ready .flight-instruction {
-  font-size: 13px;
-  bottom: 115px;
-  color: #d2ead7;
-}
-.flight-instruction span {
-  font-size: 12px;
-  color: #9bbba4;
-}
-.flight-ready .flight-progress {
-  bottom: 64px;
-  gap: 24px;
-  font-size: 12px;
-  align-items: center;
-}
-.flight-progress::before {
-  content: '';
-  width: 24px;
-  height: 1px;
-  background: #9ef1ac;
-}
-.flight-progress span:last-child {
-  color: #a5caab;
-}
 .field-coordinate {
   font-size: 10px;
   color: #94b79e;
   letter-spacing: 0.1em;
-}
-.flight-ready .depth-readout {
-  right: 35px;
-  font-size: 9px;
-}
-.depth-readout b {
-  color: #c8ffb4;
 }
 .motion-control {
   color: #a7c6ac;
@@ -557,22 +526,6 @@
   .flight-intro .journey-enter {
     min-width: 180px;
     margin-top: 24px;
-  }
-  .flight-ready .flight-instruction {
-    left: 26px;
-    bottom: 115px;
-    font-size: 12px;
-  }
-  .flight-instruction span {
-    font-size: 11px;
-  }
-  .flight-ready .flight-progress {
-    left: 26px;
-    bottom: 66px;
-    font-size: 11px;
-  }
-  .flight-ready .depth-readout {
-    right: 13px;
   }
   .flight-ready .field-coordinate {
     left: 26px;

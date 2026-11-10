@@ -175,9 +175,7 @@ export function initAbout({ root = document, members = teamMembers, story = team
   nav.append(together);
   nav.querySelectorAll('i').forEach((slash) => slash.setAttribute('aria-hidden', 'true'));
 
-  const cue = el('p', 'about-cue', 'Posúvajte ↑');
-  cue.setAttribute('aria-hidden', 'true');
-  layer.append(...sections, names, facetTags, nav, cue);
+  layer.append(...sections, names, facetTags, nav);
   layer.hidden = false;
   layer.inert = true;
   html.classList.add('about-ready');
@@ -200,9 +198,8 @@ export function initAbout({ root = document, members = teamMembers, story = team
     item.append(el('span', '', '↗'), 'O nás');
     services.before(item);
   }
-  // At the start the page goes both ways; this says what is above.
-  const upCue = make(link('about-entry about-up-cue', '#o-nas', '↑ O nás'));
-  layer.before(upCue);
+  const scrollCue = root.querySelector('.scroll-cue');
+  scrollCue?.setAttribute('aria-label', 'Posúvajte hore k tímu alebo dole k našej práci');
   const alternatives = root.querySelector('.flight-contact .contact-alternatives');
   if (alternatives) {
     const line = make(el('p', 'about-entry-line'));
@@ -252,10 +249,6 @@ export function initAbout({ root = document, members = teamMembers, story = team
     const unit = height / span;
     const start = track.offsetTop + height;
     const up = unit > 0 ? Math.max(0, Math.min(span, (start - window.scrollY) / unit)) : 0;
-    const away = unit > 0 ? Math.abs(start - window.scrollY) / unit : 1;
-    const hint = Math.max(0, 1 - away * 5);
-    put(upCue, 'opacity', hint.toFixed(2));
-    setInert(upCue, hint < 0.5);
     if (up === state.targetUp) return;
     state.targetUp = up;
     root.dispatchEvent(new Event('portfolio:about'));
@@ -309,7 +302,6 @@ export function initAbout({ root = document, members = teamMembers, story = team
     });
     const arrival = stopWeight(state.progress, 0) * split * ui;
     put(names, 'opacity', arrival.toFixed(3));
-    put(cue, 'opacity', arrival.toFixed(3));
     setInert(names, arrival < 0.6);
     nameButtons.forEach((button, index) => {
       const point = view.names[index];
@@ -442,9 +434,7 @@ export function initAbout({ root = document, members = teamMembers, story = team
       onSide = false;
       track.style.removeProperty('--about-span');
       layer.removeAttribute('style');
-      [...layer.querySelectorAll('[style]'), upCue].forEach((node) =>
-        node.removeAttribute('style'),
-      );
+      layer.querySelectorAll('[style]').forEach((node) => node.removeAttribute('style'));
       layer.querySelectorAll('*').forEach((node) => {
         if (node.inert) node.inert = false;
       });

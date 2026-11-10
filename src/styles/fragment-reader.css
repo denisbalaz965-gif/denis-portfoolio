@@ -316,9 +316,6 @@
     max-width: 37%;
   }
 }
-.reader-world .flight-instruction,
-.reader-world .flight-progress,
-.reader-world .depth-readout,
 .reader-world .field-coordinate,
 .reader-world .motion-control {
   visibility: hidden;

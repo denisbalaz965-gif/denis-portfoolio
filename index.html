@@ -59,11 +59,24 @@
       </details>
       <a class="boundary-contact" href="#kontakt">Spojme sa ↗</a>
     </header>
-    <div class="depth-readout" aria-hidden="true">
-      <span>HĹBKA</span><b id="depth-value">000</b><i></i><span>POSÚVAJ ↓</span>
-    </div>
-    <button type="button" id="signal-pause" class="motion-control" aria-pressed="false">
-      Pozastaviť pozadie
+    <button
+      type="button"
+      id="signal-pause"
+      class="motion-control"
+      aria-pressed="false"
+      aria-label="Pozastaviť pozadie"
+      title="Pozastaviť pozadie"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        aria-hidden="true"
+      >
+        <path class="motion-pause" d="M9 6v12M15 6v12" />
+        <path class="motion-play" d="m9 5 10 7-10 7Z" />
+      </svg>
     </button>
     <main id="main" class="boundary-journey flight-track">
       <div class="flight-stage">
@@ -102,9 +115,12 @@
             </div>
           </div>
         </div>
-        <p class="flight-instruction">
-          Posúvajte. Objavujte.<br /><span>Celý príbeh otvoríte kliknutím na náhľad.</span>
-        </p>
+        <div class="scroll-cue" role="img" aria-label="Posúvajte kolieskom myši">
+          <svg viewBox="0 0 32 48" fill="none" aria-hidden="true">
+            <rect class="scroll-mouse" x="5" y="2" width="22" height="38" rx="11" />
+            <rect class="scroll-wheel" x="14.5" y="10" width="3" height="8" rx="1.5" />
+          </svg>
+        </div>
         <p id="project-route-status" class="route-status" role="status" tabindex="-1" hidden>
           Tento odkaz na projekt nie je platný. Vyber si projekt z indexu prác.
         </p>
@@ -929,9 +945,6 @@
             >Firemné údaje a ďalšie informácie <span aria-hidden="true">↓</span></a
           >
           <a href="#svet" class="back-to-surface">Späť na povrch ↑</a>
-        </div>
-        <div class="flight-progress" aria-hidden="true">
-          <span id="flight-current">Objavuj posúvaním</span><span id="flight-count">00 / 06</span>
         </div>
         <section id="o-nas" class="about-layer" aria-label="O nás" hidden></section>
       </div>

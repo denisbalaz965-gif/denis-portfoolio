@@ -112,3 +112,7 @@ Zástupný obsah pre vývoj používa len doložené priradenie prác: Denis —
 ## O nás ako horná časť jednej stránky — 10. 11. 2026
 
 Po zhliadnutí prvej verzie majiteľ rozhodol, že O nás nemá byť samostatný režim po kliknutí: web je jedna súvislá stránka bez podstránok. Z úvodného kryštálu vedie posun hore k O nás, posun dole k ponuke a recenziám a potom k formuláru. Otočka je preto viazaná na posun a je vratná; samostatné správanie pri systémovom obmedzení pohybu odpadlo, platí doterajšie pravidlo pre posuvný zážitok. Brána zverejnenia a pravidlá o obsahu sa nemenia.
+
+## Úsporná navigačná vrstva — 10. 11. 2026
+
+Na výslovnú požiadavku majiteľa sa opakované pokyny na scroll, počítadlo projektov a dekoratívna hĺbka odstránili. Pri štartovom kryštáli zostáva jedna myš so zvýrazneným kolieskom, bez viditeľného návodového textu. Prístupné pomenovanie vysvetľuje smer; keď je vrstva O nás zverejniteľná, rozlišuje tím hore a práce dole. Pozastavenie pozadia zostáva ikonou s prístupným názvom. Ponuka, projektové dôkazy, články, demo štítky, kontakty a obsahová brána O nás sa nemenia.

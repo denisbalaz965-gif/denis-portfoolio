@@ -227,9 +227,7 @@
   }
 }
 @media (min-width: 600px) and (max-height: 620px) {
-  .flight-ready .flight-progress,
-  .flight-ready .field-coordinate,
-  .flight-ready .depth-readout {
+  .flight-ready .field-coordinate {
     display: none;
   }
   .hologram .service-offer h2 {
@@ -282,7 +280,6 @@ body:not(.flight-ready) .project-identity h3 {
 }
 
 @media (max-width: 760px) and (max-height: 780px) {
-  .flight-ready .flight-progress,
   .flight-ready .field-coordinate {
     display: none;
   }

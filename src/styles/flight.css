@@ -114,10 +114,6 @@
   font-size: 12px;
   color: #b8f095;
 }
-.flight-instruction,
-.flight-progress {
-  display: none;
-}
 .flight-ready .flight-track {
   height: 420svh;
 }
@@ -312,34 +308,6 @@
   opacity: 0;
   pointer-events: none;
 }
-.flight-ready .flight-instruction {
-  display: block;
-  position: absolute;
-  bottom: 95px;
-  left: var(--gutter);
-  color: #c9e8bc;
-  font-size: 12px;
-  line-height: 1.8;
-  pointer-events: none;
-  opacity: 0;
-}
-.flight-instruction span {
-  color: #9abd8b;
-  font-size: 11px;
-}
-.flight-ready .flight-progress {
-  position: absolute;
-  left: var(--gutter);
-  bottom: 55px;
-  display: flex;
-  gap: 30px;
-  font-size: 11px;
-  color: #b8e49e;
-}
-.flight-progress span:last-child {
-  color: #7ea86b;
-  font-variant-numeric: tabular-nums;
-}
 .flight-ready .boundary-field {
   background: #031008;
 }
@@ -362,11 +330,6 @@
   height: 3px;
   left: -1px;
   box-shadow: 0 0 15px #aaffbb;
-}
-.flight-ready .depth-readout {
-  right: 25px;
-  top: 42%;
-  color: #8ec798;
 }
 .route-status {
   position: fixed;
@@ -504,24 +467,6 @@
   .flight-contact .button {
     min-height: 44px;
   }
-  .flight-ready .flight-instruction {
-    left: 32px;
-    bottom: 96px;
-    font-size: 11px;
-  }
-  .flight-instruction span {
-    font-size: 10px;
-  }
-  .flight-ready .flight-progress {
-    left: 32px;
-    bottom: 58px;
-    font-size: 10px;
-    gap: 15px;
-  }
-  .flight-ready .depth-readout {
-    right: 12px;
-    top: 40%;
-  }
   .flight-ready .hologram {
     padding: 24px 21px 18px;
   }
@@ -570,12 +515,6 @@
   .flight-intro .journey-enter {
     margin-top: 12px;
   }
-  .flight-ready .flight-instruction {
-    bottom: 75px;
-  }
-  .flight-ready .flight-progress {
-    bottom: 43px;
-  }
 }
 .flight-ready .flight-project:not(.is-primary):not(.is-revealed) .beacon-name {
   opacity: 0;
@@ -590,8 +529,7 @@
 .flight-ready .flight-project:not(.is-primary):not(.is-revealed) .beacon-brackets::after {
   opacity: 0;
 }
-body:not(.flight-ready) .motion-control,
-body:not(.flight-ready) .depth-readout {
+body:not(.flight-ready) .motion-control {
   display: none;
 }
 .flight-ready .flight-project,
@@ -613,19 +551,6 @@ body:not(.flight-ready) .depth-readout {
   overflow-y: auto;
   scrollbar-width: thin;
   padding-bottom: 25px;
-}
-@media (max-width: 760px) {
-  .flight-instruction .instruction-pointer {
-    display: none;
-  }
-  .flight-instruction .instruction-touch {
-    display: inline;
-  }
-}
-@media (min-width: 761px) {
-  .flight-instruction .instruction-touch {
-    display: none;
-  }
 }
 .flight-ready .flight-project:not(.is-primary):not(.is-revealed) .fragment-beacon {
   pointer-events: none;

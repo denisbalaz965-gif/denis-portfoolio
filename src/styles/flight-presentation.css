@@ -64,18 +64,6 @@
   background: transparent;
   color: var(--phosphor-white);
 }
-.flight-ready .flight-instruction {
-  left: 50%;
-  bottom: 100px;
-  transform: translateX(-50%);
-  text-align: center;
-  width: max-content;
-  max-width: calc(100% - 48px);
-  font-size: 14px;
-}
-.flight-ready .flight-instruction span {
-  font-size: 12px;
-}
 .flight-ready .flight-copy {
   position: absolute;
   width: 36vw;
@@ -188,9 +176,6 @@
 .flight-ready .is-presented .beacon-brackets {
   opacity: 0;
 }
-.flight-ready .flight-progress {
-  font-size: 11px;
-}
 .flight-ready .signal-axis {
   opacity: 0.65;
 }
@@ -247,16 +232,6 @@
   }
   .flight-ready .holo-caption {
     margin-top: 16px;
-  }
-  .flight-ready .flight-progress {
-    bottom: 48px;
-    font-size: 10px;
-  }
-  .flight-ready .flight-instruction {
-    bottom: 105px;
-  }
-  .flight-ready .depth-readout {
-    display: none;
   }
   .flight-ready .signal-axis {
     opacity: 0.25;

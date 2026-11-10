@@ -153,13 +153,6 @@
     padding: 12px 16px;
     font-size: 13px;
   }
-  .flight-ready .flight-progress {
-    bottom: 51px;
-    font-size: 10px;
-  }
-  .flight-ready .depth-readout {
-    top: 38%;
-  }
 }
 @media (max-width: 599px) and (max-height: 679px) {
   .flight-ready .intro-identity {
@@ -178,9 +171,6 @@
   .flight-ready .intro-work .journey-enter {
     margin-top: 12px;
     min-height: 44px;
-  }
-  .flight-ready .flight-progress {
-    bottom: 42px;
   }
 }
 @media (min-width: 600px) and (max-height: 600px) {
@@ -215,9 +205,6 @@
     margin-top: 15px;
     min-height: 44px;
     padding: 10px 14px;
-  }
-  .flight-ready .flight-progress {
-    bottom: 28px;
   }
   .flight-ready .field-coordinate {
     display: none;
