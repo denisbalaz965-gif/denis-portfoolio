@@ -107,3 +107,13 @@ Na širokom viewporte má ponuka39percent šírky (najviac600px), projekt30perce
 `presentationLayout()` vracia rozdielne šírky ponuky a dôkazu, hlavný renderer iba projektuje uložené rozmery; meranie zostáva pri inicializácii/resize. V nízkom landscape sú menšie typografické roly a nepodstatný spodný HUD je skrytý, aby nekolidoval s kontaktnou akciou. WebGL rozpočty, scrollová otočka, kryštál, pozadie, index, články, staré grantové vstupy a atribúcie zostávajú. Požiadavka na rozšírenie ponuky neoprávňuje na vymyslené výsledky, skutočné recenzie ani klientské KPI.
 
 Escape uvoľní manuálne podržanie čítania, ale aktuálnu automaticky zobrazenú ponuku neskryje ani nezneprístupní. Ponuka je obsah stránky, nie zatvárateľný projektový náhľad; pri ďalšej zastávke sa normálne vymení. Staršie manuálne fragmentové správanie bez automatickej zastávky zostáva zachované.
+
+## Aktuálne rozloženie: otvorená schéma ponuky — 10. 11. 2026
+
+Používateľ odmietol konvenčné skladanie nadpis → odsek → tri rovnaké linkované riadky → tlačidlo. Primárna ponuka zostáva, mení sa jej vnútorná topológia. `service-map` zaberá200px na výšku. Tri autorské geometrické facety (inlineSVG s presnými súradnicami) sa pripájajú ku konkrétnym trom natívnym položkám zoznamu. Popisy sú vľavo30/44/33percent a zhora4/40/76percent, s rozdielnou šírkou70/56/67percent. Spojnice končia pri svojom texte; geometria je aria-hidden, význam nesie natívny zoznam. Nenahrádza funkčnú ukážku webu ani reálny projekt a nezavádza obrázkovú ilustráciu.
+
+Opis ponuky je odsadený12percent, kontaktná akcia má prirodzenú šírku a zakončuje dolný pravý okraj. Hlavný nadpis zostáva dominantný; projekt a modelová recenzia sú stále menší dôkaz na druhej strane osi. Sú tu otvorené plochy a vetvenie, nie ďalší panel alebo tri karty. Všetky faktické texty a článkové adresy ostávajú.
+
+Na mobile má mapa124px, popisy13px/1.4 a opis sa zarovná späť k ľavému okraju; pri nízkom landscape má mapa90px a popisy11px. Kontaktné ciele ostávajú aspoň44px. Na mobiloch nižších než780px sa skryje nepodstatný spodný pokyn/koordináty, aby sa viac priestoru venovalo ponuke a dôkazu. Vizuálna geometria nemá vlastnú animovaciu slučku a zostáva stabilná pri čítaní. Pôvodný scroll, WebGL rozpočty, článkové návraty a Escape dostupnosť primárnej ponuky zostávajú. Globálne tokeny a starší sidecar sa nemenia.
+
+V nízkom landscape sa kontaktná akcia zarovná na začiatok servisného stĺpca, aby sa neprekrývala s existujúcim ovládačom pozadia v pravom dolnom rohu. Desktop a portrét zachovávajú pravé zakončenie kompozície.

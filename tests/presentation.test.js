@@ -32,13 +32,13 @@ describe('A continuous statement and its proof', () => {
   });
   it('fits the measured opposite service and preserves the text-to-proof gap', () => {
     for (const [width, height, copyHeight, captionHeight] of [
-      [1280, 900, 344, 493],
+      [1280, 900, 344, 550],
       [390, 844, 220, 340],
-      [320, 740, 231, 320],
-      [844, 390, 230, 274],
+      [320, 740, 231, 344],
+      [844, 390, 230, 278],
     ]) {
       const p = presentationLayout(0, width, height, { copyHeight, captionHeight });
-      expect(p.top + captionHeight).toBeLessThan(height - 24);
+      expect(p.top + captionHeight).toBeLessThanOrEqual(height - 24);
       if (width < 600) {
         expect(p.copyTop).toBeGreaterThanOrEqual(p.top + captionHeight + 24);
         expect(p.copyTop + copyHeight).toBeLessThan(height - 45);

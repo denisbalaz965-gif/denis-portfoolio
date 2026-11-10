@@ -84,3 +84,7 @@ Majiteľ upresnil význam protiľahlých plôch: na jednej je konkrétny projekt
 ## Ponuka je hlavná — korekcia podľa snímky 10. 11. 2026
 
 Majiteľ odmietol hierarchiu v24: samotná služba bola slabšia než projekt a recenzia. Aktuálna explicitná požiadavka prevažuje starší projektovo orientovaný návrh. Šesť dvojíc preto vedie ponukou d/m/m: výrazný nadpis, zrozumiteľný prínos, tri konkrétne súčasti dodávky a kontaktné tlačidlo. Názov služby je H2 a pomenúva celú zastávku. Projekt je H3, s menším logom, vecným opisom, článkovým odkazom a tichšou modelovou recenziou. DOM aj mobilné čítanie začínajú ponukou. Mobilný skrátený dôkaz neukazuje samostatný rozsah navyše; celý rozsah zostáva v článku. Kontaktná akcia vedie na existujúci priestor kontaktu, sama nič neposiela. Ide o ponuku dodávky, nie tvrdenie o nameraných obchodných zlepšeniach. Skutočné KPI a referencie sú stále nedodané.
+
+## Priestorové rozloženie ponuky — 10. 11. 2026
+
+Majiteľ po v25 požiadal výraznejšiu kompozíciu samotnej služby. Hierarchia ponuka → dôkaz ostáva, no konvenčný zoznam troch riadkov sa nahradil otvorenou schémou: tri presne kreslené facety majú vlastné spojnice k trom natívnym textom dodávky v odlišných polohách. Geometria tým pomenúva konkrétne súčasti ponuky, nie nový klientsky výsledok či funkčné demo. Opis je mierne odsadený a kontaktná akcia uzatvára kompozíciu napravo. Ide o stabilnú SVG geometriu bez ďalšej animovacej slučky, obrázkového aktíva, rendereru alebo závislosti. Mobil má vlastné čitateľné texty, nie zmenšený raster.
