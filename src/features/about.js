@@ -1,6 +1,7 @@
 import { teamMembers, teamStory } from '../data/team-members.js';
 import { findProject } from '../data/portfolio-projects.js';
 import {
+  aboutAt,
   aboutSpan,
   aboutStops,
   aboutUpFor,
@@ -240,8 +241,14 @@ export function initAbout({ root = document, members = teamMembers, story = team
   };
 
   // Scroll position above the start of the flight, in viewports.
+  let knownPixels = pixels();
   function sync() {
     const height = pixels();
+    // The span changes only when the viewport itself does (rotation, window
+    // size), never with the browser bars. Until the resize handler has put the
+    // page back on its stop, the offset the browser reports is not a position.
+    if (knownPixels === 0) knownPixels = height;
+    if (height !== knownPixels) return;
     const unit = height / span;
     const start = track.offsetTop + height;
     const up = unit > 0 ? Math.max(0, Math.min(span, (start - window.scrollY) / unit)) : 0;
@@ -373,9 +380,13 @@ export function initAbout({ root = document, members = teamMembers, story = team
   window.addEventListener(
     'resize',
     () => {
-      // The same scroll offset means a different stop once the viewport changes.
-      if (!fallback() && state.turn >= 1 && state.split >= 1)
-        goTo(Math.round(state.progress), 'instant');
+      // The same scroll offset means a different place once the viewport changes:
+      // return to the stop the visitor was on. Browser bars leave the span alone.
+      if (pixels() !== knownPixels) {
+        knownPixels = pixels();
+        const at = aboutAt(state.targetUp, stops.length);
+        if (!fallback() && at.split >= 1) goTo(Math.round(at.progress), 'instant');
+      }
       measure();
       sync();
     },

@@ -22,6 +22,7 @@ const view = (extra = {}) => ({
 });
 let dispose = () => {};
 let scrollY = 0;
+let spanPx = SPAN;
 const open = () => {
   const about = initAbout({ members: fixtureMembers, story: fixtureStory });
   dispose = about.dispose;
@@ -30,9 +31,10 @@ const open = () => {
 
 beforeEach(() => {
   scrollY = 0;
+  spanPx = SPAN;
   vi.spyOn(window, 'scrollY', 'get').mockImplementation(() => scrollY);
   vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockImplementation(function () {
-    return this.classList.contains('about-span') ? SPAN : 0;
+    return this.classList.contains('about-span') ? spanPx : 0;
   });
   if (!Element.prototype.scrollIntoView) Element.prototype.scrollIntoView = function () {};
   window.history.replaceState(null, '', '/');
@@ -212,13 +214,39 @@ describe('One continuous scroll', () => {
     about.scene.frame(view());
     expect(Number(arrival.style.opacity)).toBe(1);
   });
-  it('stays on the same stop after a resize', () => {
+  it('returns to the same stop when the viewport itself changes size', () => {
     const about = open();
-    Object.assign(about.scene.state, { up: aboutUpFor(5), turn: 1, split: 1, progress: 5 });
+    scrollY = topFor(5);
+    window.dispatchEvent(new Event('scroll'));
+    expect(about.scene.state.targetUp).toBeCloseTo(aboutUpFor(5));
+    // Rotation: a viewport of 400 px. The browser first reports a clamped offset.
+    spanPx = aboutSpan(8) * 400;
+    scrollY = 120;
+    window.scrollTo.mockClear();
+    window.dispatchEvent(new Event('scroll'));
+    expect(about.scene.state.targetUp).toBeCloseTo(aboutUpFor(5));
+    window.dispatchEvent(new Event('resize'));
+    expect(window.scrollTo).toHaveBeenLastCalledWith({
+      top: spanPx - aboutUpFor(5) * 400,
+      behavior: 'instant',
+    });
+  });
+  it('leaves the scroll alone when only the browser bars resize the window', () => {
+    const about = open();
+    scrollY = topFor(5) - 90;
+    window.dispatchEvent(new Event('scroll'));
+    const target = about.scene.state.targetUp;
+    Object.assign(about.scene.state, { up: target, turn: 1, split: 1, progress: 5 });
     window.scrollTo.mockClear();
     window.dispatchEvent(new Event('resize'));
-    expect(window.scrollTo).toHaveBeenLastCalledWith({ top: topFor(5), behavior: 'instant' });
-    Object.assign(about.scene.state, { up: 0, turn: 0, split: 0, progress: 0 });
+    expect(window.scrollTo).not.toHaveBeenCalled();
+    expect(about.scene.state.targetUp).toBe(target);
+  });
+  it('does not move the flight side on a resize', () => {
+    open();
+    scrollY = SPAN + 900;
+    window.dispatchEvent(new Event('scroll'));
+    spanPx = aboutSpan(8) * 400;
     window.scrollTo.mockClear();
     window.dispatchEvent(new Event('resize'));
     expect(window.scrollTo).not.toHaveBeenCalled();
