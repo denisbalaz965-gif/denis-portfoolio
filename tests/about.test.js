@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { initAbout } from '../src/features/about.js';
 import { aboutSpan, aboutUpFor } from '../src/features/about-model.js';
 import { restoreFlightFallback } from '../src/features/flight-fallback.js';
+import { initProjectBrowser } from '../src/features/project-browser.js';
 import { fixtureMembers, fixtureStory } from '../src/data/team-members.fixture.js';
 
 const page = readFileSync(resolve(process.cwd(), 'index.html'), 'utf8');
@@ -175,11 +176,19 @@ describe('One continuous scroll', () => {
   });
   it('leaves the contact and home links to the flight', () => {
     open();
+    // Registered after About, so it sees About's decision; it then stops jsdom
+    // from navigating, which would otherwise land in a later test.
+    let claimed = null;
+    const record = (event) => {
+      claimed = event.defaultPrevented;
+      event.preventDefault();
+    };
+    document.addEventListener('click', record);
     for (const selector of ['.about-cta', '.about-leave', '.boundary-contact']) {
-      const click = new MouseEvent('click', { bubbles: true, cancelable: true });
-      document.querySelector(selector).dispatchEvent(click);
-      expect(click.defaultPrevented).toBe(false);
+      document.querySelector(selector).click();
+      expect(claimed).toBe(false);
     }
+    document.removeEventListener('click', record);
   });
   it('shows the stop the scroll is on and nothing while on the front', () => {
     const about = open();
@@ -263,6 +272,53 @@ describe('One continuous scroll', () => {
   });
 });
 
+describe('Articles opened from a profile', () => {
+  const popped = () =>
+    new Promise((resolve) => window.addEventListener('popstate', resolve, { once: true }));
+  const readFromProfile = () => {
+    const about = open();
+    const browser = initProjectBrowser({ animate: false });
+    dispose = () => (browser(), about.dispose());
+    // The visitor arrives by the header entry, then scrolls up to Denis's work.
+    document.querySelector('.boundary-nav .about-entry').click();
+    scrollY = topFor(2);
+    window.dispatchEvent(new Event('scroll'));
+    document.querySelector('#o-nas-denis-praca .about-works a').click();
+    expect(document.querySelector('#project-viewer').open).toBe(true);
+    window.scrollTo.mockClear();
+  };
+  const jumpedToArrival = () =>
+    window.scrollTo.mock.calls.some(([options]) => options?.top === topFor(0));
+
+  it('keeps the reading position when the article is closed', async () => {
+    readFromProfile();
+    const back = popped();
+    document.querySelector('#project-viewer .case-toolbar [data-case-close]').click();
+    await back;
+    expect(window.location.hash).toBe('#o-nas');
+    expect(jumpedToArrival()).toBe(false);
+  });
+  it('keeps the reading position when the browser goes back from the article', async () => {
+    readFromProfile();
+    const back = popped();
+    window.history.back();
+    await back;
+    expect(document.querySelector('#project-viewer').open).toBe(false);
+    expect(jumpedToArrival()).toBe(false);
+  });
+  it('still follows a later Back to an About address', async () => {
+    readFromProfile();
+    let back = popped();
+    document.querySelector('#project-viewer .case-toolbar [data-case-close]').click();
+    await back;
+    window.history.pushState(null, '', '#kontakt');
+    back = popped();
+    window.history.back();
+    await back;
+    expect(window.scrollTo).toHaveBeenLastCalledWith({ top: topFor(0), behavior: 'instant' });
+  });
+});
+
 describe('Panels that do not fit', () => {
   it('marks a panel that has to scroll inside itself, and only that one', () => {
     const tall = (el) =>
@@ -294,17 +350,37 @@ describe('About without WebGL', () => {
     expect(document.querySelector('.flight-track').style.getPropertyValue('--about-span')).toBe('');
     expect(about.scene.span()).toBe(0);
   });
-  it('leaves entries as plain anchors and leads addresses to their section', () => {
+  it('leads an address to its section on load', () => {
     window.history.replaceState(null, '', `#o-nas/${fixtureMembers[1].id}`);
     open();
     const target = document.querySelector('#o-nas-martin');
     const shown = vi.spyOn(target, 'scrollIntoView');
     restoreFlightFallback();
     expect(shown).toHaveBeenCalled();
+  });
+  it('leads later addresses to their sections, by link and by history', () => {
+    open();
+    restoreFlightFallback();
     window.scrollTo.mockClear();
+    const martin = vi.spyOn(document.querySelector('#o-nas-martin'), 'scrollIntoView');
+    const shared = document.createElement('a');
+    shared.href = '#o-nas/martin';
+    document.querySelector('.flight-contact').append(shared);
     const click = new MouseEvent('click', { bubbles: true, cancelable: true });
-    document.querySelector('.about-entry').dispatchEvent(click);
-    expect(click.defaultPrevented).toBe(false);
+    shared.dispatchEvent(click);
+    expect(click.defaultPrevented).toBe(true);
+    expect(martin).toHaveBeenCalled();
+    expect(window.location.hash).toBe('#o-nas/martin');
+
+    const miros = vi.spyOn(document.querySelector('#o-nas-miros'), 'scrollIntoView');
+    window.history.pushState(null, '', '#o-nas/miros');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+    expect(miros).toHaveBeenCalled();
+
+    const arrival = vi.spyOn(document.querySelector('#o-nas'), 'scrollIntoView');
+    document.querySelector('.boundary-nav .about-entry').click();
+    expect(arrival).toHaveBeenCalled();
+    // The flight's scroll mapping does not exist here; nothing may use it.
     expect(window.scrollTo).not.toHaveBeenCalled();
   });
 });

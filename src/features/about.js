@@ -340,11 +340,20 @@ export function initAbout({ root = document, members = teamMembers, story = team
     if (stop !== currentStop) markCurrent(stop);
   }
 
+  // Without WebGL there is no scroll mapping: the stops are plain sections.
+  function show(stop, behavior = 'smooth') {
+    if (!fallback()) goTo(stop, behavior);
+    else
+      (stop === 0 ? layer : sections[stop]).scrollIntoView({
+        block: 'start',
+        behavior: behavior === 'instant' ? 'auto' : behavior,
+      });
+  }
+
   root.addEventListener(
     'click',
     (event) => {
       if (
-        fallback() ||
         event.defaultPrevented ||
         event.metaKey ||
         event.ctrlKey ||
@@ -360,9 +369,9 @@ export function initAbout({ root = document, members = teamMembers, story = team
       if (stop !== null) {
         // An About address is a place on this page, like the index anchors.
         event.preventDefault();
-        goTo(stop);
+        show(stop);
         if (window.location.hash !== hash) window.history.pushState(null, '', hash);
-      } else if (!layer.contains(target)) return;
+      } else if (fallback() || !layer.contains(target)) return;
       else if (target.dataset.member !== undefined) {
         const member = Number(target.dataset.member);
         goTo(stops.findIndex((entry) => entry.kind === 'who' && entry.member === member));
@@ -370,10 +379,26 @@ export function initAbout({ root = document, members = teamMembers, story = team
     },
     options,
   );
+  // Leaving an article restores the reading position itself. The address it
+  // returns to is only the one the visitor arrived by, so it must not move the
+  // page; the flight in signal.js skips the same return the same way.
+  let articleReturn = null;
+  root.addEventListener(
+    'portfolio:return',
+    (event) => {
+      // Sent while the article's own entry is current (its close button). The
+      // copy sent after a browser Back names the current address and is late.
+      if (event.detail?.hash !== window.location.hash) articleReturn = event.detail?.hash ?? null;
+    },
+    options,
+  );
   const route = () => {
-    if (fallback()) return;
+    const expected = articleReturn;
+    articleReturn = null;
+    // A Back while reading: this listener runs before the reader closes itself.
+    if (viewer?.open || window.location.hash === expected) return;
     const stop = parseAboutHash(window.location.hash, stops, members);
-    if (stop !== null) goTo(stop, 'instant');
+    if (stop !== null) show(stop, 'instant');
   };
   window.addEventListener('popstate', route, options);
   window.addEventListener('scroll', sync, { passive: true, signal: controller.signal });
