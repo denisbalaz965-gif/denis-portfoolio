@@ -1,0 +1,504 @@
+/* The other side of the world: the About layer. Imported last. */
+.about-layer {
+  --about-text: #e0f3d4;
+  --about-muted: #a7bea0;
+  --about-edge: #35552d;
+  --about-phosphor: #b6ff7c;
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  visibility: hidden;
+  font:
+    18px/1.6 Instrument,
+    Arial,
+    sans-serif;
+  color: var(--about-text);
+}
+.about-layer[hidden] {
+  display: none;
+}
+html.about-open {
+  overflow: hidden;
+}
+html.about-open .about-layer {
+  visibility: visible;
+}
+/* The veil covers the calm cross-fade and the cut into an article, so it has
+   to show even while the rest of the layer is still hidden. */
+.about-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  visibility: visible;
+  background: #030804;
+  opacity: var(--about-veil, 0);
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+html.about-cut .about-veil {
+  opacity: 1;
+}
+.about-layer :focus-visible {
+  outline: 2px solid #a4ff61;
+  outline-offset: 4px;
+}
+
+.about-scroller {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  outline: none;
+}
+.about-scroller::-webkit-scrollbar {
+  display: none;
+}
+/* A section holds its stop for most of its height; a panel taller than the
+   window first scrolls to its end (negative sticky offset), then holds. */
+.about-section {
+  min-height: 185svh;
+}
+.about-section:last-child {
+  min-height: 100svh;
+}
+.about-panel {
+  position: sticky;
+  top: calc(-1 * var(--about-overflow, 0px));
+  box-sizing: border-box;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 16px;
+  padding: 110px var(--gutter) 96px 54%;
+  transform: translate3d(0, var(--shift, 0px), 0);
+  will-change: opacity, transform;
+}
+.about-panel > * {
+  max-width: 620px;
+  margin: 0;
+}
+.about-section[data-kind='arrival'] .about-panel {
+  align-content: start;
+  justify-items: center;
+  padding: 15svh var(--gutter) 0;
+  text-align: center;
+  gap: 10px;
+}
+.about-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--about-phosphor);
+}
+.about-title,
+.about-sentence,
+.about-heading {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: #e6ffe8;
+}
+.about-title {
+  font-size: clamp(44px, 6.3vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.about-sentence,
+.about-heading {
+  font-size: clamp(30px, 3.5vw, 54px);
+  line-height: 1.04;
+}
+.about-lead {
+  font-size: clamp(18px, 1.6vw, 22px);
+}
+.about-bio,
+.about-story {
+  display: grid;
+  gap: 10px;
+}
+.about-bio p,
+.about-story p {
+  margin: 0;
+}
+.about-role {
+  font-size: 15px;
+  color: var(--about-muted);
+}
+.about-portrait {
+  width: 104px;
+  height: 128px;
+  background: linear-gradient(160deg, #1d5a36, #07190e 70%);
+  clip-path: polygon(50% 0, 100% 36%, 78% 100%, 14% 92%, 0 30%);
+}
+.about-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: luminosity;
+  filter: contrast(1.1);
+}
+.about-skills,
+.about-works,
+.about-principles {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+.about-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  font-size: 16px;
+  color: var(--about-phosphor);
+}
+.about-skills li::before {
+  content: '◆';
+  margin-right: 8px;
+  font-size: 10px;
+  vertical-align: 2px;
+}
+.about-works {
+  border-bottom: 1px solid var(--about-edge);
+}
+.about-works a {
+  display: grid;
+  gap: 2px;
+  padding: 13px 0;
+  border-top: 1px solid var(--about-edge);
+  color: inherit;
+}
+.about-works b {
+  font-size: 19px;
+  color: #e6ffe8;
+}
+.about-works b::after {
+  content: ' ↗';
+  color: var(--about-phosphor);
+}
+.about-works span {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--about-muted);
+}
+.about-works a:hover b {
+  color: #a4ff61;
+}
+.about-principles {
+  display: grid;
+  gap: 6px;
+  color: var(--about-phosphor);
+}
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  font-size: 15px;
+}
+.about-links a {
+  padding: 12px 0;
+  color: var(--about-phosphor);
+}
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 26px;
+  margin-top: 8px;
+}
+.about-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 14px 22px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #092315;
+  background: #b6ff9e;
+  transition: background 0.2s;
+}
+.about-cta:hover {
+  background: #d6ffc5;
+}
+.about-leave {
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 14px 4px;
+  font-size: 16px;
+  color: inherit;
+  border-bottom: 1px solid var(--about-edge);
+}
+.about-leave:hover {
+  color: #a4ff61;
+  border-color: #a4ff61;
+}
+
+.about-names,
+.about-facet-tags {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+  opacity: 0;
+}
+.about-names button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-width: 96px;
+  min-height: 56px;
+  padding: 8px 12px;
+  background: none;
+  color: inherit;
+  pointer-events: auto;
+  will-change: transform;
+}
+.about-names b {
+  font-size: 30px;
+  line-height: 1;
+  color: var(--about-phosphor);
+}
+.about-names span {
+  font-size: 15px;
+}
+.about-names button:hover span {
+  color: #a4ff61;
+}
+.about-facet-tags li {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 13px;
+  white-space: nowrap;
+  color: var(--about-muted);
+  will-change: transform;
+}
+
+.about-nav {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: var(--about-ui, 0);
+}
+.about-nav button {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0 10px;
+  background: none;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: #63914c;
+  transition: color 0.2s;
+}
+.about-nav .about-nav-name,
+.about-nav .about-nav-together {
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 0;
+}
+.about-nav .about-nav-name {
+  display: none;
+}
+.about-nav button[aria-current='true'] .about-nav-name {
+  display: inline;
+}
+.about-nav button:hover,
+.about-nav button[aria-current='true'] {
+  color: var(--about-phosphor);
+}
+.about-nav i {
+  font-style: normal;
+  color: var(--about-edge);
+}
+.about-cue {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 34px;
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--about-muted);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Entries and the persistent way back. */
+.boundary-about {
+  margin-left: auto;
+  margin-right: 26px;
+  font-size: 13px;
+  color: #c7e7c5;
+}
+.boundary-about:hover,
+.about-back:hover {
+  color: #a4ff61;
+}
+.about-back {
+  display: none;
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 13px 16px;
+  font-size: 13px;
+  color: #c7efb6;
+  background: #08170d99;
+  border: 1px solid var(--signal-edge, #35552d);
+}
+html.about-open .about-back {
+  display: block;
+}
+html.about-open .project-index,
+html.about-open .boundary-about {
+  display: none;
+}
+.about-entry-line {
+  margin: 0 0 6px;
+}
+.about-entry-line a,
+.about-entry-footer {
+  display: inline-block;
+  padding: 12px 0;
+  font-size: 14px;
+  color: #caffad;
+  border-bottom: 1px solid #35552d;
+}
+.about-entry-line a:hover,
+.about-entry-footer:hover {
+  border-color: #a4ff61;
+}
+
+@media (max-width: 760px) {
+  .about-layer {
+    font-size: 17px;
+  }
+  .about-panel {
+    align-content: start;
+    gap: 12px;
+    padding: 39svh 22px 110px;
+  }
+  .about-section[data-kind='arrival'] .about-panel {
+    padding: 13svh 22px 0;
+  }
+  .about-title {
+    font-size: 46px;
+  }
+  .about-sentence,
+  .about-heading {
+    font-size: clamp(26px, 7.4vw, 32px);
+  }
+  .about-portrait {
+    width: 72px;
+    height: 88px;
+  }
+  .about-works a {
+    padding: 10px 0;
+  }
+  .about-works b {
+    font-size: 17px;
+  }
+  .about-works span {
+    font-size: 14px;
+  }
+  .about-facet-tags {
+    display: none;
+  }
+  .about-names button {
+    min-width: 84px;
+  }
+  .about-nav {
+    left: 0;
+    right: 0;
+    bottom: 44px;
+    justify-content: center;
+  }
+  .about-cue {
+    bottom: 100px;
+  }
+  .boundary-about {
+    display: none;
+  }
+  .about-back {
+    top: 21px;
+    left: auto;
+    right: 22px;
+    transform: none;
+  }
+}
+@media (max-height: 560px) and (min-width: 600px) {
+  .about-panel {
+    gap: 8px;
+    padding-top: 84px;
+    padding-bottom: 70px;
+  }
+  .about-sentence,
+  .about-heading {
+    font-size: 24px;
+  }
+  .about-portrait {
+    display: none;
+  }
+  .about-works a {
+    padding: 6px 0;
+  }
+  .about-works span {
+    font-size: 13px;
+  }
+  .about-section[data-kind='arrival'] .about-panel {
+    padding-top: 17svh;
+  }
+  .about-title {
+    font-size: 40px;
+  }
+  .about-cue {
+    display: none;
+  }
+}
+
+/* Without WebGL: an ordinary readable section in the document. */
+html.about-fallback .about-layer {
+  position: static;
+  visibility: visible;
+  padding: 80px var(--gutter);
+}
+html.about-fallback .about-scroller {
+  position: static;
+  overflow: visible;
+}
+html.about-fallback .about-section {
+  min-height: 0;
+}
+html.about-fallback .about-panel,
+html.about-fallback .about-section[data-kind='arrival'] .about-panel {
+  position: static;
+  min-height: 0;
+  padding: 28px 0;
+  justify-items: start;
+  text-align: left;
+  transform: none;
+}
+html.about-fallback .about-names,
+html.about-fallback .about-facet-tags,
+html.about-fallback .about-nav,
+html.about-fallback .about-cue,
+html.about-fallback .about-veil {
+  display: none;
+}
