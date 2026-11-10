@@ -13,7 +13,7 @@ describe('Bounded GPU work', () => {
       const ratio = scenePixelRatio(width, height, dpr);
       expect(ratio).toBeGreaterThan(0);
       expect(ratio).toBeLessThanOrEqual(dpr);
-      expect(width * height * ratio * ratio).toBeLessThanOrEqual(width < 761 ? 550001 : 1000001);
+      expect(width * height * ratio * ratio).toBeLessThanOrEqual(width < 761 ? 1400001 : 8500001);
     }
   });
   it('bounds the expensive background separately without stretching its aspect ratio', () => {
@@ -24,8 +24,18 @@ describe('Bounded GPU work', () => {
       [740, 360],
     ]) {
       const field = fogDimensions(width, height);
-      expect(Math.max(field.width, field.height)).toBeLessThanOrEqual(448);
+      expect(Math.max(field.width, field.height)).toBeLessThanOrEqual(width < 761 ? 640 : 960);
       expect(Math.abs(field.width / field.height - width / height)).toBeLessThan(0.015);
     }
+  });
+  it('does not enlarge a sub-native foreground on the owner desktop or a 4K display', () => {
+    for (const [width, height] of [
+      [1944, 984],
+      [3840, 2160],
+    ]) {
+      expect(scenePixelRatio(width, height, 2)).toBeGreaterThanOrEqual(1);
+      expect(fogDimensions(width, height).width).toBe(960);
+    }
+    expect(scenePixelRatio(390, 844, 3)).toBeGreaterThan(1.5);
   });
 });

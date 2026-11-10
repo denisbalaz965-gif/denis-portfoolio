@@ -1,5 +1,6 @@
 export const FLIGHT_STOPS = 6;
-export const FLIGHT_END = 8.35;
+export const FLIGHT_END = 9.65;
+export const CONTACT_STOP = 8.25;
 export const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 export function scrollTurn(progress, distance = FLIGHT_END) {
   return clamp(progress / Math.max(1, distance), 0, 1) * Math.PI * 2;
@@ -9,6 +10,9 @@ export function flightAt(scrollY, start, distance) {
 }
 export function scrollForStop(index, start, distance) {
   return start + ((clamp(index, 0, FLIGHT_STOPS - 1) + 1) / FLIGHT_END) * distance;
+}
+export function scrollForContact(start, distance) {
+  return start + (CONTACT_STOP / FLIGHT_END) * distance;
 }
 export function activeStop(progress) {
   // Hand off while the previous fragment is leaving, before it clears the viewport.
@@ -39,6 +43,8 @@ export function finaleAt(progress) {
     slide: ease(7.25, 7.82),
     reveal: ease(7.66, 8.1),
     hud: 1 - ease(6.22, 6.6),
+    contact: ease(7.66, 8.1) * (1 - ease(8.65, 9.05)),
+    footer: ease(8.95, 9.4),
   };
 }
 export function chapterProgress(scrollTop, unit, count) {

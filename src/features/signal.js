@@ -14,6 +14,7 @@ import {
   flightAt,
   activeStop,
   scrollForStop,
+  scrollForContact,
   FLIGHT_END,
   introFracture,
   scrollTurn,
@@ -35,11 +36,13 @@ void main(){
  float b=field(p*4.5+vec2(a*2.5-time*.025,time*.045));
  float fog=pow(max(0.0,a*b),1.2);
  float vein=pow(max(0.0,1.0-abs(b-.47)*12.0),3.0)*.11;
- float contour=pow(max(0.,1.-abs(fract(a*7.+b*3.)-.5)*85.),2.);
+ float contourField=a*7.+b*3.;
+ float contourWidth=max(fwidth(contourField)*.6,.012);
+ float contour=1.-smoothstep(contourWidth*.25,contourWidth,abs(fract(contourField)-.5));
  float rift=exp(-abs(p.x+.12+sin(p.y*2.+b*2.+time*.018)*.23)*9.);
  float streak=pow(max(0.,1.-abs(sin(atan(p.y,p.x)*17.+a*3.))*18.),8.)*.012;
  float center=1.0-smoothstep(.0,1.1,length(p-vec2(.16,.05)));
- vec3 color=vec3(.003,.012,.010)+vec3(.045,.33,.14)*fog*(.8+center*1.4)+vec3(.06,.5,.18)*vein+vec3(.07,.52,.22)*rift*.18+vec3(.08,.42,.18)*contour*.18+vec3(.1,.6,.28)*streak;
+ vec3 color=vec3(.003,.012,.010)+vec3(.045,.33,.14)*fog*(.8+center*1.4)+vec3(.06,.5,.18)*vein+vec3(.07,.52,.22)*rift*.18+vec3(.08,.42,.18)*contour*.035+vec3(.1,.6,.28)*streak;
  color*=.63+.37*(1.0-smoothstep(.2,1.0,length(p)));
  gl_FragColor=vec4(color,1.0);
 }`;
@@ -314,6 +317,7 @@ export function initSignal() {
     worldPoint = {};
   const intro = document.querySelector('.flight-intro');
   const contact = document.querySelector('.flight-contact');
+  const footer = document.querySelector('.flight-footer');
   const flightProgress = document.querySelector('.flight-progress');
   const instruction = document.querySelector('.flight-instruction');
   const depthValue = document.querySelector('#depth-value');
@@ -330,10 +334,12 @@ export function initSignal() {
     document.dispatchEvent(new Event('portfolio:flight-jump'));
     const top =
       index === 'contact'
-        ? start + distance
-        : index === 'intro'
-          ? start
-          : scrollForStop(index, start, distance);
+        ? scrollForContact(start, distance)
+        : index === 'footer'
+          ? start + distance
+          : index === 'intro'
+            ? start
+            : scrollForStop(index, start, distance);
     if (behavior === 'instant') {
       target = flightAt(top, start, distance);
       progress = target;
@@ -345,7 +351,7 @@ export function initSignal() {
   function revealTeam() {
     const about = document.querySelector('.flight-about');
     about.open = true;
-    contact.scrollTop = about.offsetTop;
+    footer.scrollTop += about.getBoundingClientRect().top - footer.getBoundingClientRect().top;
   }
   function route() {
     const hash = window.location.hash;
@@ -355,10 +361,13 @@ export function initSignal() {
     }
     const index = nodes.findIndex((node) => '#' + node.id === hash);
     if (index >= 0) jump(index, null, 'instant');
-    else if (['#kontakt', '#o-mne'].includes(hash)) {
-      jump('contact', null, 'instant');
+    else if (['#firemne-udaje', '#o-mne'].includes(hash)) {
+      jump('footer', null, 'instant');
       if (hash === '#o-mne') revealTeam();
-      else contact.scrollTop = 0;
+      else footer.scrollTop = 0;
+    } else if (hash === '#kontakt') {
+      jump('contact', null, 'instant');
+      contact.scrollTop = 0;
     } else if (hash === '#svet') jump('intro', null, 'instant');
   }
   document.addEventListener(
@@ -380,11 +389,15 @@ export function initSignal() {
       if (index >= 0) {
         event.preventDefault();
         jump(index, hash);
-      } else if (['#kontakt', '#o-mne'].includes(hash)) {
+      } else if (['#firemne-udaje', '#o-mne'].includes(hash)) {
+        event.preventDefault();
+        jump('footer', hash);
+        if (hash === '#o-mne') revealTeam();
+        else footer.scrollTop = 0;
+      } else if (hash === '#kontakt') {
         event.preventDefault();
         jump('contact', hash);
-        if (hash === '#o-mne') revealTeam();
-        else contact.scrollTop = 0;
+        contact.scrollTop = 0;
       } else if (hash === '#svet') {
         event.preventDefault();
         jump('intro', hash);
@@ -430,12 +443,25 @@ export function initSignal() {
     }
     const finale = finaleAt(progress);
     flightProgress.style.opacity = String(finale.hud);
-    contact.style.opacity = String(finale.reveal);
-    contact.style.transform = `translate3d(${(1 - finale.reveal) * 22}px,0,0)`;
-    contact.inert = finale.reveal < 0.98;
-    contact.style.pointerEvents = finale.reveal >= 0.98 ? 'auto' : 'none';
+    contact.style.opacity = String(finale.contact);
+    contact.style.transform = `translate3d(${(1 - finale.contact) * 22}px,0,0)`;
+    contact.inert = finale.contact < 0.98;
+    contact.style.pointerEvents = finale.contact >= 0.98 ? 'auto' : 'none';
     contact.dataset.phase =
-      finale.reveal >= 0.98 ? 'ready' : finale.slide > 0 ? 'sliding' : 'gathering';
+      finale.contact >= 0.98
+        ? 'ready'
+        : finale.footer > 0
+          ? 'footer'
+          : finale.slide > 0
+            ? 'sliding'
+            : 'gathering';
+    const footerReveal =
+      reader || entry || document.querySelector('dialog[open]') ? 0 : finale.footer;
+    footer.style.opacity = String(footerReveal);
+    footer.style.transform = `translate3d(0,${(1 - footerReveal) * 24}px,0)`;
+    footer.inert = footerReveal < 0.98;
+    footer.style.pointerEvents = footerReveal >= 0.98 ? 'auto' : 'none';
+    document.body.classList.toggle('at-footer', footerReveal > 0.6);
     instruction.style.opacity = String(progress < 0.08 ? 1 : 0);
     const labelIndex = progress < 0.4 ? -1 : primary;
     if (lastActive !== labelIndex) {
@@ -451,6 +477,9 @@ export function initSignal() {
     const fracture = introFracture(progress);
     const pose = introCrystalPose(width, height);
     const finalPose = finaleCrystalPose(width, height, finale.slide);
+    if (width >= 761 || height < 600) finalPose.y -= finale.footer * 0.32;
+    finalPose.scale *= 1 - finale.footer * 0.5;
+    if (height < 600) finalPose.scale *= 1 - finale.footer;
     merge.set(pose.x, pose.y, 4);
     projects.forEach((p, i) => {
       p.copy.inert = i !== presented;

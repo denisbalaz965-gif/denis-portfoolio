@@ -141,7 +141,7 @@ describe('Loss of 3D mid-flight', () => {
   it('restores all project links, introduction and contact and stops hiding them on later scroll', () => {
     dispose = initHolograms();
     document.querySelector('.fragment-beacon').click();
-    for (const el of document.querySelectorAll('.flight-intro,.flight-contact')) {
+    for (const el of document.querySelectorAll('.flight-intro,.flight-contact,.flight-footer')) {
       el.style.opacity = '0';
       el.style.transform = 'translateY(-60px)';
       el.style.pointerEvents = 'none';
@@ -154,7 +154,7 @@ describe('Loss of 3D mid-flight', () => {
     window.dispatchEvent(new WheelEvent('wheel', { deltaY: 100 }));
     expect(document.body.classList.contains('flight-ready')).toBe(false);
     expect(document.body.classList.contains('flight-fallback')).toBe(true);
-    for (const el of document.querySelectorAll('.flight-intro,.flight-contact')) {
+    for (const el of document.querySelectorAll('.flight-intro,.flight-contact,.flight-footer')) {
       expect(el.style.opacity).toBe('');
       expect(el.style.transform).toBe('');
       expect(el.style.pointerEvents).toBe('');

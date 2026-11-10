@@ -1,14 +1,14 @@
-// Keep costly shader pixels bounded independently from sharp HTML text.
+// Foreground geometry stays crisp; the ambient shader keeps a separate budget.
 export function scenePixelRatio(width, height, deviceRatio = 1) {
-  const budget = width < 761 ? 550000 : 1000000;
+  const budget = width < 761 ? 1400000 : 8500000;
   return Math.min(
     deviceRatio || 1,
-    width < 761 ? 1 : 0.9,
+    width < 761 ? 2 : 1.5,
     Math.sqrt(budget / Math.max(1, width * height)),
   );
 }
 export function fogDimensions(width, height) {
-  const scale = Math.min(1, 448 / Math.max(width, height));
+  const scale = Math.min(1, (width < 761 ? 640 : 960) / Math.max(width, height));
   return {
     width: Math.max(8, Math.round(width * scale)),
     height: Math.max(8, Math.round(height * scale)),
