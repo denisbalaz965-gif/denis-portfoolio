@@ -20,34 +20,42 @@ import {
   scrollTurn,
   finaleAt,
 } from './flight-model.js';
+import { stepAbout, orbitOffset, turnPhases, aboutLayout, thirdApart } from './about-model.js';
 
 const fogVertex = `void main(){gl_Position=vec4(position.xy,0.999,1.0);}`;
 const fogFragment = `
 uniform vec2 resolution;
 uniform float time;
 uniform float travel;
+uniform float space;
+uniform float pan;
+uniform vec2 nebula;
 float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}
 float field(vec2 p){return noise(p)*.58+noise(p*2.03+4.0)*.28+noise(p*4.01+9.0)*.14;}
 void main(){
  vec2 uv=gl_FragCoord.xy/resolution;
  vec2 p=(uv-.5)*vec2(resolution.x/resolution.y,1.0);
- float a=field(p*2.8+vec2(time*.035,travel*.11));
- float b=field(p*4.5+vec2(a*2.5-time*.025,time*.045));
+ vec2 q=p-vec2(pan,0.);
+ float a=field(q*2.8+vec2(time*.035,travel*.11));
+ float b=field(q*4.5+vec2(a*2.5-time*.025,time*.045));
  float fog=pow(max(0.0,a*b),1.2);
  float vein=pow(max(0.0,1.0-abs(b-.47)*12.0),3.0)*.11;
  float contourField=a*7.+b*3.;
  float contourWidth=max(fwidth(contourField)*.6,.012);
  float contour=1.-smoothstep(contourWidth*.25,contourWidth,abs(fract(contourField)-.5));
- float rift=exp(-abs(p.x+.12+sin(p.y*2.+b*2.+time*.018)*.23)*9.);
+ float rift=exp(-abs(q.x+.12+sin(q.y*2.+b*2.+time*.018)*.23)*9.);
  float streak=pow(max(0.,1.-abs(sin(atan(p.y,p.x)*17.+a*3.))*18.),8.)*.012;
  float center=1.0-smoothstep(.0,1.1,length(p-vec2(.16,.05)));
  vec3 color=vec3(.003,.012,.010)+vec3(.045,.33,.14)*fog*(.8+center*1.4)+vec3(.06,.5,.18)*vein+vec3(.07,.52,.22)*rift*.18+vec3(.08,.42,.18)*contour*.035+vec3(.1,.6,.28)*streak;
  color*=.63+.37*(1.0-smoothstep(.2,1.0,length(p)));
- gl_FragColor=vec4(color,1.0);
+ float cloud=1.0-smoothstep(.12,1.0,length((p-nebula)*vec2(.78,1.2)));
+ vec3 back=vec3(.002,.007,.006)+vec3(.04,.30,.13)*fog*cloud*1.5+vec3(.06,.5,.18)*vein*cloud*.75;
+ back*=.72+.28*(1.0-smoothstep(.3,1.2,length(p)));
+ gl_FragColor=vec4(mix(color,back,space),1.0);
 }`;
 
-export function initSignal() {
+export function initSignal({ about = null } = {}) {
   const canvas = document.querySelector('#signal-canvas');
   const track = document.querySelector('.flight-track');
   const pause = document.querySelector('#signal-pause');
@@ -76,6 +84,9 @@ export function initSignal() {
       resolution: { value: new THREE.Vector2(1, 1) },
       time: { value: 0 },
       travel: { value: 0 },
+      space: { value: 0 },
+      pan: { value: 0 },
+      nebula: { value: new THREE.Vector2() },
     },
     vertexShader: fogVertex,
     fragmentShader: fogFragment,
@@ -177,7 +188,8 @@ export function initSignal() {
   document.addEventListener(
     'portfolio:project-entry',
     (event) => {
-      if (lost || entry) return;
+      // On the other side an article opens at once; the wedge opening belongs to the flight.
+      if (lost || entry || (side && side.mode !== 'front')) return;
       const index = projects.findIndex((p) => p.node.dataset.stop === event.detail.id);
       if (index < 0) return;
       event.preventDefault();
@@ -294,6 +306,140 @@ export function initSignal() {
     scene.add(mesh);
     debris.push(mesh);
   }
+  // ---- The other side (About) ------------------------------------------------
+  // The same six wedges regroup as three thirds, one per team member. Stars and
+  // skill facets exist only when the About layer has content to show.
+  if (projects.length !== 6) about = null;
+  const side = about?.state ?? null;
+  const FRONT = { front: 1, about: 0, space: 0, pan: 0, gather: 0 };
+  const pivot = new THREE.Vector3(),
+    camRight = new THREE.Vector3(),
+    camUp = new THREE.Vector3(),
+    camForward = new THREE.Vector3(),
+    assembled = new THREE.Vector3(),
+    spot = new THREE.Vector3(),
+    ownerCentre = new THREE.Vector3();
+  const assembledQuat = new THREE.Quaternion(),
+    apartQuat = new THREE.Quaternion(),
+    aboutEuler = new THREE.Euler();
+  const thirds = about
+    ? [0, 1, 2].map((k) => {
+        const box = new THREE.Box3();
+        for (const i of [k * 2, k * 2 + 1]) {
+          const geometry = projects[i].group.children[0].geometry;
+          geometry.computeBoundingBox();
+          box.union(geometry.boundingBox);
+        }
+        return {
+          centre: box.getCenter(new THREE.Vector3()),
+          position: new THREE.Vector3(),
+          quaternion: new THREE.Quaternion(),
+          scale: 1,
+          focus: 0,
+        };
+      })
+    : [];
+  const aboutView = {
+    event: null,
+    width: 1,
+    height: 1,
+    names: [0, 1, 2].map(() => ({ x: 0, y: 0 })),
+    facets: [0, 1, 2].map(() => ({ x: 0, y: 0 })),
+  };
+  let stars = null,
+    facets = null,
+    aboutJumped = false;
+  if (about) {
+    // Stars are drawn in the sharp foreground pass, not in the low-resolution field.
+    const group = new THREE.Group();
+    group.visible = false;
+    let seed = 7;
+    const random = () => {
+      seed = (seed * 16807) % 2147483647;
+      return seed / 2147483647;
+    };
+    const layer = (count, color) => {
+      const points = [];
+      for (let i = 0; i < count; i++) {
+        const z = random() * 2 - 1,
+          angle = random() * Math.PI * 2,
+          radius = 60 + random() * 90,
+          flat = Math.sqrt(1 - z * z);
+        points.push(Math.cos(angle) * flat * radius, z * radius, Math.sin(angle) * flat * radius);
+      }
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
+      const material = new THREE.ShaderMaterial({
+        uniforms: {
+          color: { value: new THREE.Color(color) },
+          size: { value: 1 },
+          opacity: { value: 0 },
+        },
+        vertexShader:
+          'uniform float size; void main(){gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);gl_PointSize=size;}',
+        fragmentShader:
+          'uniform vec3 color; uniform float opacity; void main(){float d=length(gl_PointCoord-.5);gl_FragColor=vec4(color,opacity*(1.-smoothstep(.22,.5,d)));}',
+        transparent: true,
+        depthWrite: false,
+      });
+      const mesh = new THREE.Points(geometry, material);
+      mesh.frustumCulled = false;
+      group.add(mesh);
+      return material;
+    };
+    stars = { group, small: layer(1500, 0xbfd6c6), bright: layer(170, 0xe6ffe8) };
+    scene.add(group);
+
+    // Three small facets leave the active third on its "what" stop: one per skill.
+    const meshes = [0, 1, 2].map((j) => {
+      const geometry = makeCrystalPiece(j + 3);
+      const mesh = new THREE.Mesh(geometry, projects[0].material);
+      mesh.add(
+        new THREE.LineSegments(
+          new THREE.EdgesGeometry(geometry),
+          new THREE.LineBasicMaterial({ color: 0x99ffba, transparent: true, opacity: 0.6 }),
+        ),
+      );
+      mesh.visible = false;
+      scene.add(mesh);
+      return mesh;
+    });
+    const lineGeometry = new THREE.BufferGeometry();
+    lineGeometry.setAttribute(
+      'position',
+      new THREE.Float32BufferAttribute(new Float32Array(18), 3),
+    );
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: 0x70d99d,
+      transparent: true,
+      opacity: 0,
+      fog: false,
+    });
+    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    lines.frustumCulled = false;
+    lines.visible = false;
+    scene.add(lines);
+    facets = { meshes, lines, lineGeometry, lineMaterial };
+  }
+  function toWorld(x, y, depth, out) {
+    const span = 2 * depth * Math.tan((camera.fov * Math.PI) / 360);
+    return out
+      .copy(camera.position)
+      .addScaledVector(camForward, depth)
+      .addScaledVector(camRight, (x - 0.5) * span * camera.aspect)
+      .addScaledVector(camUp, (0.5 - y) * span);
+  }
+  const thirdCentre = (third, out) =>
+    out
+      .copy(third.centre)
+      .multiplyScalar(third.scale)
+      .applyQuaternion(third.quaternion)
+      .add(third.position);
+  const toScreen = (point, out) => {
+    screen.copy(point).project(camera);
+    out.x = (screen.x * 0.5 + 0.5) * width;
+    out.y = (-screen.y * 0.5 + 0.5) * height;
+  };
   let width = 1,
     height = 1,
     start = 0,
@@ -321,6 +467,7 @@ export function initSignal() {
   const flightProgress = document.querySelector('.flight-progress');
   const instruction = document.querySelector('.flight-instruction');
   const depthValue = document.querySelector('#depth-value');
+  const depthReadout = document.querySelector('.depth-readout');
   const currentLabel = document.querySelector('#flight-current');
   const countLabel = document.querySelector('#flight-count');
   let currentDepth = '';
@@ -410,10 +557,27 @@ export function initSignal() {
     if (document.hidden || lost) return;
     const dt = Math.min((time - lastTime) / 1000 || 0, 0.05);
     lastTime = time;
-    const locked = Boolean(
-      entry || document.querySelector('.flight-project.is-revealed,dialog[open]'),
+    // The About clock runs on this loop; pausing the background does not stop a turn.
+    const aboutEvent = side ? stepAbout(side, dt) : null;
+    const aboutOn = Boolean(side && side.turn > 0);
+    const phases = aboutOn ? turnPhases(side.turn) : FRONT;
+    const aboutSplit = side ? side.split * side.split * (3 - 2 * side.split) : 0;
+    const held = Boolean(
+      entry ||
+      document.querySelector(aboutOn ? 'dialog[open]' : '.flight-project.is-revealed,dialog[open]'),
     );
-    if (!paused && !locked) phase += dt;
+    const locked = held || Boolean(side && side.mode !== 'front');
+    if (side && side.mode !== 'returning') aboutJumped = false;
+    else if (side && !aboutJumped && side.split <= 0 && side.turn <= 0.5) {
+      // Half-way through the turn back the flight is moved to the destination,
+      // so the turn lands there. The motion covers the change of place.
+      aboutJumped = true;
+      if (side.destination === '#kontakt') {
+        jump('contact', null, 'instant');
+        contact.scrollTop = 0;
+      }
+    }
+    if (!paused && !held) phase += dt;
     if (!locked) progress += (target - progress) * (1 - Math.exp(-dt * 12));
     if (reader) {
       readerMotion += (reader.progress - readerMotion) * (1 - Math.exp(-dt * 13));
@@ -425,14 +589,23 @@ export function initSignal() {
         11 - progress * 7,
       );
     camera.lookAt(0, 0, camera.position.z - 10);
+    if (aboutOn && !reader) {
+      // Orbit the crystal: it stays the pivot, so orientation is never lost.
+      pivot.set(0, 0, 4 - progress * 7);
+      const orbit = orbitOffset(side.turn);
+      camera.position.set(pivot.x + orbit.x, pivot.y + orbit.y, pivot.z + orbit.z);
+      camera.lookAt(pivot);
+    }
     fogMaterial.uniforms.time.value = phase;
-    fogMaterial.uniforms.travel.value = progress;
+    fogMaterial.uniforms.travel.value = progress + (side ? side.progress * 0.6 : 0);
+    fogMaterial.uniforms.space.value = reader ? 0 : phases.space;
+    fogMaterial.uniforms.pan.value = reader ? 0 : phases.pan;
     const primary = activeStop(progress);
     const introReveal = clamp01((progress - 0.06) / 0.18) * clamp01((0.76 - progress) / 0.2);
-    intro.style.opacity = String(introReveal);
-    intro.inert = introReveal < 0.6;
+    intro.style.opacity = String(introReveal * phases.front);
+    intro.inert = introReveal * phases.front < 0.6;
     intro.style.transform = `translate3d(0,${(1 - introReveal) * 16}px,0)`;
-    const presented = reader || entry ? -1 : presentationAt(progress, projects.length);
+    const presented = reader || entry || aboutOn ? -1 : presentationAt(progress, projects.length);
     if (presented !== lastPresentation) {
       lastPresentation = presented;
       document.dispatchEvent(
@@ -442,11 +615,12 @@ export function initSignal() {
       );
     }
     const finale = finaleAt(progress);
-    flightProgress.style.opacity = String(finale.hud);
-    contact.style.opacity = String(finale.contact);
+    flightProgress.style.opacity = String(finale.hud * phases.front);
+    const contactShow = finale.contact * phases.front;
+    contact.style.opacity = String(contactShow);
     contact.style.transform = `translate3d(${(1 - finale.contact) * 22}px,0,0)`;
-    contact.inert = finale.contact < 0.98;
-    contact.style.pointerEvents = finale.contact >= 0.98 ? 'auto' : 'none';
+    contact.inert = contactShow < 0.98;
+    contact.style.pointerEvents = contactShow >= 0.98 ? 'auto' : 'none';
     contact.dataset.phase =
       finale.contact >= 0.98
         ? 'ready'
@@ -456,13 +630,15 @@ export function initSignal() {
             ? 'sliding'
             : 'gathering';
     const footerReveal =
-      reader || entry || document.querySelector('dialog[open]') ? 0 : finale.footer;
+      reader || entry || document.querySelector('dialog[open]') ? 0 : finale.footer * phases.front;
     footer.style.opacity = String(footerReveal);
     footer.style.transform = `translate3d(0,${(1 - footerReveal) * 24}px,0)`;
     footer.inert = footerReveal < 0.98;
     footer.style.pointerEvents = footerReveal >= 0.98 ? 'auto' : 'none';
     document.body.classList.toggle('at-footer', footerReveal > 0.6);
-    instruction.style.opacity = String(progress < 0.08 ? 1 : 0);
+    instruction.style.opacity = String((progress < 0.08 ? 1 : 0) * phases.front);
+    if (side && depthReadout)
+      depthReadout.style.opacity = phases.front < 1 ? String(phases.front) : '';
     const labelIndex = progress < 0.4 ? -1 : primary;
     if (lastActive !== labelIndex) {
       lastActive = labelIndex;
@@ -481,6 +657,50 @@ export function initSignal() {
     finalPose.scale *= 1 - finale.footer * 0.5;
     if (height < 600) finalPose.scale *= 1 - finale.footer;
     merge.set(pose.x, pose.y, 4);
+    let layout = null;
+    if (aboutOn && !reader) {
+      camera.updateMatrixWorld();
+      camRight.setFromMatrixColumn(camera.matrixWorld, 0);
+      camUp.setFromMatrixColumn(camera.matrixWorld, 1);
+      camForward.setFromMatrixColumn(camera.matrixWorld, 2).negate();
+      layout = aboutLayout(side.progress, about.stops, width < 761);
+      fogMaterial.uniforms.nebula.value.set(layout.nebula[0], layout.nebula[1]);
+      // Assembled pose: the crystal in the pivot, or the joined crystal of the last stop.
+      const joined = layout.join * aboutSplit;
+      toWorld(layout.joinPose.x, layout.joinPose.y, layout.joinPose.d, spot);
+      assembled.set(pivot.x + pose.x, pivot.y + pose.y, pivot.z).lerp(spot, joined);
+      const assembledScale = THREE.MathUtils.lerp(pose.scale, layout.joinPose.s, joined);
+      assembledQuat.setFromEuler(aboutEuler.set(0.25, 0.4 + Math.sin(phase * 0.25) * 0.12, 0.12));
+      thirds.forEach((third, k) => {
+        const target = layout.thirds[k];
+        const apart = thirdApart(aboutSplit, k, layout.join);
+        third.scale = THREE.MathUtils.lerp(assembledScale, target.s, apart);
+        apartQuat.setFromEuler(
+          aboutEuler.set(
+            0.2 + Math.sin(side.progress * 0.6 + k) * 0.12,
+            // 2.8 + k·120° turns each third's outer face to the camera on its "who" stop.
+            2.8 +
+              (k * Math.PI * 2) / 3 +
+              (side.progress - 1) * Math.PI +
+              Math.sin(phase * 0.25) * 0.2,
+            (k - 1) * 0.1,
+          ),
+        );
+        third.quaternion.copy(assembledQuat).slerp(apartQuat, apart);
+        // Once apart, a third turns about its own centre, not the crystal's axis.
+        toWorld(target.x, target.y, target.d, spot);
+        third.position
+          .copy(assembled)
+          .lerp(spot, apart)
+          .sub(
+            ownerCentre
+              .copy(third.centre)
+              .multiplyScalar(apart * third.scale)
+              .applyQuaternion(third.quaternion),
+          );
+        third.focus = target.f * apart;
+      });
+    }
     projects.forEach((p, i) => {
       p.copy.inert = i !== presented;
       p.node.classList.toggle('has-presentation', i === presented);
@@ -529,8 +749,15 @@ export function initSignal() {
           0.12 + (1 - finale.gather) * Math.sin(i) * 0.7,
         );
       }
+      if (aboutOn) {
+        // Wherever the flight left this wedge, it gathers into its third.
+        const third = thirds[i >> 1];
+        p.group.position.lerp(third.position, phases.gather);
+        p.group.quaternion.slerp(third.quaternion, phases.gather);
+        p.group.scale.setScalar(THREE.MathUtils.lerp(p.group.scale.x, third.scale, phases.gather));
+      }
       p.group.children.forEach((child, j) => {
-        child.visible = j === 0 || (fracture > 0.22 && finale.gather < 0.12);
+        child.visible = j === 0 || (fracture > 0.22 && finale.gather < 0.12 && !aboutOn);
         if (!child.isMesh) return;
         child.position.copy(child.userData.home);
         child.rotation.copy(child.userData.spin);
@@ -545,18 +772,22 @@ export function initSignal() {
           child.rotation.z += spread * 0.4;
         }
       });
-      const unfolding = i === presented || p.node.classList.contains('is-revealed');
+      const unfolding = !aboutOn && (i === presented || p.node.classList.contains('is-revealed'));
       if (unfolding && !entry) {
         p.group.children.forEach((child, j) => {
           child.position.x += (j % 2 ? -1 : 1) * 0.14;
           child.rotation.z += (j % 2 ? -1 : 1) * 0.12;
         });
       }
-      p.material.uniforms.focus.value = unfolding ? 1 : 0;
+      p.material.uniforms.focus.value = aboutOn
+        ? thirds[i >> 1].focus * phases.gather
+        : unfolding
+          ? 1
+          : 0;
       p.material.uniforms.time.value = phase;
       const gap = camera.position.z - p.group.position.z;
-      p.group.visible = !reader && gap > 1.3 && gap < 75;
-      if (!p.group.visible || fracture <= 0.98 || entry || finale.gather > 0) {
+      p.group.visible = !reader && (aboutOn || (gap > 1.3 && gap < 75));
+      if (!p.group.visible || fracture <= 0.98 || entry || finale.gather > 0 || aboutOn) {
         p.node.style.visibility = 'hidden';
         p.node.classList.remove('is-approached');
         p.beacon.tabIndex = -1;
@@ -626,7 +857,37 @@ export function initSignal() {
     debris.forEach((mesh, i) => {
       mesh.rotation.z += !paused && !locked ? dt * 0.025 * (i % 2 ? 1 : -1) : 0;
     });
-    if (time - lastFogAt > 50 || Math.abs(progress - lastFogTravel) > 0.08) {
+    if (stars) {
+      stars.group.visible = phases.space > 0 && !reader;
+      stars.group.position.copy(pivot);
+      stars.group.rotation.y = side.progress * 0.05;
+      stars.small.uniforms.opacity.value = phases.space * 0.8;
+      stars.bright.uniforms.opacity.value = phases.space;
+    }
+    if (facets) {
+      const amount = layout ? layout.facetAmount * (1 - layout.join) * aboutSplit : 0;
+      const shown = amount > 0.01;
+      facets.lines.visible = shown;
+      facets.lineMaterial.opacity = amount * 0.3;
+      if (shown) thirdCentre(thirds[layout.facetOwner], ownerCentre);
+      const line = facets.lineGeometry.getAttribute('position');
+      facets.meshes.forEach((mesh, j) => {
+        mesh.visible = shown;
+        if (!shown) return;
+        const target = layout.facets[j];
+        toWorld(target.x, target.y, target.d, spot);
+        mesh.material = projects[layout.facetOwner * 2].material;
+        mesh.position.copy(ownerCentre).lerp(spot, amount);
+        mesh.scale.setScalar(target.s * amount);
+        mesh.rotation.set(0.3 + j, side.progress * 2 + j * 1.7 + phase * 0.1, 0.2);
+        line.setXYZ(j * 2, ownerCentre.x, ownerCentre.y, ownerCentre.z);
+        line.setXYZ(j * 2 + 1, mesh.position.x, mesh.position.y, mesh.position.z);
+        toScreen(mesh.position, aboutView.facets[j]);
+      });
+      line.needsUpdate = true;
+    }
+    const aboutMoving = Boolean(side && (side.mode === 'turning' || side.mode === 'returning'));
+    if (aboutMoving || time - lastFogAt > 50 || Math.abs(progress - lastFogTravel) > 0.08) {
       renderer.setRenderTarget(fogTarget);
       renderer.render(fogScene, camera);
       renderer.setRenderTarget(null);
@@ -634,7 +895,27 @@ export function initSignal() {
       lastFogTravel = progress;
     }
     renderer.render(scene, camera);
+    if (about) {
+      // Native HTML of the other side follows the same frame.
+      if (layout)
+        thirds.forEach((third, k) => {
+          thirdCentre(third, spot).addScaledVector(camUp, -third.scale * 0.92);
+          toScreen(spot, aboutView.names[k]);
+        });
+      aboutView.event = aboutEvent;
+      aboutView.width = width;
+      aboutView.height = height;
+      about.frame(aboutView);
+    }
+    const aboutBusy =
+      aboutMoving ||
+      Boolean(
+        side &&
+        side.mode === 'about' &&
+        (side.split < 1 || Math.abs(side.target - side.progress) > 0.001 || (!paused && !held)),
+      );
     if (
+      aboutBusy ||
       entry ||
       (reader && Math.abs(reader.progress - readerMotion) > 0.001) ||
       (!paused && !locked) ||
@@ -654,6 +935,10 @@ export function initSignal() {
     start = track.getBoundingClientRect().top + window.scrollY;
     distance = Math.max(1, track.offsetHeight - height);
     renderer.setPixelRatio(scenePixelRatio(width, height, window.devicePixelRatio));
+    if (stars) {
+      stars.small.uniforms.size.value = 1.7 * renderer.getPixelRatio();
+      stars.bright.uniforms.size.value = 2.7 * renderer.getPixelRatio();
+    }
     renderer.setSize(width, height, false);
     const size = renderer.getDrawingBufferSize(new THREE.Vector2());
     fogDisplay.uniforms.resolution.value.copy(size);
@@ -699,6 +984,7 @@ export function initSignal() {
   );
   document.addEventListener('visibilitychange', startDraw, options);
   document.addEventListener('portfolio:hologram', startDraw, options);
+  document.addEventListener('portfolio:about', startDraw, options);
   document.addEventListener(
     'portfolio:return',
     (event) => {

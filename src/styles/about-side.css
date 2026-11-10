@@ -23,6 +23,16 @@ html.about-open {
 html.about-open .about-layer {
   visibility: visible;
 }
+.signal-axis {
+  transition: opacity 0.4s;
+}
+html.about-open .signal-axis {
+  opacity: 0;
+}
+/* The background pause control stays reachable above the layer. */
+html.about-open .motion-control {
+  z-index: 35;
+}
 /* The veil covers the calm cross-fade and the cut into an article, so it has
    to show even while the rest of the layer is still hidden. */
 .about-veil {
@@ -297,7 +307,7 @@ html.about-reading .about-layer > :not(.about-veil) {
 }
 .about-nav button {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   gap: 8px;
   min-width: 48px;
@@ -429,11 +439,19 @@ html.about-open .boundary-about {
   .about-names button {
     min-width: 84px;
   }
+  /* On a phone the switcher sits over scrolling text, so it carries a scrim;
+     only its buttons take touches, the rest lets the page scroll. */
   .about-nav {
     left: 0;
     right: 0;
-    bottom: 44px;
+    bottom: 0;
     justify-content: center;
+    padding: 34px 0 44px;
+    background: linear-gradient(#03080400, #030804f2 42%);
+    pointer-events: none;
+  }
+  .about-nav button {
+    pointer-events: auto;
   }
   .about-cue {
     bottom: 100px;
