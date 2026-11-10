@@ -862,20 +862,67 @@
           </article>
         </div>
         <div id="kontakt" class="flight-contact">
-          <h2>Váš ďalší projekt.<br /><em>Poďme ho rozbehnúť.</em></h2>
-          <p>
-            Nový web, e-shop, reklamná kampaň alebo menej ručnej práce? Povedzte nám, čo potrebujete
-            vyriešiť. Spoločne navrhneme ďalší krok.
-          </p>
-          <p class="team-contact-label">Povedzte nám o svojom zadaní</p>
-          <a
-            class="email-link"
-            aria-label="Napísať e-mail d/m/m"
-            href="mailto:denisbalaz965@gmail.com"
-            >Napíšte nám ↗</a
-          ><a class="phone-link" href="tel:+421948835138">+421 948 835 138 ↗</a
-          ><button class="button" id="copy-email">Skopírovať e-mail</button
-          ><span id="copy-status" role="status"></span>
+          <h2>Teraz váš<br /><em>projekt.</em></h2>
+          <p class="contact-intro">Čo chcete vytvoriť alebo zmeniť? Začnime tým, čo potrebujete.</p>
+          <form
+            id="contact-form"
+            class="contact-form"
+            aria-describedby="contact-availability"
+            novalidate
+          >
+            <div class="contact-fields">
+              <label
+                >Vaše meno<input
+                  name="name"
+                  autocomplete="name"
+                  required
+                  maxlength="100"
+                  placeholder="Ako vás oslovíme"
+              /></label>
+              <label
+                >E-mail<input
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  maxlength="254"
+                  placeholder="vas@firma.sk"
+              /></label>
+            </div>
+            <label
+              >O čom bude váš projekt?<textarea
+                name="message"
+                required
+                minlength="20"
+                maxlength="4000"
+                rows="3"
+                placeholder="Čo potrebujete vyriešiť? Ak máte termín alebo rozpočet, pokojne ho doplňte."
+              ></textarea>
+            </label>
+            <div class="contact-trap" aria-hidden="true">
+              <label>Webová stránka<input name="website" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <p id="contact-availability" class="contact-availability" role="status">
+              Overujeme dostupnosť odosielania…
+            </p>
+            <div class="contact-submit-row">
+              <button type="submit" class="contact-submit" disabled>
+                <span>Poslať zadanie</span><span aria-hidden="true">↗</span></button
+              ><span class="contact-privacy">Údaje použijeme na odpoveď<br />na vaše zadanie.</span>
+            </div>
+            <p id="contact-result" class="contact-result" role="status" aria-live="polite"></p>
+          </form>
+          <div class="contact-alternatives">
+            <span>Radšej priamo?</span>
+            <a
+              class="email-link"
+              aria-label="Napísať e-mail d/m/m"
+              href="mailto:denisbalaz965@gmail.com"
+              >denisbalaz965@gmail.com ↗</a
+            ><a class="phone-link" href="tel:+421948835138">+421 948 835 138 ↗</a
+            ><button class="button" id="copy-email">Skopírovať e-mail</button
+            ><span id="copy-status" role="status"></span>
+          </div>
           <details id="o-mne" class="flight-about team-about">
             <summary>Čo pre vás spravíme <span>＋</span></summary>
             <div class="team-content">

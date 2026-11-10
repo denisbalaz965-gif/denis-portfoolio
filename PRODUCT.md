@@ -88,3 +88,9 @@ Majiteľ odmietol hierarchiu v24: samotná služba bola slabšia než projekt a 
 ## Priestorové rozloženie ponuky — 10. 11. 2026
 
 Majiteľ po v25 požiadal výraznejšiu kompozíciu samotnej služby. Hierarchia ponuka → dôkaz ostáva, no konvenčný zoznam troch riadkov sa nahradil otvorenou schémou: tri presne kreslené facety majú vlastné spojnice k trom natívnym textom dodávky v odlišných polohách. Geometria tým pomenúva konkrétne súčasti ponuky, nie nový klientsky výsledok či funkčné demo. Opis je mierne odsadený a kontaktná akcia uzatvára kompozíciu napravo. Ide o stabilnú SVG geometriu bez ďalšej animovacej slučky, obrázkového aktíva, rendereru alebo závislosti. Mobil má vlastné čitateľné texty, nie zmenšený raster.
+
+## Spojenie na konci a kontakt — 10. 11. 2026
+
+Po poslednej realizácii sa pôvodných šesť klinov spojí do jedného kryštálu, potom sa ten istý objekt odsunie doľava a odkryje kontaktný formulár. Mobil presúva zmenšený kryštál nad formulár. Posun späť celý dej obráti; samostatný čítací interval ponechá formulár stabilný. Globálny vizuálny systém zostáva. Kontakt má meno, e-mail a zadanie, plus pôvodný e-mail, telefón a doplnkové projektové skúsenosti.
+
+Majiteľ zvolil priame odosielanie a následne prípravu na Resend, keďže účet ani vlastná odosielacia doména ešte nie sú vytvorené. Serverové napojenie je pripravené, doručovanie vypnuté až do nastavenia a výslovnej aktivácie. Klient to viditeľne oznamuje a neposkytuje falošný úspech. Potvrdenie znamená len prijatie služby na odoslanie. Skutočný e-mailový test ani doručenie zatiaľ neprebehli; postup a limity sú v docs/resend-setup.md. Pôvodná statická prezentácia je zachovaná vo Worker ESM spolu s médiami, žiadne návštevnícke prihlasovanie ani databáza nepribudli.

@@ -1,5 +1,5 @@
 export const FLIGHT_STOPS = 6;
-export const FLIGHT_END = 7.25;
+export const FLIGHT_END = 8.35;
 export const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 export function scrollTurn(progress, distance = FLIGHT_END) {
   return clamp(progress / Math.max(1, distance), 0, 1) * Math.PI * 2;
@@ -26,6 +26,20 @@ export function hologramPosition(x, y, width, height) {
 export function introFracture(progress) {
   const t = clamp((progress - 0.08) / 0.72, 0, 1);
   return t * t * (3 - 2 * t);
+}
+
+// One scroll clock, with a reading interval after the object has settled.
+export function finaleAt(progress) {
+  const ease = (a, b) => {
+    const t = clamp((progress - a) / (b - a), 0, 1);
+    return t * t * (3 - 2 * t);
+  };
+  return {
+    gather: ease(6.32, 7.22),
+    slide: ease(7.25, 7.82),
+    reveal: ease(7.66, 8.1),
+    hud: 1 - ease(6.22, 6.6),
+  };
 }
 export function chapterProgress(scrollTop, unit, count) {
   const raw = clamp(scrollTop / Math.max(1, unit), 0, Math.max(0, count - 1));

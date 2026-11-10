@@ -14,6 +14,10 @@ export default [
   },
   js.configs.recommended,
   {
+    files: ['server/**/*.js', 'scripts/**/*.mjs'],
+    languageOptions: { globals: { ...globals.browser, ...globals.node } },
+  },
+  {
     files: ['src/**/*.js'],
     languageOptions: { globals: globals.browser },
   },

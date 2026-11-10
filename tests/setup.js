@@ -3,6 +3,7 @@ import { beforeEach, vi } from 'vitest';
 // jsdom provides a DOM, not layout or a browser's native modal implementation.
 // Real layout and keyboard behavior are checked separately in a browser.
 beforeEach(() => {
+  if (typeof window === 'undefined') return;
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
   vi.stubGlobal(
     'IntersectionObserver',

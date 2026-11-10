@@ -8,8 +8,8 @@
   },
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 8793 --strictPort",
-    "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1 --port 8794 --strictPort",
+    "build": "vite build && node scripts/build-worker.mjs",
+    "preview": "node scripts/preview-worker.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

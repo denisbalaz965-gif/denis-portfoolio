@@ -117,3 +117,9 @@ Opis ponuky je odsadený12percent, kontaktná akcia má prirodzenú šírku a za
 Na mobile má mapa124px, popisy13px/1.4 a opis sa zarovná späť k ľavému okraju; pri nízkom landscape má mapa90px a popisy11px. Kontaktné ciele ostávajú aspoň44px. Na mobiloch nižších než780px sa skryje nepodstatný spodný pokyn/koordináty, aby sa viac priestoru venovalo ponuke a dôkazu. Vizuálna geometria nemá vlastnú animovaciu slučku a zostáva stabilná pri čítaní. Pôvodný scroll, WebGL rozpočty, článkové návraty a Escape dostupnosť primárnej ponuky zostávajú. Globálne tokeny a starší sidecar sa nemenia.
 
 V nízkom landscape sa kontaktná akcia zarovná na začiatok servisného stĺpca, aby sa neprekrývala s existujúcim ovládačom pozadia v pravom dolnom rohu. Desktop a portrét zachovávajú pravé zakončenie kompozície.
+
+## Záverečné zloženie — 10. 11. 2026
+
+Lokálne rozšírenie zachováva existujúci svet a globálne tokeny. Posledný import je teraz `contact-finale.css`; servisná kompozícia zostáva v `service-offer.css`. Na jednom scrollovom čase sú oddelené fázy gather6.32–7.22, slide7.25–7.82 a reveal7.66–8.1 s ustálením do8.35. Rovnakých šesť 3D klinov sa zbieha do spoločnej polohy, mierky a rotácie, drobné satelity ustúpia. Po zložení sa kryštál presunie na24.5percent šírky, mobil17percent/18.5percent výšky. Nie je pridaný renderer, laser ani nová geometria. Natívny scroll je vratný, priame #kontakt otvorí finálny stav.
+
+Formulár je samostatná pokojná plocha napravo od osi; na mobile pod kryštálom. Pri nízkej výške alebo úzkom mobile sa posúva jeho obsah, aby dostupnosť polí a pôvodných kontaktov nezávisela od zmenšovania textu. Doručovacie stavy a serverové hranice sú v docs/resend-setup.md. Pri vypnutom napojení je tlačidlo nedostupné s vysvetlením a priamym e-mailom. Existujúce články, index, návraty, kopírovanie e-mailu a grantové atribúcie zostávajú.

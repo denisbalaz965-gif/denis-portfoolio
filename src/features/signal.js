@@ -1,7 +1,12 @@
 import * as THREE from 'three';
 import { fragmentWaypoint, waypointToWorld } from './fragment-paths.js';
 import { presentationAt, presentationLayout } from './flight-presentation.js';
-import { scenePixelRatio, fogDimensions, introCrystalPose } from './render-policy.js';
+import {
+  scenePixelRatio,
+  fogDimensions,
+  introCrystalPose,
+  finaleCrystalPose,
+} from './render-policy.js';
 import { restoreFlightFallback } from './flight-fallback.js';
 import { makeCrystalPiece, makeChapterShard } from './fracture-geometry.js';
 import { createCrystalMaterial } from './crystal-material.js';
@@ -12,6 +17,7 @@ import {
   FLIGHT_END,
   introFracture,
   scrollTurn,
+  finaleAt,
 } from './flight-model.js';
 
 const fogVertex = `void main(){gl_Position=vec4(position.xy,0.999,1.0);}`;
@@ -422,11 +428,14 @@ export function initSignal() {
         }),
       );
     }
-    const ending = clamp01((progress - 6.45) / 0.65);
-    flightProgress.style.opacity = String(1 - ending);
-    contact.style.opacity = String(ending);
-    contact.inert = ending < 0.8;
-    contact.style.pointerEvents = ending > 0.8 ? 'auto' : 'none';
+    const finale = finaleAt(progress);
+    flightProgress.style.opacity = String(finale.hud);
+    contact.style.opacity = String(finale.reveal);
+    contact.style.transform = `translate3d(${(1 - finale.reveal) * 22}px,0,0)`;
+    contact.inert = finale.reveal < 0.98;
+    contact.style.pointerEvents = finale.reveal >= 0.98 ? 'auto' : 'none';
+    contact.dataset.phase =
+      finale.reveal >= 0.98 ? 'ready' : finale.slide > 0 ? 'sliding' : 'gathering';
     instruction.style.opacity = String(progress < 0.08 ? 1 : 0);
     const labelIndex = progress < 0.4 ? -1 : primary;
     if (lastActive !== labelIndex) {
@@ -441,6 +450,7 @@ export function initSignal() {
     }
     const fracture = introFracture(progress);
     const pose = introCrystalPose(width, height);
+    const finalPose = finaleCrystalPose(width, height, finale.slide);
     merge.set(pose.x, pose.y, 4);
     projects.forEach((p, i) => {
       p.copy.inert = i !== presented;
@@ -471,8 +481,27 @@ export function initSignal() {
         scrollTurn(progress) + THREE.MathUtils.lerp(0.4, i * 0.8, fracture),
         0.12 + waypoint.roll * fracture,
       );
+      if (finale.gather > 0) {
+        // Gather the original six wedges into the same origin, not a replacement model.
+        // Their launch positions lie on six different screen edges, always in front of the camera.
+        const angle = (i / projects.length) * Math.PI * 2 + 0.3;
+        const radius = (1 - finale.gather) * (width < 761 ? 2.7 : 5.5);
+        p.group.position.set(
+          finalPose.x + Math.cos(angle) * radius,
+          finalPose.y + Math.sin(angle) * radius * 0.64,
+          camera.position.z - 7 - (1 - finale.gather) * (i % 3) * 1.3,
+        );
+        p.group.scale.setScalar(
+          THREE.MathUtils.lerp(width < 761 ? 0.29 : 0.66, finalPose.scale, finale.gather),
+        );
+        p.group.rotation.set(
+          0.25 + (1 - finale.gather) * Math.sin(i * 2) * 0.6,
+          Math.PI * 2 + 0.4 + (1 - finale.gather) * (i - 2.5) * 0.7,
+          0.12 + (1 - finale.gather) * Math.sin(i) * 0.7,
+        );
+      }
       p.group.children.forEach((child, j) => {
-        child.visible = j === 0 || fracture > 0.22;
+        child.visible = j === 0 || (fracture > 0.22 && finale.gather < 0.12);
         if (!child.isMesh) return;
         child.position.copy(child.userData.home);
         child.rotation.copy(child.userData.spin);
@@ -497,8 +526,8 @@ export function initSignal() {
       p.material.uniforms.focus.value = unfolding ? 1 : 0;
       p.material.uniforms.time.value = phase;
       const gap = camera.position.z - p.group.position.z;
-      p.group.visible = !reader && gap > 1.3 && gap < 75 && ending < 0.9;
-      if (!p.group.visible || fracture <= 0.98 || entry) {
+      p.group.visible = !reader && gap > 1.3 && gap < 75;
+      if (!p.group.visible || fracture <= 0.98 || entry || finale.gather > 0) {
         p.node.style.visibility = 'hidden';
         p.node.classList.remove('is-approached');
         p.beacon.tabIndex = -1;

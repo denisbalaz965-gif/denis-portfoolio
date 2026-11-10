@@ -75,7 +75,7 @@ describe('Contact', () => {
     document.querySelector('#copy-email').click();
     await vi.waitFor(() =>
       expect(document.querySelector('#copy-status').textContent).toBe(
-        'Kopírovanie sa nepodarilo. Použite odkaz Napíšte nám.',
+        'Kopírovanie sa nepodarilo. Použite odkaz na e-mail.',
       ),
     );
   });
