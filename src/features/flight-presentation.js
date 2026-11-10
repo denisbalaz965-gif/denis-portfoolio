@@ -21,17 +21,12 @@ export function presentationLayout(
   const copyTop = narrow ? Math.max(96, height * 0.12) : Math.max(88, (height - copyHeight) / 2);
   const top = narrow
     ? Math.max(280, height * 0.38, copyTop + copyHeight + 24)
-    : Math.max(88, height * 0.3);
-  const markHeight = Math.max(
-    64,
-    Math.min(narrow ? 96 : 180, height - top - captionHeight - (narrow ? 68 : 60)),
-  );
+    : Math.max(104, (height - captionHeight) / 2);
   return {
     right,
     left: narrow ? gutter : right ? width / 2 + gutter * 0.72 : gutter,
     top,
     width: panelWidth,
-    markHeight,
     copyLeft: narrow ? gutter : right ? gutter : width / 2 + gutter * 0.72,
     copyTop,
   };

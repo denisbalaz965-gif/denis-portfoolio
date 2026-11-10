@@ -30,7 +30,7 @@ describe('A continuous statement and its proof', () => {
     expect(p.left + p.width).toBe(366);
     expect(p.top - p.copyTop).toBeGreaterThan(180);
   });
-  it('fits a brand mark and measured caption without hiding the article action', () => {
+  it('fits the measured opposite service and preserves the text-to-proof gap', () => {
     for (const [width, height, copyHeight, captionHeight] of [
       [1280, 900, 200, 168],
       [390, 844, 190, 162],
@@ -38,8 +38,7 @@ describe('A continuous statement and its proof', () => {
       [844, 390, 145, 140],
     ]) {
       const p = presentationLayout(0, width, height, { copyHeight, captionHeight });
-      expect(p.markHeight).toBeGreaterThanOrEqual(64);
-      expect(p.top + p.markHeight + captionHeight).toBeLessThan(height - 45);
+      expect(p.top + captionHeight).toBeLessThan(height - 45);
       if (width < 600) expect(p.top).toBeGreaterThanOrEqual(p.copyTop + copyHeight + 24);
     }
   });

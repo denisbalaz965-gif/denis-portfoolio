@@ -85,3 +85,13 @@ Recenzia je blízko pod článkovým odkazom s vlastným väčším odstupom (36
 `presentationLayout()` vertikálne centruje skutočne zmeraný text na desktope s hornou hranicou aspoň 88px. Mobil začína text od 96px alebo 12 percent výšky; logo nasleduje s medzerou aspoň 24px a má najviac 96px na výšku. Výška značky aj caption sa započítava do dostupného priestoru. Každý opis, odkaz a demo citát ostáva natívny HTML obsah aj pri výpadku WebGL. Hover alebo fokus na textovom povrchu podrží čítanie rovnako ako hover na značke; scroll podržanie uvoľní.
 
 Zelený svet, šesť projektov, pomalá scrollová otáčka, úvod, priame eurofondové vstupy, funkčné ukážky a existujúce celé články zostávajú zachované. Ide o lokálne rozšírenie schváleného sveta, nie o zmenu globálnych tokenov v DESIGN.md alebo sidecare.
+
+## Dvojica služby a realizácie — aktuálne spresnenie 10. 11. 2026
+
+Každá zastávka spája konkrétnu službu s konkrétnou realizáciou na opačnej strane osi. Projektová plocha `.flight-copy` zachováva názov, stručný opis, rozsah, článkový odkaz a obidve viditeľné demo označenia recenzie. Logo sa presunulo priamo k názvu do `.project-identity`: má samostatný natívny článkový odkaz s pevným priestorom 80×64px, mobilne56×44px. Názov zostáva hlavný, logo menší podpis.
+
+Protiľahlý `.hologram` už predstavuje zodpovedajúcu službu. `.service-offer h3` používa fosfor,32–52px a riadok1.05; sprievodný text15–18px/1.6, najviac34ch, odstup24px. Mobil používa25px nadpis,13px/1.5 text a odstup12px; nízky landscape29px nadpis a13px text. Obsah nemá box ani screenshot. Dismiss zostáva dostupný44×44px.
+
+Na desktope sa obe skutočne zmerané plochy centrujú samostatne, servisná začína aspoň104px odhora. Na mobile je služba pod projektom s medzerou aspoň24px. Už sa nepočíta miesto pre veľké logo v holograme ani premenná mark-height; rozmery identity sú stabilné a zahrnuté v zmeranom projekte. Merania stále prebiehajú iba pri resize/inicializácii. Natívne článkové odkazy, držanie čítania, otočka úlomkov a celý svet zostávajú rovnaké.
+
+Hlavná dráha nepridáva prázdny reklamný projekt alebo falošné KPI. Interný zoznam dopĺňania oddeľuje podklady k webom, reklamám, interakciám, eurofondovej práci v CASSIS a nakoniec skutočným referenciám. Táto lokálna zmena nemení globálne tokeny ani starší sidecar.

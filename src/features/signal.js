@@ -528,7 +528,6 @@ export function initSignal() {
       );
       p.node.style.zIndex = p.node.classList.contains('is-revealed') ? '35' : String(20 - i);
       const h = presentationLayout(i, width, height, p);
-      p.node.style.setProperty('--mark-height', `${h.markHeight}px`);
       p.node.classList.toggle('proof-right', h.right);
       p.copy.style.left = `${h.copyLeft - x}px`;
       p.copy.style.top = `${h.copyTop - y}px`;
