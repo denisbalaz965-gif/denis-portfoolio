@@ -20,9 +20,10 @@ for (const match of html.matchAll(/(?:src|href)="(\.\/assets\/[^"#]+)"/g)) {
 assert.equal((await get('/.env.local')).status, 404);
 assert.equal((await get('/server/contact.js')).status, 404);
 assert.deepEqual(await (await get('/api/contact')).json(), { ready: false });
-// The About layer ships closed until real profiles exist: neither the dev
-// fixture nor a member's name may be in any embedded text asset. The Worker
-// stores assets as base64, so they are decoded before looking.
+// The About layer publishes only supplied facts. Neither the dev fixture nor
+// any placeholder wording may be in an embedded text asset, and an invalid data
+// file must not ship names while the layer stays closed. The Worker stores
+// assets as base64, so they are decoded before looking.
 const source = await readFile('dist/server/index.js', 'utf8');
 const shipped = [
   ...source.matchAll(/"data":"([A-Za-z0-9+/=]+)","type":"text\/(?:html|javascript|css)/g),
@@ -31,8 +32,9 @@ const shipped = [
   .join('\n');
 assert.ok(shipped.length > 1000, 'Embedded text assets were not found.');
 assert.ok(!shipped.includes(FIXTURE_SENTINEL), 'Fixture content must not ship.');
-// Profile data is either absent or complete: a half-filled file would ship
-// names inside the bundle while the layer itself stays closed.
+assert.doesNotMatch(shipped, /Zástupn|ZASTUPNY/i, 'Placeholder wording must not ship.');
+// Profile data is either absent or valid: a half-filled file would ship names
+// inside the bundle while the layer itself stays closed.
 if (!aboutContentReady(teamMembers, teamStory)) {
   assert.deepEqual(teamMembers, [], 'Incomplete About profiles must not be committed.');
   assert.equal(teamStory, null, 'An About story without complete profiles must not be committed.');
@@ -46,5 +48,5 @@ const manifest = JSON.parse(await readFile('dist/.openai/hosting.json', 'utf8'))
 assert.equal(manifest.project_id, 'appgprj_6ae39fd576d881919058eaae5e0df0e0');
 assert.equal(manifest.static, undefined);
 console.log(
-  'Worker ESM, HTML assets, private-file rejection, closed About gate and unavailable contact API verified. No emails sent.',
+  'Worker ESM, HTML assets, private-file rejection, About content without placeholders and unavailable contact API verified. No emails sent.',
 );

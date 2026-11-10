@@ -341,7 +341,7 @@ O nás je druhá strana toho istého sveta a horná časť toho istého posunu. 
 
 - **Otočka.** Prvé okno posunu hore obehne kamera kryštál o 180°. Je vratná ako rozpad kryštálu: posun späť ju vráti. Hmla sa posunie do strany a zredne na jeden vzdialený oblak mimo textu, objavia sa ostré hviezdy.
 - **Tretiny.** Kryštál sa rozdelí na tri tretiny, jednu na člena. Aktívna príde dopredu, dve ustúpia do hĺbky a stmavnú. Na najvyššej zastávke sa spoja do pôvodného kryštálu.
-- **Zastávky.** Príchod, pri každom členovi „kto“ a „čo“, navrchu „spolu“. Každá zastávka je jedna obrazovka; text stojí, mení sa prelnutím. Panel, ktorý sa nezmestí, sa posúva vnútri seba a má mäkký spodný okraj.
+- **Zastávky.** Príchod, pri každom členovi „kto“ a „čo“, navrchu „spolu“. Kým člen nedodá úplný profil, má jednu zastávku: nadpisom je jeho meno, pod ním doložené práce a poznámka o predchádzajúcich prácach; bez portrétu a bez úlomkov schopností. Každá zastávka je jedna obrazovka; text stojí, mení sa prelnutím. Panel, ktorý sa nezmestí, sa posúva vnútri seba a má mäkký spodný okraj.
 - **Úlomky schopností.** Na zastávke „čo“ vyletia z tretiny vždy tri malé úlomky, jeden za každú hlavnú schopnosť. Počet nezávisí od počtu prác.
 - **Navigácia logom.** `d / m / m / spolu`; aktívne písmeno sa rozvinie na meno. Na úzkom okne je dole pri palci a nesie tmavý prechod.
 - **Portréty.** Obyčajné obrázky v HTML so zeleným tónovaním (`mix-blend-mode: luminosity` na zelenom podklade) a výrezom v tvare fazety.

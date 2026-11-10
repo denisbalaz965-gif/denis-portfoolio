@@ -203,6 +203,11 @@ html.about-side .signal-axis {
   padding: 12px 0;
   color: var(--about-phosphor);
 }
+.about-note {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--about-muted);
+}
 .about-actions {
   display: flex;
   flex-wrap: wrap;

@@ -36,7 +36,8 @@ function buildSection(stop, index, members, story) {
       ? 'o-nas-prichod'
       : stop.kind === 'together'
         ? 'o-nas-spolu'
-        : `o-nas-${owner}${stop.kind === 'what' ? '-praca' : ''}`;
+        : // A member with a full profile has "who" and "who-praca"; otherwise one section.
+          `o-nas-${owner}${stop.kind === 'what' && stop.facets ? '-praca' : ''}`;
   const panel = el('div', 'about-panel');
   section.append(panel);
   const member = members[stop.member];
@@ -68,11 +69,6 @@ function buildSection(stop, index, members, story) {
     );
   } else if (stop.kind === 'what') {
     section.dataset.member = String(stop.member);
-    const skills = el('ul', 'about-skills');
-    skills.setAttribute('aria-label', 'Schopnosti');
-    [...member.skills, ...(member.moreSkills ?? [])].forEach((skill) =>
-      skills.append(el('li', '', skill)),
-    );
     const works = el('ul', 'about-works');
     works.setAttribute('aria-label', 'Práce');
     member.works.forEach((work) => {
@@ -85,12 +81,34 @@ function buildSection(stop, index, members, story) {
       item.append(anchor);
       works.append(item);
     });
-    panel.append(
-      el('p', 'about-eyebrow', `${member.letter} / ${member.name}`),
-      el('h2', 'about-heading', 'Čo prináša.'),
-      skills,
-      works,
+    // Same wording as the published note under the services: prior work of the
+    // members is not presented as commissions of the studio.
+    const note = el(
+      'p',
+      'about-note',
+      'Referencie zahŕňajú aj práce členov tímu pred vznikom značky d/m/m.',
     );
+    if (stop.facets) {
+      const skills = el('ul', 'about-skills');
+      skills.setAttribute('aria-label', 'Schopnosti');
+      [...member.skills, ...(member.moreSkills ?? [])].forEach((skill) =>
+        skills.append(el('li', '', skill)),
+      );
+      panel.append(
+        el('p', 'about-eyebrow', `${member.letter} / ${member.name}`),
+        el('h2', 'about-heading', 'Čo prináša.'),
+        skills,
+        works,
+        note,
+      );
+    } else
+      // Only what is documented: the name and the works, nothing standing in for a profile.
+      panel.append(
+        el('p', 'about-eyebrow', 'Doložené práce'),
+        el('h2', 'about-heading', member.name),
+        works,
+        note,
+      );
     if (member.links?.length) {
       const links = el('p', 'about-links');
       member.links.forEach((entry) => {
@@ -315,7 +333,7 @@ export function initAbout({ root = document, members = teamMembers, story = team
     if (view.facetOwner !== tagOwner && members[view.facetOwner]) {
       tagOwner = view.facetOwner;
       tagItems.forEach((item, index) => {
-        item.textContent = members[tagOwner].skills[index] ?? '';
+        item.textContent = members[tagOwner].skills?.[index] ?? '';
       });
     }
     put(facetTags, 'opacity', (view.facetAmount * ui).toFixed(3));
@@ -366,7 +384,8 @@ export function initAbout({ root = document, members = teamMembers, story = team
       } else if (fallback() || !layer.contains(target)) return;
       else if (target.dataset.member !== undefined) {
         const member = Number(target.dataset.member);
-        goTo(stops.findIndex((entry) => entry.kind === 'who' && entry.member === member));
+        // A member's first stop: "who" with a full profile, otherwise their works.
+        goTo(stops.findIndex((entry) => entry.member === member));
       } else if (target.dataset.goto !== undefined) goTo(Number(target.dataset.goto));
     },
     options,

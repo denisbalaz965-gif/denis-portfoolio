@@ -26,12 +26,55 @@ import {
 } from '../src/features/about-model.js';
 
 const has = (id) => Boolean(findProject(id));
+const PROFILE = ['portrait', 'sentence', 'about', 'skills', 'moreSkills', 'role', 'links'];
+// The fixture reduced to what is documented today: names and works only.
+const factsOnly = (members) =>
+  members.map((member) =>
+    Object.fromEntries(Object.entries(member).filter(([key]) => !PROFILE.includes(key))),
+  );
+const strings = (value) =>
+  typeof value === 'string'
+    ? [value]
+    : value && typeof value === 'object'
+      ? Object.values(value).flatMap(strings)
+      : [];
 
 describe('About content gate', () => {
-  it('ships closed: production data is empty', () => {
-    expect(teamMembers).toEqual([]);
-    expect(teamStory).toBeNull();
-    expect(aboutReady(teamMembers, teamStory, has)).toBe(false);
+  it('ships the documented facts and nothing that is not supplied', () => {
+    expect(aboutReady(teamMembers, teamStory, has)).toBe(true);
+    expect(teamMembers.map((m) => [m.id, m.letter, m.name])).toEqual([
+      ['denis', 'd', 'Denis'],
+      ['martin', 'm', 'Martin'],
+      ['miros', 'm', 'Miroš'],
+    ]);
+    const works = (i) => teamMembers[i].works.map((w) => w.project);
+    expect(works(0)).toEqual(['stylovy-chlpac', 'zakazko', 'eurofondova-agenda']);
+    expect(works(1)).toEqual(['attilapark', 'previa', 'phlaboratories', 'newera', 'tatrascool']);
+    expect(works(2)).toEqual(['attilapark']);
+    expect(teamMembers[0].works[2].note).toMatch(/CASSIS Consult/);
+    expect(teamMembers[0].works[2].note).toMatch(/nie sú zákazkami d\/m\/m/);
+    // No portrait, quote, biography or skills until the members supply them.
+    for (const member of teamMembers)
+      for (const field of PROFILE) expect(member).not.toHaveProperty(field);
+    expect(teamStory.title).toBe('Tri pohľady. Jedno spoločné riešenie.');
+    expect(strings([teamMembers, teamStory]).join(' ')).not.toMatch(/Zástupn|ZASTUPNY|Lorem/i);
+  });
+  it('opens for documented facts alone and rejects half a profile', () => {
+    const facts = factsOnly(fixtureMembers);
+    expect(aboutReady(facts, fixtureStory, has)).toBe(true);
+    for (const field of ['portrait', 'sentence', 'about', 'skills']) {
+      const half = structuredClone(fixtureMembers);
+      for (const other of ['portrait', 'sentence', 'about', 'skills'])
+        if (other !== field) delete half[0][other];
+      expect(aboutReady([half[0], ...facts.slice(1)], fixtureStory, has)).toBe(false);
+    }
+    const mixed = [fixtureMembers[0], ...facts.slice(1)];
+    expect(aboutReady(mixed, fixtureStory, has)).toBe(true);
+    for (const field of ['name', 'letter', 'works']) {
+      const broken = structuredClone(facts);
+      delete broken[2][field];
+      expect(aboutReady(broken, fixtureStory, has)).toBe(false);
+    }
   });
   it('opens only for three complete members and a story', () => {
     expect(aboutReady(fixtureMembers, fixtureStory, has)).toBe(true);
@@ -91,6 +134,50 @@ describe('About stops and addresses', () => {
     expect(parseAboutHash('#o-mne', stops, fixtureMembers)).toBeNull();
     expect(parseAboutHash('#kontakt', stops, fixtureMembers)).toBeNull();
     expect(parseAboutHash('', stops, fixtureMembers)).toBeNull();
+  });
+});
+
+describe('Members without a full profile', () => {
+  const facts = factsOnly(fixtureMembers);
+  const mixed = [fixtureMembers[0], ...facts.slice(1)];
+  it('give each member one stop with the works, and facets only with skills', () => {
+    const stops = aboutStops(facts);
+    expect(stops.map((s) => s.kind)).toEqual(['arrival', 'what', 'what', 'what', 'together']);
+    expect(stops.map((s) => s.member)).toEqual([-1, 0, 1, 2, -1]);
+    expect(stops.every((s) => !s.facets)).toBe(true);
+    const both = aboutStops(mixed);
+    expect(both.map((s) => `${s.kind}${s.member}${s.facets ? '+' : ''}`)).toEqual([
+      'arrival-1',
+      'who0',
+      'what0+',
+      'what1',
+      'what2',
+      'together-1',
+    ]);
+  });
+  it('resolve their address to their first stop and back', () => {
+    const stops = aboutStops(mixed);
+    expect(parseAboutHash('#o-nas/denis', stops, mixed)).toBe(1);
+    expect(parseAboutHash('#o-nas/martin', stops, mixed)).toBe(3);
+    expect(parseAboutHash('#o-nas/miros', stops, mixed)).toBe(4);
+    expect(aboutHash(3, stops, mixed)).toBe('#o-nas/martin');
+    expect(parseAboutHash('#o-nas/spolu', stops, mixed)).toBe(5);
+  });
+  it('never raise skill facets for a member without skills', () => {
+    const stops = aboutStops(mixed);
+    expect(aboutLayout(2, stops, false).facetAmount).toBe(1);
+    expect(aboutLayout(2, stops, false).facetOwner).toBe(0);
+    for (const at of [2.7, 3, 3.5, 4, 4.5])
+      expect(aboutLayout(at, stops, false).facetAmount).toBe(0);
+    const onlyFacts = aboutStops(facts);
+    for (let at = 0; at <= 4; at += 0.25)
+      expect(aboutLayout(at, onlyFacts, false).facetAmount).toBe(0);
+  });
+  it('bring the member of the current stop forward', () => {
+    const stops = aboutStops(facts);
+    const { wide } = ABOUT_LAYOUT;
+    expect(aboutLayout(2, stops, false).thirds[1]).toEqual(wide.what.active);
+    expect(aboutLayout(4, stops, false).join).toBe(1);
   });
 });
 

@@ -50,7 +50,7 @@ afterEach(() => {
 describe('About layer in the document', () => {
   it('renders nothing and behaves like the intro while the gate is closed', () => {
     window.history.replaceState(null, '', '#o-nas/denis');
-    const about = initAbout();
+    const about = initAbout({ members: [], story: null });
     dispose = about.dispose;
     expect(about.scene).toBeNull();
     expect(document.querySelector('#o-nas').hidden).toBe(true);
@@ -120,6 +120,94 @@ describe('About layer in the document', () => {
     expect(shape(what[1])).toEqual(shape(what[0]));
     expect(shape(what[2])).toEqual(shape(what[0]));
     expect(document.querySelectorAll('.about-facet-tags li')).toHaveLength(3);
+  });
+});
+
+describe('Members with documented facts only', () => {
+  const PROFILE = ['portrait', 'sentence', 'about', 'skills', 'moreSkills', 'role', 'links'];
+  const facts = fixtureMembers.map((member) =>
+    Object.fromEntries(Object.entries(member).filter(([key]) => !PROFILE.includes(key))),
+  );
+  const FIVE = aboutSpan(5) * UNIT;
+  const topOf = (stop) => FIVE - aboutUpFor(stop) * UNIT;
+  const openFacts = () => {
+    spanPx = FIVE;
+    const about = initAbout({ members: facts, story: fixtureStory });
+    dispose = about.dispose;
+    return about;
+  };
+
+  it('show each member as their name and documented works, with nothing invented', () => {
+    openFacts();
+    const layer = document.querySelector('#o-nas');
+    const sections = [...layer.querySelectorAll('.about-section')];
+    expect(sections.map((section) => section.id)).toEqual([
+      'o-nas-prichod',
+      'o-nas-denis',
+      'o-nas-martin',
+      'o-nas-miros',
+      'o-nas-spolu',
+    ]);
+    expect(layer.querySelector('img, .about-portrait, .about-sentence, .about-skills')).toBeNull();
+    const profiles = sections.slice(1, 4);
+    expect(profiles.map((section) => section.querySelector('h2').textContent)).toEqual([
+      'Denis',
+      'Martin',
+      'Miroš',
+    ]);
+    expect(profiles.map((section) => section.querySelectorAll('.about-works a').length)).toEqual([
+      3, 5, 1,
+    ]);
+    for (const section of profiles) {
+      expect(section.querySelector('.about-note').textContent).toBe(
+        'Referencie zahŕňajú aj práce členov tímu pred vznikom značky d/m/m.',
+      );
+      expect(section.textContent).not.toMatch(/Zástupn/);
+    }
+  });
+  it('move to a member from the switcher, the names and an address', () => {
+    window.history.replaceState(null, '', '#o-nas/miros');
+    openFacts();
+    expect(window.scrollTo).toHaveBeenLastCalledWith({ top: topOf(3), behavior: 'instant' });
+    const nav = [...document.querySelectorAll('.about-nav button')];
+    nav[1].click();
+    expect(window.scrollTo).toHaveBeenLastCalledWith({ top: topOf(2), behavior: 'smooth' });
+    nav[3].click();
+    expect(window.scrollTo).toHaveBeenLastCalledWith({ top: topOf(4), behavior: 'smooth' });
+    document.querySelector('.about-names button[data-member="0"]').click();
+    expect(window.scrollTo).toHaveBeenLastCalledWith({ top: topOf(1), behavior: 'smooth' });
+  });
+  it('keep the skill labels empty and the frame running without skills', () => {
+    const about = openFacts();
+    Object.assign(about.scene.state, { up: 3, turn: 1, split: 1, progress: 2 });
+    expect(() =>
+      about.scene.frame(view({ facetOwner: 1, facetAmount: 0, names: [{ x: 1, y: 2 }] })),
+    ).not.toThrow();
+    const tags = [...document.querySelectorAll('.about-facet-tags li')];
+    expect(tags.map((tag) => tag.textContent)).toEqual(['', '', '']);
+    expect(Number(document.querySelector('.about-facet-tags').style.opacity)).toBe(0);
+    const nav = [...document.querySelectorAll('.about-nav button')];
+    expect(nav.map((b) => b.getAttribute('aria-current'))).toEqual([null, 'true', null, null]);
+  });
+  it('lead an address to the member section without WebGL', () => {
+    window.history.replaceState(null, '', '#o-nas/martin');
+    openFacts();
+    const shown = vi.spyOn(document.querySelector('#o-nas-martin'), 'scrollIntoView');
+    restoreFlightFallback();
+    expect(shown).toHaveBeenCalled();
+  });
+  it('is what the published site shows', () => {
+    spanPx = FIVE;
+    const about = initAbout();
+    dispose = about.dispose;
+    expect(about.scene).not.toBeNull();
+    const layer = document.querySelector('#o-nas');
+    expect(layer.querySelectorAll('.about-section')).toHaveLength(5);
+    expect(layer.querySelector('img, .about-portrait, .about-sentence, .about-skills')).toBeNull();
+    expect(layer.textContent).not.toMatch(/Zástupn|ZASTUPNY/);
+    expect(layer.querySelector('#o-nas-spolu h2').textContent).toBe(
+      'Tri pohľady. Jedno spoločné riešenie.',
+    );
   });
 });
 

@@ -8,44 +8,59 @@ const filled = (value) => typeof value === 'string' && value.trim().length > 0;
 const texts = (list, min) =>
   Array.isArray(list) && list.length >= min && list.every((item) => filled(item));
 
-// The publication gate: open only when all three profiles and the shared story
-// carry every required field. There is deliberately no manual switch.
+// A full profile is optional and comes whole: portrait, own sentence, a short
+// introduction and exactly three main skills. Half a profile closes the gate,
+// so nothing is published that looks like a profile but is not one.
+const PROFILE_FIELDS = ['portrait', 'sentence', 'about', 'skills'];
+export const hasProfile = (member) => PROFILE_FIELDS.every((field) => member?.[field] != null);
+const profileValid = (member) =>
+  filled(member.sentence) &&
+  filled(member.portrait?.src) &&
+  filled(member.portrait?.alt) &&
+  texts(member.about, 1) &&
+  texts(member.skills, 3) &&
+  member.skills.length === 3;
+
+// The publication gate: three members with their documented works and the
+// shared story. There is deliberately no manual switch.
 export function aboutReady(members, story, hasProject = () => true) {
   if (!Array.isArray(members) || members.length !== 3) return false;
   if (!story || !filled(story.title) || !texts(story.paragraphs, 1)) return false;
   // Ids become addresses (#o-nas/<id>), so they must be unique and URL-safe.
   const ids = members.map((member) => member?.id);
   if (new Set(ids).size !== ids.length) return false;
-  return members.every(
-    (member) =>
-      member &&
+  return members.every((member) => {
+    if (!member) return false;
+    const someProfile = PROFILE_FIELDS.some((field) => member[field] != null);
+    return (
       filled(member.id) &&
       /^[a-z0-9-]+$/.test(member.id) &&
       member.id !== 'spolu' &&
       filled(member.letter) &&
       filled(member.name) &&
-      filled(member.sentence) &&
-      filled(member.portrait?.src) &&
-      filled(member.portrait?.alt) &&
-      texts(member.about, 1) &&
-      texts(member.skills, 3) &&
-      member.skills.length === 3 &&
+      (!someProfile || (hasProfile(member) && profileValid(member))) &&
       Array.isArray(member.works) &&
       member.works.length >= 1 &&
       member.works.every(
         (work) => work && filled(work.note) && filled(work.project) && hasProject(work.project),
-      ),
-  );
+      )
+    );
+  });
 }
 
-// Arrival, two steps per member, then the shared ending.
+// Arrival, then per member "who" (only with a full profile) and "what", then
+// the shared ending. Skill facets belong to members who have skills.
 export function aboutStops(members) {
   return [
     { kind: 'arrival', member: -1 },
-    ...members.flatMap((_, member) => [
-      { kind: 'who', member },
-      { kind: 'what', member },
-    ]),
+    ...members.flatMap((entry, member) =>
+      hasProfile(entry)
+        ? [
+            { kind: 'who', member },
+            { kind: 'what', member, facets: true },
+          ]
+        : [{ kind: 'what', member, facets: false }],
+    ),
     { kind: 'together', member: -1 },
   ];
 }
@@ -69,9 +84,10 @@ export function parseAboutHash(hash, stops, members) {
     return 0;
   }
   if (target === 'spolu') return stops.length - 1;
+  // A member's address opens their first stop: "who" or, without a profile, "what".
   const member = members.findIndex((entry) => entry.id === target);
-  const index = stops.findIndex((stop) => stop.kind === 'who' && stop.member === member);
-  return member >= 0 && index >= 0 ? index : 0;
+  const index = member < 0 ? -1 : stops.findIndex((stop) => stop.member === member);
+  return index >= 0 ? index : 0;
 }
 
 // ---- Motion -----------------------------------------------------------------
@@ -225,7 +241,7 @@ export function aboutLayout(progress, stops, narrow = false) {
   let facetAmount = 0,
     facetOwner = Math.max(0, stops[Math.round(at)].member);
   stops.forEach((stop, index) => {
-    if (stop.kind !== 'what') return;
+    if (stop.kind !== 'what' || !stop.facets) return;
     const amount = at <= index ? ramp(at, index - 0.95, index) : 1 - ramp(at, index, index + 0.6);
     if (amount > facetAmount) {
       facetAmount = amount;

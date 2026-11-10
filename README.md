@@ -65,8 +65,10 @@ Doterajšia v28 prešla87testami a kontrolou v prehliadači vo viacerých rozmer
 
 [ASSET-SOURCES.json](ASSET-SOURCES.json) zaznamenáva historické aktíva; logá a článkové zábery majú vlastné `provenance.json` v príslušných priečinkoch `public/images/`. Instrument Sans používa SIL Open Font License (`public/licenses/InstrumentSans-OFL.txt`), Three.js MIT a GSAP vlastnú licenciu. Historické obrázky zostávajú zdrojovými aktívami; dnešný hlavný priestor kreslí Three.js.
 
-## O nás — ako vrstvu vidieť a otvoriť
+## O nás — čo je zverejnené a ako doplniť profil
 
-Na vývojovom serveri (`npm run dev`) sa vrstva zobrazí so zástupným obsahom z `src/data/team-members.fixture.js`: pri kryštáli posuňte hore, alebo kliknite na „O nás“. V produkčnom builde je jej kód a štýly, no žiadny obsah, vstup ani predĺženie stránky.
+O nás je verejné s doloženými faktami z `src/data/team-members.js`: krstné mená, písmená d/m/m, práce s atribúciou a spoločný text štúdia. Každý člen má jednu zastávku s menom a prácami.
 
-Verejne sa otvorí sama, keď `src/data/team-members.js` obsahuje troch úplných členov a spoločný príbeh: jedinečné id (malé písmená, číslice, pomlčka), meno, portrét s popisom, vlastnú vetu, krátke predstavenie, presne tri hlavné schopnosti a aspoň jednu prácu s vetou o príspevku. Portréty patria do `public/images/`. Dáta musia byť buď prázdne, alebo úplné; `npm run check` to stráži. Pri otvorení treba upraviť test „ships closed“ v `tests/about-model.test.js`, pravidlo o osobných menách v PRODUCT.md a test v `tests/team.test.js`, ak sa mená dostanú do článkov.
+Úplný profil člena sa pridá do toho istého súboru naraz: `portrait` (`src`, `alt`, rozmery; obrázok do `public/images/`), `sentence`, `about` (odseky) a presne tri `skills`. Člen potom dostane zastávku s portrétom a vetou a pri prácach tri úlomky schopností. Neúplná sada týchto polí vrstvu zavrie a `npm run check` zlyhá. Žiadny zástupný text nesmie byť v balíku; `scripts/validate-worker.mjs` to kontroluje.
+
+Na vývojovom serveri sa zobrazujú skutočné dáta. Zástupný úplný obsah v `src/data/team-members.fixture.js` slúži testom.

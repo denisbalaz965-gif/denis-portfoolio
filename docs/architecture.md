@@ -54,8 +54,8 @@ O nás je horná časť tej istej posuvnej dráhy. Stránka sa otvára na kryšt
 
 **Súbory**
 
-- `src/data/team-members.js`: skutočný obsah profilov a spoločnej časti. Dnes prázdny.
-- `src/data/team-members.fixture.js`: zástupný obsah. `src/main.js` ho načíta len na vývojovom serveri; do produkčného balíka sa nedostane.
+- `src/data/team-members.js`: zverejnený obsah: krstné mená, písmená, doložené práce a spoločný text. Úplné profily sa doplnia, keď ich členovia dodajú.
+- `src/data/team-members.fixture.js`: zástupné úplné profily pre testy; `src/main.js` ho načíta na vývojovom serveri, len ak skutočné dáta neprejdú bránou. Do produkčného balíka sa nedostane.
 - `src/features/about-model.js`: čisté funkcie bez DOM a WebGL: brána `aboutReady`, zastávky, adresy, prevod posunu (`aboutAt`, `aboutSpan`, `aboutUpFor`, `stepAbout`), otočka (`orbitOffset`, `turnPhases`), rozloženie (`aboutLayout`, `aboutNarrow`).
 - `src/features/about-gate.js`: jediné pravidlo „vrstvu možno ukázať“ pre stránku, vstup aplikácie aj kontrolu balíka.
 - `src/features/about.js`: vykreslí vrstvu z dát do `#o-nas` v `.flight-stage`, predĺži dráhu, vytvorí vstupy a prevádza posun na cieľ.
@@ -75,9 +75,9 @@ Osou otočky je kryštál v úvodnej polohe. Šesť klinov sa preskupí do troch
 
 `#o-nas`, `#o-nas/<id>` a `#o-nas/spolu` sú miesta na tej istej stránke, rovnako ako `#kontakt`. Odkazy a prepínač `d / m / m / spolu` na ne plynulo posunú; priama adresa skočí okamžite. Článok otvorený z profilu používa nezmenenú čítačku a jej presný návrat; počas čítania má `<html>` triedu `about-reading`.
 
-**Brána zverejnenia**
+**Brána zverejnenia a dve úrovne profilu**
 
-Vrstva sa vykreslí len vtedy, keď `aboutContentReady()` potvrdí troch úplných členov a spoločný príbeh. Inak sa nevytvorí nič, dráha sa nepredĺži, vstupy neexistujú a adresy `#o-nas…` sa prepíšu na `#svet`. `scripts/validate-worker.mjs` beží ako súčasť `npm run check` a kontroluje, že balík neobsahuje zástupný obsah, že dáta sú buď prázdne, alebo úplné, a že pri zatvorenej bráne v ňom nie sú mená.
+Vrstva sa vykreslí, keď `aboutContentReady()` potvrdí troch členov s menom, písmenom a aspoň jednou doloženou prácou a spoločný text. Úplný profil (portrét, veta, predstavenie, presne tri schopnosti) je voliteľný a celý naraz; neúplný profil bránu zavrie. `aboutStops()` dáva členovi s profilom zastávky „kto“ a „čo“ s úlomkami schopností, ostatným jednu zastávku „čo“ s menom a prácami, bez úlomkov. Adresa `#o-nas/<id>` vedie na prvú zastávku člena. `scripts/validate-worker.mjs` beží v `npm run check` a kontroluje, že balík neobsahuje zástupný obsah ani zástupné formulácie a že neplatné dáta nevydajú mená.
 
 **Fallback**
 

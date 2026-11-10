@@ -116,3 +116,9 @@ Po zhliadnutí prvej verzie majiteľ rozhodol, že O nás nemá byť samostatný
 ## Úsporná navigačná vrstva — 10. 11. 2026
 
 Na výslovnú požiadavku majiteľa sa opakované pokyny na scroll, počítadlo projektov a dekoratívna hĺbka odstránili. Pri štartovom kryštáli zostáva jedna myš so zvýrazneným kolieskom, bez viditeľného návodového textu. Prístupné pomenovanie vysvetľuje smer; keď je vrstva O nás zverejniteľná, rozlišuje tím hore a práce dole. Pozastavenie pozadia zostáva ikonou s prístupným názvom. Ponuka, projektové dôkazy, články, demo štítky, kontakty a obsahová brána O nás sa nemenia.
+
+## O nás zverejnené s doloženými faktami — 10. 11. 2026
+
+Na aktuálne zadanie majiteľa sa horná časť webu zverejňuje hneď, bez čakania na profily. Verejne sú krstné mená členov (Denis, Martin, Miroš) v poradí písmen d/m/m a ich doložené práce s doterajšou atribúciou: Denis — Štýlový chlpáč a Zákazko.sk s podporou AI a eurofondové skúsenosti z tímu CASSIS Consult, ktoré nie sú zákazkami d/m/m; Martin — päť celých webov podľa majiteľa; Miroš — spolupráca na Attila Park Caravans. Pri prácach stojí poznámka, že referencie zahŕňajú aj práce pred vznikom značky. Spoločná časť používa už publikovaný text „Tri pohľady. Jedno spoločné riešenie.“ a „Prepájame návrh, realizáciu a automatizácie…“.
+
+Tým sa mení zásada č. 1 a skoršie pravidlo „bez osobných mien“: mená sa zverejňujú, články a ponuka ostávajú pod značkou d/m/m. Portréty, vlastné vety, predstavenia, schopnosti, tituly a príbeh vzniku sa nezverejňujú, kým ich členovia nedodajú; žiadna zástupná náhrada sa nezobrazuje. Úplný profil člena sa pridá naraz a vtedy dostane vlastnú zastávku a úlomky schopností.
