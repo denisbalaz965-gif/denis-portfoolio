@@ -2,7 +2,7 @@
 
 Najprv si prečítaj [README.md](README.md), [odovzdanie](docs/CLAUDE-HANDOFF.md) a [smer O nás](docs/ABOUT-DIRECTION.md). Technickú orientáciu nájdeš v [architektúre](docs/architecture.md); obsahové hranice v [PRODUCT.md](PRODUCT.md).
 
-Majiteľ chce tvoj vlastný návrh. Dostávaš smer a kontext, nie predpísaný layout, storyboard alebo implementačný postup. Pozri existujúci web, vytvor si vlastný názor a navrhni, ako tento smer posunúť. Najbližší výstup má byť premyslený návrh na diskusiu; nová časť O nás ešte nie je implementovaná.
+Majiteľ chce tvoj vlastný návrh. Dostávaš smer a kontext, nie predpísaný layout, storyboard alebo implementačný postup. Pozri existujúci web, vytvor si vlastný názor a navrhni, ako tento smer posunúť. Návrh vrstvy O nás bol odsúhlasený a vrstva je postavená so zatvorenou bránou zverejnenia; pozri [návrh](docs/superpowers/specs/2026-11-10-o-nas-druha-strana-design.md) a časť Druhá strana v architektúre.
 
 Drž sa identity d/m/m: tmavý zelený priestor, kryštál a úlomky, súvislý zážitok, pohyb s čitateľnými intervalmi. Vizuál má pomáhať predstaviť schopnosti tímu a získať vlastných klientov. Konkrétnu kompozíciu a choreografiu navrhni ty. Existujúci kód je východisko, nie povinnosť zachovať každý detail riešenia.
 

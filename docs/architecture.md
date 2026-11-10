@@ -1,6 +1,6 @@
 # Architektúra d/m/m — aktuálna orientácia
 
-Stav zdroja verejnej v28,10.11.2026. Nový vesmír „O nás“ je zatiaľ [tvorivý smer](ABOUT-DIRECTION.md), nie existujúci modul alebo predpísané budúce riešenie.
+Stav zdroja verejnej v28,10.11.2026. Vrstva „O nás“ (druhá strana) je postavená so zatvorenou bránou zverejnenia; opisuje ju časť [Druhá strana](#druhá-strana-o-nás) a [návrh](superpowers/specs/2026-11-10-o-nas-druha-strana-design.md).
 
 ## Vstup a vlastníctvo pohybu
 
@@ -10,7 +10,7 @@ Stav zdroja verejnej v28,10.11.2026. Nový vesmír „O nás“ je zatiaľ [tvor
 
 `fragment-paths.js` určuje rôzne príchody a odchody z rohov a strán, vrátane mobilných polôh. `fracture-geometry.js` vytvára šesť klinov spoločného kryštálu aj objemové čítačkové úlomky. `crystal-material.js` vytvára procedurálny povrch. `scrollTurn()` viaže otáčanie na scroll; časová fáza vlastní atmosféru. Držanie hologramu, vstup do článku a otvorený príbeh zastavia interpoláciu hlavného letu. Automatický náhľad sám let nezamyká.
 
-Budúci prechod O nás bude musieť rešpektovať existujúce vlastníctvo kamery a životný cyklus. Táto poznámka opisuje väzby, neurčuje spôsob realizácie; navrhni ho podľa vlastného úsudku.
+Druhá strana používa tú istú kameru a ten istý cyklus snímok; `signal.js` zostáva ich vlastníkom. Podrobnosti sú v časti Druhá strana.
 
 ## Ostrosť a obnova
 
@@ -35,7 +35,8 @@ Pri skrytej karte sa snímky zastavia. Pause ovládač zastavuje samostatnú ča
 - `#projekt/<id>`: článok alebo demonštrácia.
 - `#kontakt`: formulár, nie úplný koniec dokumentu.
 - `#firemne-udaje`: samostatný firemný footer.
-- `#o-mne`: otvorí pôvodný `details` so službami vo footeri. Toto zatiaľ nie je nový vesmír O nás.
+- `#o-mne`: otvorí pôvodný `details` so službami vo footeri. Nie je to O nás a nemení sa.
+- `#o-nas`, `#o-nas/<id>`, `#o-nas/spolu`: druhá strana; platia len pri otvorenej bráne, inak sa správajú ako úvod.
 
 Na nízkom alebo úzkom okne má kontakt/footer vlastný prirodzený scroll. Na jeho okraji `overscroll-behavior-y:auto` odovzdá posun dokumentu. Nízky footer má rezervovaný spodný priestor pre pevný pause ovládač. Čítanie, kontakty a návraty majú zostať dostupné.
 
@@ -46,3 +47,33 @@ Vite slúži vývoju a bundlovaniu. `server/contact.js` poskytuje `/api/contact`
 Bez serverovej konfigurácie kontakt vracia `ready:false` a neposiela e-mail. Zapnutie vyžaduje podmienky v resend-setup.md. Príjemca je pevný, vstup sa validuje, provider dostáva text a idempotency key. Per-isolate obmedzenie nie je distribuovaná kvóta. Prijatie providerom nie je dôkaz doručenia.
 
 Verejný web je v Sites, GitHub slúži odovzdaniu zdroja. Samotný GitHub push nenasadzuje overenú novú Sites verziu. Zachovaj odlíšenie lokálneho výstupu, odoslaného commitu a skutočne publikovanej verzie.
+
+## Druhá strana (O nás)
+
+Po kliknutí na vstup kamera obehne kryštál o 180° a ukáže ľudí za prácou. Šesť klinov sa preskupí do troch tretín (dvojice 0–1, 2–3, 4–5), jedna na člena; na konci sa spoja.
+
+**Súbory**
+
+- `src/data/team-members.js`: skutočný obsah profilov a spoločnej časti. Dnes prázdny.
+- `src/data/team-members.fixture.js`: zástupný obsah. `src/main.js` ho načíta len na vývojovom serveri; do produkčného balíka sa nedostane.
+- `src/features/about-model.js`: čisté funkcie bez DOM a WebGL: brána `aboutReady`, zastávky, adresy, stavový stroj (`requestEnter`, `requestLeave`, `stepAbout`), otočka (`orbitOffset`, `turnPhases`), rozloženie (`aboutLayout`) a `sectionProgress`.
+- `src/features/about.js`: vykreslí vrstvu z dát do `#o-nas`, vytvorí vstupy, riadi históriu, fokus, posun a fallback.
+- `src/styles/about-side.css`: štýly vrstvy, importované posledné.
+
+**Vlastníctvo a tok**
+
+`initAbout()` vracia `scene = { state, stops, frame(view) }` a `main.js` ju odovzdá do `initSignal({ about })`. DOM vrstva do zdieľaného stavu len zapisuje zámery a prebúdza snímky udalosťou `portfolio:about`. `signal.js` v každej snímke zavolá `stepAbout(state, dt)`, nakreslí scénu a zavolá `frame(view)` s priemetmi tretín a úlomkov schopností; `view.event` nesie `arrived` alebo `landed`. Po pristátí vyšle DOM vrstva `portfolio:about-landed`. Kým režim nie je `front`, hlavný let je zamknutý.
+
+Osou otočky je bod 7 jednotiek pred letovou kamerou v jej aktuálnej hĺbke. Pri vstupe odkiaľkoľvek sa kliny do osi najprv zbehnú (`turnPhases().gather`). Hmlový shader má navyše `pan`, `space` a `nebula`; hviezdy sú body v ostrom prednom prechode. Pri návrate s cieľom `#kontakt` sa let v polovici spätnej otočky presunie na kontaktnú zastávku.
+
+**Brána zverejnenia**
+
+Vrstva sa vykreslí len vtedy, keď `aboutReady()` potvrdí troch úplných členov a spoločný príbeh. Inak sa nevytvorí nič, vstupy neexistujú a adresy `#o-nas…` sa prepíšu na `#svet`. `scripts/validate-worker.mjs` kontroluje, že balík neobsahuje zástupný obsah a pri zatvorenej bráne ani mená.
+
+**Posun a články**
+
+Vrstva má vlastný posuvný kontajner. Každá zastávka je sekcia s pripnutým panelom a 85svh držania; priebeh sa odvodí z polohy sekcií, takže dlhší panel drží dlhšie. Článok otvorený z profilu používa nezmenenú čítačku; počas neho má `<html>` triedu `about-reading` a po zatvorení sa vráti ten istý profil.
+
+**Obmedzený pohyb a fallback**
+
+Pri systémovom obmedzení pohybu nahradí otočku prelnutie (`ABOUT_RESPECTS_REDUCED_MOTION` v modeli). Na udalosť `portfolio:flight-fallback` sa vrstva zmení na bežnú čitateľnú sekciu.

@@ -6,7 +6,7 @@ Portfólio trojčlenného digitálneho štúdia pre vlastných klientov. Jeden t
 
 ## Pokračovanie s Claudeom
 
-Začni v [CLAUDE.md](CLAUDE.md). Majiteľ chce vlastný tvorivý návrh novej vrstvy „O nás“ a dostávaš smer, nie predpísaný layout alebo technické riešenie. Pracovná predstava je prechod otočením priestoru do vesmíru, samostatné predstavenia troch členov a na konci spoločný príbeh/myšlienka d/m/m. Táto vrstva ešte nie je implementovaná.
+Začni v [CLAUDE.md](CLAUDE.md). Vrstva „O nás“ je postavená ako druhá strana sveta: otočenie priestoru, samostatné predstavenia troch členov a na konci spoločná časť. Jej [návrh](docs/superpowers/specs/2026-11-10-o-nas-druha-strana-design.md) a [plán](docs/superpowers/plans/2026-11-10-o-nas-druha-strana.md) sú v repozitári. Na verejnom webe je zatvorená, kým majiteľ nedodá profily a príbeh.
 
 Verejná v28 vychádza z commitu `fcc931bc17e18cb7c30adf0e0957a6ea2fad0498`. Aktuálne dokumentačné odovzdanie pridáva kontext pre ďalší návrh. Push na GitHub a nasadenie verejného webu sú samostatné kroky.
 
@@ -31,22 +31,25 @@ npm run preview
 
 ## Orientácia v zdroji
 
-| Miesto                            | Úloha                                                       |
-| --------------------------------- | ----------------------------------------------------------- |
-| `index.html`                      | Úvod, služby/dôkazy, kontakt, footer, pôvodný obsah         |
-| `src/main.js`                     | Inicializácia a poradie funkcií                             |
-| `src/features/signal.js`          | Spoločná Three.js scéna, projekcia, hlavný scroll a čítačka |
-| `src/features/flight-model.js`    | Čistý model letu, oddelený kontakt a koniec                 |
-| `src/features/render-policy.js`   | Nezávislé rozpočty scény a shaderového pozadia              |
-| `src/features/fragment-paths.js`  | Rôzne smery príchodu a odchodu úlomkov                      |
-| `src/features/project-browser.js` | Články, adresy a história                                   |
-| `src/features/contact.js`         | Stav formulára a kopírovanie kontaktu                       |
-| `src/data/`                       | Realizácie, historické skúsenosti a modelové ukážky         |
-| `src/styles/main.css`             | Skutočné poradie CSS importov                               |
-| `server/contact.js`               | Pripravené serverové napojenie Resend                       |
-| `scripts/`                        | Balenie, lokálny Worker náhľad a kontrola artefaktu         |
-| `tests/`                          | Vitest/jsdom a serverové testy s náhradou poskytovateľa     |
-| `public/`                         | Logá, článkové zábery, fonty a licencie                     |
+| Miesto                            | Úloha                                                        |
+| --------------------------------- | ------------------------------------------------------------ |
+| `index.html`                      | Úvod, služby/dôkazy, kontakt, footer, pôvodný obsah          |
+| `src/main.js`                     | Inicializácia a poradie funkcií                              |
+| `src/features/signal.js`          | Spoločná Three.js scéna, projekcia, hlavný scroll a čítačka  |
+| `src/features/flight-model.js`    | Čistý model letu, oddelený kontakt a koniec                  |
+| `src/features/render-policy.js`   | Nezávislé rozpočty scény a shaderového pozadia               |
+| `src/features/fragment-paths.js`  | Rôzne smery príchodu a odchodu úlomkov                       |
+| `src/features/project-browser.js` | Články, adresy a história                                    |
+| `src/features/contact.js`         | Stav formulára a kopírovanie kontaktu                        |
+| `src/data/`                       | Realizácie, historické skúsenosti a modelové ukážky          |
+| `src/data/team-members.js`        | Skutočný obsah O nás; prázdny, kým ho majiteľ nedodá         |
+| `src/features/about-model.js`     | Čistý model druhej strany: brána, adresy, otočka, rozloženie |
+| `src/features/about.js`           | DOM vrstva O nás: vstupy, história, posun, fallback          |
+| `src/styles/main.css`             | Skutočné poradie CSS importov                                |
+| `server/contact.js`               | Pripravené serverové napojenie Resend                        |
+| `scripts/`                        | Balenie, lokálny Worker náhľad a kontrola artefaktu          |
+| `tests/`                          | Vitest/jsdom a serverové testy s náhradou poskytovateľa      |
+| `public/`                         | Logá, článkové zábery, fonty a licencie                      |
 
 Podrobnosti: [architektúra](docs/architecture.md). Produktová pravda: [PRODUCT.md](PRODUCT.md). Vizuálny systém: [DESIGN.md](DESIGN.md) a `.impeccable/design.json`. Dátované lokálne úpravy: [team-surface.md](docs/team-surface.md); jeho neskoršie časti prevažujú nad historickými popismi.
 
@@ -61,3 +64,9 @@ Doterajšia v28 prešla87testami a kontrolou v prehliadači vo viacerých rozmer
 ## Pôvod aktív a licencie
 
 [ASSET-SOURCES.json](ASSET-SOURCES.json) zaznamenáva historické aktíva; logá a článkové zábery majú vlastné `provenance.json` v príslušných priečinkoch `public/images/`. Instrument Sans používa SIL Open Font License (`public/licenses/InstrumentSans-OFL.txt`), Three.js MIT a GSAP vlastnú licenciu. Historické obrázky zostávajú zdrojovými aktívami; dnešný hlavný priestor kreslí Three.js.
+
+## O nás — ako vrstvu vidieť a otvoriť
+
+Na vývojovom serveri (`npm run dev`) sa vrstva zobrazí so zástupným obsahom z `src/data/team-members.fixture.js`; vstup je „O nás“ v hlavičke. Produkčný build ju neobsahuje.
+
+Verejne sa otvorí sama, keď `src/data/team-members.js` obsahuje troch úplných členov a spoločný príbeh: meno, portrét s popisom, vlastnú vetu, krátke predstavenie, presne tri hlavné schopnosti a aspoň jednu prácu s vetou o príspevku. Portréty patria do `public/images/`. Pri otvorení treba upraviť aj pravidlo o osobných menách v PRODUCT.md a test v `tests/team.test.js`, ak sa mená dostanú do článkov.
