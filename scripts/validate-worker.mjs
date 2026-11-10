@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import worker from '../dist/server/index.js';
 import { FIXTURE_SENTINEL } from '../src/data/team-members.fixture.js';
 import { teamMembers, teamStory } from '../src/data/team-members.js';
-import { aboutReady } from '../src/features/about-model.js';
+import { aboutContentReady } from '../src/features/about-gate.js';
 
 assert.equal(typeof worker.fetch, 'function');
 const get = (path) => worker.fetch(new Request(`https://portfolio.example${path}`), {});
@@ -31,12 +31,17 @@ const shipped = [
   .join('\n');
 assert.ok(shipped.length > 1000, 'Embedded text assets were not found.');
 assert.ok(!shipped.includes(FIXTURE_SENTINEL), 'Fixture content must not ship.');
-if (!aboutReady(teamMembers, teamStory))
+// Profile data is either absent or complete: a half-filled file would ship
+// names inside the bundle while the layer itself stays closed.
+if (!aboutContentReady(teamMembers, teamStory)) {
+  assert.deepEqual(teamMembers, [], 'Incomplete About profiles must not be committed.');
+  assert.equal(teamStory, null, 'An About story without complete profiles must not be committed.');
   assert.doesNotMatch(
     shipped,
-    /Martin|Miroš/,
+    /Denis|Martin|Miroš/,
     'Member names must not ship while the gate is closed.',
   );
+}
 const manifest = JSON.parse(await readFile('dist/.openai/hosting.json', 'utf8'));
 assert.equal(manifest.project_id, 'appgprj_6ae39fd576d881919058eaae5e0df0e0');
 assert.equal(manifest.static, undefined);

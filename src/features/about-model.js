@@ -1,3 +1,5 @@
+import { chapterProgress } from './flight-model.js';
+
 // Pure model of the About layer ("the other side"). No DOM and no WebGL here,
 // so the gate, addresses, timing and layout can be tested in isolation and
 // reused by a Node script.
@@ -11,10 +13,15 @@ const texts = (list, min) =>
 export function aboutReady(members, story, hasProject = () => true) {
   if (!Array.isArray(members) || members.length !== 3) return false;
   if (!story || !filled(story.title) || !texts(story.paragraphs, 1)) return false;
+  // Ids become addresses (#o-nas/<id>), so they must be unique and URL-safe.
+  const ids = members.map((member) => member?.id);
+  if (new Set(ids).size !== ids.length) return false;
   return members.every(
     (member) =>
       member &&
       filled(member.id) &&
+      /^[a-z0-9-]+$/.test(member.id) &&
+      member.id !== 'spolu' &&
       filled(member.letter) &&
       filled(member.name) &&
       filled(member.sentence) &&
@@ -68,14 +75,16 @@ export function parseAboutHash(hash, stops, members) {
 }
 
 // ---- Motion -----------------------------------------------------------------
+// About lives above the opening crystal on the same scroll: going up turns the
+// space, splits the crystal and walks the stops; going back down undoes it.
+// All spans are in viewport heights of upward scroll.
 
-export const ABOUT_TURN_SECONDS = 1.4;
-export const ABOUT_SPLIT_SECONDS = 0.9;
-export const ABOUT_REJOIN_SECONDS = 0.45;
-export const ABOUT_FADE_SECONDS = 0.6;
-// The turn is click-triggered and runs by itself, so it yields to the system
-// reduced-motion setting. Scroll-driven motion on the other side stays active.
-export const ABOUT_RESPECTS_REDUCED_MOTION = true;
+export const ABOUT_TURN_SPAN = 1;
+export const ABOUT_SPLIT_SPAN = 0.4;
+export const ABOUT_STOP_SPAN = 0.9;
+export const ABOUT_TAIL_SPAN = 0.5;
+// A stop is at rest a little into its hold, so a small nudge either way keeps it.
+const REST = 0.15;
 
 const clamp = (value, low = 0, high = 1) => Math.max(low, Math.min(high, value));
 const smooth = (value) => {
@@ -85,96 +94,45 @@ const smooth = (value) => {
 const ramp = (value, from, to) => smooth((value - from) / (to - from));
 const mix = (a, b, t) => a * (1 - t) + b * t;
 
-// turn, split, fade and veil run 0..1; progress and target are in stops.
-export function createAboutState() {
+// The narrow composition (third on top, text below). A low landscape phone is
+// wide enough for the side-by-side one, exactly as in the opening pose.
+export const aboutNarrow = (width, height) => width < 761 && !(height <= 560 && width >= 600);
+
+// A 0..1 share that lands exactly on its ends despite float division.
+const whole = (value) => {
+  const share = clamp(value);
+  return share > 1 - 1e-9 ? 1 : share < 1e-9 ? 0 : share;
+};
+
+// Height of the About part of the track, in viewports.
+export const aboutSpan = (stopCount) =>
+  ABOUT_TURN_SPAN + ABOUT_SPLIT_SPAN + (stopCount - 1) * ABOUT_STOP_SPAN + ABOUT_TAIL_SPAN;
+
+// Upward distance at which a stop is at rest.
+export const aboutUpFor = (stop) =>
+  ABOUT_TURN_SPAN + ABOUT_SPLIT_SPAN + (stop + REST) * ABOUT_STOP_SPAN;
+
+// Where the turn, the split and the stops are for a distance scrolled above
+// the start. Stops hold, then travel, like the chapters of an article.
+export function aboutAt(up, stopCount) {
+  const rest = Math.max(0, up - ABOUT_TURN_SPAN - ABOUT_SPLIT_SPAN);
   return {
-    mode: 'front',
-    turn: 0,
-    split: 0,
-    fade: 0,
-    veil: 0,
-    progress: 0,
-    target: 0,
-    calm: false,
-    destination: null,
+    turn: whole(up / ABOUT_TURN_SPAN),
+    split: whole((up - ABOUT_TURN_SPAN) / ABOUT_SPLIT_SPAN),
+    // chapterProgress works in pixels; a notional 1000 px viewport keeps its floor of 1 away.
+    progress: chapterProgress(rest * 1000, ABOUT_STOP_SPAN * 1000, stopCount),
   };
 }
 
-// Both requests answer whether they changed anything, so callers can skip
-// history and focus work for a repeated click. A turn in flight can be
-// reversed from where it is in either direction.
-export function requestEnter(state, { calm = false, instant = false } = {}) {
-  if (state.mode !== 'front' && state.mode !== 'returning') return false;
-  state.calm = calm;
-  state.destination = null;
-  state.fade = 0;
-  state.veil = 0;
-  if (instant) {
-    state.mode = 'about';
-    state.turn = 1;
-    state.split = 1;
-  } else state.mode = 'turning';
-  return true;
+export function createAboutState() {
+  return { up: 0, targetUp: 0, turn: 0, split: 0, progress: 0 };
 }
 
-export function requestLeave(state, destination = null) {
-  if (state.mode !== 'about' && state.mode !== 'turning') return false;
-  state.mode = 'returning';
-  state.destination = destination;
-  state.fade = 0;
-  state.veil = 0;
-  return true;
-}
-
-function crossFade(state, dt, turn) {
-  state.fade = Math.min(1, state.fade + dt / ABOUT_FADE_SECONDS);
-  state.veil = Math.sin(Math.PI * state.fade);
-  if (state.fade >= 0.5) state.turn = turn;
-  return state.fade >= 1;
-}
-
-// Advances the clocks by dt seconds. Reports the two moments the DOM cares
-// about: 'arrived' on the other side and 'landed' back on the front.
-export function stepAbout(state, dt) {
-  if (state.mode === 'turning') {
-    let done;
-    if (state.calm) done = crossFade(state, dt, 1);
-    else {
-      state.turn = Math.min(1, state.turn + dt / ABOUT_TURN_SECONDS);
-      done = state.turn >= 1;
-    }
-    if (!done) return null;
-    state.mode = 'about';
-    state.fade = 0;
-    state.veil = 0;
-    return 'arrived';
-  }
-  if (state.mode === 'about') {
-    state.split = Math.min(1, state.split + dt / ABOUT_SPLIT_SECONDS);
-    // Scrolling only takes over once the thirds have finished separating.
-    const goal = state.split < 1 ? 0 : state.target;
-    state.progress += (goal - state.progress) * (1 - Math.exp(-dt * 10));
-    return null;
-  }
-  if (state.mode === 'returning') {
-    // The thirds rejoin first, so the turn back pivots on the whole crystal.
-    if (state.split > 0) {
-      state.split = Math.max(0, state.split - dt / ABOUT_REJOIN_SECONDS);
-      return null;
-    }
-    let done;
-    if (state.calm) done = crossFade(state, dt, 0);
-    else {
-      state.turn = Math.max(0, state.turn - dt / ABOUT_TURN_SECONDS);
-      done = state.turn <= 0;
-    }
-    if (!done) return null;
-    Object.assign(state, { mode: 'front', turn: 0, split: 0, fade: 0, veil: 0 });
-    state.progress = 0;
-    state.target = 0;
-    return 'landed';
-  }
-  return null;
+// Eases the drawn position toward the scroll target, like the flight does.
+export function stepAbout(state, dt, stopCount) {
+  const gap = state.targetUp - state.up;
+  state.up = Math.abs(gap) < 0.0005 ? state.targetUp : state.up + gap * (1 - Math.exp(-dt * 12));
+  Object.assign(state, aboutAt(state.up, stopCount));
 }
 
 export const turnEase = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -283,17 +241,4 @@ export function aboutLayout(progress, stops, narrow = false) {
     facetOwner,
     nebula: preset.nebula,
   };
-}
-
-// Progress in stops from the scroll position of normally flowing sections.
-// Each section holds its stop and hands over during the last 45 % of a
-// viewport before the next one, so a longer section simply holds for longer.
-export function sectionProgress(scrollTop, tops, viewport) {
-  const last = tops.length - 1;
-  if (last <= 0 || scrollTop <= tops[0]) return 0;
-  if (scrollTop >= tops[last]) return last;
-  let index = 0;
-  while (index < last - 1 && scrollTop >= tops[index + 1]) index++;
-  const travel = Math.max(1, Math.min(0.45 * viewport, tops[index + 1] - tops[index]));
-  return index + smooth((scrollTop - (tops[index + 1] - travel)) / travel);
 }

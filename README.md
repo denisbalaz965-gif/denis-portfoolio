@@ -6,7 +6,7 @@ Portfólio trojčlenného digitálneho štúdia pre vlastných klientov. Jeden t
 
 ## Pokračovanie s Claudeom
 
-Začni v [CLAUDE.md](CLAUDE.md). Vrstva „O nás“ je postavená ako druhá strana sveta: otočenie priestoru, samostatné predstavenia troch členov a na konci spoločná časť. Jej [návrh](docs/superpowers/specs/2026-11-10-o-nas-druha-strana-design.md) a [plán](docs/superpowers/plans/2026-11-10-o-nas-druha-strana.md) sú v repozitári. Na verejnom webe je zatvorená, kým majiteľ nedodá profily a príbeh.
+Začni v [CLAUDE.md](CLAUDE.md). Vrstva „O nás“ je horná časť tej istej stránky: z úvodného kryštálu vedie posun hore k trom členom a spoločnej časti, posun dole k ponuke a formuláru. Jej [návrh](docs/superpowers/specs/2026-11-10-o-nas-druha-strana-design.md) a [plán](docs/superpowers/plans/2026-11-10-o-nas-druha-strana.md) sú v repozitári. Na verejnom webe je zatvorená, kým majiteľ nedodá profily a príbeh.
 
 Verejná v28 vychádza z commitu `fcc931bc17e18cb7c30adf0e0957a6ea2fad0498`. Aktuálne dokumentačné odovzdanie pridáva kontext pre ďalší návrh. Push na GitHub a nasadenie verejného webu sú samostatné kroky.
 
@@ -67,6 +67,6 @@ Doterajšia v28 prešla87testami a kontrolou v prehliadači vo viacerých rozmer
 
 ## O nás — ako vrstvu vidieť a otvoriť
 
-Na vývojovom serveri (`npm run dev`) sa vrstva zobrazí so zástupným obsahom z `src/data/team-members.fixture.js`; vstup je „O nás“ v hlavičke. Produkčný build ju neobsahuje.
+Na vývojovom serveri (`npm run dev`) sa vrstva zobrazí so zástupným obsahom z `src/data/team-members.fixture.js`: pri kryštáli posuňte hore, alebo kliknite na „O nás“. V produkčnom builde je jej kód a štýly, no žiadny obsah, vstup ani predĺženie stránky.
 
-Verejne sa otvorí sama, keď `src/data/team-members.js` obsahuje troch úplných členov a spoločný príbeh: meno, portrét s popisom, vlastnú vetu, krátke predstavenie, presne tri hlavné schopnosti a aspoň jednu prácu s vetou o príspevku. Portréty patria do `public/images/`. Pri otvorení treba upraviť aj pravidlo o osobných menách v PRODUCT.md a test v `tests/team.test.js`, ak sa mená dostanú do článkov.
+Verejne sa otvorí sama, keď `src/data/team-members.js` obsahuje troch úplných členov a spoločný príbeh: jedinečné id (malé písmená, číslice, pomlčka), meno, portrét s popisom, vlastnú vetu, krátke predstavenie, presne tri hlavné schopnosti a aspoň jednu prácu s vetou o príspevku. Portréty patria do `public/images/`. Dáta musia byť buď prázdne, alebo úplné; `npm run check` to stráži. Pri otvorení treba upraviť test „ships closed“ v `tests/about-model.test.js`, pravidlo o osobných menách v PRODUCT.md a test v `tests/team.test.js`, ak sa mená dostanú do článkov.

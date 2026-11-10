@@ -108,3 +108,7 @@ Kontaktný bod8.25 je oddelený od úplného konca9.65. Za formulárom sa otvor�
 Majiteľ odsúhlasil návrh druhej strany sveta (docs/superpowers/specs/2026-11-10-o-nas-druha-strana-design.md) po skúšobnom prototype. Vrstva je v zdroji, ale na verejnom webe sa nezobrazí a jej obsah sa nedostane do balíka, kým `src/data/team-members.js` neobsahuje troch úplných členov a spoločný príbeh. Dovtedy platí doterajšie pravidlo: verejné rozhranie nemá osobné mená ani profily. Pri dodaní podkladov sa toto pravidlo a zásada č. 1 upravia.
 
 Zástupný obsah pre vývoj používa len doložené priradenie prác: Denis — Štýlový chlpáč, Zákazko.sk a eurofondové skúsenosti z tímu CASSIS Consult; Martin — Attila Park Caravans, PREVIA, PH Laboratories, New Era Barbers, Tatra Scool; Miroš — spolupráca na Attila Park Caravans. Vlastné vety, predstavenia, schopnosti, portréty a spoločný príbeh sú označené ako zástupné a čakajú na majiteľa. Otvorené zostáva: podoba verejných mien, poradie písmen „m“ v logu a správanie otočky pri systémovom obmedzení pohybu (dnes prelnutie).
+
+## O nás ako horná časť jednej stránky — 10. 11. 2026
+
+Po zhliadnutí prvej verzie majiteľ rozhodol, že O nás nemá byť samostatný režim po kliknutí: web je jedna súvislá stránka bez podstránok. Z úvodného kryštálu vedie posun hore k O nás, posun dole k ponuke a recenziám a potom k formuláru. Otočka je preto viazaná na posun a je vratná; samostatné správanie pri systémovom obmedzení pohybu odpadlo, platí doterajšie pravidlo pre posuvný zážitok. Brána zverejnenia a pravidlá o obsahu sa nemenia.

@@ -12,16 +12,17 @@ import {
   aboutHash,
   parseAboutHash,
   createAboutState,
-  requestEnter,
-  requestLeave,
   stepAbout,
+  aboutSpan,
+  aboutAt,
+  aboutUpFor,
+  aboutNarrow,
   orbitOffset,
   turnPhases,
   thirdApart,
   stopWeight,
   ABOUT_LAYOUT,
   aboutLayout,
-  sectionProgress,
 } from '../src/features/about-model.js';
 
 const has = (id) => Boolean(findProject(id));
@@ -93,90 +94,6 @@ describe('About stops and addresses', () => {
   });
 });
 
-describe('About state machine', () => {
-  const run = (state, seconds, dt = 0.05) => {
-    const events = [];
-    for (let t = 0; t < seconds; t += dt) {
-      const e = stepAbout(state, dt);
-      if (e) events.push(e);
-    }
-    return events;
-  };
-  it('turns for 1.4 s, arrives once, then splits for 0.9 s', () => {
-    const s = createAboutState();
-    expect(requestEnter(s)).toBe(true);
-    expect(s.mode).toBe('turning');
-    expect(run(s, 1.3)).toEqual([]);
-    expect(run(s, 0.2)).toEqual(['arrived']);
-    expect(s.mode).toBe('about');
-    expect(s.turn).toBe(1);
-    expect(s.split).toBeLessThan(1);
-    run(s, 1);
-    expect(s.split).toBe(1);
-  });
-  it('holds the first stop until the split has finished', () => {
-    const s = createAboutState();
-    requestEnter(s);
-    run(s, 1.5);
-    s.target = 3;
-    stepAbout(s, 0.05);
-    expect(s.progress).toBe(0);
-    run(s, 2);
-    expect(s.progress).toBeCloseTo(3, 2);
-  });
-  it('rejoins before turning back and reports the landing once', () => {
-    const s = createAboutState();
-    requestEnter(s);
-    run(s, 3);
-    expect(requestLeave(s, '#kontakt')).toBe(true);
-    expect(s.destination).toBe('#kontakt');
-    stepAbout(s, 0.05);
-    expect(s.turn).toBe(1);
-    expect(run(s, 0.45 + 1.4 + 0.1)).toEqual(['landed']);
-    expect(s).toMatchObject({ mode: 'front', turn: 0, split: 0, progress: 0, target: 0 });
-  });
-  it('ignores repeated requests and reverses a turn in flight', () => {
-    const s = createAboutState();
-    requestEnter(s);
-    expect(requestEnter(s)).toBe(false);
-    run(s, 0.7);
-    const mid = s.turn;
-    expect(mid).toBeGreaterThan(0.3);
-    expect(requestLeave(s)).toBe(true);
-    expect(requestLeave(s)).toBe(false);
-    stepAbout(s, 0.05);
-    expect(s.turn).toBeLessThan(mid);
-    expect(run(s, 1)).toEqual(['landed']);
-    expect(requestLeave(s)).toBe(false);
-  });
-  it('re-enters from a returning turn without snapping', () => {
-    const s = createAboutState();
-    requestEnter(s);
-    run(s, 3);
-    requestLeave(s);
-    run(s, 0.45 + 0.5);
-    const mid = s.turn;
-    expect(requestEnter(s)).toBe(true);
-    stepAbout(s, 0.05);
-    expect(s.turn).toBeGreaterThan(mid);
-  });
-  it('cross-fades instead of turning when calm', () => {
-    const s = createAboutState();
-    requestEnter(s, { calm: true });
-    run(s, 0.2);
-    expect(s.turn).toBe(0);
-    expect(s.veil).toBeGreaterThan(0.5);
-    expect(run(s, 0.5)).toEqual(['arrived']);
-    expect(s.turn).toBe(1);
-    expect(s.veil).toBe(0);
-  });
-  it('opens instantly for a direct address', () => {
-    const s = createAboutState();
-    requestEnter(s, { instant: true });
-    expect(s).toMatchObject({ mode: 'about', turn: 1, split: 1 });
-  });
-});
-
 describe('About turn and layout', () => {
   it('orbits half a circle at radius 7 with a swell and lift at the midpoint', () => {
     expect(orbitOffset(0)).toEqual({ x: 0, y: 0, z: 7 });
@@ -219,20 +136,74 @@ describe('About turn and layout', () => {
     expect(thirdApart(1, 0, 1)).toBe(0);
     expect(thirdApart(0.4, 0, 0)).toBeGreaterThan(thirdApart(0.4, 2, 0));
   });
-  it('derives progress from section positions so long sections hold longer', () => {
-    const tops = [0, 800, 2400, 3200];
-    expect(sectionProgress(0, tops, 800)).toBe(0);
-    expect(sectionProgress(400, tops, 800)).toBe(0);
-    expect(sectionProgress(620, tops, 800)).toBeCloseTo(0.5);
-    expect(sectionProgress(800, tops, 800)).toBe(1);
-    expect(sectionProgress(2000, tops, 800)).toBe(1);
-    expect(sectionProgress(2400, tops, 800)).toBe(2);
-    expect(sectionProgress(9999, tops, 800)).toBe(3);
-    expect(sectionProgress(-50, tops, 800)).toBe(0);
-  });
   it('weights a stop fully at rest and not at all one stop away', () => {
     expect(stopWeight(2, 2)).toBe(1);
     expect(stopWeight(2.5, 2)).toBe(0);
     expect(stopWeight(3, 2)).toBe(0);
+  });
+});
+
+describe('About on the scroll', () => {
+  it('spends one viewport on the turn, then splits, then holds each stop', () => {
+    expect(aboutSpan(8)).toBeCloseTo(8.2);
+    expect(aboutAt(0, 8)).toEqual({ turn: 0, split: 0, progress: 0 });
+    expect(aboutAt(-3, 8)).toEqual({ turn: 0, split: 0, progress: 0 });
+    expect(aboutAt(0.5, 8)).toEqual({ turn: 0.5, split: 0, progress: 0 });
+    expect(aboutAt(1, 8)).toEqual({ turn: 1, split: 0, progress: 0 });
+    expect(aboutAt(1.2, 8).split).toBeCloseTo(0.5);
+    expect(aboutAt(1.4, 8)).toEqual({ turn: 1, split: 1, progress: 0 });
+  });
+  it('rests exactly on every stop and holds it before travelling on', () => {
+    for (let stop = 0; stop < 8; stop++) {
+      expect(aboutAt(aboutUpFor(stop), 8).progress).toBe(stop);
+      expect(aboutAt(aboutUpFor(stop) + 0.2, 8).progress).toBe(stop);
+    }
+    const between = aboutAt(aboutUpFor(3) + 0.6, 8).progress;
+    expect(between).toBeGreaterThan(3);
+    expect(between).toBeLessThan(4);
+  });
+  it('never runs backwards and ends on the last stop at the top of the page', () => {
+    let last = -1;
+    for (let up = 0; up <= 9; up += 0.05) {
+      const now = aboutAt(up, 8).progress;
+      expect(now).toBeGreaterThanOrEqual(last);
+      last = now;
+    }
+    expect(aboutAt(aboutSpan(8), 8).progress).toBe(7);
+    expect(aboutAt(99, 8)).toEqual({ turn: 1, split: 1, progress: 7 });
+  });
+  it('follows the scroll target smoothly and settles exactly', () => {
+    const state = createAboutState();
+    expect(state).toEqual({ up: 0, targetUp: 0, turn: 0, split: 0, progress: 0 });
+    state.targetUp = 2;
+    stepAbout(state, 0.05, 8);
+    expect(state.up).toBeGreaterThan(0);
+    expect(state.up).toBeLessThan(2);
+    expect(state.turn).toBeCloseTo(state.up);
+    for (let i = 0; i < 80; i++) stepAbout(state, 0.05, 8);
+    expect(state).toMatchObject({ up: 2, turn: 1, split: 1 });
+    state.targetUp = 0;
+    for (let i = 0; i < 80; i++) stepAbout(state, 0.05, 8);
+    expect(state).toEqual({ up: 0, targetUp: 0, turn: 0, split: 0, progress: 0 });
+  });
+  it('uses one rule for the narrow composition in the scene and the styles', () => {
+    expect(aboutNarrow(375, 812)).toBe(true);
+    expect(aboutNarrow(760, 700)).toBe(true);
+    expect(aboutNarrow(500, 400)).toBe(true);
+    expect(aboutNarrow(1440, 900)).toBe(false);
+    expect(aboutNarrow(844, 390)).toBe(false);
+    expect(aboutNarrow(740, 360)).toBe(false);
+    expect(aboutNarrow(667, 375)).toBe(false);
+  });
+});
+
+describe('About ids', () => {
+  it('rejects duplicate, reserved and address-unsafe member ids', () => {
+    const has = (id) => Boolean(findProject(id));
+    for (const id of ['denis', 'spolu', 'Mi roš', '']) {
+      const broken = structuredClone(fixtureMembers);
+      broken[2].id = id;
+      expect(aboutReady(broken, fixtureStory, has)).toBe(false);
+    }
   });
 });

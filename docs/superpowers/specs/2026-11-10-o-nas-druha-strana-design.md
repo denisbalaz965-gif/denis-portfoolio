@@ -4,6 +4,21 @@ Návrh na realizáciu, stav k 10. 11. 2026. Vychádza zo smeru v [ABOUT-DIRECTIO
 
 Pri každom rozhodnutí je uvedené, čie je: **majiteľ** znamená, že to povedal alebo odsúhlasil majiteľ; **návrh** znamená, že ide o moje rozhodnutie, ktoré majiteľ videl v prototype alebo v texte, no môže ho zmeniť.
 
+## Zmena po prvej verzii — 10. 11. 2026 (majiteľ)
+
+Po zhliadnutí postavenej vrstvy majiteľ rozhodol: web má byť jedna súvislá stránka bez podstránok a režimov. **Z úvodného kryštálu vedie posun hore k O nás, posun dole k ponuke a recenziám, potom k formuláru.** Táto časť má prednosť pred všetkým nižšie, čo jej odporuje.
+
+Čo sa tým mení oproti zvyšku dokumentu:
+
+- **Otočka je viazaná na posun, nie na čas.** Prvé okno posunu hore otočí priestor; posun späť ho vráti. Časť 4.1 (1,4 s po kliknutí, zamknutý vstup) neplatí.
+- **Žiadny vlastný posuvný kontajner ani krok v histórii.** O nás je horná časť tej istej dráhy; stránka sa otvára na kryštáli. Adresy `#o-nas…` sú miesta na stránke ako `#kontakt`. Časti 4.5, 5 (história, „← Späť k prácam“) a 9 (fokus pri vstupe a návrate) sa zjednodušujú: hlavička je všade rovnaká, odkazy plynulo posúvajú.
+- **Poradie zastávok smerom hore:** príchod, Denis, Martin, Miroš, spolu úplne navrchu. Každá zastávka je jedna obrazovka; panel, ktorý sa nezmestí, sa posúva vnútri seba (návrh).
+- **Pri kryštáli je nápoveď „↑ O nás“**, lebo posun hore na začiatku stránky nie je samozrejmý (návrh).
+- **Obmedzený pohyb:** osobitné prelnutie odpadá; platí pravidlo majiteľa pre posuvný zážitok. Otvorené rozhodnutie 12.1 je tým uzavreté.
+- **Článok z profilu** sa vracia presným návratom čítačky, ktorý už existoval.
+
+Bezo zmeny zostáva: zámer, tretiny a ich význam, dva kroky profilu, úlomky schopností, obsahový model, brána zverejnenia, fallback, mobilné zásady a zoznam podkladov od majiteľa.
+
 ## 1. Zámer
 
 Hlavná cesta webu ukazuje, čo d/m/m tvorí. Chýba odpoveď na otázku, ktorú si klient trojčlenného štúdia kladie tesne pred tým, než napíše: s kým budem hovoriť a kto mi prácu spraví.

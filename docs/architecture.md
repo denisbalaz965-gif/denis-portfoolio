@@ -50,30 +50,35 @@ Verejný web je v Sites, GitHub slúži odovzdaniu zdroja. Samotný GitHub push 
 
 ## Druhá strana (O nás)
 
-Po kliknutí na vstup kamera obehne kryštál o 180° a ukáže ľudí za prácou. Šesť klinov sa preskupí do troch tretín (dvojice 0–1, 2–3, 4–5), jedna na člena; na konci sa spoja.
+O nás je horná časť tej istej posuvnej dráhy. Stránka sa otvára na kryštáli; posun hore otočí priestor o 180° a ukáže ľudí za prácou, posun dole je doterajší let k formuláru. Nie je to samostatný režim ani podstránka.
 
 **Súbory**
 
 - `src/data/team-members.js`: skutočný obsah profilov a spoločnej časti. Dnes prázdny.
 - `src/data/team-members.fixture.js`: zástupný obsah. `src/main.js` ho načíta len na vývojovom serveri; do produkčného balíka sa nedostane.
-- `src/features/about-model.js`: čisté funkcie bez DOM a WebGL: brána `aboutReady`, zastávky, adresy, stavový stroj (`requestEnter`, `requestLeave`, `stepAbout`), otočka (`orbitOffset`, `turnPhases`), rozloženie (`aboutLayout`) a `sectionProgress`.
-- `src/features/about.js`: vykreslí vrstvu z dát do `#o-nas`, vytvorí vstupy, riadi históriu, fokus, posun a fallback.
+- `src/features/about-model.js`: čisté funkcie bez DOM a WebGL: brána `aboutReady`, zastávky, adresy, prevod posunu (`aboutAt`, `aboutSpan`, `aboutUpFor`, `stepAbout`), otočka (`orbitOffset`, `turnPhases`), rozloženie (`aboutLayout`, `aboutNarrow`).
+- `src/features/about-gate.js`: jediné pravidlo „vrstvu možno ukázať“ pre stránku, vstup aplikácie aj kontrolu balíka.
+- `src/features/about.js`: vykreslí vrstvu z dát do `#o-nas` v `.flight-stage`, predĺži dráhu, vytvorí vstupy a prevádza posun na cieľ.
 - `src/styles/about-side.css`: štýly vrstvy, importované posledné.
 
-**Vlastníctvo a tok**
+**Jedna dráha**
 
-`initAbout()` vracia `scene = { state, stops, frame(view) }` a `main.js` ju odovzdá do `initSignal({ about })`. DOM vrstva do zdieľaného stavu len zapisuje zámery a prebúdza snímky udalosťou `portfolio:about`. `signal.js` v každej snímke zavolá `stepAbout(state, dt)`, nakreslí scénu a zavolá `frame(view)` s priemetmi tretín a úlomkov schopností; `view.event` nesie `arrived` alebo `landed`. Po pristátí vyšle DOM vrstva `portfolio:about-landed`. Kým režim nie je `front`, hlavný let je zamknutý.
+`about.js` nastaví na `.flight-track` premennú `--about-span` (dnes 820svh pri ôsmich zastávkach) a dráha má výšku `535svh + --about-span`. Javisko `.flight-stage` je pripnuté cez celú dráhu. `signal.js` posunie začiatok letu o `about.span()` pixelov, takže `flightAt()` a všetky kotvy fungujú ako doteraz. Pri načítaní bez adresy skočí na kryštál (`#svet`), nie na vrch dokumentu.
 
-Osou otočky je bod 7 jednotiek pred letovou kamerou v jej aktuálnej hĺbke. Pri vstupe odkiaľkoľvek sa kliny do osi najprv zbehnú (`turnPhases().gather`). Hmlový shader má navyše `pan`, `space` a `nebula`; hviezdy sú body v ostrom prednom prechode. Pri návrate s cieľom `#kontakt` sa let v polovici spätnej otočky presunie na kontaktnú zastávku.
+Vzdialenosť nad začiatkom v jednotkách okna je `up`. `aboutAt(up)` z nej určí otočku (prvé okno), rozdelenie kryštálu (ďalších 0,4 okna) a zastávky po 0,9 okna s držaním a prechodom ako v čítačke. `about.js` pri posune zapisuje `state.targetUp`; `signal.js` v každej snímke volá `stepAbout()`, ktorý kreslenú polohu vyhladí rovnako ako let, a potom `frame(view)` s priemetmi tretín a úlomkov schopností.
+
+**Scéna**
+
+Osou otočky je kryštál v úvodnej polohe. Šesť klinov sa preskupí do troch tretín (dvojice 0–1, 2–3, 4–5), jedna na člena; na poslednej zastávke sa spoja. Hmlový shader má navyše `pan`, `space` a `nebula`; hviezdy sú body v ostrom prednom prechode.
+
+**Adresy a skoky**
+
+`#o-nas`, `#o-nas/<id>` a `#o-nas/spolu` sú miesta na tej istej stránke, rovnako ako `#kontakt`. Odkazy a prepínač `d / m / m / spolu` na ne plynulo posunú; priama adresa skočí okamžite. Článok otvorený z profilu používa nezmenenú čítačku a jej presný návrat; počas čítania má `<html>` triedu `about-reading`.
 
 **Brána zverejnenia**
 
-Vrstva sa vykreslí len vtedy, keď `aboutReady()` potvrdí troch úplných členov a spoločný príbeh. Inak sa nevytvorí nič, vstupy neexistujú a adresy `#o-nas…` sa prepíšu na `#svet`. `scripts/validate-worker.mjs` kontroluje, že balík neobsahuje zástupný obsah a pri zatvorenej bráne ani mená.
+Vrstva sa vykreslí len vtedy, keď `aboutContentReady()` potvrdí troch úplných členov a spoločný príbeh. Inak sa nevytvorí nič, dráha sa nepredĺži, vstupy neexistujú a adresy `#o-nas…` sa prepíšu na `#svet`. `scripts/validate-worker.mjs` beží ako súčasť `npm run check` a kontroluje, že balík neobsahuje zástupný obsah, že dáta sú buď prázdne, alebo úplné, a že pri zatvorenej bráne v ňom nie sú mená.
 
-**Posun a články**
+**Fallback**
 
-Vrstva má vlastný posuvný kontajner. Každá zastávka je sekcia s pripnutým panelom a 85svh držania; priebeh sa odvodí z polohy sekcií, takže dlhší panel drží dlhšie. Článok otvorený z profilu používa nezmenenú čítačku; počas neho má `<html>` triedu `about-reading` a po zatvorení sa vráti ten istý profil.
-
-**Obmedzený pohyb a fallback**
-
-Pri systémovom obmedzení pohybu nahradí otočku prelnutie (`ABOUT_RESPECTS_REDUCED_MOTION` v modeli). Na udalosť `portfolio:flight-fallback` sa vrstva zmení na bežnú čitateľnú sekciu.
+Na udalosť `portfolio:flight-fallback` sa vrstva zmení na bežnú čitateľnú sekciu, dráha sa vráti na pôvodnú výšku a adresa O nás privedie na svoju sekciu.

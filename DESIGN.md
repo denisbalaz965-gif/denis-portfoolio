@@ -337,12 +337,15 @@ The intro uses a clean two-tone identity, a separate services statement, AI-assi
 
 ## Druhá strana (O nás)
 
-Vrstva O nás je druhá strana toho istého sveta, nie nová identita. Kamera obehne kryštál o 180° za 1,4 s; kryštál zostáva v strede ako os. Hmla sa posunie do strany a zredne na jeden vzdialený oblak mimo textu, objavia sa ostré hviezdy. Priestor je tmavší a pokojnejší, aby sa dalo čítať.
+O nás je druhá strana toho istého sveta a horná časť toho istého posunu. Z úvodného kryštálu vedie posun hore k ľuďom a posun dole k ponuke a formuláru; nápoveď „↑ O nás“ to pri kryštáli hovorí.
 
-- **Tretiny.** Kryštál sa rozdelí na tri tretiny, jednu na člena. Aktívna príde dopredu, dve ustúpia do hĺbky a stmavnú. Na konci sa spoja do pôvodného kryštálu.
-- **Úlomky schopností.** Na zastávke „Čo“ vyletia z tretiny vždy tri malé úlomky, jeden za každú hlavnú schopnosť. Počet nezávisí od počtu prác.
-- **Navigácia logom.** `d / m / m / spolu`; aktívne písmeno sa rozvinie na meno. Na úzkom okne je dole pri palci a nesie tmavý prechod, aby neprekrýval text.
+- **Otočka.** Prvé okno posunu hore obehne kamera kryštál o 180°. Je vratná ako rozpad kryštálu: posun späť ju vráti. Hmla sa posunie do strany a zredne na jeden vzdialený oblak mimo textu, objavia sa ostré hviezdy.
+- **Tretiny.** Kryštál sa rozdelí na tri tretiny, jednu na člena. Aktívna príde dopredu, dve ustúpia do hĺbky a stmavnú. Na najvyššej zastávke sa spoja do pôvodného kryštálu.
+- **Zastávky.** Príchod, pri každom členovi „kto“ a „čo“, navrchu „spolu“. Každá zastávka je jedna obrazovka; text stojí, mení sa prelnutím. Panel, ktorý sa nezmestí, sa posúva vnútri seba a má mäkký spodný okraj.
+- **Úlomky schopností.** Na zastávke „čo“ vyletia z tretiny vždy tri malé úlomky, jeden za každú hlavnú schopnosť. Počet nezávisí od počtu prác.
+- **Navigácia logom.** `d / m / m / spolu`; aktívne písmeno sa rozvinie na meno. Na úzkom okne je dole pri palci a nesie tmavý prechod.
 - **Portréty.** Obyčajné obrázky v HTML so zeleným tónovaním (`mix-blend-mode: luminosity` na zelenom podklade) a výrezom v tvare fazety.
 - **Typografia.** Nič pod 13 px, čítací text 17–18 px, dotykové ciele aspoň 48 px.
+- **Don't** robiť z O nás samostatný režim, podstránku alebo krok v histórii.
 - **Don't** hýbať textom spolu s úlomkami ani viazať čitateľnosť na animáciu.
 - **Don't** stavať rozloženie profilu na počte doložených prác.

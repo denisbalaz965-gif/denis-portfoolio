@@ -1,13 +1,23 @@
-/* The other side of the world: the About layer. Imported last. */
+/* About: the upper part of the one scroll, drawn on the other side of the
+   crystal. It lives inside the flight stage. Imported last. */
+.flight-track > .about-span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: var(--about-span, 0px);
+  visibility: hidden;
+  pointer-events: none;
+}
 .about-layer {
   --about-text: #e0f3d4;
   --about-muted: #a7bea0;
   --about-edge: #35552d;
   --about-phosphor: #b6ff7c;
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 30;
-  visibility: hidden;
+  pointer-events: none;
   font:
     18px/1.6 Instrument,
     Arial,
@@ -17,89 +27,67 @@
 .about-layer[hidden] {
   display: none;
 }
-html.about-open {
-  overflow: hidden;
+/* The article reader is transparent, so the layer steps aside under it. */
+html.about-reading .about-layer {
+  visibility: hidden;
 }
-html.about-open .about-layer {
-  visibility: visible;
-}
-.signal-axis {
+html.about-ready .signal-axis {
   transition: opacity 0.4s;
 }
-html.about-open .signal-axis {
+html.about-side .signal-axis {
   opacity: 0;
-}
-/* The background pause control stays reachable above the layer. */
-html.about-open .motion-control {
-  z-index: 35;
-}
-/* The veil covers the calm cross-fade and the cut into an article, so it has
-   to show even while the rest of the layer is still hidden. */
-.about-veil {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  visibility: visible;
-  background: #030804;
-  opacity: var(--about-veil, 0);
-  pointer-events: none;
-  transition: opacity 0.15s;
-}
-html.about-cut .about-veil {
-  opacity: 1;
-}
-html.about-reading .about-layer > :not(.about-veil) {
-  visibility: hidden;
 }
 .about-layer :focus-visible {
   outline: 2px solid #a4ff61;
   outline-offset: 4px;
 }
 
-.about-scroller {
+/* One panel per stop, stacked in the same place; the scroll cross-fades them.
+   A panel that cannot fit scrolls inside itself rather than being cut. */
+.about-section {
   position: absolute;
   inset: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-  outline: none;
-}
-.about-scroller::-webkit-scrollbar {
-  display: none;
-}
-/* A section holds its stop for most of its height; a panel taller than the
-   window first scrolls to its end (negative sticky offset), then holds. */
-.about-section::after {
-  content: '';
-  display: block;
-  height: 85svh;
-}
-.about-section:last-child::after {
-  display: none;
+  pointer-events: none;
 }
 .about-panel {
-  position: sticky;
-  top: calc(-1 * var(--about-overflow, 0px));
-  box-sizing: border-box;
-  min-height: 100svh;
+  position: absolute;
+  left: 54%;
+  right: var(--gutter);
+  top: 50%;
+  max-width: 620px;
+  max-height: calc(100svh - 210px);
+  overflow-y: auto;
+  scrollbar-width: none;
   display: grid;
-  align-content: center;
   justify-items: start;
   gap: 16px;
-  padding: 110px var(--gutter) 96px 54%;
-  transform: translate3d(0, var(--shift, 0px), 0);
+  opacity: 0;
+  transform: translate3d(0, calc(-50% + var(--shift, 0px)), 0);
+  pointer-events: auto;
   will-change: opacity, transform;
 }
+.about-panel::-webkit-scrollbar {
+  display: none;
+}
+.about-section[inert] .about-panel {
+  pointer-events: none;
+}
+.about-panel.is-scrollable {
+  padding-bottom: 36px;
+  mask-image: linear-gradient(#000 calc(100% - 36px), transparent);
+}
 .about-panel > * {
-  max-width: 620px;
   margin: 0;
 }
 .about-section[data-kind='arrival'] .about-panel {
-  align-content: start;
+  left: 0;
+  right: 0;
+  top: 15svh;
+  max-width: none;
   justify-items: center;
-  padding: 15svh var(--gutter) 0;
-  text-align: center;
   gap: 10px;
+  text-align: center;
+  transform: translate3d(0, var(--shift, 0px), 0);
 }
 .about-eyebrow {
   font-size: 13px;
@@ -275,6 +263,9 @@ html.about-reading .about-layer > :not(.about-veil) {
   pointer-events: auto;
   will-change: transform;
 }
+.about-names[inert] button {
+  pointer-events: none;
+}
 .about-names b {
   font-size: 30px;
   line-height: 1;
@@ -296,6 +287,7 @@ html.about-reading .about-layer > :not(.about-veil) {
   will-change: transform;
 }
 
+/* The logo as the way around: d / m / m / spolu. */
 .about-nav {
   position: absolute;
   left: var(--gutter);
@@ -318,7 +310,11 @@ html.about-reading .about-layer > :not(.about-veil) {
   font-size: 22px;
   letter-spacing: -0.02em;
   color: #63914c;
+  pointer-events: auto;
   transition: color 0.2s;
+}
+.about-layer[inert] .about-nav button {
+  pointer-events: none;
 }
 .about-nav .about-nav-name,
 .about-nav .about-nav-together {
@@ -352,10 +348,21 @@ html.about-reading .about-layer > :not(.about-veil) {
   text-transform: uppercase;
   color: var(--about-muted);
   opacity: 0;
-  pointer-events: none;
 }
 
-/* Entries and the persistent way back. */
+/* Entries. At the start the page goes both ways; the cue says what is above. */
+.about-up-cue {
+  position: absolute;
+  z-index: 31;
+  top: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 14px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #caffad;
+}
 .boundary-about {
   margin-left: auto;
   margin-right: 26px;
@@ -363,27 +370,8 @@ html.about-reading .about-layer > :not(.about-veil) {
   color: #c7e7c5;
 }
 .boundary-about:hover,
-.about-back:hover {
+.about-up-cue:hover {
   color: #a4ff61;
-}
-.about-back {
-  display: none;
-  position: absolute;
-  top: 26px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 13px 16px;
-  font-size: 13px;
-  color: #c7efb6;
-  background: #08170d99;
-  border: 1px solid var(--signal-edge, #35552d);
-}
-html.about-open .about-back {
-  display: block;
-}
-html.about-open .project-index,
-html.about-open .boundary-about {
-  display: none;
 }
 .about-entry-line {
   margin: 0 0 6px;
@@ -401,17 +389,21 @@ html.about-open .boundary-about {
   border-color: #a4ff61;
 }
 
-@media (max-width: 760px) {
+/* Narrow: the third is on top, the text below it. Same rule as aboutNarrow(). */
+@media (max-width: 599px), (max-width: 760px) and (min-height: 561px) {
   .about-layer {
     font-size: 17px;
   }
   .about-panel {
-    align-content: start;
+    left: 22px;
+    right: 22px;
+    top: 37svh;
+    max-height: calc(63svh - 128px);
     gap: 12px;
-    padding: 39svh 22px 110px;
+    transform: translate3d(0, var(--shift, 0px), 0);
   }
   .about-section[data-kind='arrival'] .about-panel {
-    padding: 13svh 22px 0;
+    top: 13svh;
   }
   .about-title {
     font-size: 46px;
@@ -424,8 +416,12 @@ html.about-open .boundary-about {
     width: 72px;
     height: 88px;
   }
+  .about-skills {
+    gap: 2px 16px;
+    font-size: 15px;
+  }
   .about-works a {
-    padding: 10px 0;
+    padding: 9px 0;
   }
   .about-works b {
     font-size: 17px;
@@ -439,8 +435,7 @@ html.about-open .boundary-about {
   .about-names button {
     min-width: 84px;
   }
-  /* On a phone the switcher sits over scrolling text, so it carries a scrim;
-     only its buttons take touches, the rest lets the page scroll. */
+  /* The switcher sits over the text area, so it carries a scrim. */
   .about-nav {
     left: 0;
     right: 0;
@@ -448,29 +443,23 @@ html.about-open .boundary-about {
     justify-content: center;
     padding: 34px 0 44px;
     background: linear-gradient(#03080400, #030804f2 42%);
-    pointer-events: none;
-  }
-  .about-nav button {
-    pointer-events: auto;
   }
   .about-cue {
-    bottom: 100px;
+    bottom: 104px;
   }
+  .about-up-cue {
+    top: 72px;
+  }
+}
+@media (max-width: 760px) {
   .boundary-about {
     display: none;
-  }
-  .about-back {
-    top: 21px;
-    left: auto;
-    right: 22px;
-    transform: none;
   }
 }
 @media (max-height: 560px) and (min-width: 600px) {
   .about-panel {
+    max-height: calc(100svh - 150px);
     gap: 8px;
-    padding-top: 84px;
-    padding-bottom: 70px;
   }
   .about-sentence,
   .about-heading {
@@ -486,7 +475,7 @@ html.about-open .boundary-about {
     font-size: 13px;
   }
   .about-section[data-kind='arrival'] .about-panel {
-    padding-top: 17svh;
+    top: 17svh;
   }
   .about-title {
     font-size: 40px;
@@ -494,34 +483,38 @@ html.about-open .boundary-about {
   .about-cue {
     display: none;
   }
+  .about-up-cue {
+    top: 70px;
+  }
 }
 
 /* Without WebGL: an ordinary readable section in the document. */
 html.about-fallback .about-layer {
   position: static;
-  visibility: visible;
   padding: 80px var(--gutter);
+  pointer-events: auto;
 }
-html.about-fallback .about-scroller {
-  position: static;
-  overflow: visible;
-}
-html.about-fallback .about-section::after {
-  display: none;
-}
+html.about-fallback .about-section,
 html.about-fallback .about-panel,
 html.about-fallback .about-section[data-kind='arrival'] .about-panel {
   position: static;
-  min-height: 0;
+  max-height: none;
+  overflow: visible;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+html.about-fallback .about-panel,
+html.about-fallback .about-section[data-kind='arrival'] .about-panel {
   padding: 28px 0;
   justify-items: start;
   text-align: left;
-  transform: none;
 }
 html.about-fallback .about-names,
 html.about-fallback .about-facet-tags,
 html.about-fallback .about-nav,
 html.about-fallback .about-cue,
-html.about-fallback .about-veil {
+html.about-fallback .about-up-cue,
+html.about-fallback .about-span {
   display: none;
 }

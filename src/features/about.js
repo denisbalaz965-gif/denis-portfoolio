@@ -1,19 +1,15 @@
 import { teamMembers, teamStory } from '../data/team-members.js';
 import { findProject } from '../data/portfolio-projects.js';
 import {
-  ABOUT_RESPECTS_REDUCED_MOTION,
-  aboutHash,
-  aboutLayout,
-  aboutReady,
+  aboutSpan,
   aboutStops,
+  aboutUpFor,
   createAboutState,
   parseAboutHash,
-  requestEnter,
-  requestLeave,
-  sectionProgress,
   stopWeight,
   turnPhases,
 } from './about-model.js';
+import { aboutContentReady } from './about-gate.js';
 
 const el = (tag, className, text) => {
   const node = document.createElement(tag);
@@ -32,6 +28,14 @@ function buildSection(stop, index, members, story) {
   const section = el('section', 'about-section');
   section.dataset.stop = String(index);
   section.dataset.kind = stop.kind;
+  // Ids give the no-WebGL document real targets for the About addresses.
+  const owner = members[stop.member]?.id;
+  section.id =
+    stop.kind === 'arrival'
+      ? 'o-nas-prichod'
+      : stop.kind === 'together'
+        ? 'o-nas-spolu'
+        : `o-nas-${owner}${stop.kind === 'what' ? '-praca' : ''}`;
   const panel = el('div', 'about-panel');
   section.append(panel);
   const member = members[stop.member];
@@ -49,7 +53,7 @@ function buildSection(stop, index, members, story) {
     image.alt = member.portrait.alt;
     if (member.portrait.width) image.width = member.portrait.width;
     if (member.portrait.height) image.height = member.portrait.height;
-    image.loading = 'lazy';
+    // Not lazy: the panel is on screen long before a lazy load would start.
     image.decoding = 'async';
     portrait.append(image);
     const bio = el('div', 'about-bio');
@@ -120,9 +124,10 @@ function buildSection(stop, index, members, story) {
 
 export function initAbout({ root = document, members = teamMembers, story = teamStory } = {}) {
   const layer = root.querySelector('#o-nas');
+  const track = root.querySelector('.flight-track');
   const html = root.documentElement;
-  if (!layer) return { dispose() {}, scene: null };
-  if (!aboutReady(members, story, (id) => Boolean(findProject(id)))) {
+  if (!layer || !track) return { dispose() {}, scene: null };
+  if (!aboutContentReady(members, story)) {
     // Closed gate: nothing is rendered and our addresses behave like the intro.
     if (window.location.hash.startsWith('#o-nas')) window.history.replaceState(null, '', '#svet');
     return { dispose() {}, scene: null };
@@ -132,13 +137,12 @@ export function initAbout({ root = document, members = teamMembers, story = team
   const options = { signal: controller.signal };
   const state = createAboutState();
   const stops = aboutStops(members);
+  const span = aboutSpan(stops.length);
   const created = [];
   const make = (node) => (created.push(node), node);
 
-  const scroller = el('div', 'about-scroller');
-  scroller.tabIndex = -1;
   const sections = stops.map((stop, index) => buildSection(stop, index, members, story));
-  scroller.append(...sections);
+  const panels = sections.map((section) => section.firstElementChild);
 
   const names = el('div', 'about-names');
   members.forEach((member, index) => {
@@ -170,29 +174,34 @@ export function initAbout({ root = document, members = teamMembers, story = team
   nav.append(together);
   nav.querySelectorAll('i').forEach((slash) => slash.setAttribute('aria-hidden', 'true'));
 
-  const cue = el('p', 'about-cue', 'Posúvajte ↓');
+  const cue = el('p', 'about-cue', 'Posúvajte ↑');
   cue.setAttribute('aria-hidden', 'true');
-  const veil = el('div', 'about-veil');
-  veil.setAttribute('aria-hidden', 'true');
-  layer.append(veil, scroller, names, facetTags, nav, cue);
+  layer.append(...sections, names, facetTags, nav, cue);
   layer.hidden = false;
   layer.inert = true;
   html.classList.add('about-ready');
+
+  // About is the upper part of the one scroll track. The marker turns its
+  // height (in small-viewport units) into pixels for the scene and for jumps.
+  track.style.setProperty('--about-span', `${Math.round(span * 100)}svh`);
+  const marker = make(el('div', 'about-span'));
+  marker.setAttribute('aria-hidden', 'true');
+  track.append(marker);
 
   // Entries exist only while the gate is open, so a closed site has no dead links.
   const header = root.querySelector('.boundary-nav');
   const headerContact = header?.querySelector('.boundary-contact');
   if (headerContact)
     headerContact.before(make(link('about-entry boundary-about', '#o-nas', 'O nás ↗')));
-  header
-    ?.querySelector('.project-index')
-    ?.after(make(link('about-back', '#svet', '← Späť k prácam')));
   const services = root.querySelector('.project-index nav a[href="#o-mne"]');
   if (services) {
     const item = make(link('about-entry', '#o-nas'));
     item.append(el('span', '', '↗'), 'O nás');
     services.before(item);
   }
+  // At the start the page goes both ways; this says what is above.
+  const upCue = make(link('about-entry about-up-cue', '#o-nas', '↑ O nás'));
+  layer.before(upCue);
   const alternatives = root.querySelector('.flight-contact .contact-alternatives');
   if (alternatives) {
     const line = make(el('p', 'about-entry-line'));
@@ -205,27 +214,16 @@ export function initAbout({ root = document, members = teamMembers, story = team
   const introLink = root.querySelector('.flight-intro a[href="#o-mne"]');
   introLink?.setAttribute('href', '#o-nas');
 
-  const stage = root.querySelector('.flight-stage');
   const viewer = root.querySelector('#project-viewer');
-  const panels = sections.map((section) => section.firstElementChild);
   const nameButtons = [...names.children];
   const tagItems = [...facetTags.children];
   const navButtons = [...nav.querySelectorAll('button')];
-  let opener = null,
-    pendingStop = 0,
-    backPending = false,
-    currentStop = -1,
-    tops = sections.map(() => 0),
-    viewport = 1,
-    cutTimer = 0,
-    tagOwner = -1;
+  let currentStop = -1,
+    tagOwner = -1,
+    onSide = false;
 
   const fallback = () => html.classList.contains('about-fallback');
-  const active = () => state.mode === 'about' || state.mode === 'turning';
-  const wake = () => root.dispatchEvent(new Event('portfolio:about'));
-  const calm = () =>
-    ABOUT_RESPECTS_REDUCED_MOTION &&
-    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
+  const pixels = () => (fallback() ? 0 : marker.offsetHeight);
   const ease = (value) => value * value * (3 - 2 * value);
   // Style writes are skipped when the value has not changed since the last frame.
   const written = new WeakMap();
@@ -241,18 +239,32 @@ export function initAbout({ root = document, members = teamMembers, story = team
     if (node.inert !== value) node.inert = value;
   };
 
+  // Scroll position above the start of the flight, in viewports.
+  function sync() {
+    const height = pixels();
+    const unit = height / span;
+    const start = track.offsetTop + height;
+    const up = unit > 0 ? Math.max(0, Math.min(span, (start - window.scrollY) / unit)) : 0;
+    const away = unit > 0 ? Math.abs(start - window.scrollY) / unit : 1;
+    const hint = Math.max(0, 1 - away * 5);
+    put(upCue, 'opacity', hint.toFixed(2));
+    setInert(upCue, hint < 0.5);
+    if (up === state.targetUp) return;
+    state.targetUp = up;
+    root.dispatchEvent(new Event('portfolio:about'));
+  }
+  // A panel that cannot fit scrolls inside itself; the mark gives it a soft lower edge.
   function measure() {
-    viewport = scroller.clientHeight || window.innerHeight || 1;
-    tops = sections.map((section) => section.offsetTop);
     panels.forEach((panel) =>
-      panel.style.setProperty(
-        '--about-overflow',
-        `${Math.max(0, panel.offsetHeight - viewport)}px`,
-      ),
+      panel.classList.toggle('is-scrollable', panel.scrollHeight > panel.clientHeight + 1),
     );
   }
-  function goTo(index, behavior = state.calm ? 'instant' : 'smooth') {
-    scroller.scrollTo({ top: tops[index] ?? 0, behavior });
+  function goTo(stop, behavior = 'smooth') {
+    const height = pixels();
+    window.scrollTo({
+      top: track.offsetTop + height - aboutUpFor(stop) * (height / span),
+      behavior,
+    });
   }
   function markCurrent(stop) {
     currentStop = stop;
@@ -268,84 +280,24 @@ export function initAbout({ root = document, members = teamMembers, story = team
     });
   }
 
-  function open() {
-    html.classList.add('about-open');
-    layer.inert = false;
-    measure();
-    if (pendingStop > 0) {
-      goTo(pendingStop, 'instant');
-      state.target = pendingStop;
-      if (state.split >= 1) state.progress = pendingStop;
-    }
-    pendingStop = 0;
-    scroller.focus({ preventScroll: true });
-    layer.querySelectorAll('.about-portrait img').forEach((image) => {
-      image.decode?.().catch(() => {});
-    });
-  }
-  function enter(hash, { push = true, instant = false } = {}) {
-    if (!requestEnter(state, { calm: calm(), instant })) return false;
-    pendingStop = parseAboutHash(hash, stops, members) ?? 0;
-    if (push) window.history.pushState({ aboutEntry: true }, '', hash);
-    if (stage) stage.inert = true;
-    layer.inert = true;
-    wake();
-    if (instant) open();
-    return true;
-  }
-  function startLeave(destination) {
-    if (!requestLeave(state, destination)) return;
-    layer.inert = true;
-    wake();
-  }
-  function leave(destination = null) {
-    if (!active() || backPending) return;
-    // Leaving to where the visitor came from is one step back in history; the
-    // popstate handler then starts the turn. A destination keeps the entry and
-    // rewrites it on landing.
-    if (destination === null && window.history.state?.aboutEntry) {
-      backPending = true;
-      window.history.back();
-      return;
-    }
-    if (destination === null) window.history.replaceState(null, '', '#svet');
-    startLeave(destination);
-  }
-  function land() {
-    const destination = state.destination;
-    state.destination = null;
-    html.classList.remove('about-open');
-    if (stage) stage.inert = false;
-    layer.inert = true;
-    scroller.scrollTop = 0;
-    markCurrent(-1);
-    if (destination) window.history.replaceState(null, '', destination);
-    root.dispatchEvent(new CustomEvent('portfolio:about-landed', { detail: { destination } }));
-    let focus = opener;
-    if (destination === '#kontakt') {
-      focus = root.querySelector('.flight-contact h2');
-      focus?.setAttribute('tabindex', '-1');
-    }
-    opener = null;
-    if (focus?.isConnected) focus.focus({ preventScroll: true });
-  }
-
+  // Called by the scene once per frame with the projected positions.
   function frame(view) {
     if (fallback()) return;
-    if (view.event === 'arrived') open();
-    else if (view.event === 'landed') land();
-    const returning = state.mode === 'returning';
-    const split = ease(state.split);
-    const fade = returning ? split : 1;
-    const ui = state.mode === 'front' ? 0 : turnPhases(state.turn).about * fade;
+    const ui = turnPhases(state.turn).about;
     put(layer, '--about-ui', ui.toFixed(3));
-    put(layer, '--about-veil', state.veil.toFixed(3));
-    if (state.mode === 'front') return;
+    setInert(layer, ui < 0.6);
+    const side = state.turn > 0.5;
+    if (side !== onSide) {
+      onSide = side;
+      html.classList.toggle('about-side', side);
+    }
+    if (ui <= 0) return;
 
+    const split = ease(state.split);
     sections.forEach((section, index) => {
-      const weight = stopWeight(state.progress, index) * (index === 0 ? split : fade);
+      const weight = stopWeight(state.progress, index) * (index === 0 ? split : 1) * ui;
       put(panels[index], 'opacity', weight.toFixed(3));
-      put(panels[index], '--shift', `${((index - state.progress) * 46).toFixed(1)}px`);
+      put(panels[index], '--shift', `${((state.progress - index) * 46).toFixed(1)}px`);
       setInert(section, weight < 0.6);
     });
     const arrival = stopWeight(state.progress, 0) * split * ui;
@@ -361,14 +313,13 @@ export function initAbout({ root = document, members = teamMembers, story = team
           `translate3d(${point.x.toFixed(1)}px,${point.y.toFixed(1)}px,0) translate(-50%,0)`,
         );
     });
-    const layout = aboutLayout(state.progress, stops);
-    if (layout.facetOwner !== tagOwner) {
-      tagOwner = layout.facetOwner;
+    if (view.facetOwner !== tagOwner && members[view.facetOwner]) {
+      tagOwner = view.facetOwner;
       tagItems.forEach((item, index) => {
         item.textContent = members[tagOwner].skills[index] ?? '';
       });
     }
-    put(facetTags, 'opacity', (layout.facetAmount * fade).toFixed(3));
+    put(facetTags, 'opacity', (view.facetAmount * ui).toFixed(3));
     tagItems.forEach((item, index) => {
       const point = view.facets[index];
       if (point)
@@ -378,15 +329,8 @@ export function initAbout({ root = document, members = teamMembers, story = team
           `translate3d(${(point.x + 20).toFixed(1)}px,${(point.y - 10).toFixed(1)}px,0)`,
         );
     });
-
-    if (state.mode !== 'about') return;
-    const stop = Math.round(state.progress);
-    if (stop === currentStop) return;
-    markCurrent(stop);
-    // One history entry for the whole layer: stops only rewrite its address,
-    // and never while an article opened from a profile owns the address.
-    if (parseAboutHash(window.location.hash, stops, members) !== null)
-      window.history.replaceState(window.history.state, '', aboutHash(stop, stops, members));
+    const stop = state.split >= 1 ? Math.round(state.progress) : -1;
+    if (stop !== currentStop) markCurrent(stop);
   }
 
   root.addEventListener(
@@ -407,125 +351,99 @@ export function initAbout({ root = document, members = teamMembers, story = team
       const hash = target.getAttribute('href');
       const stop = hash ? parseAboutHash(hash, stops, members) : null;
       if (stop !== null) {
+        // An About address is a place on this page, like the index anchors.
         event.preventDefault();
-        if (state.mode === 'about') goTo(stop);
-        else if (enter(hash) && !layer.contains(target)) opener = target;
-      } else if (!active()) return;
-      else if (hash === '#kontakt') {
-        event.preventDefault();
-        leave('#kontakt');
-      } else if (hash === '#svet') {
-        event.preventDefault();
-        leave(null);
-      } else if (layer.contains(target) && target.dataset.member !== undefined) {
+        goTo(stop);
+        if (window.location.hash !== hash) window.history.pushState(null, '', hash);
+      } else if (!layer.contains(target)) return;
+      else if (target.dataset.member !== undefined) {
         const member = Number(target.dataset.member);
         goTo(stops.findIndex((entry) => entry.kind === 'who' && entry.member === member));
-      } else if (layer.contains(target) && target.dataset.goto !== undefined)
-        goTo(Number(target.dataset.goto));
+      } else if (target.dataset.goto !== undefined) goTo(Number(target.dataset.goto));
     },
     options,
   );
-  root.addEventListener(
-    'keydown',
-    (event) => {
-      if (event.key === 'Escape' && active() && !fallback() && !root.querySelector('dialog[open]'))
-        leave(null);
-    },
-    options,
-  );
-  window.addEventListener(
-    'popstate',
-    () => {
-      backPending = false;
-      if (fallback()) return;
-      const hash = window.location.hash;
-      const stop = parseAboutHash(hash, stops, members);
-      if (stop === null) {
-        if (active()) startLeave(null);
-      } else if (state.mode === 'front' || state.mode === 'returning') enter(hash, { push: false });
-      else if (state.mode === 'about' && hash !== aboutHash(currentStop, stops, members))
-        goTo(stop);
-    },
-    options,
-  );
-  scroller.addEventListener(
-    'scroll',
-    () => {
-      if (state.mode !== 'about') return;
-      state.target = sectionProgress(scroller.scrollTop, tops, viewport);
-      wake();
-    },
-    { passive: true, signal: controller.signal },
-  );
+  const route = () => {
+    if (fallback()) return;
+    const stop = parseAboutHash(window.location.hash, stops, members);
+    if (stop !== null) goTo(stop, 'instant');
+  };
+  window.addEventListener('popstate', route, options);
+  window.addEventListener('scroll', sync, { passive: true, signal: controller.signal });
   window.addEventListener(
     'resize',
     () => {
-      if (state.mode !== 'about') return;
+      // The same scroll offset means a different stop once the viewport changes.
+      if (!fallback() && state.turn >= 1 && state.split >= 1)
+        goTo(Math.round(state.progress), 'instant');
       measure();
-      goTo(Math.round(state.target), 'instant');
-      wake();
+      sync();
     },
     options,
   );
-  window.addEventListener('load', () => state.mode === 'about' && measure(), options);
+  window.addEventListener(
+    'load',
+    () => {
+      measure();
+      sync();
+    },
+    options,
+  );
 
-  // An article opened from a profile takes over the scene: the layer's own
-  // text steps aside and a short veil covers the cut both ways.
+  // The article reader is transparent, so the layer's text steps aside under it.
   const viewerObserver = new MutationObserver(() => {
-    if (state.mode !== 'about') return;
     html.classList.toggle('about-reading', viewer.open);
-    html.classList.add('about-cut');
-    window.clearTimeout(cutTimer);
-    cutTimer = window.setTimeout(() => html.classList.remove('about-cut'), 300);
-    wake();
   });
   if (viewer) viewerObserver.observe(viewer, { attributes: true, attributeFilter: ['open'] });
 
-  const clearInline = () => {
-    layer.removeAttribute('style');
-    layer.querySelectorAll('[style]').forEach((node) => node.removeAttribute('style'));
-    layer.querySelectorAll('*').forEach((node) => {
-      if (node.inert) node.inert = false;
-    });
-  };
   // Without WebGL the layer is an ordinary readable section of the document.
   root.addEventListener(
     'portfolio:flight-fallback',
     () => {
       Object.assign(state, createAboutState());
       html.classList.add('about-fallback');
-      html.classList.remove('about-open', 'about-reading', 'about-cut');
-      clearInline();
+      html.classList.remove('about-side', 'about-reading');
+      onSide = false;
+      track.style.removeProperty('--about-span');
+      layer.removeAttribute('style');
+      [...layer.querySelectorAll('[style]'), upCue].forEach((node) =>
+        node.removeAttribute('style'),
+      );
+      layer.querySelectorAll('*').forEach((node) => {
+        if (node.inert) node.inert = false;
+      });
       layer.inert = false;
-      if (stage) stage.inert = false;
+      const stop = parseAboutHash(window.location.hash, stops, members);
+      if (stop !== null) (stop === 0 ? layer : sections[stop]).scrollIntoView({ block: 'start' });
     },
     options,
   );
 
-  const initial = window.location.hash;
-  if (parseAboutHash(initial, stops, members) !== null)
-    enter(initial, { push: false, instant: true });
+  route();
+  measure();
+  sync();
 
   return {
-    scene: { state, stops, frame },
+    scene: {
+      state,
+      stops,
+      frame,
+      sync,
+      // Height of the About part of the track in pixels; 0 once it is a plain section.
+      span: pixels,
+      owns: (hash) => parseAboutHash(hash, stops, members) !== null,
+    },
     dispose() {
       controller.abort();
       viewerObserver.disconnect();
-      window.clearTimeout(cutTimer);
       created.forEach((node) => node.remove());
       introLink?.setAttribute('href', '#o-mne');
+      track.style.removeProperty('--about-span');
       layer.replaceChildren();
       layer.removeAttribute('style');
       layer.hidden = true;
       layer.inert = false;
-      if (stage && state.mode !== 'front') stage.inert = false;
-      html.classList.remove(
-        'about-ready',
-        'about-open',
-        'about-fallback',
-        'about-cut',
-        'about-reading',
-      );
+      html.classList.remove('about-ready', 'about-side', 'about-fallback', 'about-reading');
     },
   };
 }

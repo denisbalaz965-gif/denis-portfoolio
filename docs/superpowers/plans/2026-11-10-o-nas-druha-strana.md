@@ -10,6 +10,8 @@
 
 **Spec:** [docs/superpowers/specs/2026-11-10-o-nas-druha-strana-design.md](../specs/2026-11-10-o-nas-druha-strana-design.md). Referencia pre pocit a východiskové hodnoty: `prototype/o-nas/main.js` (odstráni sa v Task 6).
 
+> **Stav 10. 11. 2026:** Tasks 1–6 boli vykonané. Po zhliadnutí výsledku majiteľ zmenil spôsob vstupu (pozri „Zmena po prvej verzii“ v návrhu): O nás je horná časť tej istej posuvnej dráhy. Stavový stroj, vlastný posuvný kontajner a práca s históriou z Task 2, 4 a 5 boli nahradené prevodom posunu (`aboutAt`, `stepAbout`); obsahový model, brána, vykreslenie, rozloženie tretín a kontrola balíka zostali. Aktuálny stav opisuje `docs/architecture.md`.
+
 ## Global Constraints
 
 - Jeden renderer, jedna kamera, žiadny nový renderovací prechod; rozpočty z `src/features/render-policy.js` sa nemenia.

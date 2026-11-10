@@ -1,5 +1,6 @@
+/* The flight is 535svh; About, when its content exists, extends the same track upward. */
 .flight-ready .flight-track {
-  height: 535svh;
+  height: calc(535svh + var(--about-span, 0px));
 }
 .flight-ready .flight-contact,
 .flight-ready .flight-footer {

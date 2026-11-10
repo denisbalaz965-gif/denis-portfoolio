@@ -20,7 +20,14 @@ import {
   scrollTurn,
   finaleAt,
 } from './flight-model.js';
-import { stepAbout, orbitOffset, turnPhases, aboutLayout, thirdApart } from './about-model.js';
+import {
+  stepAbout,
+  orbitOffset,
+  turnPhases,
+  aboutLayout,
+  thirdApart,
+  aboutNarrow,
+} from './about-model.js';
 
 const fogVertex = `void main(){gl_Position=vec4(position.xy,0.999,1.0);}`;
 const fogFragment = `
@@ -189,7 +196,7 @@ export function initSignal({ about = null } = {}) {
     'portfolio:project-entry',
     (event) => {
       // On the other side an article opens at once; the wedge opening belongs to the flight.
-      if (lost || entry || (side && side.mode !== 'front')) return;
+      if (lost || entry || (side && side.turn > 0)) return;
       const index = projects.findIndex((p) => p.node.dataset.stop === event.detail.id);
       if (index < 0) return;
       event.preventDefault();
@@ -340,15 +347,16 @@ export function initSignal({ about = null } = {}) {
       })
     : [];
   const aboutView = {
-    event: null,
     width: 1,
     height: 1,
     names: [0, 1, 2].map(() => ({ x: 0, y: 0 })),
     facets: [0, 1, 2].map(() => ({ x: 0, y: 0 })),
+    facetOwner: 0,
+    facetAmount: 0,
   };
   let stars = null,
     facets = null,
-    aboutJumped = false;
+    homePending = Boolean(about);
   if (about) {
     // Stars are drawn in the sharp foreground pass, not in the low-resolution field.
     const group = new THREE.Group();
@@ -516,6 +524,8 @@ export function initSignal({ about = null } = {}) {
       jump('contact', null, 'instant');
       contact.scrollTop = 0;
     } else if (hash === '#svet') jump('intro', null, 'instant');
+    // With About above it, the page opens on the crystal, not at the document top.
+    else if (homePending && !about.owns(hash)) jump('intro', null, 'instant');
   }
   document.addEventListener(
     'click',
@@ -557,27 +567,16 @@ export function initSignal({ about = null } = {}) {
     if (document.hidden || lost) return;
     const dt = Math.min((time - lastTime) / 1000 || 0, 0.05);
     lastTime = time;
-    // The About clock runs on this loop; pausing the background does not stop a turn.
-    const aboutEvent = side ? stepAbout(side, dt) : null;
+    // About is the part of the same scroll above the start: its position eases
+    // toward the scroll target exactly like the flight's does.
+    if (side) stepAbout(side, dt, about.stops.length);
     const aboutOn = Boolean(side && side.turn > 0);
     const phases = aboutOn ? turnPhases(side.turn) : FRONT;
     const aboutSplit = side ? side.split * side.split * (3 - 2 * side.split) : 0;
-    const held = Boolean(
-      entry ||
-      document.querySelector(aboutOn ? 'dialog[open]' : '.flight-project.is-revealed,dialog[open]'),
+    const locked = Boolean(
+      entry || document.querySelector('.flight-project.is-revealed,dialog[open]'),
     );
-    const locked = held || Boolean(side && side.mode !== 'front');
-    if (side && side.mode !== 'returning') aboutJumped = false;
-    else if (side && !aboutJumped && side.split <= 0 && side.turn <= 0.5) {
-      // Half-way through the turn back the flight is moved to the destination,
-      // so the turn lands there. The motion covers the change of place.
-      aboutJumped = true;
-      if (side.destination === '#kontakt') {
-        jump('contact', null, 'instant');
-        contact.scrollTop = 0;
-      }
-    }
-    if (!paused && !held) phase += dt;
+    if (!paused && !locked) phase += dt;
     if (!locked) progress += (target - progress) * (1 - Math.exp(-dt * 12));
     if (reader) {
       readerMotion += (reader.progress - readerMotion) * (1 - Math.exp(-dt * 13));
@@ -593,7 +592,13 @@ export function initSignal({ about = null } = {}) {
       // Orbit the crystal: it stays the pivot, so orientation is never lost.
       pivot.set(0, 0, 4 - progress * 7);
       const orbit = orbitOffset(side.turn);
-      camera.position.set(pivot.x + orbit.x, pivot.y + orbit.y, pivot.z + orbit.z);
+      // The pointer drift fades out with the front, so the turn starts without a step.
+      const drift = locked ? 0 : phases.front;
+      camera.position.set(
+        pivot.x + orbit.x + pointerX * 0.08 * drift,
+        pivot.y + orbit.y + pointerY * 0.06 * drift,
+        pivot.z + orbit.z,
+      );
       camera.lookAt(pivot);
     }
     fogMaterial.uniforms.time.value = phase;
@@ -663,7 +668,7 @@ export function initSignal({ about = null } = {}) {
       camRight.setFromMatrixColumn(camera.matrixWorld, 0);
       camUp.setFromMatrixColumn(camera.matrixWorld, 1);
       camForward.setFromMatrixColumn(camera.matrixWorld, 2).negate();
-      layout = aboutLayout(side.progress, about.stops, width < 761);
+      layout = aboutLayout(side.progress, about.stops, aboutNarrow(width, height));
       fogMaterial.uniforms.nebula.value.set(layout.nebula[0], layout.nebula[1]);
       // Assembled pose: the crystal in the pivot, or the joined crystal of the last stop.
       const joined = layout.join * aboutSplit;
@@ -886,8 +891,16 @@ export function initSignal({ about = null } = {}) {
       });
       line.needsUpdate = true;
     }
-    const aboutMoving = Boolean(side && (side.mode === 'turning' || side.mode === 'returning'));
-    if (aboutMoving || time - lastFogAt > 50 || Math.abs(progress - lastFogTravel) > 0.08) {
+    const aboutMoving = Boolean(side && side.up !== side.targetUp);
+    aboutView.facetAmount =
+      facets && layout ? layout.facetAmount * (1 - layout.join) * aboutSplit : 0;
+    if (layout) aboutView.facetOwner = layout.facetOwner;
+    // While the space is turning the field is redrawn every frame.
+    if (
+      (aboutMoving && side.turn < 1) ||
+      time - lastFogAt > 50 ||
+      Math.abs(progress - lastFogTravel) > 0.08
+    ) {
       renderer.setRenderTarget(fogTarget);
       renderer.render(fogScene, camera);
       renderer.setRenderTarget(null);
@@ -902,20 +915,12 @@ export function initSignal({ about = null } = {}) {
           thirdCentre(third, spot).addScaledVector(camUp, -third.scale * 0.92);
           toScreen(spot, aboutView.names[k]);
         });
-      aboutView.event = aboutEvent;
       aboutView.width = width;
       aboutView.height = height;
       about.frame(aboutView);
     }
-    const aboutBusy =
-      aboutMoving ||
-      Boolean(
-        side &&
-        side.mode === 'about' &&
-        (side.split < 1 || Math.abs(side.target - side.progress) > 0.001 || (!paused && !held)),
-      );
     if (
-      aboutBusy ||
+      aboutMoving ||
       entry ||
       (reader && Math.abs(reader.progress - readerMotion) > 0.001) ||
       (!paused && !locked) ||
@@ -932,8 +937,10 @@ export function initSignal({ about = null } = {}) {
     if (lost) return;
     width = window.innerWidth;
     height = window.innerHeight;
-    start = track.getBoundingClientRect().top + window.scrollY;
-    distance = Math.max(1, track.offsetHeight - height);
+    // About occupies the top of the track; the flight starts below it.
+    const aboutPixels = about ? about.span() : 0;
+    start = track.getBoundingClientRect().top + window.scrollY + aboutPixels;
+    distance = Math.max(1, track.offsetHeight - height - aboutPixels);
     renderer.setPixelRatio(scenePixelRatio(width, height, window.devicePixelRatio));
     if (stars) {
       stars.small.uniforms.size.value = 1.7 * renderer.getPixelRatio();
@@ -1014,14 +1021,22 @@ export function initSignal({ about = null } = {}) {
     },
     options,
   );
-  resize();
-  route();
-  readScroll();
-  progress = target;
-  requestAnimationFrame(() => {
-    route();
+  // On load both clocks start where the page is; nothing animates into place.
+  const settle = () => {
     readScroll();
     progress = target;
+    if (side) {
+      about.sync();
+      side.up = side.targetUp;
+    }
+  };
+  resize();
+  route();
+  settle();
+  requestAnimationFrame(() => {
+    route();
+    homePending = false;
+    settle();
     startDraw();
   });
   startDraw();

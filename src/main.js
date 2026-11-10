@@ -7,13 +7,13 @@ import { initSignal } from './features/signal.js';
 import { initHolograms } from './features/holograms.js';
 import { initCursor } from './features/cursor.js';
 import { initAbout } from './features/about.js';
-import { aboutReady } from './features/about-model.js';
+import { aboutContentReady } from './features/about-gate.js';
 import { teamMembers, teamStory } from './data/team-members.js';
 
 // Placeholder profiles exist for the dev server only. The branch is removed
 // from production builds, so the fixture never reaches the shipped bundle.
 let aboutContent = {};
-if (import.meta.env.DEV && !aboutReady(teamMembers, teamStory)) {
+if (import.meta.env.DEV && !aboutContentReady(teamMembers, teamStory)) {
   const fixture = await import('./data/team-members.fixture.js');
   aboutContent = { members: fixture.fixtureMembers, story: fixture.fixtureStory };
 }
