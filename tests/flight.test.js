@@ -99,12 +99,12 @@ describe('Projected project holograms', () => {
     expect(document.querySelectorAll('.is-presented')).toHaveLength(0);
     expect(document.querySelector('#holo-previa').inert).toBe(true);
   });
-  it('lets Escape dismiss the automatic preview until the next stop and retains an explicit way to reopen', () => {
+  it('keeps the current studio offer available when Escape releases a reading hold', () => {
     dispose = initHolograms();
     document.dispatchEvent(new CustomEvent('portfolio:presentation', { detail: { id: 'previa' } }));
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-    expect(document.querySelector('.is-presented')).toBeNull();
-    expect(document.querySelector('#holo-previa').inert).toBe(true);
+    expect(document.querySelector('.is-presented')?.dataset.stop).toBe('previa');
+    expect(document.querySelector('#holo-previa').inert).toBe(false);
     document.querySelector('#stop-previa .fragment-beacon').click();
     expect(document.querySelector('#holo-previa').inert).toBe(false);
     expect(document.querySelector('dialog').open).toBe(false);

@@ -139,6 +139,11 @@ export function initHolograms({ root = document } = {}) {
     'keydown',
     (event) => {
       if (event.key === 'Escape') {
+        // The current studio offer is page content, not a dismissible preview.
+        if (presented?.querySelector('.service-offer')) {
+          close();
+          return;
+        }
         dismissed = presented;
         presented?.classList.remove('is-presented');
         close();

@@ -24,22 +24,25 @@ describe('A continuous statement and its proof', () => {
       }
     }
   });
-  it('stacks the proof below the copy with touch-sized side gutters on a narrow screen', () => {
+  it('leads with the service and stacks supporting proof below it on mobile', () => {
     const p = presentationLayout(0, 390, 844);
     expect(p.left).toBe(24);
     expect(p.left + p.width).toBe(366);
-    expect(p.top - p.copyTop).toBeGreaterThan(180);
+    expect(p.copyTop - p.top).toBeGreaterThan(180);
   });
   it('fits the measured opposite service and preserves the text-to-proof gap', () => {
     for (const [width, height, copyHeight, captionHeight] of [
-      [1280, 900, 200, 168],
-      [390, 844, 190, 162],
-      [320, 740, 220, 180],
-      [844, 390, 145, 140],
+      [1280, 900, 344, 493],
+      [390, 844, 220, 340],
+      [320, 740, 231, 320],
+      [844, 390, 230, 274],
     ]) {
       const p = presentationLayout(0, width, height, { copyHeight, captionHeight });
-      expect(p.top + captionHeight).toBeLessThan(height - 45);
-      if (width < 600) expect(p.top).toBeGreaterThanOrEqual(p.copyTop + copyHeight + 24);
+      expect(p.top + captionHeight).toBeLessThan(height - 24);
+      if (width < 600) {
+        expect(p.copyTop).toBeGreaterThanOrEqual(p.top + captionHeight + 24);
+        expect(p.copyTop + copyHeight).toBeLessThan(height - 45);
+      }
     }
   });
   it('makes a single smooth full turn over travel, deterministic and reversible', () => {

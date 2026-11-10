@@ -17,17 +17,19 @@ export function presentationLayout(
   const right = index % 2 === 0;
   const narrow = width < 761 && !(width >= 600 && height < 600);
   const gutter = narrow ? 24 : Math.max(40, width * 0.07);
-  const panelWidth = narrow ? width - 48 : Math.min(480, width * 0.36);
-  const copyTop = narrow ? Math.max(96, height * 0.12) : Math.max(88, (height - copyHeight) / 2);
+  const panelWidth = narrow ? width - 48 : Math.min(600, width * 0.39);
+  const copyWidth = narrow ? width - 48 : Math.min(420, width * 0.3);
   const top = narrow
-    ? Math.max(280, height * 0.38, copyTop + copyHeight + 24)
-    : Math.max(104, (height - captionHeight) / 2);
+    ? Math.max(88, height * 0.11)
+    : Math.max(88, Math.min(height * 0.18, height - captionHeight - 60));
+  const copyTop = narrow ? top + captionHeight + 24 : Math.max(104, (height - copyHeight) / 2);
   return {
     right,
-    left: narrow ? gutter : right ? width / 2 + gutter * 0.72 : gutter,
+    left: narrow ? gutter : right ? width * 0.55 : gutter,
     top,
     width: panelWidth,
-    copyLeft: narrow ? gutter : right ? gutter : width / 2 + gutter * 0.72,
+    copyWidth,
+    copyLeft: narrow ? gutter : right ? gutter : width * 0.61,
     copyTop,
   };
 }
